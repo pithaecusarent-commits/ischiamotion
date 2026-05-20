@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\user\\\\Downloads\\\\IschiaMotion\" -Recurse)",
+      "Bash(Select-Object FullName, Length)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(python3 -c ' *)",
+      "Bash(base64 \"c:/Users/user/Downloads/IschiaMotion/public/images/logo.png\" | tr -d '\\\\n' > /tmp/logo_b64_only.txt *)",
+      "Bash(python3 -)",
+      "Read(//usr/**)",
+      "Read(//usr/local/**)",
+      "Bash(/c/Users/user/AppData/Local/Microsoft/WindowsApps/python --version)",
+      "Bash(node -e ' *)",
+      "Bash(node --use-system-ca -e ' *)",
+      "Bash(node fix-colors.js)",
+      "Bash(ls \"c:\\\\Users\\\\user\\\\Downloads\\\\its\")",
+      "Read(//c/Users/user/Downloads/its/**)",
+      "Bash(node update-site-colors.js)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IschiaMotion — Logo Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #f0ede8;
+  color: #151512;
+  padding: 0 0 60px;
+}
+
+/* ── HEADER ── */
+.page-header {
+  background: #151512; color: #fff;
+  padding: 32px 40px; display: flex; align-items: center; gap: 20px;
+}
+.page-header h1 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; }
+.page-header p  { font-size: .85rem; color: rgba(255,255,255,.5); margin-top: 4px; }
+
+/* ── SECTIONS ── */
+.section { padding: 48px 40px; }
+.section + .section { border-top: 1px solid rgba(0,0,0,.08); }
+.section-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #18A36F; margin-bottom: 8px;
+}
+.section-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 4px; }
+.section-desc { font-size: .82rem; color: #6a6a6a; margin-bottom: 28px; }
+
+/* ── LOGO ROWS ── */
+.logo-row {
+  display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+}
+.logo-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.logo-bg {
+  border-radius: 16px; padding: 32px 40px;
+  display: flex; align-items: center; justify-content: center;
+}
+.bg-light  { background: #FFFDF7; border: 1px solid #e0dbd0; }
+.bg-dark   { background: #151512; }
+.bg-green  { background: #075D40; }
+.bg-sea    { background: #0A7899; }
+.bg-sand   { background: #F6EFE2; border: 1px solid #e0dbd0; }
+
+.logo-cell .label {
+  font-size: .72rem; font-weight: 600; color: #888;
+  letter-spacing: .06em; text-transform: uppercase; text-align: center;
+}
+
+/* ── ICON GRID ── */
+.icon-grid {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;
+}
+.icon-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.icon-wrap .label { font-size: .7rem; color: #888; text-align: center; }
+
+/* ── INLINE SVG FONT FIX ── */
+svg text {
+  font-family: inherit;
+}
+
+/* ── PALETTE ── */
+.palette { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+.swatch {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.swatch-color { width: 56px; height: 56px; border-radius: 12px; border: 1px solid rgba(0,0,0,.08); }
+.swatch-label { font-size: .68rem; color: #777; text-align: center; line-height: 1.4; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .section { padding: 36px 20px; }
+  .page-header { padding: 24px 20px; }
+  .logo-bg { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <svg width="44" height="44" viewBox="0 0 200 200">
+    <defs>
+      <linearGradient id="gh0" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#075D40"/>
+        <stop offset="55%" stop-color="#18A36F"/>
+        <stop offset="100%" stop-color="#0A7899"/>
+      </linearGradient>
+    </defs>
+    <rect width="200" height="200" rx="44" fill="url(#gh0)"/>
+    <circle cx="100" cy="42" r="11" fill="#fff"/>
+    <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+    <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+  <div>
+    <h1>IschiaMotion — Logo System</h1>
+    <p>Preview di tutte le versioni del logo · file SVG in public/images/</p>
+  </div>
+</div>
+
+
+<!-- ── 1. ICONA ── -->
+<div class="section">
+  <div class="section-label">01</div>
+  <div class="section-title">Icona quadrata</div>
+  <div class="section-desc">Icona principale · app icon, favicon, QR badge, dashboard</div>
+
+  <div class="icon-grid">
+    <div class="icon-wrap">
+      <svg width="180" height="180" viewBox="0 0 200 200">
+        <defs><linearGradient id="gi1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/><stop offset="55%" stop-color="#18A36F"/><stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#gi1)"/>
+        <circle cx="100" cy="42" r="11" fill="#fff"/>
+        <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+        <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">180 × 180</span>
+    </div>
+    <div class="icon-wrap">
+      <svg width="96" height="96" viewBox="0 0 200 200">
+        <defs><linearGradient id="gi2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/><stop offset="55%" stop-color="#18A36F"/><stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#gi2)"/>
+        <circle cx="100" cy="42" r="11" fill="#fff"/>
+        <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+        <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">96 × 96</span>
+    </div>
+    <div class="icon-wrap">
+      <svg width="48" height="48" viewBox="0 0 200 200">
+        <defs><linearGradient id="gi3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/><stop offset="55%" stop-color="#18A36F"/><stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#gi3)"/>
+        <circle cx="100" cy="42" r="11" fill="#fff"/>
+        <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+        <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">48 × 48</span>
+    </div>
+    <div class="icon-wrap">
+      <svg width="24" height="24" viewBox="0 0 200 200">
+        <defs><linearGradient id="gi4" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/><stop offset="55%" stop-color="#18A36F"/><stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#gi4)"/>
+        <circle cx="100" cy="42" r="11" fill="#fff"/>
+        <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+        <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="label">Favicon</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 2. LOGO ORIZZONTALE ── -->
+<div class="section">
+  <div class="section-label">02</div>
+  <div class="section-title">Logo orizzontale</div>
+  <div class="section-desc">Versione principale con wordmark · header sito, presentazioni, documenti</div>
+
+  <div class="logo-row">
+    <div class="logo-cell">
+      <div class="logo-bg bg-light" style="min-width:360px;">
+        <svg viewBox="0 0 380 88" width="340" height="79">
+          <defs><linearGradient id="ghoriz1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#075D40"/><stop offset="55%" stop-color="#18A36F"/><stop offset="100%" stop-color="#0A7899"/>
+          </linearGradient></defs>
+          <rect x="12" y="14" width="60" height="60" rx="13" fill="url(#ghoriz1)"/>
+          <g transform="translate(12,14) scale(0.3)">
+            <circle cx="100" cy="42" r="11" fill="#fff"/>
+            <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+            <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <line x1="84" y1="20" x2="84" y2="68" stroke="#18A36F" stroke-width="1" opacity="0.35"/>
+          <text x="98" y="50" font-family="Fraunces, Georgia, serif" font-size="34" font-weight="700" fill="#151512">Ischia</text>
+          <text x="100" y="67" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+        </svg>
+      </div>
+      <span class="label">Su sfondo chiaro</span>
+    </div>
+
+    <div class="logo-cell">
+      <div class="logo-bg bg-dark" style="min-width:360px;">
+        <svg viewBox="0 0 380 88" width="340" height="79">
+          <defs><linearGradient id="ghoriz2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#075D40"/><stop offset="55%" stop-color="#18A36F"/><stop offset="100%" stop-color="#0A7899"/>
+          </linearGradient></defs>
+          <rect x="12" y="14" width="60" height="60" rx="13" fill="url(#ghoriz2)"/>
+          <g transform="translate(12,14) scale(0.3)">
+            <circle cx="100" cy="42" r="11" fill="#fff"/>
+            <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+            <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <line x1="84" y1="20" x2="84" y2="68" stroke="#18A36F" stroke-width="1" opacity="0.35"/>
+          <text x="98" y="50" font-family="Fraunces, Georgia, serif" font-size="34" font-weight="700" fill="#ffffff">Ischia</text>
+          <text x="100" y="67" font-family="'DM Sans', Arial, sans-serif" font-size="12" font-weight="300" fill="#7CE3BB" style="letter-spacing:4px">MOTION</text>
+        </svg>
+      </div>
+      <span class="label">Su sfondo scuro</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 3. VERSIONE BIANCA ── -->
+<div class="section">
+  <div class="section-label">03</div>
+  <div class="section-title">Versione bianca</div>
+  <div class="section-desc">Solo bianco · per sfondi colorati, fotografie, stampa su materiali scuri</div>
+
+  <div class="logo-row">
+    <div class="logo-cell">
+      <div class="logo-bg bg-green" style="min-width:300px;">
+        <svg viewBox="0 0 360 80" width="300" height="67">
+          <g transform="translate(0,8) scale(0.32)">
+            <circle cx="100" cy="42" r="11" fill="#fff"/>
+            <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+            <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <line x1="74" y1="12" x2="74" y2="62" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <text x="88" y="45" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+          <text x="90" y="62" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="rgba(255,255,255,0.72)" style="letter-spacing:4px">MOTION</text>
+        </svg>
+      </div>
+      <span class="label">Su verde</span>
+    </div>
+
+    <div class="logo-cell">
+      <div class="logo-bg bg-sea" style="min-width:300px;">
+        <svg viewBox="0 0 360 80" width="300" height="67">
+          <g transform="translate(0,8) scale(0.32)">
+            <circle cx="100" cy="42" r="11" fill="#fff"/>
+            <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+            <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <line x1="74" y1="12" x2="74" y2="62" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <text x="88" y="45" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+          <text x="90" y="62" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="rgba(255,255,255,0.72)" style="letter-spacing:4px">MOTION</text>
+        </svg>
+      </div>
+      <span class="label">Su mare</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 4. VERSIONE SCURA ── -->
+<div class="section">
+  <div class="section-label">04</div>
+  <div class="section-title">Versione scura</div>
+  <div class="section-desc">Marca in verde brand · per stampa su carta bianca, documenti, preventivi</div>
+
+  <div class="logo-row">
+    <div class="logo-cell">
+      <div class="logo-bg bg-light" style="min-width:300px;">
+        <svg viewBox="0 0 360 80" width="300" height="67">
+          <g transform="translate(0,8) scale(0.32)">
+            <circle cx="100" cy="42" r="11" fill="#075D40"/>
+            <line x1="100" y1="56" x2="100" y2="82" stroke="#075D40" stroke-width="10" stroke-linecap="round"/>
+            <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#075D40" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="#0A7899" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+          </g>
+          <line x1="74" y1="12" x2="74" y2="62" stroke="#18A36F" stroke-width="1" opacity="0.4"/>
+          <text x="88" y="45" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#151512">Ischia</text>
+          <text x="90" y="62" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+        </svg>
+      </div>
+      <span class="label">Su bianco</span>
+    </div>
+
+    <div class="logo-cell">
+      <div class="logo-bg bg-sand" style="min-width:300px;">
+        <svg viewBox="0 0 360 80" width="300" height="67">
+          <g transform="translate(0,8) scale(0.32)">
+            <circle cx="100" cy="42" r="11" fill="#075D40"/>
+            <line x1="100" y1="56" x2="100" y2="82" stroke="#075D40" stroke-width="10" stroke-linecap="round"/>
+            <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#075D40" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="#0A7899" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+          </g>
+          <line x1="74" y1="12" x2="74" y2="62" stroke="#18A36F" stroke-width="1" opacity="0.4"/>
+          <text x="88" y="45" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#151512">Ischia</text>
+          <text x="90" y="62" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+        </svg>
+      </div>
+      <span class="label">Su sabbia</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 5. BADGE POINT ── -->
+<div class="section">
+  <div class="section-label">05</div>
+  <div class="section-title">Badge IschiaMotion Point</div>
+  <div class="section-desc">Per punti ritiro fisici, voucher, QR code, vetrofanie</div>
+
+  <div class="logo-row">
+    <div class="logo-cell">
+      <div class="logo-bg bg-light" style="min-width:300px;">
+        <svg viewBox="0 0 270 68" width="270" height="68">
+          <defs><linearGradient id="gb1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#075D40"/><stop offset="100%" stop-color="#0A7899"/>
+          </linearGradient></defs>
+          <rect width="270" height="68" rx="34" fill="url(#gb1)"/>
+          <circle cx="34" cy="34" r="22" fill="rgba(255,255,255,0.12)"/>
+          <text x="34" y="40" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">IM</text>
+          <line x1="66" y1="16" x2="66" y2="52" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="82" y="32" font-family="Fraunces, Georgia, serif" font-size="20" font-weight="700" fill="#ffffff">IschiaMotion</text>
+          <text x="84" y="52" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="400" fill="#7CE3BB" style="letter-spacing:5px">POINT</text>
+        </svg>
+      </div>
+      <span class="label">Versione standard</span>
+    </div>
+
+    <div class="logo-cell">
+      <div class="logo-bg bg-dark" style="min-width:300px;">
+        <svg viewBox="0 0 270 68" width="270" height="68">
+          <defs><linearGradient id="gb2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#075D40"/><stop offset="100%" stop-color="#0A7899"/>
+          </linearGradient></defs>
+          <rect width="270" height="68" rx="34" fill="url(#gb2)"/>
+          <circle cx="34" cy="34" r="22" fill="rgba(255,255,255,0.12)"/>
+          <text x="34" y="40" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">IM</text>
+          <line x1="66" y1="16" x2="66" y2="52" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <text x="82" y="32" font-family="Fraunces, Georgia, serif" font-size="20" font-weight="700" fill="#ffffff">IschiaMotion</text>
+          <text x="84" y="52" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="400" fill="#7CE3BB" style="letter-spacing:5px">POINT</text>
+        </svg>
+      </div>
+      <span class="label">Su nero</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 6. PALETTE ── -->
+<div class="section">
+  <div class="section-label">06</div>
+  <div class="section-title">Palette colori</div>
+  <div class="section-desc">Codici colore ufficiali del brand IschiaMotion</div>
+
+  <div class="palette">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#18A36F;"></div>
+      <div class="swatch-label">Verde<br/>#18A36F</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#075D40;"></div>
+      <div class="swatch-label">Verde scuro<br/>#075D40</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#7CE3BB;"></div>
+      <div class="swatch-label">Menta<br/>#7CE3BB</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0A7899;"></div>
+      <div class="swatch-label">Mare<br/>#0A7899</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F6EFE2; border-color:#ddd;"></div>
+      <div class="swatch-label">Sabbia<br/>#F6EFE2</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFFDF7; border-color:#ddd;"></div>
+      <div class="swatch-label">Bianco caldo<br/>#FFFDF7</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#151512;"></div>
+      <div class="swatch-label">Nero elegante<br/>#151512</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 7. FILE ── -->
+<div class="section">
+  <div class="section-label">07</div>
+  <div class="section-title">File disponibili</div>
+  <div class="section-desc">Tutti i file SVG sono in <code style="background:#e8e3db;padding:2px 6px;border-radius:4px;font-size:.8rem;">public/images/</code></div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px;">
+    <div style="background:#fff;border-radius:10px;padding:14px 18px;border:1px solid #e0dbd0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div><strong style="font-size:.9rem;">logo-icon.svg</strong><br/><span style="font-size:.78rem;color:#888;">Icona quadrata 200×200 · gradient bg · SVG scalabile</span></div>
+      <code style="font-size:.76rem;color:#18A36F;">200 × 200</code>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:14px 18px;border:1px solid #e0dbd0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div><strong style="font-size:.9rem;">logo-horizontal.svg</strong><br/><span style="font-size:.78rem;color:#888;">Logo orizzontale con wordmark · header sito, presentazioni</span></div>
+      <code style="font-size:.76rem;color:#18A36F;">380 × 88</code>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:14px 18px;border:1px solid #e0dbd0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div><strong style="font-size:.9rem;">logo-white.svg</strong><br/><span style="font-size:.78rem;color:#888;">Versione bianca trasparente · sfondi scuri e colorati</span></div>
+      <code style="font-size:.76rem;color:#18A36F;">360 × 80</code>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:14px 18px;border:1px solid #e0dbd0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div><strong style="font-size:.9rem;">logo-dark.svg</strong><br/><span style="font-size:.78rem;color:#888;">Versione scura trasparente · stampa su carta bianca</span></div>
+      <code style="font-size:.76rem;color:#18A36F;">360 × 80</code>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:14px 18px;border:1px solid #e0dbd0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div><strong style="font-size:.9rem;">logo-badge.svg</strong><br/><span style="font-size:.78rem;color:#888;">Badge IschiaMotion Point · punti ritiro, voucher, QR</span></div>
+      <code style="font-size:.76rem;color:#18A36F;">270 × 68</code>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
