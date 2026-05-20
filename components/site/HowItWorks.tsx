@@ -3,7 +3,7 @@ import type { Locale } from "@/lib/types";
 export function HowItWorks({ locale }: { locale: Locale }) {
   const steps = locale === "it"
     ? [
-      ["Cerca e scegli", "Filtra per tipo di veicolo, date e zona dell'isola. Prezzi trasparenti, disponibilita' in tempo reale."],
+      ["Cerca e scegli", "Filtra per tipo di veicolo, date e zona dell'isola. Prezzi trasparenti, disponibilità in tempo reale."],
       ["Prenota online", "Paga subito con carta di credito o scegli di pagare al ritiro. Conferma istantanea via email."],
       ["Ritira e parti", "Presentati al punto di ritiro con la conferma. Niente code, niente sorprese. Solo strada aperta."]
     ]

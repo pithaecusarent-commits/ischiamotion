@@ -5,14 +5,14 @@ const content = {
     {
       id: "spiagge-e-calette",
       eyebrow: "Spiagge e calette",
-      title: "Noleggia uno scooter a Ischia e raggiungi il mare piu' bello.",
-      text: "Con IschiaMotion puoi scegliere scooter, bici elettriche o auto per muoverti tra Maronti, Citara, San Montano e le calette piu' tranquille dell'isola. I punti ritiro brandizzati rendono la partenza semplice e riconoscibile."
+      title: "Noleggia uno scooter a Ischia e raggiungi il mare più bello.",
+      text: "Con IschiaMotion puoi scegliere scooter, bici elettriche o auto per muoverti tra Maronti, Citara, San Montano e le calette più tranquille dell'isola. I punti ritiro brandizzati rendono la partenza semplice e riconoscibile."
     },
     {
       id: "borghi-e-panorami",
       eyebrow: "Borghi e panorami",
       title: "Auto, scooter ed e-bike per scoprire Ischia oltre il porto.",
-      text: "Da Ischia Ponte a Forio, da Casamicciola a Barano, il noleggio veicoli a Ischia diventa piu' comodo quando puoi scegliere la categoria giusta e ritirare presso un IschiaMotion Point vicino al tuo itinerario."
+      text: "Da Ischia Ponte a Forio, da Casamicciola a Barano, il noleggio veicoli a Ischia diventa più comodo quando puoi scegliere la categoria giusta e ritirare presso un IschiaMotion Point vicino al tuo itinerario."
     },
     {
       id: "giornate-in-mare",
@@ -59,7 +59,7 @@ export function SeoExperiences({ locale }: { locale: Locale }) {
             <div className="section-eyebrow">{item.eyebrow}</div>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
-            <a href="#prenota">{locale === "it" ? "Cerca disponibilita' →" : "Search availability →"}</a>
+            <a href="#prenota">{locale === "it" ? "Cerca disponibilità →" : "Search availability →"}</a>
           </article>
         ))}
       </div>

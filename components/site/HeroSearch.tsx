@@ -5,7 +5,7 @@ export function HeroSearch({ locale }: { locale: Locale }) {
     <div className="search-card" id="prenota">
       <div className="search-inner">
         <div className="search-topline">
-          <div className="search-kicker">{locale === "it" ? "Disponibilita' immediata" : "Instant availability"}</div>
+          <div className="search-kicker">{locale === "it" ? "Disponibilità immediata" : "Instant availability"}</div>
           <div className="search-note">{locale === "it" ? "Prezzi chiari · conferma veloce · ritiro sull'isola" : "Clear prices · fast confirmation · island pickup"}</div>
         </div>
         <div className="search-grid">
