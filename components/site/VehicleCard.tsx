@@ -1,4 +1,4 @@
-import type { Locale, Vehicle } from "@/lib/types";
+import type { Locale, PublicVehicle } from "@/lib/types";
 import { t } from "@/lib/i18n";
 
 export function VehicleCard({
@@ -6,7 +6,7 @@ export function VehicleCard({
   locale,
   visible = true
 }: {
-  vehicle: Vehicle;
+  vehicle: PublicVehicle;
   locale: Locale;
   visible?: boolean;
 }) {

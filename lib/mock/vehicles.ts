@@ -1,6 +1,6 @@
-import type { Vehicle } from "@/lib/types";
+import type { PublicVehicle } from "@/lib/types";
 
-export const vehicles: Vehicle[] = [
+export const vehicles: PublicVehicle[] = [
   {
     id: "veh-scooter-125",
     category: "scooter",

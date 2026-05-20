@@ -1,6 +1,6 @@
-import type { PickupPoint } from "@/lib/types";
+import type { PublicPickupPoint } from "@/lib/types";
 
-export const pickupPoints: PickupPoint[] = [
+export const pickupPoints: PublicPickupPoint[] = [
   {
     id: "pp-ischia-porto",
     name_it: "IschiaMotion Point - Porto d'Ischia",
