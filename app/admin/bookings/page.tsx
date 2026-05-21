@@ -1,7 +1,11 @@
-import { getBookingNoteValue, getBookingRequests } from "@/lib/supabase/queries/bookings";
+import { signOutAdmin } from "@/app/admin/login/actions";
+import { getAdminBookingRequests } from "@/lib/supabase/queries/admin-bookings";
+import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
+import { requireAdmin } from "@/lib/supabase/admin-auth";
 
 export default async function AdminBookingsPage() {
-  const { bookings, error } = await getBookingRequests();
+  const { accessToken } = await requireAdmin("/admin/bookings");
+  const { bookings, error } = await getAdminBookingRequests(accessToken);
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
@@ -9,10 +13,20 @@ export default async function AdminBookingsPage() {
         <p className="section-kicker">Admin</p>
         <h1 className="mt-3 font-serif text-4xl font-bold">Prenotazioni</h1>
         <p className="mt-4 text-ink/65">Richieste ricevute dal sito IschiaMotion.</p>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin">
+            Area admin
+          </a>
+          <form action={signOutAdmin}>
+            <button className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" type="submit">
+              Esci
+            </button>
+          </form>
+        </div>
 
         {error ? (
           <div className="mt-8 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm text-ink/70">
-            Impossibile caricare le prenotazioni. Se RLS è attivo, serve una policy di lettura admin autenticata.
+            Impossibile caricare le prenotazioni. Verifica che l&apos;utente abbia ruolo admin e che le policy Supabase siano applicate.
           </div>
         ) : null}
 
