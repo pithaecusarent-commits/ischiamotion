@@ -96,8 +96,8 @@ nav {
 }
 .footer-logo-img {
   height: 34px;
-  opacity: .88;
-  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.3));
+  opacity: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.3));
 }
 .logo-text {
   font-family: 'Fraunces', serif;
@@ -995,6 +995,122 @@ h1 em {
   font-size: 14px;
 }
 
+/* SEO FAQ / LANDINGS */
+.faq-section,
+.seo-landing-section {
+  padding: 0 5vw 108px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.faq-card {
+  border-radius: 26px;
+  border: 1px solid rgba(21,21,18,.08);
+  background: rgba(255,253,247,.84);
+  box-shadow: 0 14px 42px rgba(13,43,78,.08);
+  padding: 24px;
+}
+.faq-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.12;
+  margin-bottom: 12px;
+}
+.faq-card p {
+  color: var(--ink-mid);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+/* SEO LANDINGS */
+.seo-landing {
+  padding-top: 128px;
+}
+.seo-landing-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  gap: 28px;
+  align-items: stretch;
+  padding: 40px 5vw 98px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.seo-landing-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(58px, 8vw, 118px);
+  font-weight: 300;
+  line-height: .9;
+  letter-spacing: -3.5px;
+  max-width: 900px;
+  margin-bottom: 24px;
+}
+.seo-landing-hero p {
+  color: var(--ink-mid);
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.7;
+  max-width: 720px;
+}
+.seo-landing-card {
+  align-self: stretch;
+  min-height: 360px;
+  border-radius: 38px;
+  padding: clamp(30px, 4vw, 48px);
+  border: 1px solid rgba(255,255,255,.78);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(0,151,171,.28), transparent 16rem),
+    radial-gradient(circle at 78% 75%, rgba(232,149,26,.2), transparent 14rem),
+    linear-gradient(145deg, rgba(224,248,250,.9), rgba(255,253,247,.9));
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.seo-landing-card span {
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--green-dark);
+  margin-bottom: 12px;
+}
+.seo-landing-card strong {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.seo-landing-card p {
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+.seo-landing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.seo-landing-pickups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.seo-landing-pickups span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(224,244,248,.78);
+  color: var(--green-dark);
+  border: 1px solid rgba(0,151,171,.18);
+  font-weight: 800;
+}
+
 /* EXPERIENCE STRIP */
 .experience {
   padding: 0 5vw 108px;
@@ -1345,6 +1461,9 @@ footer {
   .pickup-section-header,
   .pickup-section-body { grid-template-columns: 1fr; }
   .pickup-map { min-height: 380px; }
+  .faq-grid,
+  .seo-landing-grid { grid-template-columns: 1fr; }
+  .seo-landing-hero { grid-template-columns: 1fr; }
   .experience-card { grid-template-columns: 1fr; }
   .seo-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
@@ -1382,6 +1501,12 @@ footer {
   .booking-form { grid-template-columns: 1fr; }
   .section, .how-section { padding: 78px 16px; }
   .pickup-section { padding: 0 16px 78px; }
+  .faq-section,
+  .seo-landing-section { padding: 0 16px 78px; }
+  .seo-landing { padding-top: 104px; }
+  .seo-landing-hero { padding: 24px 16px 78px; }
+  .seo-landing-hero h1 { letter-spacing: -2px; }
+  .seo-landing-card { min-height: 280px; border-radius: 30px; }
   .pickup-section-header { gap: 18px; margin-bottom: 26px; }
   .pickup-section-header p { font-size: 15px; }
   .pickup-map { min-height: 320px; border-radius: 28px; }

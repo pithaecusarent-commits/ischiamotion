@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { SiteHome } from "@/components/site/SiteHome";
 import type { Locale } from "@/lib/types";
 import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
+import { JsonLd } from "@/components/site/JsonLd";
+import { organizationJsonLd, serviceJsonLd, websiteJsonLd } from "@/lib/seo";
 
 type Props = { params: { locale: Locale } };
 const locales: Locale[] = ["it", "en"];
@@ -34,5 +36,21 @@ export function generateMetadata({ params }: Props): Metadata {
 export default async function LocaleHome({ params }: Props) {
   if (!locales.includes(params.locale)) notFound();
   const pickupPoints = await getActivePickupPoints();
-  return <SiteHome locale={params.locale} pickupPoints={pickupPoints} />;
+  const isIt = params.locale === "it";
+
+  return (
+    <>
+      <JsonLd data={websiteJsonLd(params.locale)} />
+      <JsonLd data={organizationJsonLd()} />
+      <JsonLd data={serviceJsonLd(
+        params.locale,
+        `/${params.locale}`,
+        isIt ? "Noleggio veicoli a Ischia" : "Vehicle rental in Ischia",
+        isIt
+          ? "Noleggio scooter, auto, bici elettriche e barche a Ischia con richiesta online e punti ritiro IschiaMotion."
+          : "Scooter, car, e-bike and boat rental in Ischia with online requests and branded IschiaMotion pickup points."
+      )} />
+      <SiteHome locale={params.locale} pickupPoints={pickupPoints} />
+    </>
+  );
 }
