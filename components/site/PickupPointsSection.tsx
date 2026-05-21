@@ -1,17 +1,19 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 
-const preferredZones = ["Ischia Porto", "Forio", "Casamicciola", "Sant'Angelo", "Barano"];
+const preferredZones = ["Ischia Porto", "Casamicciola", "Lacco Ameno", "Forio", "Sant'Angelo", "Barano"];
 const markerClasses: Record<string, string> = {
   "Ischia Porto": "pin-port",
-  Forio: "pin-forio",
   Casamicciola: "pin-casamicciola",
+  "Lacco Ameno": "pin-lacco",
+  Forio: "pin-forio",
   "Sant'Angelo": "pin-sant-angelo",
   Barano: "pin-barano"
 };
 const labelClasses: Record<string, string> = {
   "Ischia Porto": "label-port",
-  Forio: "label-forio",
   Casamicciola: "label-casamicciola",
+  "Lacco Ameno": "label-lacco",
+  Forio: "label-forio",
   "Sant'Angelo": "label-sant-angelo",
   Barano: "label-barano"
 };
@@ -73,10 +75,10 @@ export function PickupPointsSection({
             <path d="M330 228 Q353 218 378 228 Q396 235 412 226" className="island-wave island-wave-gold" />
             <path d="M348 244 Q368 236 390 244" className="island-wave island-wave-short island-wave-gold" />
           </svg>
-          {points.slice(0, 5).map((point, index) => (
+          {points.slice(0, 6).map((point, index) => (
             <span className={`map-pin ${markerClasses[point.zone] || `pin-${index + 1}`}`} key={point.id}>{index + 1}</span>
           ))}
-          {points.slice(0, 5).map((point, index) => (
+          {points.slice(0, 6).map((point, index) => (
             <span className={`map-label ${labelClasses[point.zone] || `label-${index + 1}`}`} key={`${point.id}-label`}>
               {point.zone}
             </span>

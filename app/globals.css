@@ -978,16 +978,18 @@ h1 em {
   border: 1.5px solid rgba(0,151,171,.2);
   pointer-events: none;
 }
-.pin-port { left: 68%; top: 45%; }
-.pin-forio { left: 17%; top: 57%; }
-.pin-casamicciola { left: 51%; top: 29%; }
-.pin-sant-angelo { left: 39%; top: 65%; }
-.pin-barano { left: 64%; top: 54%; }
-.pin-1 { left: 68%; top: 45%; }
-.pin-2 { left: 17%; top: 57%; }
-.pin-3 { left: 51%; top: 29%; }
-.pin-4 { left: 39%; top: 65%; }
-.pin-5 { left: 64%; top: 54%; }
+.pin-port        { left: 69%; top: 32%; }
+.pin-casamicciola{ left: 52%; top: 27%; }
+.pin-lacco       { left: 37%; top: 27%; }
+.pin-forio       { left: 18%; top: 40%; }
+.pin-sant-angelo { left: 22%; top: 60%; }
+.pin-barano      { left: 54%; top: 54%; }
+.pin-1 { left: 69%; top: 32%; }
+.pin-2 { left: 52%; top: 27%; }
+.pin-3 { left: 37%; top: 27%; }
+.pin-4 { left: 18%; top: 40%; }
+.pin-5 { left: 22%; top: 60%; }
+.pin-6 { left: 54%; top: 54%; }
 .map-label {
   position: absolute;
   z-index: 2;
@@ -1007,16 +1009,18 @@ h1 em {
   box-shadow: 0 6px 20px rgba(13,43,78,.1), 0 1px 4px rgba(13,43,78,.06);
   white-space: nowrap;
 }
-.label-port { left: 62%; top: 33%; }
-.label-forio { left: 3%; top: 48%; }
-.label-casamicciola { left: 37%; top: 18%; }
-.label-sant-angelo { left: 23%; top: 75%; }
-.label-barano { left: 60%; top: 64%; }
-.label-1 { left: 62%; top: 33%; }
-.label-2 { left: 3%; top: 48%; }
-.label-3 { left: 37%; top: 18%; }
-.label-4 { left: 23%; top: 75%; }
-.label-5 { left: 60%; top: 64%; }
+.label-port        { left: 63%; top: 19%; }
+.label-casamicciola{ left: 39%; top: 15%; }
+.label-lacco       { left: 20%; top: 15%; }
+.label-forio       { left: 2%; top: 33%; }
+.label-sant-angelo { left: 6%; top: 70%; }
+.label-barano      { left: 49%; top: 64%; }
+.label-1 { left: 63%; top: 19%; }
+.label-2 { left: 39%; top: 15%; }
+.label-3 { left: 20%; top: 15%; }
+.label-4 { left: 2%; top: 33%; }
+.label-5 { left: 6%; top: 70%; }
+.label-6 { left: 49%; top: 64%; }
 .pickup-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1584,8 +1588,9 @@ footer {
   .pickup-section-header p { font-size: 15px; }
   .pickup-map { min-height: 320px; border-radius: 28px; }
   .map-label { font-size: 10px; padding: 5px 8px; }
-  .label-casamicciola { left: 34%; }
-  .label-sant-angelo { left: 18%; }
+  .label-casamicciola { left: 36%; }
+  .label-lacco { left: 17%; }
+  .label-sant-angelo { left: 5%; }
   .pickup-list { grid-template-columns: 1fr; }
   .pickup-point-card { min-height: auto; border-radius: 24px; }
   .experience { padding: 0 16px 78px; }
