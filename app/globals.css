@@ -978,16 +978,16 @@ h1 em {
   border: 1.5px solid rgba(0,151,171,.2);
   pointer-events: none;
 }
-.pin-port { left: 70%; top: 48%; }
-.pin-forio { left: 22%; top: 54%; }
-.pin-casamicciola { left: 55%; top: 34%; }
-.pin-sant-angelo { left: 57%; top: 66%; }
-.pin-barano { left: 76%; top: 56%; }
-.pin-1 { left: 70%; top: 48%; }
-.pin-2 { left: 22%; top: 54%; }
-.pin-3 { left: 55%; top: 34%; }
-.pin-4 { left: 57%; top: 66%; }
-.pin-5 { left: 76%; top: 56%; }
+.pin-port { left: 68%; top: 45%; }
+.pin-forio { left: 17%; top: 57%; }
+.pin-casamicciola { left: 51%; top: 29%; }
+.pin-sant-angelo { left: 39%; top: 65%; }
+.pin-barano { left: 64%; top: 54%; }
+.pin-1 { left: 68%; top: 45%; }
+.pin-2 { left: 17%; top: 57%; }
+.pin-3 { left: 51%; top: 29%; }
+.pin-4 { left: 39%; top: 65%; }
+.pin-5 { left: 64%; top: 54%; }
 .map-label {
   position: absolute;
   z-index: 2;
@@ -1007,16 +1007,16 @@ h1 em {
   box-shadow: 0 6px 20px rgba(13,43,78,.1), 0 1px 4px rgba(13,43,78,.06);
   white-space: nowrap;
 }
-.label-port { left: 66%; top: 39%; }
-.label-forio { left: 14%; top: 47%; }
-.label-casamicciola { left: 43%; top: 25%; }
-.label-sant-angelo { left: 43%; top: 76%; }
-.label-barano { left: 72%; top: 67%; }
-.label-1 { left: 66%; top: 39%; }
-.label-2 { left: 14%; top: 47%; }
-.label-3 { left: 43%; top: 25%; }
-.label-4 { left: 43%; top: 76%; }
-.label-5 { left: 72%; top: 67%; }
+.label-port { left: 62%; top: 33%; }
+.label-forio { left: 3%; top: 48%; }
+.label-casamicciola { left: 37%; top: 18%; }
+.label-sant-angelo { left: 23%; top: 75%; }
+.label-barano { left: 60%; top: 64%; }
+.label-1 { left: 62%; top: 33%; }
+.label-2 { left: 3%; top: 48%; }
+.label-3 { left: 37%; top: 18%; }
+.label-4 { left: 23%; top: 75%; }
+.label-5 { left: 60%; top: 64%; }
 .pickup-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1584,8 +1584,8 @@ footer {
   .pickup-section-header p { font-size: 15px; }
   .pickup-map { min-height: 320px; border-radius: 28px; }
   .map-label { font-size: 10px; padding: 5px 8px; }
-  .label-casamicciola { left: 38%; }
-  .label-sant-angelo { left: 37%; }
+  .label-casamicciola { left: 34%; }
+  .label-sant-angelo { left: 18%; }
   .pickup-list { grid-template-columns: 1fr; }
   .pickup-point-card { min-height: auto; border-radius: 24px; }
   .experience { padding: 0 16px 78px; }

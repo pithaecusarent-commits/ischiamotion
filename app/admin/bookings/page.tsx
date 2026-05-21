@@ -1,6 +1,6 @@
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { getAdminBookingRequests } from "@/lib/supabase/queries/admin-bookings";
-import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
+import { bookingPickupPoint, bookingVehicle, formatAdminDate, formatAdminDateTime, StatusBadge } from "@/app/admin/bookings/booking-ui";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 
 export default async function AdminBookingsPage() {
@@ -37,9 +37,9 @@ export default async function AdminBookingsPage() {
         ) : null}
 
         {bookings.length > 0 ? (
-          <div className="mt-8 overflow-x-auto rounded-3xl border border-ink/10 bg-white/70">
-            <table className="w-full min-w-[980px] border-collapse text-left text-sm">
-              <thead className="bg-sea/10 text-xs uppercase tracking-[0.16em] text-green-deep">
+          <div className="mt-8 overflow-x-auto rounded-[28px] border border-ink/10 bg-white/75 shadow-card">
+            <table className="w-full min-w-[1120px] border-collapse text-left text-sm">
+              <thead className="bg-sea/10 text-[11px] uppercase tracking-[0.14em] text-green-deep">
                 <tr>
                   <th className="p-4">Codice</th>
                   <th className="p-4">Cliente</th>
@@ -50,20 +50,40 @@ export default async function AdminBookingsPage() {
                   <th className="p-4">Pickup point</th>
                   <th className="p-4">Stato</th>
                   <th className="p-4">Creata</th>
+                  <th className="p-4">Azioni</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-ink/10">
                 {bookings.map((booking) => (
-                  <tr className="border-t border-ink/10" key={booking.booking_code}>
-                    <td className="p-4 font-semibold">{booking.booking_code}</td>
-                    <td className="p-4">{booking.customer_first_name} {booking.customer_last_name}</td>
-                    <td className="p-4">{booking.customer_email}</td>
-                    <td className="p-4">{booking.customer_phone || "-"}</td>
-                    <td className="p-4">{getBookingNoteValue(booking.notes, "Vehicle") || "-"}</td>
-                    <td className="p-4">{booking.start_date} → {booking.end_date}</td>
-                    <td className="p-4">{getBookingNoteValue(booking.notes, "Pickup point") || "-"}</td>
-                    <td className="p-4"><span className="rounded-full bg-sea/10 px-3 py-1 text-xs font-bold text-green-deep">{booking.status}</span></td>
-                    <td className="p-4">{new Date(booking.created_at).toLocaleDateString("it-IT")}</td>
+                  <tr className="align-top transition-colors hover:bg-sea/5" key={booking.id}>
+                    <td className="p-4">
+                      <span className="inline-flex whitespace-nowrap rounded-full bg-ink px-3 py-1 text-xs font-bold text-white">
+                        {booking.booking_code}
+                      </span>
+                    </td>
+                    <td className="p-4 font-semibold text-ink">{booking.customer_first_name} {booking.customer_last_name}</td>
+                    <td className="p-4 text-ink/70">{booking.customer_email}</td>
+                    <td className="p-4 text-ink/70">{booking.customer_phone || "-"}</td>
+                    <td className="max-w-[180px] p-4 text-ink/75">{bookingVehicle(booking)}</td>
+                    <td className="p-4">
+                      <div className="grid gap-1 whitespace-nowrap">
+                        <span className="font-semibold text-ink">{formatAdminDate(booking.start_date)}</span>
+                        <span className="text-xs text-ink/50">fino al {formatAdminDate(booking.end_date)}</span>
+                        {booking.pickup_time ? <span className="text-xs text-green-deep">ore {booking.pickup_time}</span> : null}
+                      </div>
+                    </td>
+                    <td className="max-w-[220px] p-4">
+                      <span className="inline-flex rounded-2xl bg-sand px-3 py-2 text-xs font-bold text-green-deep">
+                        {bookingPickupPoint(booking)}
+                      </span>
+                    </td>
+                    <td className="p-4"><StatusBadge status={booking.status} /></td>
+                    <td className="p-4 whitespace-nowrap text-ink/60">{formatAdminDateTime(booking.created_at)}</td>
+                    <td className="p-4">
+                      <a className="inline-flex rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep" href={`/admin/bookings/${booking.id}`}>
+                        Dettagli
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>
