@@ -1470,11 +1470,14 @@ footer {
 }
 @media (max-width: 760px) {
   body::before { background-size: 34px 34px; }
-  nav { border-radius: 24px; padding: 10px 10px 10px 13px; }
+  nav { border-radius: 24px; padding: 10px 12px; gap: 8px; }
+  .logo { min-width: 0; flex: 1 1 auto; overflow: hidden; }
   .logo-text { font-size: 19px; }
   .logo-icon { width: 36px; height: 36px; }
-  .logo-img { height: 64px; max-width: 220px; }
-  .nav-cta { padding: 10px 14px !important; font-size: 13px !important; }
+  .logo-img { height: 58px; max-width: min(220px, 52vw); }
+  .nav-links { flex: 0 0 auto; gap: 6px; }
+  .lang-link { padding: 9px 8px !important; }
+  .nav-cta { padding: 10px 13px !important; font-size: 13px !important; white-space: nowrap; }
   .hero {
     padding: 104px 16px 58px;
     gap: 18px;
