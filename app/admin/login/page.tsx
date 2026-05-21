@@ -1,4 +1,5 @@
 import { signInAdmin } from "@/app/admin/login/actions";
+import { PasswordField } from "@/app/admin/login/PasswordField";
 
 type Props = {
   searchParams?: {
@@ -36,16 +37,7 @@ export default function AdminLoginPage({ searchParams }: Props) {
               required
             />
           </label>
-          <label className="grid gap-2 text-sm font-bold text-ink/70">
-            Password
-            <input
-              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-            />
-          </label>
+          <PasswordField />
           <button className="mt-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
             Entra
           </button>

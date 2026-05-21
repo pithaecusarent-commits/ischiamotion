@@ -24,7 +24,14 @@ export async function signInAdmin(formData: FormData) {
   const supabase = createSupabaseAnonClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (error || !data.session || !data.user) {
+  if (error) {
+    const message = error.message.toLowerCase().includes("invalid login credentials")
+      ? "Credenziali non valide."
+      : `Errore Supabase Auth: ${error.message}`;
+    loginRedirect(message);
+  }
+
+  if (!data.session || !data.user) {
     loginRedirect("Credenziali non valide.");
   }
 

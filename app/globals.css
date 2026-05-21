@@ -912,57 +912,103 @@ h1 em {
   position: absolute;
   width: 82%;
   left: 9%;
-  top: 18%;
-  filter: drop-shadow(0 26px 50px rgba(13,43,78,.13));
+  top: 16%;
+  filter: drop-shadow(0 18px 30px rgba(13,43,78,.08));
 }
 .island-main {
-  fill: rgba(246,239,226,.82);
-  stroke: rgba(255,255,255,.92);
-  stroke-width: 2;
-}
-.island-line {
   fill: none;
-  stroke: rgba(0,151,171,.18);
-  stroke-width: 4;
+  stroke: var(--green);
+  stroke-width: 6;
   stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.island-lake {
-  fill: rgba(0,151,171,.18);
-  stroke: rgba(255,255,255,.8);
-  stroke-width: 2;
+.island-line,
+.island-lake,
+.island-coast-detail {
+  display: none;
+}
+.island-wave {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.island-wave-short {
+  stroke-width: 4;
+  opacity: .78;
+}
+.island-wave-gold {
+  stroke: var(--sun);
+  stroke-width: 4;
 }
 .map-pin {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--green);
   color: white;
   font-size: 12px;
   font-weight: 900;
-  box-shadow: 0 12px 26px rgba(0,151,171,.28);
-  border: 2px solid rgba(255,255,255,.9);
+  box-shadow: 0 8px 22px rgba(0,151,171,.35), 0 2px 6px rgba(0,151,171,.2);
+  border: 2.5px solid rgba(255,255,255,.95);
   font-family: 'DM Sans', sans-serif;
+  z-index: 3;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.map-pin:hover {
+  transform: scale(1.12);
+  box-shadow: 0 12px 30px rgba(0,151,171,.42), 0 0 0 7px rgba(0,151,171,.1);
 }
 .map-pin::after {
   content: "";
   position: absolute;
-  inset: -8px;
+  inset: -10px;
   border-radius: 50%;
-  border: 1px solid rgba(0,151,171,.18);
+  border: 1.5px solid rgba(0,151,171,.22);
 }
-.pin-port { left: 61%; top: 32%; }
-.pin-forio { left: 21%; top: 53%; }
-.pin-casamicciola { left: 51%; top: 26%; }
-.pin-sant-angelo { left: 54%; top: 70%; }
-.pin-barano { left: 70%; top: 59%; }
-.pin-1 { left: 61%; top: 32%; }
-.pin-2 { left: 21%; top: 53%; }
-.pin-3 { left: 51%; top: 26%; }
-.pin-4 { left: 54%; top: 70%; }
-.pin-5 { left: 70%; top: 59%; }
+.pin-port { left: 70%; top: 48%; }
+.pin-forio { left: 22%; top: 54%; }
+.pin-casamicciola { left: 55%; top: 34%; }
+.pin-sant-angelo { left: 57%; top: 66%; }
+.pin-barano { left: 76%; top: 56%; }
+.pin-1 { left: 70%; top: 48%; }
+.pin-2 { left: 22%; top: 54%; }
+.pin-3 { left: 55%; top: 34%; }
+.pin-4 { left: 57%; top: 66%; }
+.pin-5 { left: 76%; top: 56%; }
+.map-label {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  max-width: 136px;
+  padding: 5px 11px;
+  border: 1px solid rgba(255,255,255,.85);
+  border-radius: 999px;
+  background: rgba(255,255,255,.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--green-dark);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .02em;
+  box-shadow: 0 6px 18px rgba(13,43,78,.1), 0 1px 3px rgba(13,43,78,.06);
+  white-space: nowrap;
+}
+.label-port { left: 66%; top: 39%; }
+.label-forio { left: 14%; top: 47%; }
+.label-casamicciola { left: 43%; top: 25%; }
+.label-sant-angelo { left: 43%; top: 76%; }
+.label-barano { left: 72%; top: 67%; }
+.label-1 { left: 66%; top: 39%; }
+.label-2 { left: 14%; top: 47%; }
+.label-3 { left: 43%; top: 25%; }
+.label-4 { left: 43%; top: 76%; }
+.label-5 { left: 72%; top: 67%; }
 .pickup-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1529,6 +1575,9 @@ footer {
   .pickup-section-header { gap: 18px; margin-bottom: 26px; }
   .pickup-section-header p { font-size: 15px; }
   .pickup-map { min-height: 320px; border-radius: 28px; }
+  .map-label { font-size: 10px; padding: 5px 8px; }
+  .label-casamicciola { left: 38%; }
+  .label-sant-angelo { left: 37%; }
   .pickup-list { grid-template-columns: 1fr; }
   .pickup-point-card { min-height: auto; border-radius: 24px; }
   .experience { padding: 0 16px 78px; }

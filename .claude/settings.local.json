@@ -15,7 +15,9 @@
       "Bash(node fix-colors.js)",
       "Bash(ls \"c:\\\\Users\\\\user\\\\Downloads\\\\its\")",
       "Read(//c/Users/user/Downloads/its/**)",
-      "Bash(node update-site-colors.js)"
+      "Bash(node update-site-colors.js)",
+      "Bash(Remove-Item -Recurse -Force \"C:\\\\Users\\\\user\\\\Downloads\\\\IschiaMotion\\\\.next\" -ErrorAction SilentlyContinue)",
+      "Bash(Write-Host \"Done\")"
     ],
     "additionalDirectories": [
       "\\tmp"

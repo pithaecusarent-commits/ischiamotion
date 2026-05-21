@@ -8,6 +8,13 @@ const markerClasses: Record<string, string> = {
   "Sant'Angelo": "pin-sant-angelo",
   Barano: "pin-barano"
 };
+const labelClasses: Record<string, string> = {
+  "Ischia Porto": "label-port",
+  Forio: "label-forio",
+  Casamicciola: "label-casamicciola",
+  "Sant'Angelo": "label-sant-angelo",
+  Barano: "label-barano"
+};
 
 function sortPickupPoints(points: PublicPickupPoint[]) {
   return [...points].sort((a, b) => {
@@ -56,15 +63,17 @@ export function PickupPointsSection({
         <div className="pickup-map" aria-hidden="true">
           <svg className="island-shape" viewBox="0 0 420 260" role="img" focusable="false">
             <path
-              d="M39 139C56 101 88 78 126 66c28-9 52-8 79-22 24-13 56-24 94-15 38 10 67 37 78 73 11 38-2 77-24 105-24 30-58 45-99 45-32 0-56-12-82-16-31-5-59 7-88-3-38-13-60-45-45-94Z"
+              d="M75 83c-12-8-13-24 1-31 10-5 18 5 28 7 23 4 39 7 61 5 29-2 38 12 61 16 22 4 36-4 51 11 11 11 11 25 28 31 15 5 27 10 29 27 2 16-8 27-24 29-32 4-55 2-84 17-27 14-57 29-94 20-24-6-49-2-72-11-18-7-31-21-26-35 3-10 15-9 20-17 7-11-8-22-4-36 3-11 17-20 25-33Z"
               className="island-main"
             />
-            <path d="M97 108c31-16 70-11 103-27 34-17 77-31 113-13" className="island-line" />
-            <path d="M118 188c33 10 60-6 94 0 26 5 48 19 82 10" className="island-line" />
-            <circle cx="305" cy="70" r="11" className="island-lake" />
           </svg>
           {points.slice(0, 5).map((point, index) => (
             <span className={`map-pin ${markerClasses[point.zone] || `pin-${index + 1}`}`} key={point.id}>{index + 1}</span>
+          ))}
+          {points.slice(0, 5).map((point, index) => (
+            <span className={`map-label ${labelClasses[point.zone] || `label-${index + 1}`}`} key={`${point.id}-label`}>
+              {point.zone}
+            </span>
           ))}
         </div>
 
