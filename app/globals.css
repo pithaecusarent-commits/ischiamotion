@@ -95,7 +95,8 @@ nav {
   filter: drop-shadow(0 4px 12px rgba(13,43,78,.18));
 }
 .footer-logo-img {
-  height: 34px;
+  height: 82px;
+  max-width: 340px;
   opacity: 1;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,.3));
 }
@@ -1475,6 +1476,7 @@ footer {
   .logo-text { font-size: 19px; }
   .logo-icon { width: 36px; height: 36px; }
   .logo-img { height: 58px; max-width: min(220px, 52vw); }
+  .footer-logo-img { height: 74px; max-width: 300px; }
   .nav-links { flex: 0 0 auto; gap: 6px; }
   .lang-link { padding: 9px 8px !important; }
   .nav-cta { padding: 10px 13px !important; font-size: 13px !important; white-space: nowrap; }
