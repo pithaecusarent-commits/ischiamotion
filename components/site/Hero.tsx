@@ -7,12 +7,20 @@ export function Hero({
   locale,
   activeFilter,
   onFilterChange,
-  pickupPoints
+  pickupPoints,
+  startDate,
+  endDate,
+  onStartDateChange,
+  onEndDateChange
 }: {
   locale: Locale;
   activeFilter: "all" | "scooter" | "auto" | "barca" | "bici";
   onFilterChange: (filter: "all" | "scooter" | "auto" | "barca" | "bici") => void;
   pickupPoints: PublicPickupPoint[];
+  startDate: string;
+  endDate: string;
+  onStartDateChange: (value: string) => void;
+  onEndDateChange: (value: string) => void;
 }) {
   const copy = t(locale);
   const firstPickupPoint = pickupPoints[0];
@@ -36,7 +44,13 @@ export function Hero({
           <a href="#come-funziona" className="ghost-btn">{copy.hero.secondary}</a>
         </div>
 
-        <HeroSearch locale={locale} />
+        <HeroSearch
+          locale={locale}
+          startDate={startDate}
+          endDate={endDate}
+          onStartDateChange={onStartDateChange}
+          onEndDateChange={onEndDateChange}
+        />
         <VehicleFilters locale={locale} active={activeFilter} onChange={onFilterChange} />
       </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useState } from "react";
 import type { Locale } from "@/lib/types";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
@@ -17,6 +18,8 @@ import type { PublicPickupPoint } from "@/lib/types";
 
 export function SiteHome({ locale, pickupPoints = mockPickupPoints }: { locale: Locale; pickupPoints?: PublicPickupPoint[] }) {
   const [activeFilter, setActiveFilter] = useVehicleFilter();
+  const [startDate, setStartDate] = useState("2026-06-15");
+  const [endDate, setEndDate] = useState("2026-06-20");
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -33,8 +36,17 @@ export function SiteHome({ locale, pickupPoints = mockPickupPoints }: { locale: 
     <>
       <Header locale={locale} />
       <main>
-        <Hero locale={locale} activeFilter={activeFilter} onFilterChange={setActiveFilter} pickupPoints={pickupPoints} />
-        <VehicleGrid locale={locale} active={activeFilter} />
+        <Hero
+          locale={locale}
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          pickupPoints={pickupPoints}
+          startDate={startDate}
+          endDate={endDate}
+          onStartDateChange={setStartDate}
+          onEndDateChange={setEndDate}
+        />
+        <VehicleGrid locale={locale} active={activeFilter} pickupPoints={pickupPoints} startDate={startDate} endDate={endDate} />
         <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />

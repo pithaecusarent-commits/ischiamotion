@@ -4,11 +4,13 @@ import { t } from "@/lib/i18n";
 export function VehicleCard({
   vehicle,
   locale,
-  visible = true
+  visible = true,
+  onBook
 }: {
   vehicle: PublicVehicle;
   locale: Locale;
   visible?: boolean;
+  onBook: (vehicle: PublicVehicle) => void;
 }) {
   const title = locale === "it" ? vehicle.title_it : vehicle.title_en;
   const features = locale === "it" ? vehicle.features_it : vehicle.features_en;
@@ -35,7 +37,7 @@ export function VehicleCard({
         </div>
         <div className="vcard-foot">
           <div className="vcard-price">€{vehicle.price_from} <small>/ {locale === "it" ? "giorno" : "day"}</small></div>
-          <button className="book-btn" type="button" onClick={() => document.querySelector("#prenota")?.scrollIntoView({ behavior: "smooth", block: "center" })}>
+          <button className="book-btn" type="button" onClick={() => onBook(vehicle)}>
             {locale === "it" ? "Prenota" : "Book"}
           </button>
         </div>
