@@ -23,8 +23,10 @@ export type PublicPickupPoint = {
   zone: string;
   public_label_it: string;
   public_label_en: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
+  description_it?: string | null;
+  description_en?: string | null;
   is_active: boolean;
 };
 

@@ -11,8 +11,10 @@ import { SeoExperiences } from "@/components/site/SeoExperiences";
 import { HowItWorks } from "@/components/site/HowItWorks";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
+import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
+import type { PublicPickupPoint } from "@/lib/types";
 
-export function SiteHome({ locale }: { locale: Locale }) {
+export function SiteHome({ locale, pickupPoints = mockPickupPoints }: { locale: Locale; pickupPoints?: PublicPickupPoint[] }) {
   const [activeFilter, setActiveFilter] = useVehicleFilter();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function SiteHome({ locale }: { locale: Locale }) {
     <>
       <Header locale={locale} />
       <main>
-        <Hero locale={locale} activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        <Hero locale={locale} activeFilter={activeFilter} onFilterChange={setActiveFilter} pickupPoints={pickupPoints} />
         <VehicleGrid locale={locale} active={activeFilter} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />

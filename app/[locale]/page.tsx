@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteHome } from "@/components/site/SiteHome";
 import type { Locale } from "@/lib/types";
+import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 
 type Props = { params: { locale: Locale } };
 const locales: Locale[] = ["it", "en"];
+
+export const revalidate = 300;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -28,7 +31,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function LocaleHome({ params }: Props) {
+export default async function LocaleHome({ params }: Props) {
   if (!locales.includes(params.locale)) notFound();
-  return <SiteHome locale={params.locale} />;
+  const pickupPoints = await getActivePickupPoints();
+  return <SiteHome locale={params.locale} pickupPoints={pickupPoints} />;
 }

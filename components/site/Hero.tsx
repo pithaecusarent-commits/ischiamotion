@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/types";
+import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { t } from "@/lib/i18n";
 import { HeroSearch } from "@/components/site/HeroSearch";
 import { VehicleFilters } from "@/components/site/VehicleFilters";
@@ -6,13 +6,23 @@ import { VehicleFilters } from "@/components/site/VehicleFilters";
 export function Hero({
   locale,
   activeFilter,
-  onFilterChange
+  onFilterChange,
+  pickupPoints
 }: {
   locale: Locale;
   activeFilter: "all" | "scooter" | "auto" | "barca" | "bici";
   onFilterChange: (filter: "all" | "scooter" | "auto" | "barca" | "bici") => void;
+  pickupPoints: PublicPickupPoint[];
 }) {
   const copy = t(locale);
+  const firstPickupPoint = pickupPoints[0];
+  const pickupTitle = firstPickupPoint
+    ? (locale === "it" ? firstPickupPoint.public_label_it : firstPickupPoint.public_label_en)
+    : "IschiaMotion Point";
+  const pickupDescription = firstPickupPoint
+    ? (locale === "it" ? firstPickupPoint.description_it : firstPickupPoint.description_en)
+    : null;
+  const pickupZones = pickupPoints.slice(0, 3).map((point) => point.zone).join(", ");
 
   return (
     <section className="hero">
@@ -51,8 +61,8 @@ export function Hero({
 
           <div className="pickup-card">
             <span className="mini-label">{locale === "it" ? "Ritiro rapido" : "Fast pickup"}</span>
-            <span className="mini-title">15+ punti</span>
-            <span className="mini-sub">Porto, Forio, Casamicciola</span>
+            <span className="mini-title">{pickupTitle}</span>
+            <span className="mini-sub">{pickupDescription || pickupZones}</span>
           </div>
         </div>
 
@@ -66,7 +76,7 @@ export function Hero({
             <div className="hero-stat-label">{locale === "it" ? "Recensioni clienti" : "Guest reviews"}</div>
           </div>
           <div className="hero-stat">
-            <span className="hero-stat-val">15+</span>
+            <span className="hero-stat-val">{pickupPoints.length}</span>
             <div className="hero-stat-label">{locale === "it" ? "Punti ritiro" : "Pickup points"}</div>
           </div>
         </div>
