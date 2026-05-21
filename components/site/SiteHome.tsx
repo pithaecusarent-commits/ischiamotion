@@ -6,6 +6,7 @@ import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
 import { VehicleGrid, useVehicleFilter } from "@/components/site/VehicleGrid";
+import { PickupPointsSection } from "@/components/site/PickupPointsSection";
 import { ExperienceSection } from "@/components/site/ExperienceSection";
 import { SeoExperiences } from "@/components/site/SeoExperiences";
 import { HowItWorks } from "@/components/site/HowItWorks";
@@ -34,6 +35,7 @@ export function SiteHome({ locale, pickupPoints = mockPickupPoints }: { locale: 
       <main>
         <Hero locale={locale} activeFilter={activeFilter} onFilterChange={setActiveFilter} pickupPoints={pickupPoints} />
         <VehicleGrid locale={locale} active={activeFilter} />
+        <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />
         <HowItWorks locale={locale} />

@@ -1,0 +1,75 @@
+import type { Locale, PublicPickupPoint } from "@/lib/types";
+
+const preferredZones = ["Ischia Porto", "Forio", "Casamicciola", "Sant'Angelo", "Barano"];
+
+function sortPickupPoints(points: PublicPickupPoint[]) {
+  return [...points].sort((a, b) => {
+    const aIndex = preferredZones.indexOf(a.zone);
+    const bIndex = preferredZones.indexOf(b.zone);
+
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+
+    return a.zone.localeCompare(b.zone);
+  });
+}
+
+function formatPickupLabel(label: string) {
+  return label
+    .replace(" - ", " — ")
+    .replace("Porto d'Ischia", "Porto d’Ischia")
+    .replace("Sant'Angelo", "Sant’Angelo");
+}
+
+export function PickupPointsSection({
+  locale,
+  pickupPoints
+}: {
+  locale: Locale;
+  pickupPoints: PublicPickupPoint[];
+}) {
+  const points = sortPickupPoints(pickupPoints);
+
+  return (
+    <section className="pickup-section reveal" aria-label={locale === "it" ? "Punti ritiro IschiaMotion" : "IschiaMotion Pickup Points"}>
+      <div className="pickup-section-header">
+        <div>
+          <div className="section-eyebrow">{locale === "it" ? "Punti ritiro" : "Pickup points"}</div>
+          <h2 className="section-title">{locale === "it" ? "Punti ritiro IschiaMotion" : "IschiaMotion Pickup Points"}</h2>
+        </div>
+        <p>
+          {locale === "it"
+            ? "Ritira il tuo mezzo nei punti IschiaMotion distribuiti sull’isola. Il cliente vede solo il punto ritiro brandizzato, non il nome del singolo noleggiatore."
+            : "Pick up your vehicle at branded IschiaMotion points across the island. Customers see only the branded pickup point, not the individual rental company name."}
+        </p>
+      </div>
+
+      <div className="pickup-section-body">
+        <div className="pickup-map" aria-hidden="true">
+          <div className="island-shape" />
+          {points.slice(0, 5).map((point, index) => (
+            <span className={`map-pin pin-${index + 1}`} key={point.id}>{index + 1}</span>
+          ))}
+        </div>
+
+        <div className="pickup-list">
+          {points.map((point, index) => {
+            const label = locale === "it" ? point.public_label_it : point.public_label_en;
+            const description = locale === "it" ? point.description_it : point.description_en;
+
+            return (
+              <article className="pickup-point-card" key={point.id}>
+                <span className="pickup-index">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{formatPickupLabel(label)}</h3>
+                  <p>{description || point.zone}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}

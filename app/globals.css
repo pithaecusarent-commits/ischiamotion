@@ -740,6 +740,138 @@ h1 em {
 }
 .book-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
 
+/* PICKUP POINTS */
+.pickup-section {
+  padding: 0 5vw 108px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.pickup-section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+  gap: 34px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+.pickup-section-header p {
+  color: var(--ink-mid);
+  line-height: 1.75;
+  font-size: 16px;
+  max-width: 620px;
+}
+.pickup-section-body {
+  display: grid;
+  grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+  gap: 22px;
+  align-items: stretch;
+}
+.pickup-map {
+  position: relative;
+  min-height: 460px;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 1px solid rgba(0,151,171,.16);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(124,227,187,.32), transparent 12rem),
+    radial-gradient(circle at 80% 72%, rgba(232,149,26,.18), transparent 14rem),
+    linear-gradient(145deg, rgba(224,248,250,.9), rgba(255,253,247,.92));
+  box-shadow: 0 20px 58px rgba(13,43,78,.1);
+}
+.pickup-map::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border: 1px dashed rgba(13,43,78,.13);
+  border-radius: 30px;
+}
+.island-shape {
+  position: absolute;
+  width: 58%;
+  height: 70%;
+  left: 21%;
+  top: 14%;
+  border-radius: 46% 54% 42% 58% / 34% 48% 52% 66%;
+  background:
+    radial-gradient(circle at 38% 26%, rgba(255,253,247,.9), transparent 20%),
+    linear-gradient(145deg, rgba(246,239,226,.95), rgba(124,227,187,.38));
+  border: 1px solid rgba(255,255,255,.9);
+  box-shadow: inset 0 0 34px rgba(0,151,171,.08), 0 26px 60px rgba(13,43,78,.12);
+  transform: rotate(-14deg);
+}
+.map-pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-size: 12px;
+  font-weight: 900;
+  box-shadow: 0 12px 26px rgba(0,151,171,.28);
+  border: 2px solid rgba(255,255,255,.9);
+  font-family: 'DM Sans', sans-serif;
+}
+.map-pin::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,151,171,.18);
+}
+.pin-1 { left: 43%; top: 22%; }
+.pin-2 { left: 23%; top: 35%; }
+.pin-3 { left: 48%; top: 31%; }
+.pin-4 { left: 53%; top: 72%; }
+.pin-5 { left: 61%; top: 55%; }
+.pickup-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.pickup-point-card {
+  display: flex;
+  gap: 15px;
+  min-height: 142px;
+  padding: 22px;
+  border-radius: 26px;
+  border: 1px solid rgba(21,21,18,.08);
+  background: rgba(255,253,247,.84);
+  box-shadow: 0 14px 42px rgba(13,43,78,.08);
+  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+.pickup-point-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,151,171,.22);
+  box-shadow: 0 22px 58px rgba(13,43,78,.13);
+}
+.pickup-index {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0,151,171,.1);
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 900;
+}
+.pickup-point-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.pickup-point-card p {
+  color: var(--ink-mid);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
 /* EXPERIENCE STRIP */
 .experience {
   padding: 0 5vw 108px;
@@ -1087,6 +1219,9 @@ footer {
   }
   .hero-left { padding-top: 8px; }
   .vehicles-grid { grid-template-columns: repeat(2, 1fr); }
+  .pickup-section-header,
+  .pickup-section-body { grid-template-columns: 1fr; }
+  .pickup-map { min-height: 380px; }
   .experience-card { grid-template-columns: 1fr; }
   .seo-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
@@ -1120,6 +1255,12 @@ footer {
   .search-grid { grid-template-columns: 1fr; }
   .search-topline { align-items: flex-start; flex-direction: column; gap: 3px; }
   .section, .how-section { padding: 78px 16px; }
+  .pickup-section { padding: 0 16px 78px; }
+  .pickup-section-header { gap: 18px; margin-bottom: 26px; }
+  .pickup-section-header p { font-size: 15px; }
+  .pickup-map { min-height: 320px; border-radius: 28px; }
+  .pickup-list { grid-template-columns: 1fr; }
+  .pickup-point-card { min-height: auto; border-radius: 24px; }
   .experience { padding: 0 16px 78px; }
   .seo-section { padding: 0 16px 78px; }
   .section-header { align-items: flex-start; flex-direction: column; }
