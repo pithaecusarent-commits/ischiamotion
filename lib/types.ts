@@ -101,7 +101,7 @@ export type Booking = {
   start_date: string;
   end_date: string;
   pickup_time: string | null;
-  status: "pending" | "confirmed" | "cancelled" | "completed" | "no_show";
+  status: "pending" | "confirmed" | "voucher_sent" | "checked_in" | "cancelled" | "completed" | "no_show";
   notes: string | null;
   created_at: string;
   updated_at: string;

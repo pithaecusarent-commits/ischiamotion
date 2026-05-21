@@ -15,6 +15,18 @@ export type AdminBookingItem = {
   created_at: string;
 };
 
+export const adminBookingStatuses = [
+  "pending",
+  "confirmed",
+  "voucher_sent",
+  "checked_in",
+  "completed",
+  "cancelled",
+  "no_show"
+] as const;
+
+export type AdminBookingStatus = (typeof adminBookingStatuses)[number];
+
 const bookingSelect = "id, booking_code, customer_first_name, customer_last_name, customer_email, customer_phone, start_date, end_date, pickup_time, status, notes, created_at";
 
 export async function getAdminBookingRequests(accessToken: string): Promise<{ bookings: AdminBookingItem[]; error: string | null }> {
@@ -32,6 +44,31 @@ export async function getAdminBookingRequests(accessToken: string): Promise<{ bo
     return { bookings: (data || []) as AdminBookingItem[], error: null };
   } catch (error) {
     return { bookings: [], error: error instanceof Error ? error.message : "Unable to load bookings." };
+  }
+}
+
+export async function updateAdminBookingStatus(
+  accessToken: string,
+  id: string,
+  status: AdminBookingStatus
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase
+      .from("bookings")
+      .update({
+        status,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id);
+
+    if (error) {
+      return { error: error.message };
+    }
+
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update booking status." };
   }
 }
 

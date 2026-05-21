@@ -1,7 +1,7 @@
 import type { AdminBookingItem } from "@/lib/supabase/queries/admin-bookings";
 import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
 
-const statusStyles: Record<string, { label: string; className: string }> = {
+export const statusStyles: Record<string, { label: string; className: string }> = {
   pending: {
     label: "In attesa",
     className: "border-amber-200 bg-amber-50 text-amber-800"
@@ -31,6 +31,16 @@ const statusStyles: Record<string, { label: string; className: string }> = {
     className: "border-stone-200 bg-stone-100 text-stone-700"
   }
 };
+
+export const statusOptions = [
+  { value: "pending", label: "In attesa" },
+  { value: "confirmed", label: "Confermata" },
+  { value: "voucher_sent", label: "Voucher inviato" },
+  { value: "checked_in", label: "Check-in fatto" },
+  { value: "completed", label: "Completata" },
+  { value: "cancelled", label: "Annullata" },
+  { value: "no_show", label: "No-show" }
+] as const;
 
 export function formatAdminDate(value: string) {
   return new Intl.DateTimeFormat("it-IT", {
