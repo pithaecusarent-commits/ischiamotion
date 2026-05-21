@@ -1395,9 +1395,9 @@ h1 em {
 
 /* FOOTER */
 footer {
-  background: #172542;
+  background: #E0F4F8;
   padding: 36px 5vw;
-  color: white;
+  color: var(--ink);
 }
 .footer-wrap {
   max-width: 1280px;
@@ -1418,15 +1418,15 @@ footer {
 }
 .footer-links a {
   font-size: 13px;
-  color: rgba(255,255,255,.68);
+  color: rgba(21,21,18,.68);
   text-decoration: none;
   transition: color .2s;
   padding: 8px 10px;
 }
-.footer-links a:hover { color: rgba(255,255,255,.88); }
+.footer-links a:hover { color: var(--green-dark); }
 .footer-copy {
   font-size: 13px;
-  color: rgba(255,255,255,.52);
+  color: rgba(21,21,18,.54);
   min-width: max-content;
 }
 
