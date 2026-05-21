@@ -59,7 +59,7 @@ export function SeoExperiences({ locale }: { locale: Locale }) {
             <div className="section-eyebrow">{item.eyebrow}</div>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
-            <a href="#prenota">{locale === "it" ? "Cerca disponibilità →" : "Search availability →"}</a>
+            <a href="#prenota">{locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}</a>
           </article>
         ))}
       </div>

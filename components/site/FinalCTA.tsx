@@ -5,9 +5,9 @@ export function FinalCTA({ locale }: { locale: Locale }) {
     <section className="final-cta reveal">
       <div className="final-box">
         <h2 dangerouslySetInnerHTML={{ __html: locale === "it" ? "Pronto a vivere<br>l'isola senza limiti?" : "Ready to explore<br>the island freely?" }} />
-        <p>{locale === "it" ? "Scegli il mezzo, conferma le date e inizia il viaggio. IschiaMotion rende il noleggio più semplice, bello e veloce." : "Choose the ride, confirm the dates and start your trip. IschiaMotion makes rental simpler, smoother and faster."}</p>
+        <p>{locale === "it" ? "Scegli il mezzo, invia la richiesta e attendi la verifica della disponibilità. IschiaMotion rende il noleggio più semplice, bello e veloce." : "Choose the ride, send your request and wait for the availability check. IschiaMotion makes rental simpler, smoother and faster."}</p>
         <a href="#prenota" className="primary-btn">
-          {locale === "it" ? "Prenota il tuo mezzo →" : "Book your ride →"}
+          {locale === "it" ? "Richiedi il tuo mezzo →" : "Request your ride →"}
         </a>
       </div>
     </section>

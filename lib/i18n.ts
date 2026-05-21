@@ -7,12 +7,12 @@ export const dictionary = {
       cars: "Auto",
       boats: "Barche",
       ebikes: "Bici elettriche",
-      book: "Prenota ora"
+      book: "Richiedi ora"
     },
     hero: {
       kicker: "Ischia · Procida · Vivara",
       title: "Scopri Ischia<br>al tuo<br><em>ritmo.</em>",
-      subtitle: "Noleggia scooter, auto, bici elettriche e barche. Prenota online in pochi secondi, ritira sull'isola e parti senza pensieri.",
+      subtitle: "Noleggia scooter, auto, bici elettriche e barche. Richiedi online in pochi secondi, ritira sull'isola e parti senza pensieri.",
       cta: "Trova il tuo mezzo →",
       secondary: "Come funziona"
     },
@@ -20,13 +20,13 @@ export const dictionary = {
       ["200+", "Veicoli disponibili"],
       ["15+", "Punti di ritiro sull'isola"],
       ["4.9★", "Valutazione media clienti"],
-      ["100%", "Prenotazione garantita"]
+      ["100%", "Richiesta guidata"]
     ],
     common: {
       from: "da",
       day: "giorno",
       zone: "Zona",
-      request: "Prenota",
+      request: "Richiedi",
       all: "Tutti"
     }
   },
@@ -36,12 +36,12 @@ export const dictionary = {
       cars: "Cars",
       boats: "Boats",
       ebikes: "E-bikes",
-      book: "Book now"
+      book: "Request now"
     },
     hero: {
       kicker: "Ischia · Procida · Vivara",
       title: "Discover Ischia<br>at your own<br><em>pace.</em>",
-      subtitle: "Rent scooters, cars, e-bikes and boats. Book online in seconds, pick up on the island and start without stress.",
+      subtitle: "Rent scooters, cars, e-bikes and boats. Request online in seconds, pick up on the island and start without stress.",
       cta: "Find your ride →",
       secondary: "How it works"
     },
@@ -49,13 +49,13 @@ export const dictionary = {
       ["200+", "Available vehicles"],
       ["15+", "Pickup points on the island"],
       ["4.9★", "Average guest rating"],
-      ["100%", "Guaranteed booking"]
+      ["100%", "Guided request"]
     ],
     common: {
       from: "from",
       day: "day",
       zone: "Zone",
-      request: "Book",
+      request: "Request",
       all: "All"
     }
   }

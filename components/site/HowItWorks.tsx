@@ -3,13 +3,13 @@ import type { Locale } from "@/lib/types";
 export function HowItWorks({ locale }: { locale: Locale }) {
   const steps = locale === "it"
     ? [
-      ["Cerca e scegli", "Filtra per tipo di veicolo, date e zona dell'isola. Prezzi trasparenti, disponibilità in tempo reale."],
-      ["Prenota online", "Paga subito con carta di credito o scegli di pagare al ritiro. Conferma istantanea via email."],
+      ["Cerca e scegli", "Filtra per tipo di veicolo, date e zona dell'isola. Prezzi trasparenti e richiesta disponibilità."],
+      ["Richiedi online", "Invia la richiesta online e ricevi conferma dopo la verifica della disponibilità."],
       ["Ritira e parti", "Presentati al punto di ritiro con la conferma. Niente code, niente sorprese. Solo strada aperta."]
     ]
     : [
-      ["Search and choose", "Filter by vehicle type, dates and island area. Transparent prices and real-time availability."],
-      ["Book online", "Pay by card or choose to pay at pickup. Instant confirmation by email."],
+      ["Search and choose", "Filter by vehicle type, dates and island area. Transparent prices and quick online request."],
+      ["Request online", "Send your request online and receive confirmation after availability check."],
       ["Pick up and go", "Show up at the pickup point with your confirmation. No queues, no surprises. Just open road."]
     ];
 

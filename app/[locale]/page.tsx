@@ -21,8 +21,8 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: isIt ? "Noleggio veicoli Ischia | IschiaMotion" : "Vehicle rental Ischia | IschiaMotion",
     description: isIt
-      ? "Noleggia scooter, auto, bici elettriche e barche a Ischia. Prenota online, ritira sull'isola e vivi ogni angolo al tuo ritmo."
-      : "Rent scooters, cars, e-bikes and boats in Ischia. Book online, pick up on the island and explore at your own pace.",
+      ? "Noleggia scooter, auto, bici elettriche e barche a Ischia. Richiedi online, ritira sull'isola e vivi ogni angolo al tuo ritmo."
+      : "Rent scooters, cars, e-bikes and boats in Ischia. Request online, pick up on the island and explore at your own pace.",
     alternates: {
       canonical: `/${params.locale}`,
       languages: { it: "/it", en: "/en" }

@@ -17,8 +17,8 @@ export function HeroSearch({
     <div className="search-card" id="prenota">
       <div className="search-inner">
         <div className="search-topline">
-          <div className="search-kicker">{locale === "it" ? "Disponibilità immediata" : "Instant availability"}</div>
-          <div className="search-note">{locale === "it" ? "Prezzi chiari · conferma veloce · ritiro sull'isola" : "Clear prices · fast confirmation · island pickup"}</div>
+          <div className="search-kicker">{locale === "it" ? "Richiesta veloce" : "Quick online request"}</div>
+          <div className="search-note">{locale === "it" ? "Richiesta online · conferma dopo verifica · ritiro sull'isola" : "Online request · confirmation after availability check · island pickup"}</div>
         </div>
         <div className="search-grid">
           <div className="s-field">
@@ -42,7 +42,7 @@ export function HeroSearch({
         </div>
         <button type="button" className="search-btn" onClick={() => document.querySelector("#veicoli")?.scrollIntoView({ behavior: "smooth", block: "start" })}>
           <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="white" strokeWidth="1.5" /><path d="M10.5 10.5L13 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" /></svg>
-          {locale === "it" ? "Cerca veicoli disponibili" : "Search available vehicles"}
+          {locale === "it" ? "Invia richiesta disponibilità" : "Request availability"}
         </button>
       </div>
     </div>
