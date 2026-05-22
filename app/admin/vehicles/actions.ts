@@ -9,6 +9,7 @@ import {
   updateAdminVehicle,
   type AdminVehicleFormData
 } from "@/lib/supabase/queries/admin-vehicles";
+import { uploadVehicleImage } from "@/lib/supabase/queries/admin-vehicle-images";
 
 function parseFeatures(value: FormDataEntryValue | null) {
   return String(value || "")
@@ -17,7 +18,10 @@ function parseFeatures(value: FormDataEntryValue | null) {
     .filter(Boolean);
 }
 
-function parseVehicleFormData(formData: FormData): { data: AdminVehicleFormData | null; error: string | null } {
+async function parseVehicleFormData(
+  formData: FormData,
+  accessToken: string
+): Promise<{ data: AdminVehicleFormData | null; error: string | null }> {
   const titleIt = String(formData.get("title_it") || "").trim();
   const titleEn = String(formData.get("title_en") || "").trim();
   const categoryId = String(formData.get("category_id") || "").trim();
@@ -25,6 +29,9 @@ function parseVehicleFormData(formData: FormData): { data: AdminVehicleFormData 
   const pickupPointId = String(formData.get("pickup_point_id") || "").trim();
   const priceRaw = String(formData.get("price_from") || "").trim();
   const priceFrom = priceRaw ? Number(priceRaw) : null;
+  const imageFile = formData.get("image_file");
+  const existingImageUrl = String(formData.get("image_url") || "").trim();
+  let imageUrl = existingImageUrl;
 
   if (!titleIt) return { data: null, error: "Titolo IT obbligatorio." };
   if (!titleEn) return { data: null, error: "Titolo EN obbligatorio." };
@@ -32,6 +39,17 @@ function parseVehicleFormData(formData: FormData): { data: AdminVehicleFormData 
   if (!renterId) return { data: null, error: "Noleggiatore obbligatorio." };
   if (!pickupPointId) return { data: null, error: "Pickup point obbligatorio." };
   if (priceRaw && Number.isNaN(priceFrom)) return { data: null, error: "Prezzo da deve essere numerico." };
+
+  if (imageFile instanceof File && imageFile.size > 0) {
+    try {
+      imageUrl = await uploadVehicleImage(imageFile, accessToken);
+    } catch (error) {
+      return {
+        data: null,
+        error: error instanceof Error ? error.message : "Upload immagine non riuscito."
+      };
+    }
+  }
 
   return {
     data: {
@@ -43,7 +61,7 @@ function parseVehicleFormData(formData: FormData): { data: AdminVehicleFormData 
       description_it: String(formData.get("description_it") || "").trim(),
       description_en: String(formData.get("description_en") || "").trim(),
       price_from: priceFrom,
-      image_url: String(formData.get("image_url") || "").trim(),
+      image_url: imageUrl,
       features_it: parseFeatures(formData.get("features_it")),
       features_en: parseFeatures(formData.get("features_en")),
       is_active: formData.get("is_active") === "on"
@@ -54,7 +72,7 @@ function parseVehicleFormData(formData: FormData): { data: AdminVehicleFormData 
 
 export async function createAdminVehicleAction(formData: FormData) {
   const { accessToken } = await requireAdmin("/admin/vehicles/new");
-  const parsed = parseVehicleFormData(formData);
+  const parsed = await parseVehicleFormData(formData, accessToken);
 
   if (!parsed.data) {
     redirect(`/admin/vehicles/new?error=${encodeURIComponent(parsed.error || "Dati non validi.")}`);
@@ -73,7 +91,7 @@ export async function createAdminVehicleAction(formData: FormData) {
 export async function updateAdminVehicleAction(formData: FormData) {
   const vehicleId = String(formData.get("vehicle_id") || "");
   const { accessToken } = await requireAdmin(`/admin/vehicles/${vehicleId}`);
-  const parsed = parseVehicleFormData(formData);
+  const parsed = await parseVehicleFormData(formData, accessToken);
 
   if (!vehicleId) {
     redirect("/admin/vehicles?error=Veicolo%20non%20valido");

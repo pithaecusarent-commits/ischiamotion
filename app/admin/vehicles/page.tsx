@@ -85,6 +85,7 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-sea/10 text-[11px] uppercase tracking-[0.14em] text-green-deep">
                   <tr>
+                    <th className="px-4 py-4">Foto</th>
                     <th className="px-4 py-4">Titolo IT</th>
                     <th className="px-4 py-4">Categoria</th>
                     <th className="px-4 py-4">Prezzo da</th>
@@ -97,6 +98,18 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                 <tbody className="divide-y divide-ink/10">
                   {vehicles.map((vehicle) => (
                     <tr className="align-top transition-colors hover:bg-sea/5" key={vehicle.id}>
+                      <td className="px-4 py-4">
+                        {vehicle.image_url ? (
+                          <div className="h-16 w-20 overflow-hidden rounded-2xl border border-ink/10 bg-cream">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={vehicle.image_url} alt={vehicle.title_it} className="h-full w-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="grid h-16 w-20 place-items-center rounded-2xl border border-ink/10 bg-cream text-[10px] font-bold uppercase tracking-[0.12em] text-ink/35">
+                            No foto
+                          </div>
+                        )}
+                      </td>
                       <td className="px-4 py-4 font-bold">{vehicle.title_it}</td>
                       <td className="px-4 py-4 text-ink/70">{vehicle.category_name}</td>
                       <td className="px-4 py-4 text-ink/70">{formatPrice(vehicle.price_from)}</td>

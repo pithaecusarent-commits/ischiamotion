@@ -1,4 +1,5 @@
 import type { AdminVehicle, AdminVehicleOptions } from "@/lib/supabase/queries/admin-vehicles";
+import { ImageUploadField } from "@/app/admin/vehicles/ImageUploadField";
 
 type Props = {
   action: (formData: FormData) => void;
@@ -13,7 +14,7 @@ function featuresValue(value?: string[]) {
 
 export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
   return (
-    <form action={action} className="mt-6 grid gap-5">
+    <form action={action} className="mt-6 grid gap-5" encType="multipart/form-data">
       {vehicle ? <input type="hidden" name="vehicle_id" value={vehicle.id} /> : null}
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -115,16 +116,9 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
             defaultValue={vehicle?.price_from ?? ""}
           />
         </label>
-        <label className="grid gap-2 text-sm font-bold text-ink/70">
-          Image URL
-          <input
-            className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
-            name="image_url"
-            defaultValue={vehicle?.image_url || ""}
-            placeholder="/images/..."
-          />
-        </label>
       </div>
+
+      <ImageUploadField currentImageUrl={vehicle?.image_url} />
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2 text-sm font-bold text-ink/70">
