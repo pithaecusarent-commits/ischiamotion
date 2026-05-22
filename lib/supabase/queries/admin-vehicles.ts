@@ -5,6 +5,7 @@ export type AdminVehicle = {
   category_id: string;
   renter_id: string;
   pickup_point_id: string;
+  internal_name: string | null;
   title_it: string;
   title_en: string;
   description_it: string | null;
@@ -25,6 +26,7 @@ export type AdminVehicleFormData = {
   category_id: string;
   renter_id: string;
   pickup_point_id: string;
+  internal_name: string;
   title_it: string;
   title_en: string;
   description_it: string;
@@ -50,7 +52,7 @@ export type AdminVehicleOptions = {
 
 type VehicleRow = Omit<AdminVehicle, "category_name" | "pickup_point_label" | "renter_name">;
 
-const vehicleSelect = "id, category_id, renter_id, pickup_point_id, title_it, title_en, description_it, description_en, price_from, image_url, features_it, features_en, is_active, created_at, updated_at";
+const vehicleSelect = "id, category_id, renter_id, pickup_point_id, internal_name, title_it, title_en, description_it, description_en, price_from, image_url, features_it, features_en, is_active, created_at, updated_at";
 
 function normalizeVehicle(row: VehicleRow, options: AdminVehicleOptions): AdminVehicle {
   const category = options.categories.find((item) => item.id === row.category_id);
@@ -245,6 +247,7 @@ function toVehiclePayload(data: AdminVehicleFormData) {
     category_id: data.category_id,
     renter_id: data.renter_id,
     pickup_point_id: data.pickup_point_id,
+    internal_name: data.internal_name || null,
     title_it: data.title_it,
     title_en: data.title_en,
     description_it: data.description_it || null,

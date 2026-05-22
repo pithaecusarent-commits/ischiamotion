@@ -1,6 +1,6 @@
 import "server-only";
 
-import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
+import { createSupabaseUserClient, getAdminSession } from "@/lib/supabase/admin-auth";
 
 const bucketName = "vehicle-images";
 const maxImageSize = 5 * 1024 * 1024;
@@ -50,4 +50,58 @@ export async function uploadVehicleImage(file: File, accessToken: string): Promi
     .getPublicUrl(path);
 
   return data.publicUrl;
+}
+
+export async function deleteVehicleImageByPublicUrl(imageUrl: string | null | undefined): Promise<void> {
+  const path = getVehicleImagePathFromPublicUrl(imageUrl);
+
+  if (!path) {
+    return;
+  }
+
+  try {
+    const session = await getAdminSession();
+
+    if (!session.accessToken || session.profile?.role !== "admin") {
+      return;
+    }
+
+    const supabase = createSupabaseUserClient(session.accessToken);
+    const { error } = await supabase.storage
+      .from(bucketName)
+      .remove([path]);
+
+    if (error && process.env.NODE_ENV === "development") {
+      console.warn(`Vehicle image cleanup failed: ${error.message}`);
+    }
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Vehicle image cleanup failed:", error);
+    }
+  }
+}
+
+function getVehicleImagePathFromPublicUrl(imageUrl: string | null | undefined) {
+  if (!imageUrl) return "";
+
+  try {
+    const parsedUrl = new URL(imageUrl);
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+    if (supabaseUrl && parsedUrl.origin !== new URL(supabaseUrl).origin) {
+      return "";
+    }
+
+    const marker = `/storage/v1/object/public/${bucketName}/`;
+    const markerIndex = parsedUrl.pathname.indexOf(marker);
+
+    if (markerIndex === -1) {
+      return "";
+    }
+
+    const path = parsedUrl.pathname.slice(markerIndex + marker.length);
+    return path ? decodeURIComponent(path) : "";
+  } catch {
+    return "";
+  }
 }

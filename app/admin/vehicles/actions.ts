@@ -9,7 +9,7 @@ import {
   updateAdminVehicle,
   type AdminVehicleFormData
 } from "@/lib/supabase/queries/admin-vehicles";
-import { uploadVehicleImage } from "@/lib/supabase/queries/admin-vehicle-images";
+import { deleteVehicleImageByPublicUrl, uploadVehicleImage } from "@/lib/supabase/queries/admin-vehicle-images";
 
 function parseFeatures(value: FormDataEntryValue | null) {
   return String(value || "")
@@ -21,32 +21,38 @@ function parseFeatures(value: FormDataEntryValue | null) {
 async function parseVehicleFormData(
   formData: FormData,
   accessToken: string
-): Promise<{ data: AdminVehicleFormData | null; error: string | null }> {
+): Promise<{ data: AdminVehicleFormData | null; error: string | null; uploadedImage: boolean; originalImageUrl: string }> {
   const titleIt = String(formData.get("title_it") || "").trim();
   const titleEn = String(formData.get("title_en") || "").trim();
   const categoryId = String(formData.get("category_id") || "").trim();
   const renterId = String(formData.get("renter_id") || "").trim();
   const pickupPointId = String(formData.get("pickup_point_id") || "").trim();
+  const internalName = String(formData.get("internal_name") || "").trim();
   const priceRaw = String(formData.get("price_from") || "").trim();
   const priceFrom = priceRaw ? Number(priceRaw) : null;
   const imageFile = formData.get("image_file");
   const existingImageUrl = String(formData.get("image_url") || "").trim();
+  const originalImageUrl = String(formData.get("original_image_url") || "").trim();
   let imageUrl = existingImageUrl;
+  let uploadedImage = false;
 
-  if (!titleIt) return { data: null, error: "Titolo IT obbligatorio." };
-  if (!titleEn) return { data: null, error: "Titolo EN obbligatorio." };
-  if (!categoryId) return { data: null, error: "Categoria obbligatoria." };
-  if (!renterId) return { data: null, error: "Noleggiatore obbligatorio." };
-  if (!pickupPointId) return { data: null, error: "Pickup point obbligatorio." };
-  if (priceRaw && Number.isNaN(priceFrom)) return { data: null, error: "Prezzo da deve essere numerico." };
+  if (!titleIt) return { data: null, error: "Titolo IT obbligatorio.", uploadedImage, originalImageUrl };
+  if (!titleEn) return { data: null, error: "Titolo EN obbligatorio.", uploadedImage, originalImageUrl };
+  if (!categoryId) return { data: null, error: "Categoria obbligatoria.", uploadedImage, originalImageUrl };
+  if (!renterId) return { data: null, error: "Noleggiatore obbligatorio.", uploadedImage, originalImageUrl };
+  if (!pickupPointId) return { data: null, error: "Pickup point obbligatorio.", uploadedImage, originalImageUrl };
+  if (priceRaw && Number.isNaN(priceFrom)) return { data: null, error: "Prezzo da deve essere numerico.", uploadedImage, originalImageUrl };
 
   if (imageFile instanceof File && imageFile.size > 0) {
     try {
       imageUrl = await uploadVehicleImage(imageFile, accessToken);
+      uploadedImage = true;
     } catch (error) {
       return {
         data: null,
-        error: error instanceof Error ? error.message : "Upload immagine non riuscito."
+        error: error instanceof Error ? error.message : "Upload immagine non riuscito.",
+        uploadedImage,
+        originalImageUrl
       };
     }
   }
@@ -56,6 +62,7 @@ async function parseVehicleFormData(
       category_id: categoryId,
       renter_id: renterId,
       pickup_point_id: pickupPointId,
+      internal_name: internalName,
       title_it: titleIt,
       title_en: titleEn,
       description_it: String(formData.get("description_it") || "").trim(),
@@ -66,7 +73,9 @@ async function parseVehicleFormData(
       features_en: parseFeatures(formData.get("features_en")),
       is_active: formData.get("is_active") === "on"
     },
-    error: null
+    error: null,
+    uploadedImage,
+    originalImageUrl
   };
 }
 
@@ -107,6 +116,14 @@ export async function updateAdminVehicleAction(formData: FormData) {
 
   if (error) {
     redirect(`/admin/vehicles/${vehicleId}?error=${encodeURIComponent(error)}`);
+  }
+
+  if (
+    parsed.uploadedImage &&
+    parsed.originalImageUrl &&
+    parsed.originalImageUrl !== parsed.data.image_url
+  ) {
+    await deleteVehicleImageByPublicUrl(parsed.originalImageUrl);
   }
 
   redirect(`/admin/vehicles/${vehicleId}?saved=1`);

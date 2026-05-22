@@ -20,13 +20,28 @@ export type RenterBookingItem = {
   deposit_amount: number | null;
   balance_due: number | null;
   payment_notes: string | null;
+  notes: string | null;
+  vehicles: {
+    title_it: string;
+    internal_name: string | null;
+  } | null;
   pickup_points: {
     public_label_it: string;
     zone: string;
   } | null;
 };
 
-type RenterBookingRow = Omit<RenterBookingItem, "pickup_points"> & {
+type RenterBookingRow = Omit<RenterBookingItem, "pickup_points" | "vehicles"> & {
+  vehicles:
+    | {
+      title_it: string;
+      internal_name: string | null;
+    }
+    | {
+      title_it: string;
+      internal_name: string | null;
+    }[]
+    | null;
   pickup_points:
     | {
       public_label_it: string;
@@ -86,6 +101,11 @@ const bookingSelect = `
   deposit_amount,
   balance_due,
   payment_notes,
+  notes,
+  vehicles (
+    title_it,
+    internal_name
+  ),
   pickup_points (
     public_label_it,
     zone
@@ -127,6 +147,9 @@ export async function getRenterBookings(accessToken: string): Promise<{ bookings
 
     const bookings = ((data || []) as unknown as RenterBookingRow[]).map((booking) => ({
       ...booking,
+      vehicles: Array.isArray(booking.vehicles)
+        ? booking.vehicles[0] || null
+        : booking.vehicles,
       pickup_points: Array.isArray(booking.pickup_points)
         ? booking.pickup_points[0] || null
         : booking.pickup_points

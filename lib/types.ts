@@ -82,6 +82,7 @@ export type Vehicle = {
   category_id: string | null;
   renter_id: string | null;
   pickup_point_id: string | null;
+  internal_name: string | null;
   title_it: string;
   title_en: string;
   description_it: string | null;

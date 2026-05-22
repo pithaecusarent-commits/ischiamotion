@@ -2,6 +2,7 @@ import { requireRenter } from "@/lib/supabase/renter-auth";
 import { getRenterBookings } from "@/lib/supabase/queries/renter";
 import { AccessDenied, EmptyState, RenterShell, StatusBadge } from "@/app/renter/renter-ui";
 import { deliveryMethodLabels, formatMoney, paymentMethodLabels, paymentStatusLabels, paymentTypeLabels } from "@/lib/booking-labels";
+import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
 
 function shortCustomer(firstName: string, lastName: string) {
   return `${firstName} ${lastName ? `${lastName.slice(0, 1)}.` : ""}`.trim();
@@ -44,6 +45,7 @@ export default async function RenterBookingsPage() {
                   <th className="px-5 py-4">Codice</th>
                   <th className="px-5 py-4">Cliente</th>
                   <th className="px-5 py-4">Date</th>
+                  <th className="px-5 py-4">Veicolo</th>
                   <th className="px-5 py-4">Servizio</th>
                   <th className="px-5 py-4">Stato</th>
                   <th className="px-5 py-4">Azioni</th>
@@ -57,6 +59,12 @@ export default async function RenterBookingsPage() {
                     <td className="px-5 py-4">
                       {formatDateRange(booking.start_date, booking.end_date)}
                       {booking.pickup_time ? <span className="block text-xs text-ink/50">{booking.pickup_time}</span> : null}
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className="font-semibold">{booking.vehicles?.title_it || getBookingNoteValue(booking.notes, "Vehicle") || "-"}</span>
+                      {booking.vehicles?.internal_name ? (
+                        <span className="mt-1 block text-xs text-ink/55">{booking.vehicles.internal_name}</span>
+                      ) : null}
                     </td>
                     <td className="px-5 py-4">
                       <span className="font-semibold">{deliveryMethodLabels.it[booking.delivery_method]}</span>

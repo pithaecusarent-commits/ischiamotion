@@ -86,7 +86,7 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                 <thead className="bg-sea/10 text-[11px] uppercase tracking-[0.14em] text-green-deep">
                   <tr>
                     <th className="px-4 py-4">Foto</th>
-                    <th className="px-4 py-4">Titolo IT</th>
+                    <th className="px-4 py-4">Titolo pubblico</th>
                     <th className="px-4 py-4">Categoria</th>
                     <th className="px-4 py-4">Prezzo da</th>
                     <th className="px-4 py-4">Pickup point</th>
@@ -110,7 +110,12 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                           </div>
                         )}
                       </td>
-                      <td className="px-4 py-4 font-bold">{vehicle.title_it}</td>
+                      <td className="px-4 py-4">
+                        <div className="font-bold">{vehicle.title_it}</div>
+                        {vehicle.internal_name ? (
+                          <div className="mt-1 text-xs font-semibold text-ink/50">{vehicle.internal_name}</div>
+                        ) : null}
+                      </td>
                       <td className="px-4 py-4 text-ink/70">{vehicle.category_name}</td>
                       <td className="px-4 py-4 text-ink/70">{formatPrice(vehicle.price_from)}</td>
                       <td className="px-4 py-4 text-ink/70">{vehicle.pickup_point_label}</td>

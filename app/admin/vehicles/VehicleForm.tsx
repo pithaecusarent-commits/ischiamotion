@@ -16,6 +16,7 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
   return (
     <form action={action} className="mt-6 grid gap-5" encType="multipart/form-data">
       {vehicle ? <input type="hidden" name="vehicle_id" value={vehicle.id} /> : null}
+      <input type="hidden" name="original_image_url" value={vehicle?.image_url || ""} />
 
       <div className="grid gap-4 md:grid-cols-3">
         <label className="grid gap-2 text-sm font-bold text-ink/70">
@@ -66,7 +67,7 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2 text-sm font-bold text-ink/70">
-          Titolo IT
+          Titolo pubblico IT
           <input
             className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
             name="title_it"
@@ -75,7 +76,7 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
           />
         </label>
         <label className="grid gap-2 text-sm font-bold text-ink/70">
-          Titolo EN
+          Titolo pubblico EN
           <input
             className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
             name="title_en"
@@ -83,6 +84,24 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
             required
           />
         </label>
+      </div>
+
+      <div className="rounded-[28px] border border-sea/10 bg-white/65 p-5">
+        <label className="grid gap-2 text-sm font-bold text-ink/70">
+          Nome interno veicolo
+          <input
+            className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+            name="internal_name"
+            defaultValue={vehicle?.internal_name || ""}
+            placeholder="Es. Vespa Primavera 125 - mezzo 01"
+          />
+          <span className="text-xs font-semibold leading-5 text-ink/50">
+            Visibile solo ad admin e noleggiatore. Il cliente vedra solo il titolo pubblico, ad esempio Scooter 125.
+          </span>
+        </label>
+        <div className="mt-4 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold leading-6 text-ink/70">
+          Per il pubblico usa nomi generici come Scooter 125, Auto, E-bike, Gommone, Barca. Il nome interno serve solo per l&apos;organizzazione.
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
