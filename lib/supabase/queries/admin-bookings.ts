@@ -1,4 +1,5 @@
 import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
+import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentStatus, BookingPaymentType } from "@/lib/types";
 
 export type AdminBookingItem = {
   id: string;
@@ -11,6 +12,16 @@ export type AdminBookingItem = {
   end_date: string;
   pickup_time: string | null;
   status: string;
+  delivery_method: BookingDeliveryMethod;
+  delivery_location: string | null;
+  delivery_notes: string | null;
+  payment_type: BookingPaymentType;
+  payment_method: BookingPaymentMethod;
+  payment_status: BookingPaymentStatus;
+  total_amount: number | null;
+  deposit_amount: number | null;
+  balance_due: number | null;
+  payment_notes: string | null;
   notes: string | null;
   created_at: string;
 };
@@ -27,7 +38,7 @@ export const adminBookingStatuses = [
 
 export type AdminBookingStatus = (typeof adminBookingStatuses)[number];
 
-const bookingSelect = "id, booking_code, customer_first_name, customer_last_name, customer_email, customer_phone, start_date, end_date, pickup_time, status, notes, created_at";
+const bookingSelect = "id, booking_code, customer_first_name, customer_last_name, customer_email, customer_phone, start_date, end_date, pickup_time, status, delivery_method, delivery_location, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at";
 
 export async function getAdminBookingRequests(accessToken: string): Promise<{ bookings: AdminBookingItem[]; error: string | null }> {
   try {

@@ -2,6 +2,14 @@ export type Locale = "it" | "en";
 
 export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "bici";
 
+export type BookingDeliveryMethod = "pickup_point" | "port_delivery" | "hotel_delivery";
+
+export type BookingPaymentType = "pay_on_pickup" | "deposit_required" | "prepaid_full";
+
+export type BookingPaymentMethod = "unknown" | "cash" | "card" | "bank_transfer" | "future_online_card";
+
+export type BookingPaymentStatus = "unpaid" | "deposit_pending" | "deposit_paid" | "paid" | "refunded" | "cancelled";
+
 export type PublicVehicle = {
   id: string;
   category: VehicleCategorySlug;
@@ -102,6 +110,16 @@ export type Booking = {
   end_date: string;
   pickup_time: string | null;
   status: "pending" | "confirmed" | "voucher_sent" | "checked_in" | "cancelled" | "completed" | "no_show";
+  delivery_method: BookingDeliveryMethod;
+  delivery_location: string | null;
+  delivery_notes: string | null;
+  payment_type: BookingPaymentType;
+  payment_method: BookingPaymentMethod;
+  payment_status: BookingPaymentStatus;
+  total_amount: number | null;
+  deposit_amount: number | null;
+  balance_due: number | null;
+  payment_notes: string | null;
   notes: string | null;
   created_at: string;
   updated_at: string;

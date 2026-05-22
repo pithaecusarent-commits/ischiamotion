@@ -1,4 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
+import { initialPaymentStatus } from "@/lib/booking-labels";
+import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentType } from "@/lib/types";
 
 export type BookingRequestInput = {
   bookingCode: string;
@@ -10,6 +12,12 @@ export type BookingRequestInput = {
   startDate: string;
   endDate: string;
   pickupTime: string;
+  deliveryMethod: BookingDeliveryMethod;
+  deliveryLocation: string;
+  deliveryNotes: string;
+  paymentType: BookingPaymentType;
+  paymentMethod: BookingPaymentMethod;
+  paymentNotes: string;
   notes: string;
   vehicleLabel: string;
   pickupPointLabel: string;
@@ -51,6 +59,8 @@ export function buildBookingNotes(input: Pick<BookingRequestInput, "notes" | "ve
 export async function createBookingRequest(input: BookingRequestInput) {
   const supabase = createPublicSupabaseClient();
 
+  // Future Supabase-backed vehicle matching should filter renters by
+  // renter_delivery_capabilities.delivery_method before assigning renter_id.
   const { error } = await supabase.from("bookings").insert({
     booking_code: input.bookingCode,
     customer_first_name: input.firstName,
@@ -62,6 +72,13 @@ export async function createBookingRequest(input: BookingRequestInput) {
     end_date: input.endDate,
     pickup_time: input.pickupTime || null,
     status: "pending",
+    delivery_method: input.deliveryMethod,
+    delivery_location: input.deliveryLocation || null,
+    delivery_notes: input.deliveryNotes || null,
+    payment_type: input.paymentType,
+    payment_method: input.paymentMethod,
+    payment_status: initialPaymentStatus(input.paymentType),
+    payment_notes: input.paymentNotes || null,
     notes: buildBookingNotes(input)
   });
 

@@ -6,7 +6,13 @@ import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions
 import { VoucherPrintButton } from "@/app/admin/bookings/[id]/VoucherPrintButton";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import {
+  bookingAmountSummary,
   bookingCustomerNotes,
+  bookingDeliveryLocation,
+  bookingDeliveryMethod,
+  bookingPaymentMethod,
+  bookingPaymentStatus,
+  bookingPaymentType,
   bookingPickupPoint,
   bookingVehicle,
   formatAdminDate,
@@ -111,6 +117,26 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
               <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
               <DetailRow label="Stato" value={<StatusBadge status={booking.status} />} />
               <DetailRow label="Data creazione" value={formatAdminDateTime(booking.created_at)} />
+            </div>
+
+            <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
+              <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Ritiro / consegna</div>
+              <div className="mt-4 grid gap-4 md:grid-cols-3">
+                <DetailRow label="Modalità" value={bookingDeliveryMethod(booking)} />
+                <DetailRow label="Luogo" value={bookingDeliveryLocation(booking)} />
+                <DetailRow label="Note consegna" value={booking.delivery_notes || "-"} />
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
+              <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Pagamento operativo</div>
+              <div className="mt-4 grid gap-4 md:grid-cols-3">
+                <DetailRow label="Tipo pagamento" value={bookingPaymentType(booking)} />
+                <DetailRow label="Metodo preferito" value={bookingPaymentMethod(booking)} />
+                <DetailRow label="Stato pagamento" value={bookingPaymentStatus(booking)} />
+                <DetailRow label="Importi" value={bookingAmountSummary(booking)} />
+                <DetailRow label="Note pagamento" value={booking.payment_notes || "-"} />
+              </div>
             </div>
 
             <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
@@ -238,7 +264,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/images/ischiamotion-logo.png" alt="IschiaMotion" />
                     <h1>Voucher IschiaMotion</h1>
-                    <p>Mostra questo voucher al punto ritiro IschiaMotion.</p>
+                    <p>Mostra questo voucher al punto ritiro o al personale incaricato della consegna.</p>
                   </div>
 
                   <div className="mb-5 flex flex-wrap gap-3 print-hidden">
@@ -275,6 +301,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                         value={`${formatAdminDate(booking.start_date)} - ${formatAdminDate(booking.end_date)}${booking.pickup_time ? `, ore ${booking.pickup_time}` : ""}`}
                       />
                       <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
+                      <DetailRow label="Modalità servizio" value={bookingDeliveryMethod(booking)} />
+                      <DetailRow label="Luogo" value={bookingDeliveryLocation(booking)} />
+                      <DetailRow label="Note consegna" value={booking.delivery_notes || "-"} />
+                      <DetailRow label="Pagamento" value={bookingPaymentType(booking)} />
+                      <DetailRow label="Stato pagamento" value={bookingPaymentStatus(booking)} />
+                      <DetailRow label="Importi" value={bookingAmountSummary(booking)} />
                       <DetailRow label="Stato" value={<StatusBadge status={booking.status} />} />
                     </div>
                   </div>

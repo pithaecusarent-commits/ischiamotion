@@ -1,6 +1,16 @@
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { getAdminBookingRequests } from "@/lib/supabase/queries/admin-bookings";
-import { bookingPickupPoint, bookingVehicle, formatAdminDate, formatAdminDateTime, StatusBadge } from "@/app/admin/bookings/booking-ui";
+import {
+  bookingDeliveryLocation,
+  bookingDeliveryMethod,
+  bookingPaymentStatus,
+  bookingPaymentType,
+  bookingPickupPoint,
+  bookingVehicle,
+  formatAdminDate,
+  formatAdminDateTime,
+  StatusBadge
+} from "@/app/admin/bookings/booking-ui";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 
 export default async function AdminBookingsPage() {
@@ -57,7 +67,7 @@ export default async function AdminBookingsPage() {
                   <th className="px-3 py-4">Telefono</th>
                   <th className="px-3 py-4">Veicolo</th>
                   <th className="px-3 py-4">Date</th>
-                  <th className="px-3 py-4">Pickup point</th>
+                  <th className="px-3 py-4">Servizio</th>
                   <th className="px-3 py-4">Stato</th>
                 </tr>
               </thead>
@@ -86,10 +96,17 @@ export default async function AdminBookingsPage() {
                     </td>
                     <td className="px-3 py-4">
                       <span className="inline-flex max-w-full rounded-2xl bg-sand px-3 py-2 text-xs font-bold leading-4 text-green-deep">
-                        {bookingPickupPoint(booking)}
+                        {bookingDeliveryMethod(booking)}
                       </span>
+                      <div className="mt-2 text-xs leading-4 text-ink/55">{bookingDeliveryLocation(booking) || bookingPickupPoint(booking)}</div>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4"><StatusBadge status={booking.status} /></td>
+                    <td className="whitespace-nowrap px-3 py-4">
+                      <StatusBadge status={booking.status} />
+                      <div className="mt-2 whitespace-normal text-xs leading-4 text-ink/55">
+                        {bookingPaymentType(booking)}
+                        <span className="block font-semibold text-green-deep">{bookingPaymentStatus(booking)}</span>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>

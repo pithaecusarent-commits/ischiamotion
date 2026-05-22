@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
 import type { AdminBookingItem } from "@/lib/supabase/queries/admin-bookings";
+import type { BookingDeliveryMethod, BookingPaymentStatus, BookingPaymentType } from "@/lib/types";
 
 export type AdminVoucher = {
   id: string;
@@ -15,6 +16,7 @@ export type AdminVoucher = {
 
 export type PublicCheckinVoucher = {
   voucher_code: string;
+  customer_language: "it" | "en";
   booking_status: string;
   customer_display_name: string | null;
   vehicle_label: string | null;
@@ -22,6 +24,13 @@ export type PublicCheckinVoucher = {
   start_date: string;
   end_date: string;
   pickup_time: string | null;
+  delivery_method: BookingDeliveryMethod;
+  delivery_location: string | null;
+  delivery_notes: string | null;
+  payment_type: BookingPaymentType;
+  payment_status: BookingPaymentStatus;
+  deposit_amount: number | null;
+  balance_due: number | null;
 };
 
 function createPublicSupabaseClient() {

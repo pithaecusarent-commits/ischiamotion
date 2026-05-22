@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPublicCheckinVoucher } from "@/lib/supabase/queries/vouchers";
 import { generateQrDataUrl } from "@/lib/qr";
 import { PrintVoucherButton } from "@/app/checkin/[code]/PrintVoucherButton";
+import { deliveryMethodLabels, formatMoney, paymentStatusLabels, paymentTypeLabels } from "@/lib/booking-labels";
 
 type Props = {
   params: {
@@ -20,6 +21,7 @@ function formatDate(value: string) {
 export default async function PublicCheckinPage({ params }: Props) {
   const { voucher, error } = await getPublicCheckinVoucher(params.code);
   const qrDataUrl = voucher ? await generateQrDataUrl(`/checkin/${voucher.voucher_code}`) : "";
+  const locale = voucher?.customer_language === "en" ? "en" : "it";
 
   if (!voucher && !error) {
     notFound();
@@ -44,7 +46,11 @@ export default async function PublicCheckinPage({ params }: Props) {
             <div className="mt-8 text-center">
               <p className="section-kicker">Voucher IschiaMotion</p>
               <h1 className="mt-3 font-serif text-4xl font-bold">Check-in ritiro</h1>
-              <p className="mt-3 text-ink/65">Presenta questa schermata al punto ritiro IschiaMotion.</p>
+              <p className="mt-3 text-ink/65">
+                {locale === "it"
+                  ? "Mostra questo voucher al punto ritiro o al personale incaricato della consegna."
+                  : "Show this voucher at the pickup point or to the delivery staff."}
+              </p>
               <PrintVoucherButton />
             </div>
 
@@ -77,6 +83,36 @@ export default async function PublicCheckinPage({ params }: Props) {
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Pickup point</div>
                 <div className="mt-2 text-sm font-semibold">{voucher.pickup_point_label || "-"}</div>
               </div>
+              <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
+                <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Servizio</div>
+                <div className="mt-2 text-sm font-semibold">{deliveryMethodLabels[locale][voucher.delivery_method]}</div>
+              </div>
+              <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
+                <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Luogo</div>
+                <div className="mt-2 text-sm font-semibold">{voucher.delivery_location || voucher.pickup_point_label || "-"}</div>
+              </div>
+              {voucher.delivery_notes ? (
+                <div className="rounded-3xl border border-ink/10 bg-white/65 p-5 sm:col-span-2">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Note operative</div>
+                  <div className="mt-2 text-sm font-semibold">{voucher.delivery_notes}</div>
+                </div>
+              ) : null}
+              <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
+                <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Pagamento</div>
+                <div className="mt-2 text-sm font-semibold">{paymentTypeLabels[locale][voucher.payment_type]}</div>
+              </div>
+              <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
+                <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Stato pagamento</div>
+                <div className="mt-2 text-sm font-semibold">{paymentStatusLabels[locale][voucher.payment_status]}</div>
+              </div>
+              {(voucher.deposit_amount !== null || voucher.balance_due !== null) ? (
+                <div className="rounded-3xl border border-ink/10 bg-white/65 p-5 sm:col-span-2">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Acconto / saldo</div>
+                  <div className="mt-2 text-sm font-semibold">
+                    Acconto {formatMoney(voucher.deposit_amount)} · Saldo {formatMoney(voucher.balance_due)}
+                  </div>
+                </div>
+              ) : null}
               <div className="rounded-3xl border border-ink/10 bg-white/65 p-5 sm:col-span-2">
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Date</div>
                 <div className="mt-2 text-sm font-semibold">

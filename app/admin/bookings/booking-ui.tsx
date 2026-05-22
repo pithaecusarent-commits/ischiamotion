@@ -1,4 +1,5 @@
 import type { AdminBookingItem } from "@/lib/supabase/queries/admin-bookings";
+import { deliveryMethodLabels, formatMoney, paymentMethodLabels, paymentStatusLabels, paymentTypeLabels } from "@/lib/booking-labels";
 import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
 
 export const statusStyles: Record<string, { label: string; className: string }> = {
@@ -79,6 +80,34 @@ export function bookingVehicle(booking: AdminBookingItem) {
 
 export function bookingPickupPoint(booking: AdminBookingItem) {
   return getBookingNoteValue(booking.notes, "Pickup point") || "-";
+}
+
+export function bookingDeliveryMethod(booking: AdminBookingItem) {
+  return deliveryMethodLabels.it[booking.delivery_method] || booking.delivery_method;
+}
+
+export function bookingDeliveryLocation(booking: AdminBookingItem) {
+  return booking.delivery_location || bookingPickupPoint(booking);
+}
+
+export function bookingPaymentType(booking: AdminBookingItem) {
+  return paymentTypeLabels.it[booking.payment_type] || booking.payment_type;
+}
+
+export function bookingPaymentMethod(booking: AdminBookingItem) {
+  return paymentMethodLabels.it[booking.payment_method] || booking.payment_method;
+}
+
+export function bookingPaymentStatus(booking: AdminBookingItem) {
+  return paymentStatusLabels.it[booking.payment_status] || booking.payment_status;
+}
+
+export function bookingAmountSummary(booking: AdminBookingItem) {
+  return [
+    booking.total_amount !== null ? `Totale ${formatMoney(booking.total_amount)}` : "",
+    booking.deposit_amount !== null ? `Acconto ${formatMoney(booking.deposit_amount)}` : "",
+    booking.balance_due !== null ? `Saldo ${formatMoney(booking.balance_due)}` : ""
+  ].filter(Boolean).join(" · ") || "-";
 }
 
 export function bookingCustomerNotes(booking: AdminBookingItem) {

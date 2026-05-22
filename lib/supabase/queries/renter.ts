@@ -1,4 +1,5 @@
 import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
+import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentStatus, BookingPaymentType } from "@/lib/types";
 
 export type RenterBookingItem = {
   id: string;
@@ -9,6 +10,16 @@ export type RenterBookingItem = {
   end_date: string;
   pickup_time: string | null;
   status: string;
+  delivery_method: BookingDeliveryMethod;
+  delivery_location: string | null;
+  delivery_notes: string | null;
+  payment_type: BookingPaymentType;
+  payment_method: BookingPaymentMethod;
+  payment_status: BookingPaymentStatus;
+  total_amount: number | null;
+  deposit_amount: number | null;
+  balance_due: number | null;
+  payment_notes: string | null;
   pickup_points: {
     public_label_it: string;
     zone: string;
@@ -39,6 +50,16 @@ export type RenterCategoryAvailabilityItem = {
   updated_at: string | null;
 };
 
+export type RenterDeliveryCapabilityItem = {
+  id: string | null;
+  renter_id: string;
+  delivery_method: BookingDeliveryMethod;
+  is_enabled: boolean;
+  zones: string[];
+  notes: string | null;
+  updated_at: string | null;
+};
+
 export type RenterCheckinResult = {
   outcome: "checked_in" | "already_checked_in" | "invalid" | "invalid_status" | "denied";
   message: string;
@@ -55,6 +76,16 @@ const bookingSelect = `
   end_date,
   pickup_time,
   status,
+  delivery_method,
+  delivery_location,
+  delivery_notes,
+  payment_type,
+  payment_method,
+  payment_status,
+  total_amount,
+  deposit_amount,
+  balance_due,
+  payment_notes,
   pickup_points (
     public_label_it,
     zone
@@ -62,6 +93,7 @@ const bookingSelect = `
 `;
 
 const fallbackCategoryOrder = ["scooter", "auto", "bici-elettriche", "barche-gommoni", "quad"];
+const deliveryMethodOrder: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
 
 export async function getRenterIds(accessToken: string): Promise<{ renterIds: string[]; error: string | null }> {
   try {
@@ -210,6 +242,102 @@ export async function updateRenterAvailability(input: {
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to update availability." };
+  }
+}
+
+export async function getRenterDeliveryCapabilities(accessToken: string): Promise<{ capabilities: RenterDeliveryCapabilityItem[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const renterResult = await getRenterIds(accessToken);
+
+    if (renterResult.error) {
+      return { capabilities: [], error: renterResult.error };
+    }
+
+    const renterId = renterResult.renterIds[0];
+    if (!renterId) {
+      return { capabilities: [], error: null };
+    }
+
+    const { data, error } = await supabase
+      .from("renter_delivery_capabilities")
+      .select("id, renter_id, delivery_method, is_enabled, zones, notes, updated_at")
+      .eq("renter_id", renterId);
+
+    if (error) {
+      return { capabilities: [], error: error.message };
+    }
+
+    const rowsByMethod = new Map((data || []).map((row) => [row.delivery_method as BookingDeliveryMethod, row]));
+
+    return {
+      capabilities: deliveryMethodOrder.map((method) => {
+        const row = rowsByMethod.get(method);
+        return {
+          id: (row?.id as string | undefined) || null,
+          renter_id: renterId,
+          delivery_method: method,
+          is_enabled: row?.is_enabled !== false,
+          zones: (row?.zones as string[] | null | undefined) || [],
+          notes: (row?.notes as string | null | undefined) || null,
+          updated_at: (row?.updated_at as string | null | undefined) || null
+        };
+      }),
+      error: null
+    };
+  } catch (error) {
+    return { capabilities: [], error: error instanceof Error ? error.message : "Unable to load delivery capabilities." };
+  }
+}
+
+export async function updateRenterDeliveryCapability(input: {
+  accessToken: string;
+  renterId: string;
+  deliveryMethod: BookingDeliveryMethod;
+  isEnabled: boolean;
+  zones: string[];
+  notes: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+    const payload = {
+      is_enabled: input.isEnabled,
+      zones: input.zones.length > 0 ? input.zones : null,
+      notes: input.notes.trim() || null,
+      updated_at: new Date().toISOString()
+    };
+
+    const { data: existing, error: existingError } = await supabase
+      .from("renter_delivery_capabilities")
+      .select("id")
+      .eq("renter_id", input.renterId)
+      .eq("delivery_method", input.deliveryMethod)
+      .maybeSingle<{ id: string }>();
+
+    if (existingError) {
+      return { error: existingError.message };
+    }
+
+    const { error } = existing?.id
+      ? await supabase
+        .from("renter_delivery_capabilities")
+        .update(payload)
+        .eq("id", existing.id)
+      : await supabase
+        .from("renter_delivery_capabilities")
+        .insert({
+          ...payload,
+          renter_id: input.renterId,
+          delivery_method: input.deliveryMethod
+        });
+
+    if (error) {
+      return { error: error.message };
+    }
+
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update delivery capability." };
   }
 }
 
