@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import type { Booking } from "@/lib/types";
 
 export type BookingRequestInput = {
   bookingCode: string;
@@ -15,21 +14,6 @@ export type BookingRequestInput = {
   vehicleLabel: string;
   pickupPointLabel: string;
 };
-
-export type PublicBookingListItem = Pick<
-  Booking,
-  | "booking_code"
-  | "customer_first_name"
-  | "customer_last_name"
-  | "customer_email"
-  | "customer_phone"
-  | "start_date"
-  | "end_date"
-  | "pickup_time"
-  | "status"
-  | "notes"
-  | "created_at"
->;
 
 function createPublicSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -83,24 +67,6 @@ export async function createBookingRequest(input: BookingRequestInput) {
 
   if (error) {
     throw error;
-  }
-}
-
-export async function getBookingRequests(): Promise<{ bookings: PublicBookingListItem[]; error: string | null }> {
-  try {
-    const supabase = createPublicSupabaseClient();
-    const { data, error } = await supabase
-      .from("bookings")
-      .select("booking_code, customer_first_name, customer_last_name, customer_email, customer_phone, start_date, end_date, pickup_time, status, notes, created_at")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      return { bookings: [], error: error.message };
-    }
-
-    return { bookings: (data || []) as PublicBookingListItem[], error: null };
-  } catch (error) {
-    return { bookings: [], error: error instanceof Error ? error.message : "Unable to load bookings." };
   }
 }
 

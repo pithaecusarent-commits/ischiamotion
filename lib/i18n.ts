@@ -17,7 +17,7 @@ export const dictionary = {
       secondary: "Come funziona"
     },
     trust: [
-      ["200+", "Veicoli disponibili"],
+      ["200+", "Mezzi selezionati"],
       ["15+", "Punti di ritiro sull'isola"],
       ["4.9★", "Valutazione media clienti"],
       ["100%", "Richiesta guidata"]
@@ -46,7 +46,7 @@ export const dictionary = {
       secondary: "How it works"
     },
     trust: [
-      ["200+", "Available vehicles"],
+      ["200+", "Selected vehicles"],
       ["15+", "Pickup points on the island"],
       ["4.9★", "Average guest rating"],
       ["100%", "Guided request"]

@@ -1,5 +1,4 @@
 import type { Locale, PublicVehicle } from "@/lib/types";
-import { t } from "@/lib/i18n";
 
 export function VehicleCard({
   vehicle,
@@ -26,7 +25,7 @@ export function VehicleCard({
     <article className="vcard" data-category={vehicle.category} style={{ display: visible ? undefined : "none" }}>
       <div className="vcard-img">
         <span>{vehicle.emoji}</span>
-        <span className="avail">{locale === "it" ? "Disponibile" : "Available"}</span>
+        <span className="avail">{locale === "it" ? "Su richiesta" : "On request"}</span>
       </div>
       <div className="vcard-body">
         <div className="vcard-type">{typeLabels[vehicle.category]}</div>

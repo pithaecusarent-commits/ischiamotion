@@ -6,7 +6,7 @@ export function ExperienceSection({ locale }: { locale: Locale }) {
       <div className="experience-card">
         <div className="exp-panel">
           <h2>{locale === "it" ? "Più libertà, meno attese." : "More freedom, less waiting."}</h2>
-          <p>{locale === "it" ? "Un'esperienza pensata per chi arriva sull'isola e vuole muoversi subito: scegli il mezzo, blocca le date e ritira nel punto più comodo." : "An experience for guests arriving on the island who want to move right away: choose the ride, lock the dates and pick up at the most convenient point."}</p>
+          <p>{locale === "it" ? "Un'esperienza pensata per chi arriva sull'isola e vuole organizzarsi senza complicazioni: scegli il mezzo, indica le date e ritira nel punto più comodo." : "An experience for guests arriving on the island who want to plan without friction: choose the ride, set the dates and pick up at the most convenient point."}</p>
           <div className="exp-list">
             <div><span>✓</span> {locale === "it" ? "Verifica disponibilità e dettagli chiari" : "Availability check and clear details"}</div>
             <div><span>✓</span> {locale === "it" ? "Punti ritiro nei luoghi più utili" : "Pickup points in the most useful places"}</div>

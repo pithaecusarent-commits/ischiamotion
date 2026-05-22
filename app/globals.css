@@ -909,44 +909,57 @@ h1 em {
   border: 1px dashed rgba(13,43,78,.13);
   border-radius: 30px;
 }
-.island-shape {
+.ischia-map-stage {
   position: absolute;
-  width: 82%;
-  left: 9%;
-  top: 16%;
-  filter: drop-shadow(0 18px 30px rgba(13,43,78,.08));
+  left: 50%;
+  top: 50%;
+  width: calc(100% - 68px);
+  max-width: 560px;
+  aspect-ratio: 420 / 260;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
 }
-.island-fill {
-  fill: rgba(0,151,171,0.07);
+.ischia-map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 12px 22px rgba(13,43,78,.06));
+}
+.ischia-map-shadow {
+  fill: rgba(13,43,78,.1);
+  transform: translate(6px, 9px);
+}
+.ischia-map-land {
+  fill: rgba(220,248,252,.46);
   stroke: none;
 }
-.island-main {
+.ischia-map-outline {
   fill: none;
   stroke: var(--green);
-  stroke-width: 6;
+  stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.island-line,
-.island-lake,
-.island-coast-detail {
-  display: none;
-}
-.island-wave {
+.ischia-map-ridge,
+.ischia-map-coast-detail {
   fill: none;
-  stroke: var(--green);
-  stroke-width: 4.5;
+  stroke: rgba(0,151,171,.3);
+  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
+  stroke-dasharray: 5 8;
 }
-.island-wave-short {
-  stroke-width: 3.5;
-  opacity: .65;
+.ischia-map-ridge-soft {
+  stroke: rgba(0,151,171,.16);
+  stroke-width: 1.1;
 }
-.island-wave-gold {
-  stroke: var(--sun);
-  stroke-width: 4;
-  opacity: .85;
+.ischia-map-coast-detail {
+  stroke: rgba(232,149,26,.42);
+  stroke-width: 1.4;
+  stroke-dasharray: none;
 }
 .map-pin {
   position: absolute;
@@ -965,9 +978,10 @@ h1 em {
   z-index: 3;
   cursor: default;
   transition: transform .2s ease, box-shadow .2s ease;
+  transform: translate(-50%, -50%);
 }
 .map-pin:hover {
-  transform: scale(1.14) translateY(-2px);
+  transform: translate(-50%, -50%) scale(1.14) translateY(-2px);
   box-shadow: 0 14px 32px rgba(0,151,171,.45), 0 0 0 7px rgba(0,151,171,.1);
 }
 .map-pin::after {
@@ -978,18 +992,6 @@ h1 em {
   border: 1.5px solid rgba(0,151,171,.2);
   pointer-events: none;
 }
-.pin-port        { left: 69%; top: 32%; }
-.pin-casamicciola{ left: 52%; top: 27%; }
-.pin-lacco       { left: 37%; top: 27%; }
-.pin-forio       { left: 18%; top: 40%; }
-.pin-sant-angelo { left: 22%; top: 60%; }
-.pin-barano      { left: 54%; top: 54%; }
-.pin-1 { left: 69%; top: 32%; }
-.pin-2 { left: 52%; top: 27%; }
-.pin-3 { left: 37%; top: 27%; }
-.pin-4 { left: 18%; top: 40%; }
-.pin-5 { left: 22%; top: 60%; }
-.pin-6 { left: 54%; top: 54%; }
 .map-label {
   position: absolute;
   z-index: 2;
@@ -1005,22 +1007,11 @@ h1 em {
   font-size: 11px;
   font-weight: 900;
   line-height: 1;
-  letter-spacing: .01em;
+  letter-spacing: 0;
   box-shadow: 0 6px 20px rgba(13,43,78,.1), 0 1px 4px rgba(13,43,78,.06);
   white-space: nowrap;
+  transform: translate(-50%, -50%);
 }
-.label-port        { left: 63%; top: 19%; }
-.label-casamicciola{ left: 39%; top: 15%; }
-.label-lacco       { left: 20%; top: 15%; }
-.label-forio       { left: 2%; top: 33%; }
-.label-sant-angelo { left: 6%; top: 70%; }
-.label-barano      { left: 49%; top: 64%; }
-.label-1 { left: 63%; top: 19%; }
-.label-2 { left: 39%; top: 15%; }
-.label-3 { left: 20%; top: 15%; }
-.label-4 { left: 2%; top: 33%; }
-.label-5 { left: 6%; top: 70%; }
-.label-6 { left: 49%; top: 64%; }
 .pickup-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1587,10 +1578,8 @@ footer {
   .pickup-section-header { gap: 18px; margin-bottom: 26px; }
   .pickup-section-header p { font-size: 15px; }
   .pickup-map { min-height: 320px; border-radius: 28px; }
+  .ischia-map-stage { width: calc(100% - 44px); }
   .map-label { font-size: 10px; padding: 5px 8px; }
-  .label-casamicciola { left: 36%; }
-  .label-lacco { left: 17%; }
-  .label-sant-angelo { left: 5%; }
   .pickup-list { grid-template-columns: 1fr; }
   .pickup-point-card { min-height: auto; border-radius: 24px; }
   .experience { padding: 0 16px 78px; }

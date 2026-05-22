@@ -110,7 +110,7 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
     <div className="booking-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
       <div className="booking-modal">
         <button className="booking-close" type="button" onClick={onClose} aria-label={text.close}>×</button>
-        <div className="section-eyebrow">{locale === "it" ? "Prenotazione" : "Booking"}</div>
+        <div className="section-eyebrow">{locale === "it" ? "Richiesta" : "Request"}</div>
         <h2 id="booking-modal-title">{text.title}</h2>
         <p className="booking-intro">{text.subtitle}</p>
 

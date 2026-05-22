@@ -1,22 +1,7 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
+import { IschiaPickupMap } from "./IschiaPickupMap";
 
 const preferredZones = ["Ischia Porto", "Casamicciola", "Lacco Ameno", "Forio", "Sant'Angelo", "Barano"];
-const markerClasses: Record<string, string> = {
-  "Ischia Porto": "pin-port",
-  Casamicciola: "pin-casamicciola",
-  "Lacco Ameno": "pin-lacco",
-  Forio: "pin-forio",
-  "Sant'Angelo": "pin-sant-angelo",
-  Barano: "pin-barano"
-};
-const labelClasses: Record<string, string> = {
-  "Ischia Porto": "label-port",
-  Casamicciola: "label-casamicciola",
-  "Lacco Ameno": "label-lacco",
-  Forio: "label-forio",
-  "Sant'Angelo": "label-sant-angelo",
-  Barano: "label-barano"
-};
 
 function sortPickupPoints(points: PublicPickupPoint[]) {
   return [...points].sort((a, b) => {
@@ -62,28 +47,7 @@ export function PickupPointsSection({
       </div>
 
       <div className="pickup-section-body">
-        <div className="pickup-map" aria-hidden="true">
-          <svg className="island-shape" viewBox="0 0 420 260" role="img" focusable="false">
-            <path
-              d="M75 83c-12-8-13-24 1-31 10-5 18 5 28 7 23 4 39 7 61 5 29-2 38 12 61 16 22 4 36-4 51 11 11 11 11 25 28 31 15 5 27 10 29 27 2 16-8 27-24 29-32 4-55 2-84 17-27 14-57 29-94 20-24-6-49-2-72-11-18-7-31-21-26-35 3-10 15-9 20-17 7-11-8-22-4-36 3-11 17-20 25-33Z"
-              className="island-fill"
-            />
-            <path
-              d="M75 83c-12-8-13-24 1-31 10-5 18 5 28 7 23 4 39 7 61 5 29-2 38 12 61 16 22 4 36-4 51 11 11 11 11 25 28 31 15 5 27 10 29 27 2 16-8 27-24 29-32 4-55 2-84 17-27 14-57 29-94 20-24-6-49-2-72-11-18-7-31-21-26-35 3-10 15-9 20-17 7-11-8-22-4-36 3-11 17-20 25-33Z"
-              className="island-main"
-            />
-            <path d="M330 228 Q353 218 378 228 Q396 235 412 226" className="island-wave island-wave-gold" />
-            <path d="M348 244 Q368 236 390 244" className="island-wave island-wave-short island-wave-gold" />
-          </svg>
-          {points.slice(0, 6).map((point, index) => (
-            <span className={`map-pin ${markerClasses[point.zone] || `pin-${index + 1}`}`} key={point.id}>{index + 1}</span>
-          ))}
-          {points.slice(0, 6).map((point, index) => (
-            <span className={`map-label ${labelClasses[point.zone] || `label-${index + 1}`}`} key={`${point.id}-label`}>
-              {point.zone}
-            </span>
-          ))}
-        </div>
+        <IschiaPickupMap points={points.slice(0, 6)} />
 
         <div className="pickup-list">
           {points.map((point, index) => {

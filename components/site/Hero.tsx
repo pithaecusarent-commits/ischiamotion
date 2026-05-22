@@ -83,7 +83,7 @@ export function Hero({
         <div className="hero-stat-row">
           <div className="hero-stat">
             <span className="hero-stat-val">200+</span>
-            <div className="hero-stat-label">{locale === "it" ? "Veicoli disponibili" : "Available vehicles"}</div>
+            <div className="hero-stat-label">{locale === "it" ? "Mezzi selezionati" : "Selected vehicles"}</div>
           </div>
           <div className="hero-stat">
             <span className="hero-stat-val">4.9★</span>
