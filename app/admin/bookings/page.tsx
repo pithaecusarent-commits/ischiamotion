@@ -9,7 +9,7 @@ export default async function AdminBookingsPage() {
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
-      <section className="mx-auto max-w-6xl rounded-[30px] bg-cream p-8 shadow-soft">
+      <section className="mx-auto max-w-7xl rounded-[30px] bg-cream p-8 shadow-soft">
         <p className="section-kicker">Admin</p>
         <h1 className="mt-3 font-serif text-4xl font-bold">Prenotazioni</h1>
         <p className="mt-4 text-ink/65">Richieste ricevute dal sito IschiaMotion.</p>
@@ -37,53 +37,59 @@ export default async function AdminBookingsPage() {
         ) : null}
 
         {bookings.length > 0 ? (
-          <div className="mt-8 overflow-x-auto rounded-[28px] border border-ink/10 bg-white/75 shadow-card">
-            <table className="w-full min-w-[1120px] border-collapse text-left text-sm">
+          <div className="mt-8 overflow-hidden rounded-[28px] border border-ink/10 bg-white/75 shadow-card">
+            <table className="w-full table-fixed border-collapse text-left text-xs xl:text-sm">
+              <colgroup>
+                <col className="w-[15%]" />
+                <col className="w-[12%]" />
+                <col className="w-[16%]" />
+                <col className="w-[12%]" />
+                <col className="w-[11%]" />
+                <col className="w-[12%]" />
+                <col className="w-[12%]" />
+                <col className="w-[10%]" />
+              </colgroup>
               <thead className="bg-sea/10 text-[11px] uppercase tracking-[0.14em] text-green-deep">
                 <tr>
-                  <th className="p-4">Codice</th>
-                  <th className="p-4">Cliente</th>
-                  <th className="p-4">Email</th>
-                  <th className="p-4">Telefono</th>
-                  <th className="p-4">Veicolo</th>
-                  <th className="p-4">Date</th>
-                  <th className="p-4">Pickup point</th>
-                  <th className="p-4">Stato</th>
-                  <th className="p-4">Creata</th>
-                  <th className="p-4">Azioni</th>
+                  <th className="px-3 py-4">Codice</th>
+                  <th className="px-3 py-4">Cliente</th>
+                  <th className="px-3 py-4">Email</th>
+                  <th className="px-3 py-4">Telefono</th>
+                  <th className="px-3 py-4">Veicolo</th>
+                  <th className="px-3 py-4">Date</th>
+                  <th className="px-3 py-4">Pickup point</th>
+                  <th className="px-3 py-4">Stato</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink/10">
                 {bookings.map((booking) => (
                   <tr className="align-top transition-colors hover:bg-sea/5" key={booking.id}>
-                    <td className="p-4">
+                    <td className="px-3 py-4">
                       <span className="inline-flex whitespace-nowrap rounded-full bg-ink px-3 py-1 text-xs font-bold text-white">
                         {booking.booking_code}
                       </span>
+                      <div className="mt-2 text-[11px] leading-4 text-ink/50">{formatAdminDateTime(booking.created_at)}</div>
+                      <a className="mt-2 inline-flex rounded-full border border-ink/10 px-3 py-1.5 text-[11px] font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep" href={`/admin/bookings/${booking.id}`}>
+                        Dettagli
+                      </a>
                     </td>
-                    <td className="p-4 font-semibold text-ink">{booking.customer_first_name} {booking.customer_last_name}</td>
-                    <td className="p-4 text-ink/70">{booking.customer_email}</td>
-                    <td className="p-4 text-ink/70">{booking.customer_phone || "-"}</td>
-                    <td className="max-w-[180px] p-4 text-ink/75">{bookingVehicle(booking)}</td>
-                    <td className="p-4">
+                    <td className="break-words px-3 py-4 font-semibold text-ink">{booking.customer_first_name} {booking.customer_last_name}</td>
+                    <td className="break-words px-3 py-4 text-ink/70">{booking.customer_email}</td>
+                    <td className="break-words px-3 py-4 text-ink/70">{booking.customer_phone || "-"}</td>
+                    <td className="break-words px-3 py-4 text-ink/75">{bookingVehicle(booking)}</td>
+                    <td className="px-3 py-4">
                       <div className="grid gap-1 whitespace-nowrap">
                         <span className="font-semibold text-ink">{formatAdminDate(booking.start_date)}</span>
                         <span className="text-xs text-ink/50">fino al {formatAdminDate(booking.end_date)}</span>
                         {booking.pickup_time ? <span className="text-xs text-green-deep">ore {booking.pickup_time}</span> : null}
                       </div>
                     </td>
-                    <td className="max-w-[220px] p-4">
-                      <span className="inline-flex rounded-2xl bg-sand px-3 py-2 text-xs font-bold text-green-deep">
+                    <td className="px-3 py-4">
+                      <span className="inline-flex max-w-full rounded-2xl bg-sand px-3 py-2 text-xs font-bold leading-4 text-green-deep">
                         {bookingPickupPoint(booking)}
                       </span>
                     </td>
-                    <td className="p-4"><StatusBadge status={booking.status} /></td>
-                    <td className="p-4 whitespace-nowrap text-ink/60">{formatAdminDateTime(booking.created_at)}</td>
-                    <td className="p-4">
-                      <a className="inline-flex rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep" href={`/admin/bookings/${booking.id}`}>
-                        Dettagli
-                      </a>
-                    </td>
+                    <td className="whitespace-nowrap px-3 py-4"><StatusBadge status={booking.status} /></td>
                   </tr>
                 ))}
               </tbody>
