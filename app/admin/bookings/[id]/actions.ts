@@ -4,8 +4,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { adminBookingStatuses, updateAdminBookingStatus, type AdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
+import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithMessage(id: string, type: "success" | "error") {
+function redirectWithMessage(id: string, type: "success" | "error" | "voucherRequired") {
   redirect(`/admin/bookings/${id}?statusUpdate=${type}`);
 }
 
@@ -18,6 +19,15 @@ export async function updateBookingStatusAction(formData: FormData) {
   }
 
   const { accessToken } = await requireAdmin(`/admin/bookings/${bookingId}`);
+
+  if (nextStatus === "checked_in") {
+    const { voucher } = await getAdminVoucherByBookingId(accessToken, bookingId);
+
+    if (!voucher) {
+      redirectWithMessage(bookingId, "voucherRequired");
+    }
+  }
+
   const { error } = await updateAdminBookingStatus(accessToken, bookingId, nextStatus as AdminBookingStatus);
 
   if (error) {

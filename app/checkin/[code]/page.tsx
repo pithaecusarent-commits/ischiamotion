@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getPublicCheckinVoucher } from "@/lib/supabase/queries/vouchers";
 import { createQrSvgDataUrl } from "@/lib/qr";
+import { PrintVoucherButton } from "@/app/checkin/[code]/PrintVoucherButton";
 
 type Props = {
   params: {
@@ -25,7 +26,7 @@ export default async function PublicCheckinPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
-      <section className="mx-auto max-w-2xl rounded-[30px] bg-cream p-8 shadow-soft">
+      <section className="voucher-print-area mx-auto max-w-2xl rounded-[30px] bg-cream p-8 shadow-soft">
         <div className="flex justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/ischiamotion-logo.png" alt="IschiaMotion" className="h-20 w-auto" />
@@ -43,9 +44,10 @@ export default async function PublicCheckinPage({ params }: Props) {
               <p className="section-kicker">Voucher IschiaMotion</p>
               <h1 className="mt-3 font-serif text-4xl font-bold">Check-in ritiro</h1>
               <p className="mt-3 text-ink/65">Presenta questa schermata al punto ritiro IschiaMotion.</p>
+              <PrintVoucherButton />
             </div>
 
-            <div className="mx-auto mt-8 max-w-[240px] rounded-[28px] border border-ink/10 bg-white p-4">
+            <div className="print-qr-card mx-auto mt-8 max-w-[240px] rounded-[28px] border border-ink/10 bg-white p-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={createQrSvgDataUrl(`/checkin/${voucher.voucher_code}`)} alt={`QR voucher ${voucher.voucher_code}`} className="h-auto w-full" />
             </div>

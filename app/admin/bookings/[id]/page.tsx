@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
 import { markBookingCheckedInAction } from "@/app/admin/bookings/[id]/checkin-actions";
 import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
+import { VoucherPrintButton } from "@/app/admin/bookings/[id]/VoucherPrintButton";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import {
   bookingCustomerNotes,
@@ -42,7 +43,7 @@ function DetailRow({ label, value }: { label: string; value: ReactNode }) {
 export default async function AdminBookingDetailPage({ params, searchParams }: Props) {
   const { accessToken } = await requireAdmin(`/admin/bookings/${params.id}`);
   const { booking, error } = await getAdminBookingById(accessToken, params.id);
-  const { voucher } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null };
+  const { voucher, error: voucherLoadError } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null, error: null };
   const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
   const statusMessage = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
@@ -133,6 +134,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {statusMessage === "voucherRequired" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Genera prima il voucher cliente.
+                </div>
+              ) : null}
+
               <form action={updateBookingStatusAction} className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
                 <input type="hidden" name="bookingId" value={booking.id} />
                 <label className="grid gap-2 text-sm font-bold text-ink/70">
@@ -186,7 +193,13 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
               {voucherMessage === "error" ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
-                  Impossibile generare il voucher. Verifica che la prenotazione sia confermata.
+                  Impossibile generare il voucher. Verifica che la prenotazione sia confermata e che la migration 0006 sia applicata su Supabase.
+                </div>
+              ) : null}
+
+              {voucherLoadError ? (
+                <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+                  Impossibile leggere i voucher cliente. Verifica che la migration 0006 e le policy admin su booking_vouchers siano applicate.
                 </div>
               ) : null}
 
@@ -196,45 +209,71 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {booking.status === "confirmed" && !voucher ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-5">
+                  <div className="text-sm font-semibold text-green-deep">
+                    Prenotazione confermata: puoi generare il voucher cliente.
+                  </div>
+                  <form action={generateVoucherAction} className="mt-4">
+                    <input type="hidden" name="bookingId" value={booking.id} />
+                    <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                      Genera voucher
+                    </button>
+                  </form>
+                </div>
+              ) : null}
+
               {["cancelled", "no_show"].includes(booking.status) ? (
                 <div className="mt-5 rounded-3xl border border-stone-200 bg-stone-100 p-4 text-sm font-semibold text-stone-700">
                   Voucher non disponibile per prenotazioni annullate o no-show.
                 </div>
               ) : null}
 
-              {booking.status === "confirmed" && !voucher ? (
-                <form action={generateVoucherAction} className="mt-5">
-                  <input type="hidden" name="bookingId" value={booking.id} />
-                  <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
-                    Genera voucher
-                  </button>
-                </form>
-              ) : null}
-
               {voucher ? (
-                <div className="mt-6 grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
-                  <div className="rounded-[28px] border border-ink/10 bg-white p-4">
+                <div className="voucher-print-area mt-6 rounded-[28px] border border-ink/10 bg-white/70 p-5">
+                  <div className="hidden print-voucher-header">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={createQrSvgDataUrl(voucher.qr_payload || `/checkin/${voucher.voucher_code}`)}
-                      alt={`QR voucher ${voucher.voucher_code}`}
-                      className="h-auto w-full"
-                    />
+                    <img src="/images/ischiamotion-logo.png" alt="IschiaMotion" />
+                    <h1>Voucher IschiaMotion</h1>
+                    <p>Mostra questo voucher al punto ritiro IschiaMotion.</p>
                   </div>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <DetailRow label="Codice voucher" value={voucher.voucher_code} />
-                    <DetailRow
-                      label="Link check-in"
-                      value={<a className="text-green-deep underline" href={`/checkin/${voucher.voucher_code}`}>{`/checkin/${voucher.voucher_code}`}</a>}
-                    />
-                    <DetailRow label="Cliente" value={`${booking.customer_first_name} ${booking.customer_last_name}`} />
-                    <DetailRow label="Veicolo" value={bookingVehicle(booking)} />
-                    <DetailRow
-                      label="Date"
-                      value={`${formatAdminDate(booking.start_date)} - ${formatAdminDate(booking.end_date)}${booking.pickup_time ? `, ore ${booking.pickup_time}` : ""}`}
-                    />
-                    <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
-                    <DetailRow label="Stato" value={<StatusBadge status={booking.status} />} />
+
+                  <div className="mb-5 flex flex-wrap gap-3 print-hidden">
+                    <VoucherPrintButton />
+                    <a
+                      className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep"
+                      href={`/checkin/${voucher.voucher_code}`}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Apri voucher cliente
+                    </a>
+                  </div>
+
+                  <div className="grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
+                    <div className="rounded-[28px] border border-ink/10 bg-white p-4 print-qr-card">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={createQrSvgDataUrl(voucher.qr_payload || `/checkin/${voucher.voucher_code}`)}
+                        alt={`QR voucher ${voucher.voucher_code}`}
+                        className="h-auto w-full"
+                      />
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2 print-voucher-details">
+                      <DetailRow label="Codice voucher" value={voucher.voucher_code} />
+                      <DetailRow
+                        label="Link check-in"
+                        value={<a className="text-green-deep underline" href={`/checkin/${voucher.voucher_code}`}>{`/checkin/${voucher.voucher_code}`}</a>}
+                      />
+                      <DetailRow label="Cliente" value={`${booking.customer_first_name} ${booking.customer_last_name}`} />
+                      <DetailRow label="Veicolo" value={bookingVehicle(booking)} />
+                      <DetailRow
+                        label="Date"
+                        value={`${formatAdminDate(booking.start_date)} - ${formatAdminDate(booking.end_date)}${booking.pickup_time ? `, ore ${booking.pickup_time}` : ""}`}
+                      />
+                      <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
+                      <DetailRow label="Stato" value={<StatusBadge status={booking.status} />} />
+                    </div>
                   </div>
                 </div>
               ) : null}

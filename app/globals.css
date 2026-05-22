@@ -1592,3 +1592,93 @@ footer {
   .hero-actions { flex-direction: column; }
   .primary-btn, .ghost-btn { width: 100%; }
 }
+
+@media print {
+  @page {
+    margin: 14mm;
+    size: A4;
+  }
+
+  body {
+    background: white !important;
+    color: #151512 !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .voucher-print-area,
+  .voucher-print-area * {
+    visibility: visible !important;
+  }
+
+  .voucher-print-area {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  .print-voucher-header {
+    display: grid !important;
+    justify-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .print-voucher-header img {
+    width: auto;
+    height: 84px;
+  }
+
+  .print-voucher-header h1 {
+    margin: 0;
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+  }
+
+  .print-voucher-header p {
+    margin: 0;
+    color: rgba(21,21,18,.72);
+    font-size: 14px;
+  }
+
+  .print-qr-card {
+    max-width: 260px !important;
+    margin: 0 auto 24px !important;
+    padding: 12px !important;
+    border: 1px solid rgba(21,21,18,.14) !important;
+    border-radius: 18px !important;
+    background: white !important;
+    break-inside: avoid;
+  }
+
+  .print-voucher-details,
+  .voucher-print-area .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .voucher-print-area .rounded-3xl,
+  .voucher-print-area .rounded-\[28px\] {
+    border: 1px solid rgba(21,21,18,.12) !important;
+    border-radius: 14px !important;
+    background: white !important;
+    box-shadow: none !important;
+    padding: 14px !important;
+    break-inside: avoid;
+  }
+}
