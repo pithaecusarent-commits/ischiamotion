@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPublicCheckinVoucher } from "@/lib/supabase/queries/vouchers";
-import { createQrSvgDataUrl } from "@/lib/qr";
+import { generateQrDataUrl } from "@/lib/qr";
 import { PrintVoucherButton } from "@/app/checkin/[code]/PrintVoucherButton";
 
 type Props = {
@@ -19,6 +19,7 @@ function formatDate(value: string) {
 
 export default async function PublicCheckinPage({ params }: Props) {
   const { voucher, error } = await getPublicCheckinVoucher(params.code);
+  const qrDataUrl = voucher ? await generateQrDataUrl(`/checkin/${voucher.voucher_code}`) : "";
 
   if (!voucher && !error) {
     notFound();
@@ -49,7 +50,7 @@ export default async function PublicCheckinPage({ params }: Props) {
 
             <div className="print-qr-card mx-auto mt-8 max-w-[240px] rounded-[28px] border border-ink/10 bg-white p-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={createQrSvgDataUrl(`/checkin/${voucher.voucher_code}`)} alt={`QR voucher ${voucher.voucher_code}`} className="h-auto w-full" />
+              <img src={qrDataUrl} alt={`QR voucher ${voucher.voucher_code}`} className="h-auto w-full" />
             </div>
 
             <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/70 p-6">

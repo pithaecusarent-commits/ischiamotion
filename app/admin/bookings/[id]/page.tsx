@@ -18,7 +18,7 @@ import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { getAdminBookingById } from "@/lib/supabase/queries/admin-bookings";
 import { getAdminCheckinByBookingId } from "@/lib/supabase/queries/checkins";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
-import { createQrSvgDataUrl } from "@/lib/qr";
+import { generateQrDataUrl, toAbsoluteCheckinUrl } from "@/lib/qr";
 
 type Props = {
   params: {
@@ -48,6 +48,9 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const statusMessage = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
   const checkinMessage = searchParams?.checkin;
+  const voucherPath = voucher ? `/checkin/${voucher.voucher_code}` : "";
+  const voucherUrl = voucher ? toAbsoluteCheckinUrl(voucherPath) : "";
+  const voucherQrDataUrl = voucher ? await generateQrDataUrl(voucher.qr_payload || voucherPath) : "";
 
   if (!booking && !error) {
     notFound();
@@ -242,7 +245,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     <VoucherPrintButton />
                     <a
                       className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep"
-                      href={`/checkin/${voucher.voucher_code}`}
+                      href={voucherPath}
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -254,7 +257,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     <div className="rounded-[28px] border border-ink/10 bg-white p-4 print-qr-card">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={createQrSvgDataUrl(voucher.qr_payload || `/checkin/${voucher.voucher_code}`)}
+                        src={voucherQrDataUrl}
                         alt={`QR voucher ${voucher.voucher_code}`}
                         className="h-auto w-full"
                       />
@@ -263,7 +266,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                       <DetailRow label="Codice voucher" value={voucher.voucher_code} />
                       <DetailRow
                         label="Link check-in"
-                        value={<a className="text-green-deep underline" href={`/checkin/${voucher.voucher_code}`}>{`/checkin/${voucher.voucher_code}`}</a>}
+                        value={<a className="break-all text-green-deep underline" href={voucherPath}>{voucherUrl}</a>}
                       />
                       <DetailRow label="Cliente" value={`${booking.customer_first_name} ${booking.customer_last_name}`} />
                       <DetailRow label="Veicolo" value={bookingVehicle(booking)} />
