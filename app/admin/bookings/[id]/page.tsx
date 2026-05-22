@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
+import { markBookingCheckedInAction } from "@/app/admin/bookings/[id]/checkin-actions";
 import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import {
@@ -14,6 +15,7 @@ import {
 } from "@/app/admin/bookings/booking-ui";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { getAdminBookingById } from "@/lib/supabase/queries/admin-bookings";
+import { getAdminCheckinByBookingId } from "@/lib/supabase/queries/checkins";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 import { createQrSvgDataUrl } from "@/lib/qr";
 
@@ -24,6 +26,7 @@ type Props = {
   searchParams?: {
     statusUpdate?: string;
     voucher?: string;
+    checkin?: string;
   };
 };
 
@@ -40,8 +43,10 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const { accessToken } = await requireAdmin(`/admin/bookings/${params.id}`);
   const { booking, error } = await getAdminBookingById(accessToken, params.id);
   const { voucher } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null };
+  const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
   const statusMessage = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
+  const checkinMessage = searchParams?.checkin;
 
   if (!booking && !error) {
     notFound();
@@ -231,6 +236,70 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
                     <DetailRow label="Stato" value={<StatusBadge status={booking.status} />} />
                   </div>
+                </div>
+              ) : null}
+            </div>
+
+            <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Check-in cliente</div>
+                  <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Registrazione ritiro</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+                    Usa questa azione quando il cliente si presenta al punto ritiro IschiaMotion con il voucher.
+                  </p>
+                </div>
+                {booking.status === "checked_in" || checkin ? <StatusBadge status="checked_in" /> : null}
+              </div>
+
+              {checkinMessage === "success" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Check-in registrato correttamente.
+                </div>
+              ) : null}
+
+              {checkinMessage === "error" ? (
+                <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+                  Impossibile registrare il check-in. Verifica che esista un voucher valido.
+                </div>
+              ) : null}
+
+              {booking.status === "pending" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Conferma la richiesta e genera il voucher prima del check-in.
+                </div>
+              ) : null}
+
+              {booking.status === "confirmed" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Genera il voucher prima di registrare il check-in.
+                </div>
+              ) : null}
+
+              {booking.status === "voucher_sent" ? (
+                voucher ? (
+                  <form action={markBookingCheckedInAction} className="mt-5">
+                    <input type="hidden" name="bookingId" value={booking.id} />
+                    <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                      Segna check-in effettuato
+                    </button>
+                  </form>
+                ) : (
+                  <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+                    Voucher non trovato: genera o verifica il voucher prima del check-in.
+                  </div>
+                )
+              ) : null}
+
+              {booking.status === "checked_in" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Check-in effettuato{checkin?.checked_in_at ? ` il ${formatAdminDateTime(checkin.checked_in_at)}` : "."}
+                </div>
+              ) : null}
+
+              {["cancelled", "no_show"].includes(booking.status) ? (
+                <div className="mt-5 rounded-3xl border border-stone-200 bg-stone-100 p-4 text-sm font-semibold text-stone-700">
+                  Check-in non disponibile per prenotazioni annullate o no-show.
                 </div>
               ) : null}
             </div>
