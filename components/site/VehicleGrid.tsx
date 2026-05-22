@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Locale, PublicPickupPoint, PublicVehicle, VehicleFilter } from "@/lib/types";
-import { vehicles } from "@/lib/mock/vehicles";
+import { vehicles as mockVehicles } from "@/lib/mock/vehicles";
 import { VehicleCard } from "@/components/site/VehicleCard";
 import { BookingRequestModal } from "@/components/site/BookingRequestModal";
+import { getPublicVehicles } from "@/lib/supabase/queries/public-vehicles";
 
 export function useVehicleFilter() {
   return useState<VehicleFilter>("all");
@@ -15,18 +16,50 @@ export function VehicleGrid({
   active,
   pickupPoints,
   startDate,
-  endDate
+  endDate,
+  vehicles
 }: {
   locale: Locale;
   active: VehicleFilter;
   pickupPoints: PublicPickupPoint[];
   startDate: string;
   endDate: string;
+  vehicles?: PublicVehicle[];
 }) {
   const [selectedVehicle, setSelectedVehicle] = useState<PublicVehicle | null>(null);
+  const [vehicleList, setVehicleList] = useState(vehicles?.length ? vehicles : mockVehicles);
+
+  useEffect(() => {
+    let isMounted = true;
+    const categorySlug = active === "scooter"
+      ? "scooter"
+      : active === "auto"
+        ? "auto"
+        : active === "bici"
+          ? "bici-elettriche"
+          : active === "barca"
+            ? "barche-gommoni"
+            : undefined;
+
+    getPublicVehicles({
+      locale,
+      category_slug: categorySlug,
+      start_date: startDate,
+      end_date: endDate
+    }).then((nextVehicles) => {
+      if (isMounted && nextVehicles.length > 0) {
+        setVehicleList(nextVehicles);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [active, endDate, locale, startDate]);
+
   const filtered = useMemo(
-    () => vehicles.filter((vehicle) => vehicle.is_available),
-    []
+    () => vehicleList.filter((vehicle) => vehicle.is_available).sort((a, b) => a.price_from - b.price_from),
+    [vehicleList]
   );
   const visibleIds = useMemo(
     () => new Set(filtered.filter((vehicle) => active === "all" || vehicle.category === active).map((vehicle) => vehicle.id)),

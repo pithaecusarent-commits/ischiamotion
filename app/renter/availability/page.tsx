@@ -1,8 +1,18 @@
-import { saveRenterAvailability, saveRenterDeliveryCapability } from "@/app/renter/availability/actions";
+import {
+  createRenterAvailabilityRuleAction,
+  deleteRenterAvailabilityRuleAction,
+  saveRenterAvailability,
+  saveRenterDeliveryCapability
+} from "@/app/renter/availability/actions";
 import { AccessDenied, EmptyState, RenterShell } from "@/app/renter/renter-ui";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
 import { requireRenter } from "@/lib/supabase/renter-auth";
-import { getRenterAvailability, getRenterDeliveryCapabilities } from "@/lib/supabase/queries/renter";
+import {
+  getRenterAvailability,
+  getRenterAvailabilityRules,
+  getRenterDeliveryCapabilities,
+  getRenterVehicles
+} from "@/lib/supabase/queries/renter";
 
 type Props = {
   searchParams?: {
@@ -18,11 +28,18 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
     return <AccessDenied />;
   }
 
-  const [{ availability, error }, { capabilities, error: capabilitiesError }] = await Promise.all([
+  const [
+    { availability, error },
+    { capabilities, error: capabilitiesError },
+    { vehicles, error: vehiclesError },
+    { rules, error: rulesError }
+  ] = await Promise.all([
     getRenterAvailability(session.accessToken),
-    getRenterDeliveryCapabilities(session.accessToken)
+    getRenterDeliveryCapabilities(session.accessToken),
+    getRenterVehicles(session.accessToken),
+    getRenterAvailabilityRules(session.accessToken)
   ]);
-  const pageError = error || capabilitiesError;
+  const pageError = error || capabilitiesError || vehiclesError || rulesError;
 
   return (
     <RenterShell title="Disponibilita categorie">
@@ -154,6 +171,121 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
           </div>
         </>
       ) : null}
+
+      <div className="mb-4 mt-8">
+        <h2 className="font-serif text-3xl font-bold">Calendario disponibilità mezzi</h2>
+        <p className="mt-2 text-sm text-ink/60">
+          Chiudi date non disponibili o imposta un minimo giorni noleggio per singolo mezzo.
+        </p>
+      </div>
+
+      {vehicles.length === 0 ? (
+        <EmptyState
+          title="Nessun veicolo assegnato"
+          text="Nessun veicolo assegnato al tuo noleggio."
+        />
+      ) : (
+        <div className="grid gap-5">
+          <form action={createRenterAvailabilityRuleAction} className="rounded-[28px] border border-ink/10 bg-white/70 p-5">
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="grid gap-2 text-sm font-bold text-ink/70">
+                Veicolo
+                <select
+                  className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm outline-none focus:border-sea/50"
+                  name="vehicle"
+                  required
+                >
+                  <option value="">Seleziona veicolo</option>
+                  {vehicles.map((vehicle) => (
+                    <option key={vehicle.id} value={`${vehicle.id}|${vehicle.renter_id}`}>
+                      {vehicle.title_it}{vehicle.internal_name ? ` - ${vehicle.internal_name}` : ""}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-bold text-ink/70">
+                Minimo giorni noleggio
+                <input
+                  className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm outline-none focus:border-sea/50"
+                  name="minStayDays"
+                  type="number"
+                  min="1"
+                  defaultValue="1"
+                />
+              </label>
+            </div>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <label className="grid gap-2 text-sm font-bold text-ink/70">
+                Data inizio
+                <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm outline-none focus:border-sea/50" name="dateFrom" type="date" required />
+              </label>
+              <label className="grid gap-2 text-sm font-bold text-ink/70">
+                Data fine
+                <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm outline-none focus:border-sea/50" name="dateTo" type="date" required />
+              </label>
+            </div>
+            <label className="mt-4 inline-flex items-center gap-3 text-sm font-bold text-ink/70">
+              <input className="h-5 w-5" name="isClosed" type="checkbox" defaultChecked />
+              Chiudi disponibilità per queste date
+            </label>
+            <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto]">
+              <input
+                className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm outline-none focus:border-sea/50"
+                name="notes"
+                placeholder="Note operative opzionali"
+              />
+              <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
+                Salva regola
+              </button>
+            </div>
+          </form>
+
+          {rules.length > 0 ? (
+            <div className="overflow-hidden rounded-[28px] border border-ink/10 bg-white/70">
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-left text-sm">
+                  <thead className="bg-cream text-xs uppercase tracking-[0.12em] text-ink/50">
+                    <tr>
+                      <th className="px-5 py-4">Veicolo</th>
+                      <th className="px-5 py-4">Dal / al</th>
+                      <th className="px-5 py-4">Chiuso</th>
+                      <th className="px-5 py-4">Min stay</th>
+                      <th className="px-5 py-4">Note</th>
+                      <th className="px-5 py-4">Azioni</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-ink/10">
+                    {rules.map((rule) => (
+                      <tr key={rule.id}>
+                        <td className="px-5 py-4 font-semibold">
+                          {rule.vehicles?.title_it || "-"}
+                          {rule.vehicles?.internal_name ? <span className="block text-xs text-ink/50">{rule.vehicles.internal_name}</span> : null}
+                        </td>
+                        <td className="px-5 py-4">{rule.date_from} / {rule.date_to}</td>
+                        <td className="px-5 py-4">{rule.is_closed ? "Sì" : "No"}</td>
+                        <td className="px-5 py-4">{rule.min_stay_days} giorni</td>
+                        <td className="px-5 py-4">{rule.notes || "-"}</td>
+                        <td className="px-5 py-4">
+                          <form action={deleteRenterAvailabilityRuleAction}>
+                            <input type="hidden" name="ruleId" value={rule.id} />
+                            <button className="rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink/65 hover:border-sea/30 hover:text-green-deep" type="submit">
+                              Elimina
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-[28px] border border-ink/10 bg-white/70 p-6 text-sm text-ink/60">
+              Nessuna regola calendario creata.
+            </div>
+          )}
+        </div>
+      )}
     </RenterShell>
   );
 }

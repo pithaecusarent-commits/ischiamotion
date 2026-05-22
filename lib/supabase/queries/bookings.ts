@@ -19,6 +19,8 @@ export type BookingRequestInput = {
   paymentMethod: BookingPaymentMethod;
   paymentNotes: string;
   notes: string;
+  vehicleId: string | null;
+  pickupPointId: string | null;
   vehicleLabel: string;
   pickupPointLabel: string;
 };
@@ -68,6 +70,8 @@ export async function createBookingRequest(input: BookingRequestInput) {
     customer_email: input.email,
     customer_phone: input.phone || null,
     customer_language: input.language,
+    vehicle_id: input.vehicleId,
+    pickup_point_id: input.pickupPointId,
     start_date: input.startDate,
     end_date: input.endDate,
     pickup_time: input.pickupTime || null,

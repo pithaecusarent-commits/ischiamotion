@@ -102,6 +102,7 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
   }, [locale, vehicle]);
 
   if (!vehicle) return null;
+  const currentVehicle = vehicle;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -138,6 +139,8 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
         paymentMethod: String(formData.get("paymentMethod") || "unknown") as BookingPaymentMethod,
         paymentNotes: String(formData.get("paymentNotes") || ""),
         notes: String(formData.get("notes") || ""),
+        vehicleId: currentVehicle.source === "supabase" ? currentVehicle.id : null,
+        pickupPointId: currentVehicle.source === "supabase" ? currentVehicle.pickup_point_id || pickupPoint.id : null,
         vehicleLabel,
         pickupPointLabel: formatPickupLabel(pickupPoint, locale)
       });

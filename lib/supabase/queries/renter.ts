@@ -75,6 +75,32 @@ export type RenterDeliveryCapabilityItem = {
   updated_at: string | null;
 };
 
+export type RenterVehicleItem = {
+  id: string;
+  renter_id: string;
+  title_it: string;
+  internal_name: string | null;
+  price_from: number | null;
+  is_active: boolean;
+};
+
+export type RenterAvailabilityRuleItem = {
+  id: string;
+  vehicle_id: string;
+  renter_id: string;
+  date_from: string;
+  date_to: string;
+  is_closed: boolean;
+  min_stay_days: number;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  vehicles: {
+    title_it: string;
+    internal_name: string | null;
+  } | null;
+};
+
 export type RenterCheckinResult = {
   outcome: "checked_in" | "already_checked_in" | "invalid" | "invalid_status" | "denied";
   message: string;
@@ -310,6 +336,130 @@ export async function getRenterDeliveryCapabilities(accessToken: string): Promis
     };
   } catch (error) {
     return { capabilities: [], error: error instanceof Error ? error.message : "Unable to load delivery capabilities." };
+  }
+}
+
+export async function getRenterVehicles(accessToken: string): Promise<{ vehicles: RenterVehicleItem[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const renterResult = await getRenterIds(accessToken);
+
+    if (renterResult.error) {
+      return { vehicles: [], error: renterResult.error };
+    }
+
+    if (renterResult.renterIds.length === 0) {
+      return { vehicles: [], error: null };
+    }
+
+    const { data, error } = await supabase
+      .from("vehicles")
+      .select("id, renter_id, title_it, internal_name, price_from, is_active")
+      .in("renter_id", renterResult.renterIds)
+      .order("title_it", { ascending: true });
+
+    if (error) {
+      return { vehicles: [], error: error.message };
+    }
+
+    return { vehicles: (data || []) as unknown as RenterVehicleItem[], error: null };
+  } catch (error) {
+    return { vehicles: [], error: error instanceof Error ? error.message : "Unable to load renter vehicles." };
+  }
+}
+
+export async function getRenterAvailabilityRules(accessToken: string): Promise<{ rules: RenterAvailabilityRuleItem[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { data, error } = await supabase
+      .from("vehicle_availability_rules")
+      .select(`
+        id,
+        vehicle_id,
+        renter_id,
+        date_from,
+        date_to,
+        is_closed,
+        min_stay_days,
+        notes,
+        created_at,
+        updated_at,
+        vehicles (
+          title_it,
+          internal_name
+        )
+      `)
+      .order("date_from", { ascending: true });
+
+    if (error) {
+      return { rules: [], error: error.message };
+    }
+
+    const rules = ((data || []) as unknown as Array<Omit<RenterAvailabilityRuleItem, "vehicles"> & {
+      vehicles: RenterAvailabilityRuleItem["vehicles"] | RenterAvailabilityRuleItem["vehicles"][];
+    }>).map((rule) => ({
+      ...rule,
+      vehicles: Array.isArray(rule.vehicles) ? rule.vehicles[0] || null : rule.vehicles
+    }));
+
+    return { rules, error: null };
+  } catch (error) {
+    return { rules: [], error: error instanceof Error ? error.message : "Unable to load availability rules." };
+  }
+}
+
+export async function createRenterAvailabilityRule(input: {
+  accessToken: string;
+  vehicleId: string;
+  renterId: string;
+  dateFrom: string;
+  dateTo: string;
+  isClosed: boolean;
+  minStayDays: number;
+  notes: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+    const { error } = await supabase
+      .from("vehicle_availability_rules")
+      .insert({
+        vehicle_id: input.vehicleId,
+        renter_id: input.renterId,
+        date_from: input.dateFrom,
+        date_to: input.dateTo,
+        is_closed: input.isClosed,
+        min_stay_days: input.minStayDays,
+        notes: input.notes.trim() || null
+      });
+
+    if (error) {
+      return { error: error.message };
+    }
+
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to create availability rule." };
+  }
+}
+
+export async function deleteRenterAvailabilityRule(input: {
+  accessToken: string;
+  ruleId: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+    const { error } = await supabase
+      .from("vehicle_availability_rules")
+      .delete()
+      .eq("id", input.ruleId);
+
+    if (error) {
+      return { error: error.message };
+    }
+
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to delete availability rule." };
   }
 }
 

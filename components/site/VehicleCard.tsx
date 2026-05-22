@@ -24,7 +24,12 @@ export function VehicleCard({
   return (
     <article className="vcard" data-category={vehicle.category} style={{ display: visible ? undefined : "none" }}>
       <div className="vcard-img">
-        <span>{vehicle.emoji}</span>
+        {vehicle.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={vehicle.image_url} alt={title} className="h-full w-full object-cover" />
+        ) : (
+          <span>{vehicle.emoji}</span>
+        )}
         <span className="avail">{locale === "it" ? "Su richiesta" : "On request"}</span>
       </div>
       <div className="vcard-body">

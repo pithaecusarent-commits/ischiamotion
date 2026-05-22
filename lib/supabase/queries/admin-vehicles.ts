@@ -135,14 +135,23 @@ export async function getAdminVehicles(accessToken: string): Promise<{ vehicles:
     const { data, error } = await supabase
       .from("vehicles")
       .select(vehicleSelect)
-      .order("created_at", { ascending: false });
+      .order("category_id", { ascending: true })
+      .order("price_from", { ascending: true, nullsFirst: false });
 
     if (error) {
       return { vehicles: [], error: error.message };
     }
 
+    const vehicles = ((data || []) as unknown as VehicleRow[])
+      .map((row) => normalizeVehicle(row, optionsResult.options))
+      .sort((a, b) => {
+        const categoryCompare = a.category_name.localeCompare(b.category_name, "it");
+        if (categoryCompare !== 0) return categoryCompare;
+        return (a.price_from ?? Number.MAX_SAFE_INTEGER) - (b.price_from ?? Number.MAX_SAFE_INTEGER);
+      });
+
     return {
-      vehicles: ((data || []) as unknown as VehicleRow[]).map((row) => normalizeVehicle(row, optionsResult.options)),
+      vehicles,
       error: null
     };
   } catch (error) {

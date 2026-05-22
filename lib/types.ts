@@ -18,6 +18,9 @@ export type PublicVehicle = {
   location_it: string;
   location_en: string;
   price_from: number;
+  image_url?: string | null;
+  pickup_point_id?: string | null;
+  source?: "mock" | "supabase";
   features_it: string[];
   features_en: string[];
   emoji: string;
@@ -155,5 +158,18 @@ export type RenterCategoryAvailability = {
   pickup_point_id: string | null;
   is_open: boolean;
   reason: string | null;
+  updated_at: string;
+};
+
+export type VehicleAvailabilityRule = {
+  id: string;
+  vehicle_id: string;
+  renter_id: string;
+  date_from: string;
+  date_to: string;
+  is_closed: boolean;
+  min_stay_days: number;
+  notes: string | null;
+  created_at: string;
   updated_at: string;
 };
