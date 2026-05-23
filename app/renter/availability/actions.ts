@@ -7,6 +7,7 @@ import {
   createRenterAvailabilityRule,
   deleteRenterAvailabilityRule,
   updateRenterAvailability,
+  updateRenterAvailabilityRule,
   updateRenterDeliveryCapability
 } from "@/lib/supabase/queries/renter";
 import type { BookingDeliveryMethod } from "@/lib/types";
@@ -91,11 +92,12 @@ export async function createRenterAvailabilityRuleAction(formData: FormData) {
 
   const vehicleValue = String(formData.get("vehicle") || "");
   const [vehicleId, renterId] = vehicleValue.split("|");
+  const ruleId = String(formData.get("ruleId") || "");
   const dateFrom = String(formData.get("dateFrom") || "");
   const dateTo = String(formData.get("dateTo") || "");
   const isClosed = formData.get("isClosed") === "on";
-  const parsedMinStayDays = Number(formData.get("minStayDays") || "1");
-  const minStayDays = Number.isFinite(parsedMinStayDays) ? Math.max(Math.trunc(parsedMinStayDays), 1) : 1;
+  const parsedMinRentalDays = Number(formData.get("minRentalDays") || "1");
+  const minRentalDays = Number.isFinite(parsedMinRentalDays) ? Math.max(Math.trunc(parsedMinRentalDays), 1) : 1;
   const notes = String(formData.get("notes") || "");
 
   if (!vehicleId || !renterId || !dateFrom || !dateTo) {
@@ -106,16 +108,28 @@ export async function createRenterAvailabilityRuleAction(formData: FormData) {
     redirect("/renter/availability?error=La%20data%20fine%20deve%20essere%20successiva%20alla%20data%20inizio");
   }
 
-  const { error } = await createRenterAvailabilityRule({
-    accessToken: session.accessToken,
-    vehicleId,
-    renterId,
-    dateFrom,
-    dateTo,
-    isClosed,
-    minStayDays,
-    notes
-  });
+  const { error } = ruleId
+    ? await updateRenterAvailabilityRule({
+      accessToken: session.accessToken,
+      ruleId,
+      vehicleId,
+      renterId,
+      dateFrom,
+      dateTo,
+      isClosed,
+      minRentalDays,
+      notes
+    })
+    : await createRenterAvailabilityRule({
+      accessToken: session.accessToken,
+      vehicleId,
+      renterId,
+      dateFrom,
+      dateTo,
+      isClosed,
+      minRentalDays,
+      notes
+    });
 
   revalidatePath("/renter/availability");
 

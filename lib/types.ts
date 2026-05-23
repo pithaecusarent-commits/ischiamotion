@@ -1,6 +1,6 @@
 export type Locale = "it" | "en";
 
-export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "bici";
+export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "bici" | "skipper";
 
 export type BookingDeliveryMethod = "pickup_point" | "port_delivery" | "hotel_delivery";
 
@@ -168,7 +168,7 @@ export type VehicleAvailabilityRule = {
   date_from: string;
   date_to: string;
   is_closed: boolean;
-  min_stay_days: number;
+  min_rental_days: number;
   notes: string | null;
   created_at: string;
   updated_at: string;

@@ -305,6 +305,9 @@ h1 em {
   gap: 10px;
   margin-bottom: 12px;
 }
+.search-grid-2col {
+  grid-template-columns: 1fr 1fr;
+}
 .s-field {
   display: flex;
   flex-direction: column;
@@ -617,6 +620,53 @@ h1 em {
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
 }
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.result-card {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  overflow: hidden;
+  border: 1px solid rgba(13,43,78,.08);
+  border-radius: 24px;
+  background: rgba(255,253,247,.76);
+  box-shadow: 0 18px 50px rgba(13,43,78,.08);
+}
+.result-media {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #E0F8FA, #DCF4F8);
+  font-size: 58px;
+}
+.result-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.result-body {
+  padding: 18px;
+}
+.result-body h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+.result-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
 .vcard {
   border-radius: 30px;
   overflow: hidden;
@@ -658,6 +708,15 @@ h1 em {
   filter: blur(2px);
 }
 .vcard-img span:first-child { position: relative; z-index: 1; }
+.vcard-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
 .vcard:nth-child(1) .vcard-img { background: linear-gradient(135deg, #E0F8FA, #DCF4F8); }
 .vcard:nth-child(2) .vcard-img { background: linear-gradient(135deg, #e8eef8, #fff2d9); }
 .vcard:nth-child(3) .vcard-img { background: linear-gradient(135deg, #fff2dc, #e4fbf6); }
@@ -1545,6 +1604,7 @@ footer {
   }
   .hero-left { padding-top: 8px; }
   .vehicles-grid { grid-template-columns: repeat(2, 1fr); }
+  .results-grid { grid-template-columns: 1fr; }
   .pickup-section-header,
   .pickup-section-body { grid-template-columns: 1fr; }
   .pickup-map { min-height: 380px; }
@@ -1586,6 +1646,7 @@ footer {
   .route-card, .rating-card, .pickup-card { display: none; }
   h1 { letter-spacing: -2.5px; }
   .search-grid { grid-template-columns: 1fr; }
+  .search-grid-2col { grid-template-columns: 1fr; }
   .search-topline { align-items: flex-start; flex-direction: column; gap: 3px; }
   .booking-modal-backdrop { padding: 12px; }
   .booking-modal { border-radius: 28px; max-height: 92vh; }
@@ -1612,6 +1673,9 @@ footer {
   .seo-section { padding: 0 16px 78px; }
   .section-header { align-items: flex-start; flex-direction: column; }
   .vehicles-grid { grid-template-columns: 1fr; }
+  .result-card { grid-template-columns: 1fr; }
+  .result-media { min-height: 160px; }
+  .result-foot { align-items: flex-start; flex-direction: column; }
   .trust-bar { grid-template-columns: repeat(2, 1fr); padding: 30px 16px; }
   .footer-wrap { flex-direction: column; text-align: center; }
   .footer-copy { min-width: auto; }

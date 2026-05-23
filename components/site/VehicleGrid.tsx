@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Locale, PublicPickupPoint, PublicVehicle, VehicleFilter } from "@/lib/types";
+import type { Locale, PublicVehicle, VehicleFilter } from "@/lib/types";
 import { vehicles } from "@/lib/mock/vehicles";
 import { VehicleCard } from "@/components/site/VehicleCard";
-import { BookingRequestModal } from "@/components/site/BookingRequestModal";
 
 export function useVehicleFilter() {
   return useState<VehicleFilter>("all");
@@ -13,17 +12,12 @@ export function useVehicleFilter() {
 export function VehicleGrid({
   locale,
   active,
-  pickupPoints,
-  startDate,
-  endDate
+  onCategoryChange
 }: {
   locale: Locale;
   active: VehicleFilter;
-  pickupPoints: PublicPickupPoint[];
-  startDate: string;
-  endDate: string;
+  onCategoryChange: (category: VehicleFilter) => void;
 }) {
-  const [selectedVehicle, setSelectedVehicle] = useState<PublicVehicle | null>(null);
   const filtered = useMemo(
     () => vehicles.filter((vehicle) => vehicle.is_available),
     []
@@ -33,24 +27,26 @@ export function VehicleGrid({
     [active, filtered]
   );
 
-  return (
-    <>
-      <section className="section reveal" id="veicoli">
-        <div className="section-header">
-          <div>
-            <div className="section-eyebrow">{locale === "it" ? "Richiesta disponibilità" : "Availability request"}</div>
-            <h2 className="section-title" dangerouslySetInnerHTML={{ __html: locale === "it" ? "Scegli il tuo<br><em>mezzo perfetto</em>" : "Choose your<br><em>perfect ride</em>" }} />
-          </div>
-          <a href="#prenota" className="see-all">{locale === "it" ? "Vedi tutti →" : "View all →"}</a>
-        </div>
+  function handleBook(vehicle: PublicVehicle) {
+    onCategoryChange(vehicle.category);
+    document.getElementById("prenota")?.scrollIntoView({ behavior: "smooth" });
+  }
 
-        <div className="vehicles-grid">
-          {filtered.map((vehicle) => (
-            <VehicleCard key={vehicle.id} vehicle={vehicle} locale={locale} visible={visibleIds.has(vehicle.id)} onBook={setSelectedVehicle} />
-          ))}
+  return (
+    <section className="section reveal" id="veicoli">
+      <div className="section-header">
+        <div>
+          <div className="section-eyebrow">{locale === "it" ? "Richiesta disponibilità" : "Availability request"}</div>
+          <h2 className="section-title" dangerouslySetInnerHTML={{ __html: locale === "it" ? "Scegli il tuo<br><em>mezzo perfetto</em>" : "Choose your<br><em>perfect ride</em>" }} />
         </div>
-      </section>
-      <BookingRequestModal locale={locale} vehicle={selectedVehicle} pickupPoints={pickupPoints} startDate={startDate} endDate={endDate} onClose={() => setSelectedVehicle(null)} />
-    </>
+        <a href="#prenota" className="see-all">{locale === "it" ? "Vedi tutti →" : "View all →"}</a>
+      </div>
+
+      <div className="vehicles-grid">
+        {filtered.map((vehicle) => (
+          <VehicleCard key={vehicle.id} vehicle={vehicle} locale={locale} visible={visibleIds.has(vehicle.id)} onBook={handleBook} />
+        ))}
+      </div>
+    </section>
   );
 }

@@ -37,7 +37,7 @@ export const vehicles: PublicVehicle[] = [
     price_from: 115,
     features_it: ["Senza patente", "Costa libera"],
     features_en: ["No license", "Free coast"],
-    emoji: "⛵",
+    emoji: "🛥️",
     is_available: true
   },
   {
@@ -64,6 +64,19 @@ export const vehicles: PublicVehicle[] = [
     features_it: ["Premium", "Full day"],
     features_en: ["Premium", "Full day"],
     emoji: "🚤",
+    is_available: true
+  },
+  {
+    id: "veh-skipper-1",
+    category: "skipper",
+    title_it: "Barca con skipper",
+    title_en: "Boat with skipper",
+    location_it: "Porto d'Ischia",
+    location_en: "Ischia Port",
+    price_from: 260,
+    features_it: ["Skipper incluso", "Itinerario personalizzato", "Esperienza premium"],
+    features_en: ["Skipper included", "Custom itinerary", "Premium experience"],
+    emoji: "⛵",
     is_available: true
   }
 ];

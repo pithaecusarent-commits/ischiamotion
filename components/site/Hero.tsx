@@ -1,4 +1,4 @@
-import type { Locale, PublicPickupPoint } from "@/lib/types";
+import type { BookingDeliveryMethod, Locale, PublicPickupPoint, VehicleFilter } from "@/lib/types";
 import { t } from "@/lib/i18n";
 import { HeroSearch } from "@/components/site/HeroSearch";
 import { VehicleFilters } from "@/components/site/VehicleFilters";
@@ -10,17 +10,21 @@ export function Hero({
   pickupPoints,
   startDate,
   endDate,
+  deliveryMethod,
   onStartDateChange,
-  onEndDateChange
+  onEndDateChange,
+  onDeliveryMethodChange
 }: {
   locale: Locale;
-  activeFilter: "all" | "scooter" | "auto" | "barca" | "bici";
-  onFilterChange: (filter: "all" | "scooter" | "auto" | "barca" | "bici") => void;
+  activeFilter: VehicleFilter;
+  onFilterChange: (filter: VehicleFilter) => void;
   pickupPoints: PublicPickupPoint[];
   startDate: string;
   endDate: string;
+  deliveryMethod: BookingDeliveryMethod;
   onStartDateChange: (value: string) => void;
   onEndDateChange: (value: string) => void;
+  onDeliveryMethodChange: (value: BookingDeliveryMethod) => void;
 }) {
   const copy = t(locale);
   const firstPickupPoint = pickupPoints[0];
@@ -46,10 +50,14 @@ export function Hero({
 
         <HeroSearch
           locale={locale}
+          category={activeFilter}
           startDate={startDate}
           endDate={endDate}
+          deliveryMethod={deliveryMethod}
+          onCategoryChange={onFilterChange}
           onStartDateChange={onStartDateChange}
           onEndDateChange={onEndDateChange}
+          onDeliveryMethodChange={onDeliveryMethodChange}
         />
         <VehicleFilters locale={locale} active={activeFilter} onChange={onFilterChange} />
       </div>

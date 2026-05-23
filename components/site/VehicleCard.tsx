@@ -17,14 +17,20 @@ export function VehicleCard({
   const typeLabels: Record<string, string> = {
     scooter: vehicle.emoji === "🏍️" ? (locale === "it" ? "Moto" : "Motorbike") : "Scooter",
     auto: locale === "it" ? "Auto" : "Car",
-    barca: locale === "it" ? "Barca" : "Boat",
-    bici: locale === "it" ? "Bici elettrica" : "E-bike"
+    barca: vehicle.emoji === "🛥️" ? (locale === "it" ? "Gommone" : "RIB / Dinghy") : (locale === "it" ? "Barca" : "Boat"),
+    bici: locale === "it" ? "Bici elettrica" : "E-bike",
+    skipper: locale === "it" ? "Barca con skipper" : "Boat with skipper"
   };
 
   return (
     <article className="vcard" data-category={vehicle.category} style={{ display: visible ? undefined : "none" }}>
       <div className="vcard-img">
-        <span>{vehicle.emoji}</span>
+        {vehicle.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={vehicle.image_url} alt={title} />
+        ) : (
+          <span>{vehicle.emoji}</span>
+        )}
         <span className="avail">{locale === "it" ? "Su richiesta" : "On request"}</span>
       </div>
       <div className="vcard-body">

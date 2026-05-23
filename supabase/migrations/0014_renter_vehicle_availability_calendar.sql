@@ -5,13 +5,14 @@ create table if not exists public.vehicle_availability_rules (
   date_from date not null,
   date_to date not null,
   is_closed boolean not null default false,
-  min_stay_days integer not null default 1,
+  min_rental_days integer not null default 1,
   notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint vehicle_availability_rules_date_check check (date_to >= date_from),
-  constraint vehicle_availability_rules_min_stay_check check (min_stay_days >= 1)
+  constraint vehicle_availability_rules_min_rental_days_check check (min_rental_days >= 1)
 );
+
 
 drop policy if exists "Renters can read own vehicles" on public.vehicles;
 create policy "Renters can read own vehicles"

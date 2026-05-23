@@ -91,7 +91,7 @@ export type RenterAvailabilityRuleItem = {
   date_from: string;
   date_to: string;
   is_closed: boolean;
-  min_stay_days: number;
+  min_rental_days: number;
   notes: string | null;
   created_at: string;
   updated_at: string;
@@ -380,7 +380,7 @@ export async function getRenterAvailabilityRules(accessToken: string): Promise<{
         date_from,
         date_to,
         is_closed,
-        min_stay_days,
+        min_rental_days,
         notes,
         created_at,
         updated_at,
@@ -415,7 +415,7 @@ export async function createRenterAvailabilityRule(input: {
   dateFrom: string;
   dateTo: string;
   isClosed: boolean;
-  minStayDays: number;
+  minRentalDays: number;
   notes: string;
 }): Promise<{ error: string | null }> {
   try {
@@ -444,7 +444,7 @@ export async function createRenterAvailabilityRule(input: {
         date_from: input.dateFrom,
         date_to: input.dateTo,
         is_closed: input.isClosed,
-        min_stay_days: input.minStayDays,
+        min_rental_days: input.minRentalDays,
         notes: input.notes.trim() || null
       });
 
@@ -455,6 +455,58 @@ export async function createRenterAvailabilityRule(input: {
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to create availability rule." };
+  }
+}
+
+export async function updateRenterAvailabilityRule(input: {
+  accessToken: string;
+  ruleId: string;
+  vehicleId: string;
+  renterId: string;
+  dateFrom: string;
+  dateTo: string;
+  isClosed: boolean;
+  minRentalDays: number;
+  notes: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from("vehicles")
+      .select("id, renter_id")
+      .eq("id", input.vehicleId)
+      .eq("renter_id", input.renterId)
+      .maybeSingle<{ id: string; renter_id: string }>();
+
+    if (vehicleError) {
+      return { error: vehicleError.message };
+    }
+
+    if (!vehicle) {
+      return { error: "Veicolo non assegnato al tuo noleggio." };
+    }
+
+    const { error } = await supabase
+      .from("vehicle_availability_rules")
+      .update({
+        vehicle_id: input.vehicleId,
+        renter_id: vehicle.renter_id,
+        date_from: input.dateFrom,
+        date_to: input.dateTo,
+        is_closed: input.isClosed,
+        min_rental_days: input.minRentalDays,
+        notes: input.notes.trim() || null
+      })
+      .eq("id", input.ruleId);
+
+    if (error) {
+      return { error: error.message };
+    }
+
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update availability rule." };
   }
 }
 
