@@ -31,7 +31,7 @@ export const vehicles: PublicVehicle[] = [
     id: "veh-rib-5",
     category: "gommone",
     title_it: "Gommone",
-    title_en: "RIB / Dinghy",
+    title_en: "Rubber dinghy",
     location_it: "Casamicciola",
     location_en: "Casamicciola",
     price_from: 115,

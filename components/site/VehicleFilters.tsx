@@ -16,7 +16,7 @@ const labels: Record<Locale, Record<VehicleFilter, string>> = {
     all: "All",
     scooter: "🛵 Scooter",
     auto: "🚗 Cars",
-    gommone: "🛥️ RIB",
+    gommone: "🛥️ Rubber dinghy",
     barca: "🚤 Boats",
     bici: "🚲 E-bikes",
     skipper: "⛵ With skipper"

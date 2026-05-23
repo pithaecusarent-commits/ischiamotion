@@ -17,7 +17,7 @@ export function VehicleCard({
   const typeLabels: Record<string, string> = {
     scooter: vehicle.emoji === "🏍️" ? (locale === "it" ? "Moto" : "Motorbike") : "Scooter",
     auto: locale === "it" ? "Auto" : "Car",
-    gommone: locale === "it" ? "Gommone" : "RIB / Dinghy",
+    gommone: locale === "it" ? "Gommone" : "Rubber dinghy",
     barca: locale === "it" ? "Barca" : "Boat",
     bici: locale === "it" ? "Bici elettrica" : "E-bike",
     skipper: locale === "it" ? "Barca con skipper" : "Boat with skipper"

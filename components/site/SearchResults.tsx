@@ -19,7 +19,7 @@ const categoryLabels: Record<Locale, Record<VehicleFilter, string>> = {
     scooter: "125cc Scooter",
     auto: "Car",
     bici: "E-bike",
-    gommone: "RIB / Dinghy",
+    gommone: "Rubber dinghy",
     barca: "Boat",
     skipper: "Boat with skipper"
   }

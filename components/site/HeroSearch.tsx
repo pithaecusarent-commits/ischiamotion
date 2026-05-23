@@ -80,7 +80,7 @@ export function HeroSearch({
               <option value="scooter">{locale === "it" ? "Scooter 125" : "125cc Scooter"}</option>
               <option value="auto">{locale === "it" ? "Auto" : "Car"}</option>
               <option value="bici">E-bike</option>
-              <option value="gommone">{locale === "it" ? "Gommone" : "RIB / Dinghy"}</option>
+              <option value="gommone">{locale === "it" ? "Gommone" : "Rubber dinghy"}</option>
               <option value="barca">{locale === "it" ? "Barca" : "Boat"}</option>
               <option value="skipper">{locale === "it" ? "Barca con skipper" : "Boat with skipper"}</option>
             </select>
