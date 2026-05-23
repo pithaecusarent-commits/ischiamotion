@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels, paymentMethodLabels, paymentTypeLabels } from "@/lib/booking-labels";
 import { createBookingRequest, generateBookingCode } from "@/lib/supabase/queries/bookings";
+import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
   BookingPaymentMethod,
@@ -93,9 +94,12 @@ function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
 
 export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, endDate, initialDeliveryMethod, onClose }: Props) {
   const text = copy[locale];
+  const isNautical = isNauticalCategory(vehicle?.category);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [selectedPickupPointId, setSelectedPickupPointId] = useState(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
-  const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(initialDeliveryMethod || "pickup_point");
+  const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(
+    isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point")
+  );
   const [paymentType, setPaymentType] = useState<BookingPaymentType>("pay_on_pickup");
   const vehicleLabel = useMemo(() => {
     if (!vehicle) return "";
@@ -104,9 +108,9 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
 
   useEffect(() => {
     setSelectedPickupPointId(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
-    setDeliveryMethod(initialDeliveryMethod || "pickup_point");
+    setDeliveryMethod(isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point"));
     setStatus("idle");
-  }, [initialDeliveryMethod, pickupPoints, vehicle]);
+  }, [initialDeliveryMethod, isNautical, pickupPoints, vehicle]);
 
   if (!vehicle) return null;
   const currentVehicle = vehicle;
@@ -121,7 +125,9 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
       return;
     }
 
-    const selectedDeliveryMethod = String(formData.get("deliveryMethod") || "pickup_point") as BookingDeliveryMethod;
+    const selectedDeliveryMethod: BookingDeliveryMethod = isNautical
+      ? "pickup_point"
+      : (String(formData.get("deliveryMethod") || "pickup_point") as BookingDeliveryMethod);
     const deliveryLocation = selectedDeliveryMethod === "pickup_point"
       ? formatPickupLabel(pickupPoint, locale)
       : String(formData.get("deliveryLocation") || "");
@@ -188,7 +194,13 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
                 ))}
               </select>
             </label>
-            {initialDeliveryMethod ? (
+            {isNautical ? (
+              <label>
+                <span>{text.deliveryTitle}</span>
+                <input value={deliveryMethodLabels[locale].pickup_point} readOnly />
+                <input type="hidden" name="deliveryMethod" value="pickup_point" />
+              </label>
+            ) : initialDeliveryMethod ? (
               <label>
                 <span>{text.deliveryTitle}</span>
                 <input value={deliveryMethodLabels[locale][initialDeliveryMethod]} readOnly />

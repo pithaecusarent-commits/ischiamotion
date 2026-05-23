@@ -11,7 +11,8 @@ import {
   updateRenterAvailability,
   updateRenterAvailabilityRule,
   updateRenterDeliveryCapability,
-  updateRenterPriceRule
+  updateRenterPriceRule,
+  upsertRenterCategoryDeliveryCapability
 } from "@/lib/supabase/queries/renter";
 import type { BookingDeliveryMethod } from "@/lib/types";
 
@@ -45,6 +46,54 @@ export async function saveRenterAvailability(formData: FormData) {
     redirect(`/renter/availability?error=${encodeURIComponent(error)}`);
   }
 
+  redirect("/renter/availability?saved=1");
+}
+
+export async function saveCategoryDeliveryCapabilityAction(formData: FormData) {
+  const session = await requireRenter("/renter/availability");
+
+  if (session.denied) {
+    redirect("/renter/availability?error=Accesso%20negato");
+  }
+
+  const renterId = String(formData.get("renterId") || "");
+  const categoryId = String(formData.get("categoryId") || "");
+  const categorySlug = String(formData.get("categorySlug") || "");
+  const zones = String(formData.get("zones") || "")
+    .split(",")
+    .map((z) => z.trim())
+    .filter(Boolean);
+  const notes = String(formData.get("notes") || "");
+
+  if (!renterId || !categoryId || !categorySlug) {
+    redirect("/renter/availability?error=Configurazione%20non%20valida");
+  }
+
+  const methods: Array<{ method: BookingDeliveryMethod; field: string }> = [
+    { method: "pickup_point", field: "enabled_pickup_point" },
+    { method: "port_delivery", field: "enabled_port_delivery" },
+    { method: "hotel_delivery", field: "enabled_hotel_delivery" }
+  ];
+
+  for (const { method, field } of methods) {
+    const isEnabled = String(formData.get(field) || "false") === "true";
+    const { error } = await upsertRenterCategoryDeliveryCapability({
+      accessToken: session.accessToken,
+      renterId,
+      categoryId,
+      categorySlug,
+      deliveryMethod: method,
+      isEnabled,
+      zones,
+      notes
+    });
+    if (error) {
+      revalidatePath("/renter/availability");
+      redirect(`/renter/availability?error=${encodeURIComponent(error)}`);
+    }
+  }
+
+  revalidatePath("/renter/availability");
   redirect("/renter/availability?saved=1");
 }
 
