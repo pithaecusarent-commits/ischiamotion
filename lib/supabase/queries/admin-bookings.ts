@@ -83,6 +83,33 @@ export async function updateAdminBookingStatus(
   }
 }
 
+export async function updateAdminBookingPayment(
+  accessToken: string,
+  id: string,
+  data: {
+    payment_type: BookingPaymentType;
+    payment_method: BookingPaymentMethod;
+    payment_status: BookingPaymentStatus;
+    total_amount: number | null;
+    deposit_amount: number | null;
+    balance_due: number | null;
+    payment_notes: string | null;
+  }
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase
+      .from("bookings")
+      .update({ ...data, updated_at: new Date().toISOString() })
+      .eq("id", id);
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update booking payment." };
+  }
+}
+
 export async function getAdminBookingById(accessToken: string, id: string): Promise<{ booking: AdminBookingItem | null; error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);

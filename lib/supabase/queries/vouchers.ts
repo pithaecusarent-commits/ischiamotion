@@ -29,6 +29,7 @@ export type PublicCheckinVoucher = {
   delivery_notes: string | null;
   payment_type: BookingPaymentType;
   payment_status: BookingPaymentStatus;
+  total_amount: number | null;
   deposit_amount: number | null;
   balance_due: number | null;
 };

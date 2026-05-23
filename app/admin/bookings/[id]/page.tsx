@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
 import { markBookingCheckedInAction } from "@/app/admin/bookings/[id]/checkin-actions";
+import { PaymentForm } from "@/app/admin/bookings/[id]/PaymentForm";
 import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
 import { VoucherPrintButton } from "@/app/admin/bookings/[id]/VoucherPrintButton";
 import { signOutAdmin } from "@/app/admin/login/actions";
@@ -34,6 +35,7 @@ type Props = {
     statusUpdate?: string;
     voucher?: string;
     checkin?: string;
+    payment?: string;
   };
 };
 
@@ -51,9 +53,10 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const { booking, error } = await getAdminBookingById(accessToken, params.id);
   const { voucher, error: voucherLoadError } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null, error: null };
   const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
-  const statusMessage = searchParams?.statusUpdate;
+  const statusMessage  = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
   const checkinMessage = searchParams?.checkin;
+  const paymentMessage = searchParams?.payment;
   const voucherPath = voucher ? `/checkin/${voucher.voucher_code}` : "";
   const voucherUrl = voucher ? toAbsoluteCheckinUrl(voucherPath) : "";
   const voucherQrDataUrl = voucher ? await generateQrDataUrl(voucher.qr_payload || voucherPath) : "";
@@ -138,6 +141,21 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 <DetailRow label="Note pagamento" value={booking.payment_notes || "-"} />
               </div>
             </div>
+
+            {booking ? (
+              <PaymentForm
+                bookingId={booking.id}
+                paymentType={booking.payment_type}
+                paymentMethod={booking.payment_method}
+                paymentStatus={booking.payment_status}
+                totalAmount={booking.total_amount}
+                depositAmount={booking.deposit_amount}
+                balanceDue={booking.balance_due}
+                paymentNotes={booking.payment_notes}
+                successMessage={paymentMessage === "success"}
+                errorMessage={paymentMessage === "error"}
+              />
+            ) : null}
 
             <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">

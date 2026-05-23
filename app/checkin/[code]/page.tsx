@@ -105,11 +105,15 @@ export default async function PublicCheckinPage({ params }: Props) {
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Stato pagamento</div>
                 <div className="mt-2 text-sm font-semibold">{paymentStatusLabels[locale][voucher.payment_status]}</div>
               </div>
-              {(voucher.deposit_amount !== null || voucher.balance_due !== null) ? (
+              {(voucher.total_amount !== null || voucher.deposit_amount !== null || voucher.balance_due !== null) ? (
                 <div className="rounded-3xl border border-ink/10 bg-white/65 p-5 sm:col-span-2">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Acconto / saldo</div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Importi</div>
                   <div className="mt-2 text-sm font-semibold">
-                    Acconto {formatMoney(voucher.deposit_amount)} · Saldo {formatMoney(voucher.balance_due)}
+                    {[
+                      voucher.total_amount   !== null ? `Totale ${formatMoney(voucher.total_amount)}`     : "",
+                      voucher.deposit_amount !== null ? `Acconto ${formatMoney(voucher.deposit_amount)}`  : "",
+                      voucher.balance_due    !== null ? `Saldo ${formatMoney(voucher.balance_due)}`       : ""
+                    ].filter(Boolean).join(" · ")}
                   </div>
                 </div>
               ) : null}

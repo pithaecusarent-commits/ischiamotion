@@ -84,9 +84,13 @@ export default async function RenterBookingsPage() {
                       <span className="block text-xs font-semibold text-green-deep">
                         {paymentStatusLabels.it[booking.payment_status]}
                       </span>
-                      {(booking.deposit_amount !== null || booking.balance_due !== null) ? (
+                      {(booking.total_amount !== null || booking.deposit_amount !== null || booking.balance_due !== null) ? (
                         <span className="mt-1 block text-xs text-ink/55">
-                          Acconto {formatMoney(booking.deposit_amount)} · Saldo {formatMoney(booking.balance_due)}
+                          {[
+                            booking.total_amount   !== null ? `Tot. ${formatMoney(booking.total_amount)}`    : "",
+                            booking.deposit_amount !== null ? `Acc. ${formatMoney(booking.deposit_amount)}`  : "",
+                            booking.balance_due    !== null ? `Saldo ${formatMoney(booking.balance_due)}`    : ""
+                          ].filter(Boolean).join(" · ")}
                         </span>
                       ) : null}
                     </td>

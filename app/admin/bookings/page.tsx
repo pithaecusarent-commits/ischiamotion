@@ -1,6 +1,7 @@
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { getAdminBookingRequests } from "@/lib/supabase/queries/admin-bookings";
 import {
+  bookingAmountSummary,
   bookingDeliveryLocation,
   bookingDeliveryMethod,
   bookingPaymentStatus,
@@ -105,6 +106,9 @@ export default async function AdminBookingsPage() {
                       <div className="mt-2 whitespace-normal text-xs leading-4 text-ink/55">
                         {bookingPaymentType(booking)}
                         <span className="block font-semibold text-green-deep">{bookingPaymentStatus(booking)}</span>
+                        {bookingAmountSummary(booking) !== "-" ? (
+                          <span className="block text-ink/70">{bookingAmountSummary(booking)}</span>
+                        ) : null}
                       </div>
                     </td>
                   </tr>
