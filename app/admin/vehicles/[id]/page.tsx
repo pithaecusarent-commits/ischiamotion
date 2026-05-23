@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { updateAdminVehicleAction } from "@/app/admin/vehicles/actions";
+import { AdminPriceRulesSection } from "@/app/admin/vehicles/AdminPriceRulesSection";
 import { VehicleForm } from "@/app/admin/vehicles/VehicleForm";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { getAdminVehicleById } from "@/lib/supabase/queries/admin-vehicles";
+import { getAdminVehicleById, getAdminVehiclePriceRules } from "@/lib/supabase/queries/admin-vehicles";
 
 type Props = {
   params: {
@@ -16,7 +17,10 @@ type Props = {
 
 export default async function EditAdminVehiclePage({ params, searchParams }: Props) {
   const { accessToken } = await requireAdmin(`/admin/vehicles/${params.id}`);
-  const { vehicle, options, error } = await getAdminVehicleById(accessToken, params.id);
+  const [{ vehicle, options, error }, { rules: priceRules }] = await Promise.all([
+    getAdminVehicleById(accessToken, params.id),
+    getAdminVehiclePriceRules(accessToken, params.id)
+  ]);
 
   if (!vehicle && !error) {
     notFound();
@@ -43,6 +47,14 @@ export default async function EditAdminVehiclePage({ params, searchParams }: Pro
 
         {vehicle ? (
           <VehicleForm action={updateAdminVehicleAction} options={options} vehicle={vehicle} submitLabel="Salva modifiche" />
+        ) : null}
+
+        {vehicle?.renter_id ? (
+          <AdminPriceRulesSection
+            vehicleId={params.id}
+            renterId={vehicle.renter_id}
+            rules={priceRules}
+          />
         ) : null}
       </section>
     </main>

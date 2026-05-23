@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BookingRequestModal } from "@/components/site/BookingRequestModal";
+import { t } from "@/lib/i18n";
 import type { BookingDeliveryMethod, Locale, PublicPickupPoint, PublicVehicle, VehicleFilter } from "@/lib/types";
 
 const categoryLabels: Record<Locale, Record<VehicleFilter, string>> = {
@@ -97,7 +98,7 @@ export function SearchResults({
                       {features.slice(0, 3).map((feature) => <span className="feature" key={feature}>{feature}</span>)}
                     </div>
                     <div className="result-foot">
-                      <div className="vcard-price">€{vehicle.price_from} <small>/ {locale === "it" ? "giorno" : "day"}</small></div>
+                      <div className="vcard-price"><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></div>
                       <button className="book-btn" type="button" onClick={() => setSelectedVehicle(vehicle)}>
                         {locale === "it" ? "Richiedi questo mezzo" : "Request this vehicle"}
                       </button>

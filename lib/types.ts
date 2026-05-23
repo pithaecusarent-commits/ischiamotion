@@ -173,3 +173,18 @@ export type VehicleAvailabilityRule = {
   created_at: string;
   updated_at: string;
 };
+
+export type VehiclePriceRule = {
+  id: string;
+  vehicle_id: string;
+  renter_id: string;
+  name: string | null;
+  date_from: string;
+  date_to: string;
+  price_per_day: number;
+  min_rental_days: number;
+  is_active: boolean;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};

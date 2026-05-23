@@ -1,3 +1,4 @@
+import { t } from "@/lib/i18n";
 import type { Locale, PublicVehicle } from "@/lib/types";
 
 export function VehicleCard({
@@ -42,7 +43,7 @@ export function VehicleCard({
           {features.map((feature) => <span className="feature" key={feature}>{feature}</span>)}
         </div>
         <div className="vcard-foot">
-          <div className="vcard-price">€{vehicle.price_from} <small>/ {locale === "it" ? "giorno" : "day"}</small></div>
+          <div className="vcard-price"><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></div>
           <button className="book-btn" type="button" onClick={() => onBook(vehicle)}>
             {locale === "it" ? "Richiedi" : "Request"}
           </button>

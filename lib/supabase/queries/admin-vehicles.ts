@@ -251,6 +251,123 @@ export async function toggleAdminVehicleActive(accessToken: string, id: string, 
   }
 }
 
+// ─── Admin Price Rules ────────────────────────────────────────────────────────
+
+export type AdminPriceRuleItem = {
+  id: string;
+  vehicle_id: string;
+  renter_id: string;
+  name: string | null;
+  date_from: string;
+  date_to: string;
+  price_per_day: number;
+  min_rental_days: number;
+  is_active: boolean;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type AdminPriceRuleInput = {
+  vehicle_id: string;
+  renter_id: string;
+  name: string;
+  date_from: string;
+  date_to: string;
+  price_per_day: number;
+  min_rental_days: number;
+  is_active: boolean;
+  notes: string;
+};
+
+export async function getAdminVehiclePriceRules(
+  accessToken: string,
+  vehicleId: string
+): Promise<{ rules: AdminPriceRuleItem[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { data, error } = await supabase
+      .from("vehicle_price_rules")
+      .select("id, vehicle_id, renter_id, name, date_from, date_to, price_per_day, min_rental_days, is_active, notes, created_at, updated_at")
+      .eq("vehicle_id", vehicleId)
+      .order("date_from", { ascending: true });
+
+    if (error) return { rules: [], error: error.message };
+    return { rules: (data || []) as unknown as AdminPriceRuleItem[], error: null };
+  } catch (error) {
+    return { rules: [], error: error instanceof Error ? error.message : "Unable to load price rules." };
+  }
+}
+
+export async function createAdminVehiclePriceRule(
+  accessToken: string,
+  data: AdminPriceRuleInput
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase.from("vehicle_price_rules").insert({
+      vehicle_id:      data.vehicle_id,
+      renter_id:       data.renter_id,
+      name:            data.name.trim() || null,
+      date_from:       data.date_from,
+      date_to:         data.date_to,
+      price_per_day:   data.price_per_day,
+      min_rental_days: data.min_rental_days,
+      is_active:       data.is_active,
+      notes:           data.notes.trim() || null
+    });
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to create price rule." };
+  }
+}
+
+export async function updateAdminVehiclePriceRule(
+  accessToken: string,
+  ruleId: string,
+  data: AdminPriceRuleInput
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase
+      .from("vehicle_price_rules")
+      .update({
+        vehicle_id:      data.vehicle_id,
+        renter_id:       data.renter_id,
+        name:            data.name.trim() || null,
+        date_from:       data.date_from,
+        date_to:         data.date_to,
+        price_per_day:   data.price_per_day,
+        min_rental_days: data.min_rental_days,
+        is_active:       data.is_active,
+        notes:           data.notes.trim() || null
+      })
+      .eq("id", ruleId);
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update price rule." };
+  }
+}
+
+export async function deleteAdminVehiclePriceRule(
+  accessToken: string,
+  ruleId: string
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase
+      .from("vehicle_price_rules")
+      .delete()
+      .eq("id", ruleId);
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to delete price rule." };
+  }
+}
+
 function toVehiclePayload(data: AdminVehicleFormData) {
   return {
     category_id: data.category_id,

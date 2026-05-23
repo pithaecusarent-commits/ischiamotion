@@ -129,6 +129,12 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
     setStatus("submitting");
 
     try {
+      const userPaymentNotes = String(formData.get("paymentNotes") || "");
+      const priceNote = currentVehicle.price_from > 0
+        ? `Prezzo visto in ricerca: €${currentVehicle.price_from}/giorno`
+        : "";
+      const paymentNotes = [priceNote, userPaymentNotes].filter(Boolean).join("\n");
+
       await createBookingRequest({
         bookingCode: generateBookingCode(),
         firstName: String(formData.get("firstName") || ""),
@@ -144,7 +150,7 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
         deliveryNotes: String(formData.get("deliveryNotes") || ""),
         paymentType: String(formData.get("paymentType") || "pay_on_pickup") as BookingPaymentType,
         paymentMethod: String(formData.get("paymentMethod") || "unknown") as BookingPaymentMethod,
-        paymentNotes: String(formData.get("paymentNotes") || ""),
+        paymentNotes,
         notes: String(formData.get("notes") || ""),
         vehicleId: currentVehicle.source === "supabase" ? currentVehicle.id : null,
         pickupPointId: currentVehicle.source === "supabase" ? currentVehicle.pickup_point_id || pickupPoint.id : null,

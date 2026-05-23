@@ -5,10 +5,13 @@ import { redirect } from "next/navigation";
 import { requireRenter } from "@/lib/supabase/renter-auth";
 import {
   createRenterAvailabilityRule,
+  createRenterPriceRule,
   deleteRenterAvailabilityRule,
+  deleteRenterPriceRule,
   updateRenterAvailability,
   updateRenterAvailabilityRule,
-  updateRenterDeliveryCapability
+  updateRenterDeliveryCapability,
+  updateRenterPriceRule
 } from "@/lib/supabase/queries/renter";
 import type { BookingDeliveryMethod } from "@/lib/types";
 
@@ -154,6 +157,96 @@ export async function deleteRenterAvailabilityRuleAction(formData: FormData) {
   }
 
   const { error } = await deleteRenterAvailabilityRule({
+    accessToken: session.accessToken,
+    ruleId
+  });
+
+  revalidatePath("/renter/availability");
+
+  if (error) {
+    redirect(`/renter/availability?error=${encodeURIComponent(error)}`);
+  }
+
+  redirect("/renter/availability?saved=1");
+}
+
+export async function savePriceRuleAction(formData: FormData) {
+  const session = await requireRenter("/renter/availability");
+
+  if (session.denied) {
+    redirect("/renter/availability?error=Accesso%20negato");
+  }
+
+  const vehicleValue = String(formData.get("vehicle") || "");
+  const [vehicleId, renterId] = vehicleValue.split("|");
+  const ruleId = String(formData.get("priceRuleId") || "");
+  const name = String(formData.get("name") || "");
+  const dateFrom = String(formData.get("dateFrom") || "");
+  const dateTo = String(formData.get("dateTo") || "");
+  const priceRaw = Number(formData.get("pricePerDay") || "0");
+  const pricePerDay = Number.isFinite(priceRaw) && priceRaw >= 0 ? priceRaw : 0;
+  const minRentalDays = Math.max(Math.trunc(Number(formData.get("minRentalDays") || "1")), 1);
+  const isActive = formData.get("isActive") !== "false";
+  const notes = String(formData.get("notes") || "");
+
+  if (!vehicleId || !renterId || !dateFrom || !dateTo) {
+    redirect("/renter/availability?error=Compila%20veicolo%20e%20date");
+  }
+
+  if (dateTo < dateFrom) {
+    redirect("/renter/availability?error=La%20data%20fine%20deve%20essere%20successiva%20alla%20data%20inizio");
+  }
+
+  const { error } = ruleId
+    ? await updateRenterPriceRule({
+      accessToken: session.accessToken,
+      ruleId,
+      vehicleId,
+      renterId,
+      name,
+      dateFrom,
+      dateTo,
+      pricePerDay,
+      minRentalDays,
+      isActive,
+      notes
+    })
+    : await createRenterPriceRule({
+      accessToken: session.accessToken,
+      vehicleId,
+      renterId,
+      name,
+      dateFrom,
+      dateTo,
+      pricePerDay,
+      minRentalDays,
+      isActive,
+      notes
+    });
+
+  revalidatePath("/renter/availability");
+
+  if (error) {
+    redirect(`/renter/availability?error=${encodeURIComponent(error)}`);
+  }
+
+  redirect("/renter/availability?saved=1");
+}
+
+export async function deletePriceRuleAction(formData: FormData) {
+  const session = await requireRenter("/renter/availability");
+
+  if (session.denied) {
+    redirect("/renter/availability?error=Accesso%20negato");
+  }
+
+  const ruleId = String(formData.get("priceRuleId") || "");
+
+  if (!ruleId) {
+    redirect("/renter/availability?error=Regola%20prezzo%20non%20valida");
+  }
+
+  const { error } = await deleteRenterPriceRule({
     accessToken: session.accessToken,
     ruleId
   });

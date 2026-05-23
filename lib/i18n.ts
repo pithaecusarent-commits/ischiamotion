@@ -23,7 +23,7 @@ export const dictionary = {
       ["100%", "Richiesta guidata"]
     ],
     common: {
-      from: "da",
+      from: "A partire da",
       day: "giorno",
       zone: "Zona",
       request: "Richiedi",
@@ -52,7 +52,7 @@ export const dictionary = {
       ["100%", "Guided request"]
     ],
     common: {
-      from: "from",
+      from: "From",
       day: "day",
       zone: "Zone",
       request: "Request",

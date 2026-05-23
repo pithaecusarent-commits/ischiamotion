@@ -5,8 +5,12 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import {
   createAdminVehicle,
+  createAdminVehiclePriceRule,
+  deleteAdminVehiclePriceRule,
   toggleAdminVehicleActive,
   updateAdminVehicle,
+  updateAdminVehiclePriceRule,
+  type AdminPriceRuleInput,
   type AdminVehicleFormData
 } from "@/lib/supabase/queries/admin-vehicles";
 import { deleteVehicleImageByPublicUrl, uploadVehicleImage } from "@/lib/supabase/queries/admin-vehicle-images";
@@ -146,4 +150,78 @@ export async function toggleAdminVehicleActiveAction(formData: FormData) {
   }
 
   redirect("/admin/vehicles?updated=1");
+}
+
+function parsePriceRuleFormData(formData: FormData): { data: AdminPriceRuleInput | null; error: string | null } {
+  const vehicleId  = String(formData.get("vehicle_id")  || "").trim();
+  const renterId   = String(formData.get("renter_id")   || "").trim();
+  const name       = String(formData.get("name")        || "").trim();
+  const dateFrom   = String(formData.get("dateFrom")    || "").trim();
+  const dateTo     = String(formData.get("dateTo")      || "").trim();
+  const priceRaw   = Number(formData.get("pricePerDay") || "0");
+  const minDaysRaw = Number(formData.get("minRentalDays") || "1");
+  const isActive   = String(formData.get("isActive")    || "true") !== "false";
+  const notes      = String(formData.get("notes")       || "").trim();
+
+  if (!vehicleId || !renterId) return { data: null, error: "Veicolo obbligatorio." };
+  if (!dateFrom || !dateTo)    return { data: null, error: "Date obbligatorie." };
+  if (dateTo < dateFrom)       return { data: null, error: "La data fine deve essere successiva alla data inizio." };
+  if (!Number.isFinite(priceRaw) || priceRaw < 0) return { data: null, error: "Prezzo non valido." };
+
+  return {
+    data: {
+      vehicle_id:      vehicleId,
+      renter_id:       renterId,
+      name,
+      date_from:       dateFrom,
+      date_to:         dateTo,
+      price_per_day:   priceRaw,
+      min_rental_days: Math.max(Math.trunc(Number.isFinite(minDaysRaw) ? minDaysRaw : 1), 1),
+      is_active:       isActive,
+      notes
+    },
+    error: null
+  };
+}
+
+export async function saveAdminVehiclePriceRuleAction(formData: FormData) {
+  const vehicleId = String(formData.get("vehicle_id") || "");
+  const { accessToken } = await requireAdmin(`/admin/vehicles/${vehicleId}`);
+  const ruleId = String(formData.get("priceRuleId") || "");
+  const parsed = parsePriceRuleFormData(formData);
+
+  if (!parsed.data) {
+    redirect(`/admin/vehicles/${vehicleId}?error=${encodeURIComponent(parsed.error || "Dati non validi.")}`);
+  }
+
+  const { error } = ruleId
+    ? await updateAdminVehiclePriceRule(accessToken, ruleId, parsed.data)
+    : await createAdminVehiclePriceRule(accessToken, parsed.data);
+
+  revalidatePath(`/admin/vehicles/${vehicleId}`);
+
+  if (error) {
+    redirect(`/admin/vehicles/${vehicleId}?error=${encodeURIComponent(error)}`);
+  }
+
+  redirect(`/admin/vehicles/${vehicleId}?saved=1`);
+}
+
+export async function deleteAdminVehiclePriceRuleAction(formData: FormData) {
+  const vehicleId = String(formData.get("vehicle_id") || "");
+  const ruleId    = String(formData.get("priceRuleId") || "");
+  const { accessToken } = await requireAdmin(`/admin/vehicles/${vehicleId}`);
+
+  if (!ruleId) {
+    redirect(`/admin/vehicles/${vehicleId}?error=Regola%20non%20valida`);
+  }
+
+  const { error } = await deleteAdminVehiclePriceRule(accessToken, ruleId);
+  revalidatePath(`/admin/vehicles/${vehicleId}`);
+
+  if (error) {
+    redirect(`/admin/vehicles/${vehicleId}?error=${encodeURIComponent(error)}`);
+  }
+
+  redirect(`/admin/vehicles/${vehicleId}?saved=1`);
 }

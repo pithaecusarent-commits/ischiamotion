@@ -582,6 +582,179 @@ export async function updateRenterDeliveryCapability(input: {
   }
 }
 
+// ─── Price Rules ──────────────────────────────────────────────────────────────
+
+export type RenterPriceRuleItem = {
+  id: string;
+  vehicle_id: string;
+  renter_id: string;
+  name: string | null;
+  date_from: string;
+  date_to: string;
+  price_per_day: number;
+  min_rental_days: number;
+  is_active: boolean;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  vehicles: {
+    title_it: string;
+    internal_name: string | null;
+  } | null;
+};
+
+export async function getRenterPriceRules(accessToken: string): Promise<{ rules: RenterPriceRuleItem[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { data, error } = await supabase
+      .from("vehicle_price_rules")
+      .select(`
+        id,
+        vehicle_id,
+        renter_id,
+        name,
+        date_from,
+        date_to,
+        price_per_day,
+        min_rental_days,
+        is_active,
+        notes,
+        created_at,
+        updated_at,
+        vehicles (
+          title_it,
+          internal_name
+        )
+      `)
+      .order("date_from", { ascending: true });
+
+    if (error) {
+      return { rules: [], error: error.message };
+    }
+
+    const rules = ((data || []) as unknown as Array<Omit<RenterPriceRuleItem, "vehicles"> & {
+      vehicles: RenterPriceRuleItem["vehicles"] | RenterPriceRuleItem["vehicles"][];
+    }>).map((rule) => ({
+      ...rule,
+      vehicles: Array.isArray(rule.vehicles) ? rule.vehicles[0] || null : rule.vehicles
+    }));
+
+    return { rules, error: null };
+  } catch (error) {
+    return { rules: [], error: error instanceof Error ? error.message : "Unable to load price rules." };
+  }
+}
+
+export async function createRenterPriceRule(input: {
+  accessToken: string;
+  vehicleId: string;
+  renterId: string;
+  name: string;
+  dateFrom: string;
+  dateTo: string;
+  pricePerDay: number;
+  minRentalDays: number;
+  isActive: boolean;
+  notes: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from("vehicles")
+      .select("id, renter_id")
+      .eq("id", input.vehicleId)
+      .eq("renter_id", input.renterId)
+      .maybeSingle<{ id: string; renter_id: string }>();
+
+    if (vehicleError) return { error: vehicleError.message };
+    if (!vehicle) return { error: "Veicolo non assegnato al tuo noleggio." };
+
+    const { error } = await supabase.from("vehicle_price_rules").insert({
+      vehicle_id:     input.vehicleId,
+      renter_id:      vehicle.renter_id,
+      name:           input.name.trim() || null,
+      date_from:      input.dateFrom,
+      date_to:        input.dateTo,
+      price_per_day:  input.pricePerDay,
+      min_rental_days: input.minRentalDays,
+      is_active:      input.isActive,
+      notes:          input.notes.trim() || null
+    });
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to create price rule." };
+  }
+}
+
+export async function updateRenterPriceRule(input: {
+  accessToken: string;
+  ruleId: string;
+  vehicleId: string;
+  renterId: string;
+  name: string;
+  dateFrom: string;
+  dateTo: string;
+  pricePerDay: number;
+  minRentalDays: number;
+  isActive: boolean;
+  notes: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from("vehicles")
+      .select("id, renter_id")
+      .eq("id", input.vehicleId)
+      .eq("renter_id", input.renterId)
+      .maybeSingle<{ id: string; renter_id: string }>();
+
+    if (vehicleError) return { error: vehicleError.message };
+    if (!vehicle) return { error: "Veicolo non assegnato al tuo noleggio." };
+
+    const { error } = await supabase
+      .from("vehicle_price_rules")
+      .update({
+        vehicle_id:      input.vehicleId,
+        renter_id:       vehicle.renter_id,
+        name:            input.name.trim() || null,
+        date_from:       input.dateFrom,
+        date_to:         input.dateTo,
+        price_per_day:   input.pricePerDay,
+        min_rental_days: input.minRentalDays,
+        is_active:       input.isActive,
+        notes:           input.notes.trim() || null
+      })
+      .eq("id", input.ruleId);
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update price rule." };
+  }
+}
+
+export async function deleteRenterPriceRule(input: {
+  accessToken: string;
+  ruleId: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+    const { error } = await supabase
+      .from("vehicle_price_rules")
+      .delete()
+      .eq("id", input.ruleId);
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to delete price rule." };
+  }
+}
+
 export async function createRenterCheckin(input: {
   accessToken: string;
   voucherCode: string;
