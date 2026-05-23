@@ -28,59 +28,35 @@ export type PublicVehicleQueryParams = {
   delivery_method?: string;
 };
 
+export type PublicVehicleSearchResult = {
+  vehicles: PublicVehicle[];
+  isFallback: boolean;
+  error: string | null;
+};
+
 const categoryMap: Record<string, VehicleCategorySlug> = {
   scooter: "scooter",
   auto: "auto",
   "bici-elettriche": "bici",
   "barche-gommoni": "barca",
+  gommone: "barca",
+  gommoni: "barca",
   barca: "barca",
-  bici: "bici"
+  barche: "barca",
+  bici: "bici",
+  "boat-with-skipper": "skipper",
+  skipper: "skipper"
 };
 
 const emojiMap: Record<VehicleCategorySlug, string> = {
   scooter: "🛵",
   auto: "🚗",
   bici: "🚲",
-  barca: "🚤"
+  barca: "🚤",
+  skipper: "⛵"
 };
 
-export async function getPublicVehicles(params: PublicVehicleQueryParams): Promise<PublicVehicle[]> {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return mockVehicles;
-  }
-
-  try {
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false
-      }
-    });
-
-    const { data, error } = await supabase.rpc("get_public_vehicle_listings", {
-      lookup_category_slug: params.category_slug || null,
-      requested_start_date: params.start_date || null,
-      requested_end_date: params.end_date || null,
-      requested_delivery_method: params.delivery_method || null
-    });
-
-    if (error || !data?.length) {
-      return mockVehicles;
-    }
-
-    return (data as PublicVehicleListingRow[])
-      .map(toPublicVehicle)
-      .filter((vehicle): vehicle is PublicVehicle => Boolean(vehicle))
-      .sort((a, b) => a.price_from - b.price_from);
-  } catch {
-    return mockVehicles;
-  }
-}
-
-function toPublicVehicle(row: PublicVehicleListingRow): PublicVehicle | null {
+export function mapPublicVehicleToVehicleCardModel(row: PublicVehicleListingRow): PublicVehicle | null {
   const category = categoryMap[row.category_slug];
   if (!category) return null;
 
@@ -100,4 +76,65 @@ function toPublicVehicle(row: PublicVehicleListingRow): PublicVehicle | null {
     emoji: emojiMap[category],
     is_available: row.is_active
   };
+}
+
+export async function searchPublicVehicles(params: PublicVehicleQueryParams): Promise<PublicVehicleSearchResult> {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return { vehicles: filterMockVehicles(params), isFallback: true, error: "Missing Supabase public environment variables." };
+  }
+
+  try {
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
+    });
+
+    const { data, error } = await supabase.rpc("search_public_vehicles", {
+      p_category_slug: toDatabaseCategorySlug(params.category_slug),
+      p_start_date: params.start_date || null,
+      p_end_date: params.end_date || null,
+      p_delivery_method: (params.delivery_method && params.delivery_method !== "pickup_point") ? params.delivery_method : null
+    });
+
+    if (error) {
+      return { vehicles: filterMockVehicles(params), isFallback: true, error: error.message };
+    }
+
+    const vehicles = ((data || []) as PublicVehicleListingRow[])
+      .map(mapPublicVehicleToVehicleCardModel)
+      .filter((vehicle: PublicVehicle | null): vehicle is PublicVehicle => Boolean(vehicle))
+      .sort((a, b) => a.price_from - b.price_from);
+
+    return { vehicles, isFallback: false, error: null };
+  } catch {
+    return { vehicles: filterMockVehicles(params), isFallback: true, error: "Unable to search public vehicles." };
+  }
+}
+
+export async function getPublicVehicles(params: PublicVehicleQueryParams): Promise<PublicVehicle[]> {
+  const result = await searchPublicVehicles(params);
+  return result.vehicles;
+}
+
+function filterMockVehicles(params: PublicVehicleQueryParams) {
+  return mockVehicles
+    .filter((vehicle) => {
+      if (!vehicle.is_available) return false;
+      if (!params.category_slug || params.category_slug === "all") return true;
+      return vehicle.category === categoryMap[params.category_slug];
+    })
+    .sort((a, b) => a.price_from - b.price_from);
+}
+
+function toDatabaseCategorySlug(categorySlug?: string) {
+  if (!categorySlug || categorySlug === "all") return null;
+  if (categorySlug === "bici") return "bici-elettriche";
+  if (categorySlug === "barca") return "barche-gommoni";
+  if (categorySlug === "skipper") return "boat-with-skipper";
+  return categorySlug;
 }
