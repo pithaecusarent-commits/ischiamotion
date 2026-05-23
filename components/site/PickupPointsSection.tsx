@@ -37,7 +37,17 @@ export function PickupPointsSection({
       <div className="pickup-section-header">
         <div>
           <div className="section-eyebrow">{locale === "it" ? "Punti ritiro" : "Pickup points"}</div>
-          <h2 className="section-title">{locale === "it" ? "Punti ritiro IschiaMotion" : "IschiaMotion Pickup Points"}</h2>
+          <h2 className="section-title">
+            {locale === "it" ? (
+              <>
+                Punti ritiro <span className="brand-title-accent">IschiaMotion</span>
+              </>
+            ) : (
+              <>
+                <span className="brand-title-accent">IschiaMotion</span> Pickup Points
+              </>
+            )}
+          </h2>
         </div>
         <p>
           {locale === "it"

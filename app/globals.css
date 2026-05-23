@@ -590,6 +590,11 @@ h1 em {
   font-style: italic;
   color: var(--green);
 }
+
+.brand-title-accent {
+  color: var(--green);
+}
+
 .see-all {
   font-size: 14px;
   color: var(--green-dark);
@@ -917,6 +922,14 @@ h1 em {
     radial-gradient(ellipse at 55% 50%, rgba(124,227,187,.14), transparent 50%),
     linear-gradient(145deg, rgba(220,248,252,.93), rgba(255,253,245,.95));
   box-shadow: 0 24px 64px rgba(13,43,78,.12);
+}
+.ischia-map-image {
+  display: block;
+  width: 118%;
+  height: 100%;
+  min-height: 460px;
+  object-fit: contain;
+  transform: translateX(-7%);
 }
 .pickup-map::before {
   content: "";

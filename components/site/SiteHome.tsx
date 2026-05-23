@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useState } from "react";
-import type { Locale, PublicPickupPoint, PublicVehicle } from "@/lib/types";
+import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
@@ -17,12 +17,10 @@ import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
 
 export function SiteHome({
   locale,
-  pickupPoints = mockPickupPoints,
-  vehicles
+  pickupPoints = mockPickupPoints
 }: {
   locale: Locale;
   pickupPoints?: PublicPickupPoint[];
-  vehicles?: PublicVehicle[];
 }) {
   const [activeFilter, setActiveFilter] = useVehicleFilter();
   const [startDate, setStartDate] = useState("2026-06-15");
@@ -53,7 +51,7 @@ export function SiteHome({
           onStartDateChange={setStartDate}
           onEndDateChange={setEndDate}
         />
-        <VehicleGrid locale={locale} active={activeFilter} pickupPoints={pickupPoints} startDate={startDate} endDate={endDate} vehicles={vehicles} />
+        <VehicleGrid locale={locale} active={activeFilter} pickupPoints={pickupPoints} startDate={startDate} endDate={endDate} />
         <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />
