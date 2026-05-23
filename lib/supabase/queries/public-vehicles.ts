@@ -38,12 +38,15 @@ const categoryMap: Record<string, VehicleCategorySlug> = {
   scooter: "scooter",
   auto: "auto",
   "bici-elettriche": "bici",
-  "barche-gommoni": "barca",
-  gommone: "barca",
-  gommoni: "barca",
+  bici: "bici",
+  gommone: "gommone",
+  gommoni: "gommone",
+  rib: "gommone",
+  dinghy: "gommone",
   barca: "barca",
   barche: "barca",
-  bici: "bici",
+  boat: "barca",
+  "barche-gommoni": "barca",
   "boat-with-skipper": "skipper",
   skipper: "skipper"
 };
@@ -52,6 +55,7 @@ const emojiMap: Record<VehicleCategorySlug, string> = {
   scooter: "🛵",
   auto: "🚗",
   bici: "🚲",
+  gommone: "🛥️",
   barca: "🚤",
   skipper: "⛵"
 };
@@ -134,7 +138,7 @@ function filterMockVehicles(params: PublicVehicleQueryParams) {
 function toDatabaseCategorySlug(categorySlug?: string) {
   if (!categorySlug || categorySlug === "all") return null;
   if (categorySlug === "bici") return "bici-elettriche";
-  if (categorySlug === "barca") return "barche-gommoni";
   if (categorySlug === "skipper") return "boat-with-skipper";
+  // "barca" and "gommone" use their own DB slugs directly
   return categorySlug;
 }

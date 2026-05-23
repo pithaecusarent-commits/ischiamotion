@@ -29,7 +29,7 @@ export const vehicles: PublicVehicle[] = [
   },
   {
     id: "veh-rib-5",
-    category: "barca",
+    category: "gommone",
     title_it: "Gommone",
     title_en: "RIB / Dinghy",
     location_it: "Casamicciola",

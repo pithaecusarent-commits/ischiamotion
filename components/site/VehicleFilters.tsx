@@ -7,7 +7,8 @@ const labels: Record<Locale, Record<VehicleFilter, string>> = {
     all: "Tutti",
     scooter: "🛵 Scooter",
     auto: "🚗 Auto",
-    barca: "🛥️ Barche",
+    gommone: "🛥️ Gommone",
+    barca: "🚤 Barca",
     bici: "🚲 Bici",
     skipper: "⛵ Con skipper"
   },
@@ -15,7 +16,8 @@ const labels: Record<Locale, Record<VehicleFilter, string>> = {
     all: "All",
     scooter: "🛵 Scooter",
     auto: "🚗 Cars",
-    barca: "🛥️ Boats",
+    gommone: "🛥️ RIB",
+    barca: "🚤 Boats",
     bici: "🚲 E-bikes",
     skipper: "⛵ With skipper"
   }
@@ -30,7 +32,7 @@ export function VehicleFilters({
   active: VehicleFilter;
   onChange: (filter: VehicleFilter) => void;
 }) {
-  const filters: VehicleFilter[] = ["all", "scooter", "auto", "barca", "bici", "skipper"];
+  const filters: VehicleFilter[] = ["all", "scooter", "auto", "gommone", "barca", "bici", "skipper"];
 
   return (
     <div className="pills" aria-label={locale === "it" ? "Categorie veicolo" : "Vehicle categories"}>

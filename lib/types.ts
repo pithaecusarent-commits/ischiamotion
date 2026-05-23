@@ -1,6 +1,6 @@
 export type Locale = "it" | "en";
 
-export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "bici" | "skipper";
+export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "gommone" | "bici" | "skipper";
 
 export type BookingDeliveryMethod = "pickup_point" | "port_delivery" | "hotel_delivery";
 

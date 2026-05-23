@@ -14,17 +14,19 @@ type SearchParams = {
 };
 
 const locales: Locale[] = ["it", "en"];
-const categories: VehicleFilter[] = ["all", "scooter", "auto", "bici", "barca", "skipper"];
+const categories: VehicleFilter[] = ["all", "scooter", "auto", "bici", "gommone", "barca", "skipper"];
 const deliveryMethods: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
 
-// Maps URL params (which may contain DB slugs) to frontend VehicleFilter slugs.
-// Prevents DB slugs like "boat-with-skipper" from falling back to "all".
+// Maps URL params (which may contain DB slugs or aliases) to frontend VehicleFilter slugs.
 const categoryAliases: Record<string, VehicleFilter> = {
   "boat-with-skipper": "skipper",
   "bici-elettriche": "bici",
-  "barche-gommoni": "barca",
-  "gommone": "barca",
-  "barche": "barca"
+  "gommoni": "gommone",
+  "rib": "gommone",
+  "dinghy": "gommone",
+  "barche": "barca",
+  "boat": "barca",
+  "barche-gommoni": "barca"
 };
 
 function resolveCategory(raw: string | undefined): VehicleFilter {
