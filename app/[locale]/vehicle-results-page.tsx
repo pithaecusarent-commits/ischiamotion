@@ -17,6 +17,22 @@ const locales: Locale[] = ["it", "en"];
 const categories: VehicleFilter[] = ["all", "scooter", "auto", "bici", "barca", "skipper"];
 const deliveryMethods: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
 
+// Maps URL params (which may contain DB slugs) to frontend VehicleFilter slugs.
+// Prevents DB slugs like "boat-with-skipper" from falling back to "all".
+const categoryAliases: Record<string, VehicleFilter> = {
+  "boat-with-skipper": "skipper",
+  "bici-elettriche": "bici",
+  "barche-gommoni": "barca",
+  "gommone": "barca",
+  "barche": "barca"
+};
+
+function resolveCategory(raw: string | undefined): VehicleFilter {
+  if (!raw) return "all";
+  const normalized = categoryAliases[raw] ?? raw;
+  return categories.includes(normalized as VehicleFilter) ? (normalized as VehicleFilter) : "all";
+}
+
 export async function VehicleResultsPage({
   locale,
   searchParams
@@ -26,9 +42,7 @@ export async function VehicleResultsPage({
 }) {
   if (!locales.includes(locale)) notFound();
 
-  const category = categories.includes(searchParams?.category as VehicleFilter)
-    ? (searchParams?.category as VehicleFilter)
-    : "all";
+  const category = resolveCategory(searchParams?.category);
   const deliveryMethod = deliveryMethods.includes(searchParams?.delivery_method as BookingDeliveryMethod)
     ? (searchParams?.delivery_method as BookingDeliveryMethod)
     : null;
