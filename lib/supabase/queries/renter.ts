@@ -420,11 +420,27 @@ export async function createRenterAvailabilityRule(input: {
 }): Promise<{ error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(input.accessToken);
+
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from("vehicles")
+      .select("id, renter_id")
+      .eq("id", input.vehicleId)
+      .eq("renter_id", input.renterId)
+      .maybeSingle<{ id: string; renter_id: string }>();
+
+    if (vehicleError) {
+      return { error: vehicleError.message };
+    }
+
+    if (!vehicle) {
+      return { error: "Veicolo non assegnato al tuo noleggio." };
+    }
+
     const { error } = await supabase
       .from("vehicle_availability_rules")
       .insert({
         vehicle_id: input.vehicleId,
-        renter_id: input.renterId,
+        renter_id: vehicle.renter_id,
         date_from: input.dateFrom,
         date_to: input.dateTo,
         is_closed: input.isClosed,

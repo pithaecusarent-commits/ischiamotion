@@ -94,7 +94,8 @@ export async function createRenterAvailabilityRuleAction(formData: FormData) {
   const dateFrom = String(formData.get("dateFrom") || "");
   const dateTo = String(formData.get("dateTo") || "");
   const isClosed = formData.get("isClosed") === "on";
-  const minStayDays = Math.max(Number(formData.get("minStayDays") || "1"), 1);
+  const parsedMinStayDays = Number(formData.get("minStayDays") || "1");
+  const minStayDays = Number.isFinite(parsedMinStayDays) ? Math.max(Math.trunc(parsedMinStayDays), 1) : 1;
   const notes = String(formData.get("notes") || "");
 
   if (!vehicleId || !renterId || !dateFrom || !dateTo) {
