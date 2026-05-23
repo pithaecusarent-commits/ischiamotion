@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels, paymentMethodLabels, paymentTypeLabels } from "@/lib/booking-labels";
 import { createBookingRequest, generateBookingCode } from "@/lib/supabase/queries/bookings";
 import type {
@@ -18,6 +18,7 @@ type Props = {
   pickupPoints: PublicPickupPoint[];
   startDate: string;
   endDate: string;
+  initialDeliveryMethod?: BookingDeliveryMethod | null;
   onClose: () => void;
 };
 
@@ -90,16 +91,22 @@ function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   return label.replace(" - ", " — ");
 }
 
-export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, endDate, onClose }: Props) {
+export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, endDate, initialDeliveryMethod, onClose }: Props) {
   const text = copy[locale];
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [selectedPickupPointId, setSelectedPickupPointId] = useState(pickupPoints[0]?.id || "");
-  const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>("pickup_point");
+  const [selectedPickupPointId, setSelectedPickupPointId] = useState(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
+  const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(initialDeliveryMethod || "pickup_point");
   const [paymentType, setPaymentType] = useState<BookingPaymentType>("pay_on_pickup");
   const vehicleLabel = useMemo(() => {
     if (!vehicle) return "";
     return locale === "it" ? vehicle.title_it : vehicle.title_en;
   }, [locale, vehicle]);
+
+  useEffect(() => {
+    setSelectedPickupPointId(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
+    setDeliveryMethod(initialDeliveryMethod || "pickup_point");
+    setStatus("idle");
+  }, [initialDeliveryMethod, pickupPoints, vehicle]);
 
   if (!vehicle) return null;
   const currentVehicle = vehicle;
@@ -175,23 +182,31 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
                 ))}
               </select>
             </label>
-            <div className="booking-notes">
-              <span>{text.deliveryTitle}</span>
-              <div className="booking-option-grid">
-                {deliveryOptions.map((option) => (
-                  <label key={option}>
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value={option}
-                      checked={deliveryMethod === option}
-                      onChange={() => setDeliveryMethod(option)}
-                    />
-                    <span>{deliveryMethodLabels[locale][option]}</span>
-                  </label>
-                ))}
+            {initialDeliveryMethod ? (
+              <label>
+                <span>{text.deliveryTitle}</span>
+                <input value={deliveryMethodLabels[locale][initialDeliveryMethod]} readOnly />
+                <input type="hidden" name="deliveryMethod" value={initialDeliveryMethod} />
+              </label>
+            ) : (
+              <div className="booking-notes">
+                <span>{text.deliveryTitle}</span>
+                <div className="booking-option-grid">
+                  {deliveryOptions.map((option) => (
+                    <label key={option}>
+                      <input
+                        type="radio"
+                        name="deliveryMethod"
+                        value={option}
+                        checked={deliveryMethod === option}
+                        onChange={() => setDeliveryMethod(option)}
+                      />
+                      <span>{deliveryMethodLabels[locale][option]}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             {deliveryMethod === "port_delivery" ? (
               <label>
                 <span>{text.port}</span>
