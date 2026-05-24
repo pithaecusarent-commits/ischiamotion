@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { BookingDeliveryMethod, Locale, PublicPickupPoint, VehicleFilter } from "@/lib/types";
 import { t } from "@/lib/i18n";
 import { HeroSearch } from "@/components/site/HeroSearch";
@@ -27,14 +28,6 @@ export function Hero({
   onDeliveryMethodChange: (value: BookingDeliveryMethod) => void;
 }) {
   const copy = t(locale);
-  const firstPickupPoint = pickupPoints[0];
-  const pickupTitle = firstPickupPoint
-    ? (locale === "it" ? firstPickupPoint.public_label_it : firstPickupPoint.public_label_en)
-    : "IschiaMotion Point";
-  const pickupDescription = firstPickupPoint
-    ? (locale === "it" ? firstPickupPoint.description_it : firstPickupPoint.description_en)
-    : null;
-  const pickupZones = pickupPoints.slice(0, 3).map((point) => point.zone).join(", ");
 
   return (
     <section className="hero">
@@ -63,29 +56,47 @@ export function Hero({
       </div>
 
       <div className="hero-right">
-        <div className="island-map" />
+        <Image
+          className="hero-art-image"
+          src="/images/hero-ischiamotion-castello-clean.png"
+          alt={locale === "it" ? "Scooter IschiaMotion davanti al Castello Aragonese" : "IschiaMotion scooter in front of Castello Aragonese"}
+          fill
+          sizes="(max-width: 1080px) 520px, 46vw"
+          priority
+        />
         <div className="scooter-scene">
-          <div className="sun" />
-          <div className="orbit" />
-          <span className="big-icon">🛵</span>
-
-          <div className="route-card">
-            <span className="mini-label">{locale === "it" ? "Itinerario top" : "Top route"}</span>
-            <span className="mini-title">Porto → Sant’Angelo</span>
-            <span className="mini-sub">{locale === "it" ? "Panorami, terme e mare" : "Views, spas and sea"}</span>
+          <div className="hero-night" aria-hidden="true" />
+          <div className="hero-stars" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
           </div>
-
-          <div className="rating-card">
-            <span className="mini-label">{locale === "it" ? "Clienti felici" : "Happy guests"}</span>
-            <span className="mini-title">4.9★</span>
-            <span className="mini-sub">{locale === "it" ? "Esperienza fluida" : "Smooth experience"}</span>
-          </div>
-
-          <div className="pickup-card">
-            <span className="mini-label">{locale === "it" ? "Ritiro rapido" : "Fast pickup"}</span>
-            <span className="mini-title">{pickupTitle}</span>
-            <span className="mini-sub">{pickupDescription || pickupZones}</span>
-          </div>
+          <div className="hero-orbit" aria-hidden="true" />
+          <div className="hero-astro" aria-hidden="true" />
+          <span className="light-dot light-dot-a" />
+          <span className="light-dot light-dot-b" />
+          <span className="light-dot light-dot-c" />
         </div>
 
         <div className="hero-stat-row">
@@ -98,8 +109,8 @@ export function Hero({
             <div className="hero-stat-label">{locale === "it" ? "Recensioni clienti" : "Guest reviews"}</div>
           </div>
           <div className="hero-stat">
-            <span className="hero-stat-val">{pickupPoints.length}</span>
-            <div className="hero-stat-label">{locale === "it" ? "Punti ritiro" : "Pickup points"}</div>
+            <span className="hero-stat-val">20+</span>
+            <div className="hero-stat-label">{locale === "it" ? "Punti di ritiro" : "Pickup points"}</div>
           </div>
         </div>
       </div>
