@@ -26,7 +26,7 @@ type BookingEmailPayload = {
 
 const resendEndpoint = "https://api.resend.com/emails";
 const defaultAdminEmail = "info@ischiamotion.com";
-const defaultFromEmail = "IschiaMotion <info@ischiamotion.com>";
+const defaultFromEmail = "IschiaMotion <noreply@mail.ischiamotion.com>";
 const defaultSiteUrl = "https://ischiamotion.com";
 
 class Resend {

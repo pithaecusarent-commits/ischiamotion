@@ -3,11 +3,18 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { adminBookingStatuses, updateAdminBookingStatus, type AdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
+import {
+  adminBookingStatuses,
+  assignAdminBookingRenter,
+  updateAdminBookingStatus,
+  type AdminBookingStatus
+} from "@/lib/supabase/queries/admin-bookings";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithMessage(id: string, type: "success" | "error" | "voucherRequired") {
-  redirect(`/admin/bookings/${id}?statusUpdate=${type}`);
+function redirectWithMessage(id: string, type: "success" | "error" | "voucherRequired" | "renterAssigned" | "renterError") {
+  const param = type === "renterAssigned" || type === "renterError" ? "renterAssign" : "statusUpdate";
+  const value = type === "renterAssigned" ? "success" : type === "renterError" ? "error" : type;
+  redirect(`/admin/bookings/${id}?${param}=${value}`);
 }
 
 export async function updateBookingStatusAction(formData: FormData) {
@@ -37,4 +44,25 @@ export async function updateBookingStatusAction(formData: FormData) {
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);
   redirectWithMessage(bookingId, "success");
+}
+
+export async function assignBookingRenterAction(formData: FormData) {
+  const bookingId = String(formData.get("bookingId") || "");
+  const renterId = String(formData.get("renterId") || "");
+
+  if (!bookingId || !renterId) {
+    redirectWithMessage(bookingId, "renterError");
+  }
+
+  const { accessToken } = await requireAdmin(`/admin/bookings/${bookingId}`);
+  const { error } = await assignAdminBookingRenter(accessToken, bookingId, renterId);
+
+  if (error) {
+    redirectWithMessage(bookingId, "renterError");
+  }
+
+  revalidatePath("/admin/bookings");
+  revalidatePath(`/admin/bookings/${bookingId}`);
+  revalidatePath("/renter/bookings");
+  redirectWithMessage(bookingId, "renterAssigned");
 }

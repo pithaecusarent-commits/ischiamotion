@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
+import { assignBookingRenterAction, updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
 import { markBookingCheckedInAction } from "@/app/admin/bookings/[id]/checkin-actions";
 import { PaymentForm } from "@/app/admin/bookings/[id]/PaymentForm";
 import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
@@ -22,7 +22,7 @@ import {
   StatusBadge
 } from "@/app/admin/bookings/booking-ui";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { getAdminBookingById } from "@/lib/supabase/queries/admin-bookings";
+import { getActiveAdminRenters, getAdminBookingById } from "@/lib/supabase/queries/admin-bookings";
 import { getAdminCheckinByBookingId } from "@/lib/supabase/queries/checkins";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 import { generateQrDataUrl, toAbsoluteCheckinUrl } from "@/lib/qr";
@@ -36,6 +36,7 @@ type Props = {
     voucher?: string;
     checkin?: string;
     payment?: string;
+    renterAssign?: string;
   };
 };
 
@@ -51,12 +52,14 @@ function DetailRow({ label, value }: { label: string; value: ReactNode }) {
 export default async function AdminBookingDetailPage({ params, searchParams }: Props) {
   const { accessToken } = await requireAdmin(`/admin/bookings/${params.id}`);
   const { booking, error } = await getAdminBookingById(accessToken, params.id);
+  const { renters, error: rentersError } = await getActiveAdminRenters(accessToken);
   const { voucher, error: voucherLoadError } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null, error: null };
   const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
   const statusMessage  = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
   const checkinMessage = searchParams?.checkin;
   const paymentMessage = searchParams?.payment;
+  const renterAssignMessage = searchParams?.renterAssign;
   const voucherPath = voucher ? `/checkin/${voucher.voucher_code}` : "";
   const voucherUrl = voucher ? toAbsoluteCheckinUrl(voucherPath) : "";
   const voucherQrDataUrl = voucher ? await generateQrDataUrl(voucher.qr_payload || voucherPath) : "";
@@ -156,6 +159,61 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 errorMessage={paymentMessage === "error"}
               />
             ) : null}
+
+            <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Assegna noleggiatore</div>
+                  <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Gestione partner interno</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+                    Il nome del noleggiatore resta visibile solo in admin. Dopo l&apos;assegnazione, la richiesta appare nell&apos;area renter collegata.
+                  </p>
+                </div>
+              </div>
+
+              {renterAssignMessage === "success" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Noleggiatore assegnato correttamente.
+                </div>
+              ) : null}
+
+              {renterAssignMessage === "error" || rentersError ? (
+                <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+                  Impossibile assegnare il noleggiatore. Verifica che esistano renter attivi e che le policy admin siano applicate.
+                </div>
+              ) : null}
+
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
+                <DetailRow
+                  label="Noleggiatore attuale"
+                  value={booking.renters?.business_name_internal || (booking.renter_id ? "Renter collegato" : "Non assegnato")}
+                />
+                <DetailRow label="ID booking" value={booking.id} />
+              </div>
+
+              <form action={assignBookingRenterAction} className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+                <input type="hidden" name="bookingId" value={booking.id} />
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Noleggiatore attivo
+                  <select
+                    className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+                    name="renterId"
+                    defaultValue={booking.renter_id || ""}
+                    required
+                  >
+                    <option value="">Seleziona noleggiatore</option>
+                    {renters.map((renter) => (
+                      <option key={renter.id} value={renter.id}>
+                        {renter.business_name_internal}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit" disabled={renters.length === 0}>
+                  Assegna
+                </button>
+              </form>
+            </div>
 
             <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">

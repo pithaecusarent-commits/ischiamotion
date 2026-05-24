@@ -2,6 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
 import type { PublicPickupPoint } from "@/lib/types";
 
+function canUseMockFallback() {
+  return process.env.NODE_ENV !== "production";
+}
+
 type PickupPointRow = {
   id: string;
   public_label_it: string;
@@ -33,7 +37,7 @@ export async function getActivePickupPoints(): Promise<PublicPickupPoint[]> {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return mockPickupPoints;
+    return canUseMockFallback() ? mockPickupPoints : [];
   }
 
   try {
@@ -51,11 +55,11 @@ export async function getActivePickupPoints(): Promise<PublicPickupPoint[]> {
       .order("zone", { ascending: true });
 
     if (error || !data?.length) {
-      return mockPickupPoints;
+      return canUseMockFallback() ? mockPickupPoints : [];
     }
 
     return data.map((row) => toPublicPickupPoint(row as PickupPointRow));
   } catch {
-    return mockPickupPoints;
+    return canUseMockFallback() ? mockPickupPoints : [];
   }
 }

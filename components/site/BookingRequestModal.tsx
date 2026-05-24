@@ -51,7 +51,8 @@ const copy = {
     close: "Chiudi",
     success: "Richiesta ricevuta. Verifichiamo disponibilità e dettagli con il partner locale, poi ti ricontattiamo.",
     error: "Non siamo riusciti a inviare la richiesta. Riprova tra poco.",
-    mockBlocked: "Questa opzione dimostrativa non può essere richiesta. Prova a cambiare ricerca o contattaci su WhatsApp."
+    mockBlocked: "Questa opzione dimostrativa non può essere richiesta. Prova a cambiare ricerca o contattaci su WhatsApp.",
+    noPickupPoints: "Al momento i punti di ritiro non sono disponibili. Contattaci su WhatsApp per assistenza."
   },
   en: {
     title: "Availability request",
@@ -80,7 +81,8 @@ const copy = {
     close: "Close",
     success: "Request received. We check availability and details with the local partner, then contact you.",
     error: "We could not send your request. Please try again shortly.",
-    mockBlocked: "This demo option cannot be requested. Try changing your search or contact us on WhatsApp."
+    mockBlocked: "This demo option cannot be requested. Try changing your search or contact us on WhatsApp.",
+    noPickupPoints: "Pickup points are currently unavailable. Contact us on WhatsApp for assistance."
   }
 } satisfies Record<Locale, Record<string, string>>;
 
@@ -194,14 +196,18 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
               <span>{text.vehicle}</span>
               <input value={vehicleLabel} readOnly />
             </label>
-            <label>
-              <span>{text.pickupPoint}</span>
-              <select value={selectedPickupPointId} onChange={(event) => setSelectedPickupPointId(event.target.value)} required>
-                {pickupPoints.map((point) => (
-                  <option key={point.id} value={point.id}>{formatPickupLabel(point, locale)}</option>
-                ))}
-              </select>
-            </label>
+            {pickupPoints.length === 0 ? (
+              <div className="booking-message error">{text.noPickupPoints}</div>
+            ) : (
+              <label>
+                <span>{text.pickupPoint}</span>
+                <select value={selectedPickupPointId} onChange={(event) => setSelectedPickupPointId(event.target.value)} required>
+                  {pickupPoints.map((point) => (
+                    <option key={point.id} value={point.id}>{formatPickupLabel(point, locale)}</option>
+                  ))}
+                </select>
+              </label>
+            )}
             {isNautical ? (
               <label>
                 <span>{text.deliveryTitle}</span>
@@ -331,7 +337,7 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
               </div>
             ) : null}
 
-            <button className="booking-submit" type="submit" disabled={status === "submitting"}>
+            <button className="booking-submit" type="submit" disabled={status === "submitting" || pickupPoints.length === 0}>
               {status === "submitting" ? text.sending : text.submit}
             </button>
           </form>
