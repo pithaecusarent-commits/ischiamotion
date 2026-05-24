@@ -49,8 +49,8 @@ export function SearchResults({
 }: Props) {
   const [selectedVehicle, setSelectedVehicle] = useState<PublicVehicle | null>(null);
   const emptyText = locale === "it"
-    ? "Nessun mezzo disponibile per questa ricerca. Prova a cambiare date o categoria."
-    : "No vehicles available for this search. Try changing dates or category.";
+    ? "Nessuna opzione trovata per questa ricerca. Prova a cambiare date o categoria: la disponibilità viene sempre verificata con i partner locali."
+    : "No options found for this search. Try changing dates or category: availability is always reviewed with local partners.";
 
   return (
     <>
@@ -58,7 +58,7 @@ export function SearchResults({
         <div className="section-header">
           <div>
             <div className="section-eyebrow">{locale === "it" ? "Risultati ricerca" : "Search results"}</div>
-            <h1 className="section-title">{locale === "it" ? "Mezzi disponibili" : "Available vehicles"}</h1>
+            <h1 className="section-title">{locale === "it" ? "Opzioni da verificare" : "Options to review"}</h1>
             <p className="mt-3 text-ink/60">
               {categoryLabels[locale][category]} · {startDate || "-"} / {endDate || "-"}
             </p>
@@ -69,8 +69,8 @@ export function SearchResults({
         {isFallback ? (
           <div className="mb-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-ink/70">
             {locale === "it"
-              ? "Stiamo mostrando esempi generici perché la ricerca live non è disponibile."
-              : "Showing generic examples because live search is not available."}
+              ? "Stiamo mostrando esempi generici: la disponibilità effettiva viene verificata con i partner locali."
+              : "Showing generic examples: actual availability is reviewed with local partners."}
           </div>
         ) : null}
 
@@ -100,7 +100,7 @@ export function SearchResults({
                     <div className="result-foot">
                       <div className="vcard-price"><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></div>
                       <button className="book-btn" type="button" onClick={() => setSelectedVehicle(vehicle)}>
-                        {locale === "it" ? "Richiedi questo mezzo" : "Request this vehicle"}
+                        {locale === "it" ? "Richiedi verifica" : "Request review"}
                       </button>
                     </div>
                   </div>

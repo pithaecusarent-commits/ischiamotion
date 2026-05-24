@@ -36,10 +36,10 @@ export function VehicleGrid({
     <section className="section reveal" id="veicoli">
       <div className="section-header">
         <div>
-          <div className="section-eyebrow">{locale === "it" ? "Richiesta disponibilità" : "Availability request"}</div>
-          <h2 className="section-title" dangerouslySetInnerHTML={{ __html: locale === "it" ? "Scegli il tuo<br><em>mezzo perfetto</em>" : "Choose your<br><em>perfect ride</em>" }} />
+          <div className="section-eyebrow">{locale === "it" ? "Noleggio a Ischia tramite partner" : "Rental in Ischia via partners"}</div>
+          <h2 className="section-title" dangerouslySetInnerHTML={{ __html: locale === "it" ? "Scooter, auto,<br><em>e-bike e barche</em>" : "Scooters, cars,<br><em>e-bikes and boats</em>" }} />
         </div>
-        <a href="#prenota" className="see-all">{locale === "it" ? "Vedi tutti →" : "View all →"}</a>
+        <a href="#prenota" className="see-all">{locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}</a>
       </div>
 
       <div className="vehicles-grid">

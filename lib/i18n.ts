@@ -12,8 +12,8 @@ export const dictionary = {
     hero: {
       kicker: "Ischia · Procida · Vivara",
       title: "Scopri Ischia<br>al tuo<br><em>ritmo.</em>",
-      subtitle: "Noleggia scooter, auto, bici elettriche e barche. Richiedi online in pochi secondi, ritira sull'isola e parti senza pensieri.",
-      cta: "Trova il tuo mezzo →",
+      subtitle: "IschiaMotion è una piattaforma locale che ti aiuta a trovare scooter, auto, e-bike, gommoni e barche disponibili a Ischia tramite partner selezionati. Invia una richiesta di disponibilità e ricevi conferma dopo verifica.",
+      cta: "Richiedi disponibilità →",
       secondary: "Come funziona"
     },
     trust: [
@@ -41,8 +41,8 @@ export const dictionary = {
     hero: {
       kicker: "Ischia · Procida · Vivara",
       title: "Discover Ischia<br>at your own<br><em>pace.</em>",
-      subtitle: "Rent scooters, cars, e-bikes and boats. Request online in seconds, pick up on the island and start without stress.",
-      cta: "Find your ride →",
+      subtitle: "IschiaMotion helps you find scooters, cars, e-bikes, rubber dinghies and boats in Ischia through selected local rental partners. Send an availability request and receive confirmation after review.",
+      cta: "Request availability →",
       secondary: "How it works"
     },
     trust: [

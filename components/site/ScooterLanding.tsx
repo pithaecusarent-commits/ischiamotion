@@ -18,18 +18,18 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const homePath = isIt ? "/it" : "/en";
   const title = isIt ? "Noleggio scooter Ischia" : "Scooter rental Ischia";
   const description = isIt
-    ? "Richiedi online il tuo scooter a Ischia e scegli un punto ritiro IschiaMotion comodo per porto, spiagge e borghi."
-    : "Request your scooter in Ischia online and choose an IschiaMotion pickup point close to ports, beaches and villages.";
+    ? "Richiedi disponibilità per scooter a Ischia tramite una rete di noleggiatori selezionati e scegli un punto ritiro comodo per porto, spiagge e borghi."
+    : "Request scooter availability in Ischia through selected local rental partners and choose a pickup point close to ports, beaches and villages.";
   const advantages = isIt
     ? [
-      ["Libertà nei movimenti", "Raggiungi Maronti, Citara, Sant’Angelo e Ischia Ponte con tempi più flessibili."],
-      ["Richiesta online", "Indichi date, orario e punto ritiro: ti ricontattiamo per confermare la disponibilità."],
-      ["Punti brandizzati", "Il cliente vede solo il punto IschiaMotion, senza nomi di singoli noleggiatori."]
+      ["Network locale", "IschiaMotion collega la tua richiesta a noleggiatori selezionati sull’isola."],
+      ["Richiesta online", "Indichi date, orario e punto ritiro: ricevi conferma dopo verifica disponibilità."],
+      ["Ritiro semplice", "Scegli un punto IschiaMotion comodo per porto, spiagge e borghi."]
     ]
     : [
-      ["More freedom", "Reach Maronti, Citara, Sant’Angelo and Ischia Ponte with more flexible timing."],
-      ["Online request", "Choose dates, time and pickup point: we contact you to confirm availability."],
-      ["Branded pickup points", "Customers see only the IschiaMotion point, not individual rental company names."]
+      ["Local network", "IschiaMotion connects your request with selected rental partners on the island."],
+      ["Online request", "Choose dates, time and pickup point: confirmation follows availability review."],
+      ["Simple pickup", "Choose an IschiaMotion point close to ports, beaches and villages."]
     ];
 
   return (
@@ -48,14 +48,14 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             <h1>{title}</h1>
             <p>{description}</p>
             <div className="hero-actions">
-              <a href={`${homePath}#veicoli`} className="primary-btn">{isIt ? "Scegli uno scooter" : "Choose a scooter"}</a>
+              <a href={`${homePath}#veicoli`} className="primary-btn">{isIt ? "Vedi opzioni scooter" : "View scooter options"}</a>
               <a href={`${homePath}#prenota`} className="ghost-btn">{isIt ? "Imposta le date" : "Set dates"}</a>
             </div>
           </div>
           <div className="seo-landing-card">
             <span>{isIt ? "Ideale per" : "Best for"}</span>
             <strong>{isIt ? "Spiagge, porti e borghi" : "Beaches, ports and villages"}</strong>
-            <p>{isIt ? "Una richiesta semplice per muoverti sull’isola con più autonomia." : "A simple request to explore the island with more independence."}</p>
+            <p>{isIt ? "Una richiesta semplice verso partner locali selezionati per muoverti sull’isola con più autonomia." : "A simple request to selected local partners for exploring the island with more independence."}</p>
           </div>
         </section>
 
@@ -96,8 +96,8 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
         <section className="final-cta reveal">
           <div className="final-box">
             <h2>{isIt ? "Pronto a muoverti a Ischia?" : "Ready to move around Ischia?"}</h2>
-            <p>{isIt ? "Imposta le date, scegli il mezzo e invia una richiesta: ti contatteremo per confermare la disponibilità." : "Set your dates, choose a ride and send a request: we will contact you to confirm availability."}</p>
-            <a href={`${homePath}#veicoli`} className="primary-btn">{isIt ? "Vai agli scooter" : "View scooters"}</a>
+            <p>{isIt ? "Imposta le date, scegli un’opzione e invia una richiesta: riceverai conferma dopo verifica con il partner locale." : "Set your dates, choose an option and send a request: confirmation follows review with the local partner."}</p>
+            <a href={`${homePath}#veicoli`} className="primary-btn">{isIt ? "Vai alle opzioni scooter" : "View scooter options"}</a>
           </div>
         </section>
       </main>

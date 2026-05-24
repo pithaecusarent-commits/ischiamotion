@@ -6,7 +6,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Noleggio scooter Ischia | IschiaMotion",
-  description: "Noleggio scooter Ischia con richiesta online e punti ritiro IschiaMotion a Porto d’Ischia, Forio, Casamicciola, Sant’Angelo e Barano.",
+  description: "Richiedi disponibilità per noleggio scooter Ischia tramite una rete di noleggiatori selezionati, con punti ritiro a Porto d’Ischia, Forio e altre zone.",
   alternates: {
     canonical: "/it/noleggio-scooter-ischia",
     languages: {

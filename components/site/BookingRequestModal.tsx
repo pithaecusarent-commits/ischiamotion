@@ -25,8 +25,8 @@ type Props = {
 
 const copy = {
   it: {
-    title: "Richiesta prenotazione",
-    subtitle: "Compila i dati e ti contatteremo per confermare la disponibilità.",
+    title: "Richiesta disponibilità",
+    subtitle: "Compila i dati: IschiaMotion verifica l’opzione con il partner locale selezionato e ti ricontatta.",
     firstName: "Nome",
     lastName: "Cognome",
     email: "Email",
@@ -41,20 +41,20 @@ const copy = {
     paymentTitle: "Condizioni di pagamento",
     paymentMethod: "Metodo preferito",
     paymentNotes: "Note pagamento opzionali",
-    paymentNotice: "Il pagamento online automatico non è incluso in questa versione. Eventuali acconti, saldi o pagamenti anticipati saranno confermati dopo la verifica della disponibilità.",
+    paymentNotice: "Eventuali acconti, saldi o pagamenti anticipati vengono definiti solo dopo la verifica della disponibilità con il partner locale.",
     notes: "Note",
     language: "Lingua cliente",
-    vehicle: "Veicolo selezionato",
-    pickupPoint: "Pickup point selezionato",
+    vehicle: "Opzione selezionata",
+    pickupPoint: "Pickup point richiesto",
     submit: "Invia richiesta",
     sending: "Invio in corso...",
     close: "Chiudi",
-    success: "Richiesta ricevuta. Ti contatteremo per confermare la disponibilità.",
+    success: "Richiesta ricevuta. Verifichiamo disponibilità e dettagli con il partner locale, poi ti ricontattiamo.",
     error: "Non siamo riusciti a inviare la richiesta. Riprova tra poco."
   },
   en: {
-    title: "Booking request",
-    subtitle: "Fill in your details and we will contact you to confirm availability.",
+    title: "Availability request",
+    subtitle: "Fill in your details: IschiaMotion checks the option with the selected local partner and contacts you.",
     firstName: "First name",
     lastName: "Last name",
     email: "Email",
@@ -69,15 +69,15 @@ const copy = {
     paymentTitle: "Payment conditions",
     paymentMethod: "Preferred method",
     paymentNotes: "Optional payment notes",
-    paymentNotice: "Automatic online payment is not included in this version. Deposits, balances or prepayments will be confirmed after availability check.",
+    paymentNotice: "Deposits, balances or prepayments are defined only after availability is reviewed with the local partner.",
     notes: "Notes",
     language: "Customer language",
-    vehicle: "Selected vehicle",
-    pickupPoint: "Selected pickup point",
+    vehicle: "Selected option",
+    pickupPoint: "Requested pickup point",
     submit: "Send request",
     sending: "Sending...",
     close: "Close",
-    success: "Request received. We will contact you to confirm availability.",
+    success: "Request received. We check availability and details with the local partner, then contact you.",
     error: "We could not send your request. Please try again shortly."
   }
 } satisfies Record<Locale, Record<string, string>>;

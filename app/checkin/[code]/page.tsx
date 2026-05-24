@@ -48,8 +48,8 @@ export default async function PublicCheckinPage({ params }: Props) {
               <h1 className="mt-3 font-serif text-4xl font-bold">Check-in ritiro</h1>
               <p className="mt-3 text-ink/65">
                 {locale === "it"
-                  ? "Mostra questo voucher al punto ritiro o al personale incaricato della consegna."
-                  : "Show this voucher at the pickup point or to the delivery staff."}
+                  ? "Mostra questo voucher al punto ritiro o al partner locale incaricato della consegna."
+                  : "Show this voucher at the pickup point or to the local partner handling delivery."}
               </p>
               <PrintVoucherButton />
             </div>

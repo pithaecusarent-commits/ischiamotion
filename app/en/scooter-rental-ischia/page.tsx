@@ -6,7 +6,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Scooter rental Ischia | IschiaMotion",
-  description: "Scooter rental Ischia with online requests and branded IschiaMotion pickup points in Ischia Port, Forio, Casamicciola, Sant’Angelo and Barano.",
+  description: "Request scooter rental availability in Ischia through selected local rental partners, with pickup points in Ischia Port, Forio and other island areas.",
   alternates: {
     canonical: "/en/scooter-rental-ischia",
     languages: {

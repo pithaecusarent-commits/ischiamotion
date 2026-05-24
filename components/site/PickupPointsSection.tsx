@@ -51,8 +51,8 @@ export function PickupPointsSection({
         </div>
         <p>
           {locale === "it"
-            ? "Ritira il tuo mezzo nei punti IschiaMotion distribuiti sull’isola. Il cliente vede solo il punto ritiro brandizzato, non il nome del singolo noleggiatore."
-            : "Pick up your vehicle at branded IschiaMotion points across the island. Customers see only the branded pickup point, not the individual rental company name."}
+            ? "Indica un punto IschiaMotion distribuito sull’isola: la disponibilità e le modalità vengono confermate dopo verifica con il partner locale."
+            : "Select an IschiaMotion point across the island: availability and pickup details are confirmed after review with the local partner."}
         </p>
       </div>
 

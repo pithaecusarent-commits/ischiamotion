@@ -5,40 +5,40 @@ const content = {
     {
       id: "spiagge-e-calette",
       eyebrow: "Spiagge e calette",
-      title: "Noleggia uno scooter a Ischia e raggiungi il mare più bello.",
-      text: "Con IschiaMotion puoi scegliere scooter, bici elettriche o auto per muoverti tra Maronti, Citara, San Montano e le calette più tranquille dell'isola. I punti ritiro brandizzati rendono la partenza semplice e riconoscibile."
+      title: "Noleggio scooter Ischia: trova l’opzione giusta per le spiagge.",
+      text: "IschiaMotion ti aiuta a richiedere scooter, bici elettriche o auto tramite partner locali selezionati per muoverti tra Maronti, Citara, San Montano e le calette più tranquille dell'isola."
     },
     {
       id: "borghi-e-panorami",
       eyebrow: "Borghi e panorami",
-      title: "Auto, scooter ed e-bike per scoprire Ischia oltre il porto.",
-      text: "Da Ischia Ponte a Forio, da Casamicciola a Barano, il noleggio veicoli a Ischia diventa più comodo quando puoi scegliere la categoria giusta e ritirare presso un IschiaMotion Point vicino al tuo itinerario."
+      title: "Noleggio auto Ischia ed e-bike per scoprire l’isola oltre il porto.",
+      text: "Da Ischia Ponte a Forio, da Casamicciola a Barano, IschiaMotion facilita richieste per noleggio auto Ischia, noleggio e-bike Ischia e scooter tramite partner selezionati."
     },
     {
       id: "giornate-in-mare",
       eyebrow: "Giornate in mare",
-      title: "Barche e gommoni a Ischia per vivere la costa dal mare.",
-      text: "Per chi vuole vedere l'isola da un'altra prospettiva, IschiaMotion raccoglie richieste per barche e gommoni con punti ritiro chiari, informazioni essenziali e un'esperienza coerente con il resto del viaggio."
+      title: "Noleggio barche Ischia, gommoni e barca con skipper.",
+      text: "Per chi vuole vedere l'isola dal mare, IschiaMotion raccoglie richieste per noleggio gommoni Ischia, noleggio barche Ischia e barca con skipper Ischia tramite partner nautici selezionati."
     }
   ],
   en: [
     {
       id: "spiagge-e-calette",
       eyebrow: "Beaches and coves",
-      title: "Rent a scooter in Ischia and reach the island's best beaches.",
-      text: "With IschiaMotion you can choose scooters, e-bikes or cars to move between Maronti, Citara, San Montano and quieter coves. Branded pickup points make every start simple and recognizable."
+      title: "Scooter rental Ischia: find the right option for the beaches.",
+      text: "IschiaMotion helps you request scooters, e-bikes or cars through selected local partners to move between Maronti, Citara, San Montano and quieter coves."
     },
     {
       id: "borghi-e-panorami",
       eyebrow: "Villages and views",
-      title: "Cars, scooters and e-bikes to explore beyond the port.",
-      text: "From Ischia Ponte to Forio, from Casamicciola to Barano, vehicle rental in Ischia becomes easier when you can choose the right category and pick up at an IschiaMotion Point near your route."
+      title: "Car rental Ischia and e-bike rental to explore beyond the port.",
+      text: "From Ischia Ponte to Forio, from Casamicciola to Barano, IschiaMotion facilitates requests for car rental Ischia, e-bike rental Ischia and scooter options through selected partners."
     },
     {
       id: "giornate-in-mare",
       eyebrow: "Days at sea",
-      title: "Boat and rib rental in Ischia for a different view of the coast.",
-      text: "For guests who want to see the island from the water, IschiaMotion collects requests for boats and ribs with clear pickup points, essential information and a consistent travel experience."
+      title: "Boat rental Ischia, rubber dinghies and boat with skipper.",
+      text: "For guests who want to see the island from the water, IschiaMotion collects requests for rubber dinghy rental Ischia, boat rental Ischia and boat with skipper Ischia through selected nautical partners."
     }
   ]
 } satisfies Record<Locale, Array<{ id: string; eyebrow: string; title: string; text: string }>>;

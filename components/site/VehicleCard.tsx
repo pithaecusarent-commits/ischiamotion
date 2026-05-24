@@ -45,7 +45,7 @@ export function VehicleCard({
         <div className="vcard-foot">
           <div className="vcard-price"><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></div>
           <button className="book-btn" type="button" onClick={() => onBook(vehicle)}>
-            {locale === "it" ? "Richiedi" : "Request"}
+            {locale === "it" ? "Verifica" : "Check"}
           </button>
         </div>
       </div>

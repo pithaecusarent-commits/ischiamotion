@@ -19,17 +19,17 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!locales.includes(params.locale)) notFound();
   const isIt = params.locale === "it";
   return {
-    title: isIt ? "Noleggio veicoli Ischia | IschiaMotion" : "Vehicle rental Ischia | IschiaMotion",
+    title: isIt ? "Noleggio scooter auto barche Ischia | IschiaMotion" : "Scooter car boat rental Ischia | IschiaMotion",
     description: isIt
-      ? "Noleggia scooter, auto, bici elettriche e barche a Ischia. Richiedi online, ritira sull'isola e vivi ogni angolo al tuo ritmo."
-      : "Rent scooters, cars, e-bikes and boats in Ischia. Request online, pick up on the island and explore at your own pace.",
+      ? "Piattaforma locale per noleggio scooter Ischia, noleggio auto Ischia, noleggio e-bike Ischia, noleggio gommoni Ischia, noleggio barche Ischia e skipper tramite partner selezionati."
+      : "Local marketplace for scooter rental Ischia, car rental Ischia, e-bike rental, rubber dinghy rental, boat rental and skipper options via selected partners.",
     alternates: {
       canonical: `/${params.locale}`,
       languages: { it: "/it", en: "/en" }
     },
     keywords: isIt
-      ? ["noleggio veicoli Ischia", "noleggio scooter Ischia", "noleggio auto Ischia"]
-      : ["vehicle rental Ischia", "scooter rental Ischia", "car rental Ischia"]
+      ? ["noleggio veicoli Ischia", "noleggio scooter Ischia", "noleggio auto Ischia", "noleggio e-bike Ischia", "noleggio gommoni Ischia", "noleggio barche Ischia", "barca con skipper Ischia"]
+      : ["vehicle rental Ischia", "scooter rental Ischia", "car rental Ischia", "e-bike rental Ischia", "rubber dinghy rental Ischia", "boat rental Ischia", "boat with skipper Ischia"]
   };
 }
 
@@ -45,10 +45,10 @@ export default async function LocaleHome({ params }: Props) {
       <JsonLd data={serviceJsonLd(
         params.locale,
         `/${params.locale}`,
-        isIt ? "Noleggio veicoli a Ischia" : "Vehicle rental in Ischia",
+        isIt ? "Noleggio scooter auto barche Ischia tramite marketplace locale" : "Scooter car boat rental Ischia through a local marketplace",
         isIt
-          ? "Noleggio scooter, auto, bici elettriche e barche a Ischia con richiesta online e punti ritiro IschiaMotion."
-          : "Scooter, car, e-bike and boat rental in Ischia with online requests and branded IschiaMotion pickup points."
+          ? "IschiaMotion facilita richieste di disponibilità per noleggio scooter, auto, e-bike, gommoni, barche e barca con skipper tramite noleggiatori selezionati a Ischia."
+          : "IschiaMotion facilitates availability requests for scooter rental, car rental, e-bike rental, rubber dinghy rental, boat rental and boat with skipper through selected local partners in Ischia."
       )} />
       <SiteHome locale={params.locale} pickupPoints={pickupPoints} />
     </>

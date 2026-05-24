@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "IschiaMotion",
-  description: "Noleggia scooter, auto, bici elettriche e barche a Ischia.",
+  description: "Piattaforma locale per richieste di noleggio scooter, auto, e-bike, gommoni e barche a Ischia tramite partner selezionati.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000")
 };
 
