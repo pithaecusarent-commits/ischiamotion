@@ -2,6 +2,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
+import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, scooterFaq, serviceJsonLd, siteUrl } from "@/lib/seo";
 
@@ -101,6 +102,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           </div>
         </section>
       </main>
+      <WhatsAppCTA locale={locale} />
       <Footer locale={locale} />
     </>
   );

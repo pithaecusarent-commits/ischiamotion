@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { SearchResults } from "@/components/site/SearchResults";
+import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 import { searchPublicVehicles } from "@/lib/supabase/queries/public-vehicles";
 import type { BookingDeliveryMethod, Locale, VehicleFilter } from "@/lib/types";
@@ -77,6 +78,7 @@ export async function VehicleResultsPage({
           isFallback={result.isFallback}
         />
       </main>
+      <WhatsAppCTA locale={locale} />
       <Footer locale={locale} />
     </>
   );

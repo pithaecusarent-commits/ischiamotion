@@ -10,8 +10,8 @@ export const dictionary = {
       book: "Richiedi ora"
     },
     hero: {
-      kicker: "Ischia · Procida · Vivara",
-      title: "Scopri Ischia<br>al tuo<br><em>ritmo.</em>",
+      kicker: "Ischia",
+      title: "Scopri Ischia<br>al tuo <em>ritmo.</em>",
       subtitle: "IschiaMotion è una piattaforma locale che ti aiuta a trovare scooter, auto, e-bike, gommoni e barche disponibili a Ischia tramite partner selezionati. Invia una richiesta di disponibilità e ricevi conferma dopo verifica.",
       cta: "Richiedi disponibilità →",
       secondary: "Come funziona"
@@ -39,8 +39,8 @@ export const dictionary = {
       book: "Request now"
     },
     hero: {
-      kicker: "Ischia · Procida · Vivara",
-      title: "Discover Ischia<br>at your own<br><em>pace.</em>",
+      kicker: "Ischia",
+      title: "Discover Ischia<br>at your own <em>pace.</em>",
       subtitle: "IschiaMotion helps you find scooters, cars, e-bikes, rubber dinghies and boats in Ischia through selected local rental partners. Send an availability request and receive confirmation after review.",
       cta: "Request availability →",
       secondary: "How it works"

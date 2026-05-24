@@ -13,6 +13,7 @@ import { SeoExperiences } from "@/components/site/SeoExperiences";
 import { HowItWorks } from "@/components/site/HowItWorks";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
+import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
 
 export function SiteHome({
@@ -62,6 +63,7 @@ export function SiteHome({
         <TrustBar locale={locale} />
         <FinalCTA locale={locale} />
       </main>
+      <WhatsAppCTA locale={locale} />
       <Footer locale={locale} />
     </>
   );
