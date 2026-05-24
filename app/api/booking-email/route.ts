@@ -29,6 +29,37 @@ const defaultAdminEmail = "info@ischiamotion.com";
 const defaultFromEmail = "IschiaMotion <info@ischiamotion.com>";
 const defaultSiteUrl = "https://ischiamotion.com";
 
+class Resend {
+  constructor(private readonly apiKey: string) {}
+
+  emails = {
+    send: async (input: { from: string; to: string; subject: string; html: string; text?: string }) => {
+      const response = await fetch(resendEndpoint, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(input)
+      });
+
+      const body = await response.json().catch(async () => {
+        const text = await response.text().catch(() => "");
+        return text ? { message: text } : null;
+      });
+
+      if (!response.ok) {
+        const message = typeof body === "object" && body && "message" in body
+          ? String(body.message)
+          : `Resend error ${response.status}`;
+        return { data: null, error: { message } };
+      }
+
+      return { data: body as { id?: string } | null, error: null };
+    }
+  };
+}
+
 function textLine(label: string, value: string | null | undefined) {
   return `${label}: ${value?.trim() || "-"}`;
 }
@@ -123,31 +154,19 @@ function customerEmailText(payload: BookingEmailPayload) {
 }
 
 async function sendResendEmail(input: {
-  apiKey: string;
+  resend: Resend;
   from: string;
   to: string;
   subject: string;
   text: string;
 }) {
-  const response = await fetch(resendEndpoint, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${input.apiKey}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      from: input.from,
-      to: input.to,
-      subject: input.subject,
-      text: input.text,
-      html: toHtml(input.text)
-    })
+  return input.resend.emails.send({
+    from: input.from,
+    to: input.to,
+    subject: input.subject,
+    text: input.text,
+    html: toHtml(input.text)
   });
-
-  if (!response.ok) {
-    const body = await response.text().catch(() => "");
-    throw new Error(`Resend error ${response.status}: ${body}`);
-  }
 }
 
 function isValidPayload(payload: Partial<BookingEmailPayload>): payload is BookingEmailPayload {
@@ -180,32 +199,63 @@ export async function POST(request: Request) {
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl).replace(/\/$/, "");
   const adminUrl = payload.bookingId ? `${siteUrl}/admin/bookings/${encodeURIComponent(payload.bookingId)}` : `${siteUrl}/admin/bookings`;
 
+  console.info("[booking-email] route called", {
+    bookingCode: payload.bookingCode,
+    resendApiKeyPresent: Boolean(apiKey),
+    fromEmail,
+    adminEmail,
+    customerEmail: payload.email
+  });
+
   if (!apiKey) {
     console.warn(`[booking-email] RESEND_API_KEY missing. Skipping email for ${payload.bookingCode}.`);
-    return NextResponse.json({ ok: true, skipped: true });
+    return NextResponse.json({
+      ok: false,
+      adminEmailSent: false,
+      customerEmailSent: false,
+      error: "RESEND_API_KEY missing."
+    });
   }
 
-  try {
-    await Promise.all([
-      sendResendEmail({
-        apiKey,
-        from: fromEmail,
-        to: adminEmail,
-        subject: `Nuova richiesta IschiaMotion — ${payload.bookingCode}`,
-        text: adminEmailText(payload, adminUrl)
-      }),
-      sendResendEmail({
-        apiKey,
-        from: fromEmail,
-        to: payload.email,
-        subject: payload.language === "it" ? "Richiesta ricevuta — IschiaMotion" : "Request received — IschiaMotion",
-        text: customerEmailText(payload)
-      })
-    ]);
+  const resend = new Resend(apiKey);
+  const adminResult = await sendResendEmail({
+    resend,
+    from: fromEmail,
+    to: adminEmail,
+    subject: `Nuova richiesta IschiaMotion — ${payload.bookingCode}`,
+    text: adminEmailText(payload, adminUrl)
+  }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Admin email failed." } }));
+  const adminEmailSent = !adminResult.error;
 
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error(`[booking-email] Unable to send email for ${payload.bookingCode}.`, error);
-    return NextResponse.json({ ok: true, emailError: true });
+  if (adminEmailSent) {
+    console.info("[booking-email] admin email sent", { bookingCode: payload.bookingCode, id: adminResult.data?.id || null });
+  } else {
+    console.error("[booking-email] admin email error", { bookingCode: payload.bookingCode, error: adminResult.error.message });
   }
+
+  const customerResult = await sendResendEmail({
+    resend,
+    from: fromEmail,
+    to: payload.email,
+    subject: payload.language === "it" ? "Richiesta ricevuta — IschiaMotion" : "Request received — IschiaMotion",
+    text: customerEmailText(payload)
+  }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Customer email failed." } }));
+  const customerEmailSent = !customerResult.error;
+
+  if (customerEmailSent) {
+    console.info("[booking-email] customer email sent", { bookingCode: payload.bookingCode, id: customerResult.data?.id || null });
+  } else {
+    console.error("[booking-email] customer email error", { bookingCode: payload.bookingCode, error: customerResult.error.message });
+  }
+
+  const ok = adminEmailSent && customerEmailSent;
+
+  return NextResponse.json({
+    ok,
+    adminEmailSent,
+    customerEmailSent,
+    error: ok
+      ? undefined
+      : [adminResult.error?.message, customerResult.error?.message].filter(Boolean).join(" | ")
+  });
 }
