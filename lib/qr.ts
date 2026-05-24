@@ -1,4 +1,4 @@
-const fallbackSiteUrl = "https://ischiamotion.vercel.app";
+const fallbackSiteUrl = "https://ischiamotion.com";
 const qrApiUrl = "https://api.qrserver.com/v1/create-qr-code/";
 
 function normalizeSiteUrl() {

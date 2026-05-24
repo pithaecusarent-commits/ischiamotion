@@ -49,8 +49,8 @@ export function SearchResults({
 }: Props) {
   const [selectedVehicle, setSelectedVehicle] = useState<PublicVehicle | null>(null);
   const emptyText = locale === "it"
-    ? "Nessuna opzione trovata per questa ricerca. Prova a cambiare date o categoria: la disponibilità viene sempre verificata con i partner locali."
-    : "No options found for this search. Try changing dates or category: availability is always reviewed with local partners.";
+    ? "Al momento non ci sono mezzi disponibili per questa ricerca. Prova a cambiare date o categoria."
+    : "No vehicles are currently available for this search. Try changing dates or category.";
 
   return (
     <>

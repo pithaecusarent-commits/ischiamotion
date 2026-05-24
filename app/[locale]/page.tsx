@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { SiteHome } from "@/components/site/SiteHome";
 import type { Locale } from "@/lib/types";
 import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
+import { searchPublicVehicles } from "@/lib/supabase/queries/public-vehicles";
 import { JsonLd } from "@/components/site/JsonLd";
 import { organizationJsonLd, serviceJsonLd, websiteJsonLd } from "@/lib/seo";
 
@@ -35,7 +36,10 @@ export function generateMetadata({ params }: Props): Metadata {
 
 export default async function LocaleHome({ params }: Props) {
   if (!locales.includes(params.locale)) notFound();
-  const pickupPoints = await getActivePickupPoints();
+  const [pickupPoints, vehicleResult] = await Promise.all([
+    getActivePickupPoints(),
+    searchPublicVehicles({ locale: params.locale, category_slug: "all" })
+  ]);
   const isIt = params.locale === "it";
 
   return (
@@ -50,7 +54,7 @@ export default async function LocaleHome({ params }: Props) {
           ? "IschiaMotion facilita richieste di disponibilità per noleggio scooter, auto, e-bike, gommoni, barche e barca con skipper tramite noleggiatori selezionati a Ischia."
           : "IschiaMotion facilitates availability requests for scooter rental, car rental, e-bike rental, rubber dinghy rental, boat rental and boat with skipper through selected local partners in Ischia."
       )} />
-      <SiteHome locale={params.locale} pickupPoints={pickupPoints} />
+      <SiteHome locale={params.locale} pickupPoints={pickupPoints} vehicles={vehicleResult.vehicles} />
     </>
   );
 }

@@ -18,7 +18,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <li><a href="#">{locale === "it" ? "Contatti" : "Contact"}</a></li>
           <li><a href="/renter">{locale === "it" ? "Sei un noleggiatore?" : "Are you a renter?"}</a></li>
         </ul>
-        <div className="footer-copy">© 2026 IschiaMotion.it</div>
+        <div className="footer-copy">© 2026 IschiaMotion.com</div>
       </div>
     </footer>
   );

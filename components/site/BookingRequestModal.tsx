@@ -50,7 +50,8 @@ const copy = {
     sending: "Invio in corso...",
     close: "Chiudi",
     success: "Richiesta ricevuta. Verifichiamo disponibilità e dettagli con il partner locale, poi ti ricontattiamo.",
-    error: "Non siamo riusciti a inviare la richiesta. Riprova tra poco."
+    error: "Non siamo riusciti a inviare la richiesta. Riprova tra poco.",
+    mockBlocked: "Questa opzione dimostrativa non può essere richiesta. Prova a cambiare ricerca o contattaci su WhatsApp."
   },
   en: {
     title: "Availability request",
@@ -78,7 +79,8 @@ const copy = {
     sending: "Sending...",
     close: "Close",
     success: "Request received. We check availability and details with the local partner, then contact you.",
-    error: "We could not send your request. Please try again shortly."
+    error: "We could not send your request. Please try again shortly.",
+    mockBlocked: "This demo option cannot be requested. Try changing your search or contact us on WhatsApp."
   }
 } satisfies Record<Locale, Record<string, string>>;
 
@@ -117,6 +119,12 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (process.env.NODE_ENV === "production" && currentVehicle.source === "mock") {
+      setStatus("error");
+      return;
+    }
+
     const formData = new FormData(event.currentTarget);
     const pickupPoint = pickupPoints.find((point) => point.id === selectedPickupPointId) || pickupPoints[0];
 
@@ -317,7 +325,11 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
               <textarea name="notes" rows={4} />
             </label>
 
-            {status === "error" ? <div className="booking-message error">{text.error}</div> : null}
+            {status === "error" ? (
+              <div className="booking-message error">
+                {process.env.NODE_ENV === "production" && currentVehicle.source === "mock" ? text.mockBlocked : text.error}
+              </div>
+            ) : null}
 
             <button className="booking-submit" type="submit" disabled={status === "submitting"}>
               {status === "submitting" ? text.sending : text.submit}

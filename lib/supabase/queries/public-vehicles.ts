@@ -60,6 +60,10 @@ const emojiMap: Record<VehicleCategorySlug, string> = {
   skipper: "⛵"
 };
 
+function canUseMockFallback() {
+  return process.env.NODE_ENV !== "production";
+}
+
 export function mapPublicVehicleToVehicleCardModel(row: PublicVehicleListingRow): PublicVehicle | null {
   const category = categoryMap[row.category_slug];
   if (!category) return null;
@@ -87,7 +91,11 @@ export async function searchPublicVehicles(params: PublicVehicleQueryParams): Pr
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return { vehicles: filterMockVehicles(params), isFallback: true, error: "Missing Supabase public environment variables." };
+    return {
+      vehicles: canUseMockFallback() ? filterMockVehicles(params) : [],
+      isFallback: canUseMockFallback(),
+      error: "Missing Supabase public environment variables."
+    };
   }
 
   try {
@@ -106,7 +114,11 @@ export async function searchPublicVehicles(params: PublicVehicleQueryParams): Pr
     });
 
     if (error) {
-      return { vehicles: filterMockVehicles(params), isFallback: true, error: error.message };
+      return {
+        vehicles: canUseMockFallback() ? filterMockVehicles(params) : [],
+        isFallback: canUseMockFallback(),
+        error: error.message
+      };
     }
 
     const vehicles = ((data || []) as PublicVehicleListingRow[])
@@ -116,7 +128,11 @@ export async function searchPublicVehicles(params: PublicVehicleQueryParams): Pr
 
     return { vehicles, isFallback: false, error: null };
   } catch {
-    return { vehicles: filterMockVehicles(params), isFallback: true, error: "Unable to search public vehicles." };
+    return {
+      vehicles: canUseMockFallback() ? filterMockVehicles(params) : [],
+      isFallback: canUseMockFallback(),
+      error: "Unable to search public vehicles."
+    };
   }
 }
 

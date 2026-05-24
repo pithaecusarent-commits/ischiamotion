@@ -1,6 +1,6 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.it";
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com";
 
 export const scooterFaq = {
   it: [
