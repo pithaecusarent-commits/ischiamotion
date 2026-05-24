@@ -12,21 +12,15 @@ export function useVehicleFilter() {
 export function VehicleGrid({
   locale,
   active,
-  onCategoryChange,
-  vehicles: suppliedVehicles
+  onCategoryChange
 }: {
   locale: Locale;
   active: VehicleFilter;
   onCategoryChange: (category: VehicleFilter) => void;
-  vehicles?: PublicVehicle[];
 }) {
-  const sourceVehicles = useMemo(
-    () => suppliedVehicles ?? (process.env.NODE_ENV !== "production" ? vehicles : []),
-    [suppliedVehicles]
-  );
   const filtered = useMemo(
-    () => sourceVehicles.filter((vehicle) => vehicle.is_available),
-    [sourceVehicles]
+    () => vehicles.filter((vehicle) => vehicle.is_available),
+    []
   );
   const visibleIds = useMemo(
     () => new Set(filtered.filter((vehicle) => active === "all" || vehicle.category === active).map((vehicle) => vehicle.id)),

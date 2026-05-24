@@ -89,7 +89,7 @@ const copy = {
 const portOptions = ["Porto d'Ischia", "Casamicciola", "Forio"];
 const deliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
 const paymentTypeOptions: BookingPaymentType[] = ["pay_on_pickup", "deposit_required", "prepaid_full"];
-const paymentMethodOptions: BookingPaymentMethod[] = ["unknown", "cash", "card", "bank_transfer", "future_online_card"];
+const paymentMethodOptions: BookingPaymentMethod[] = ["unknown", "cash", "card", "bank_transfer"];
 
 function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   const label = locale === "it" ? point.public_label_it : point.public_label_en;
