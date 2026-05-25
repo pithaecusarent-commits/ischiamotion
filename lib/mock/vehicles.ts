@@ -37,7 +37,7 @@ export const vehicles: PublicVehicle[] = [
     price_from: 115,
     features_it: ["Senza patente", "Costa libera"],
     features_en: ["No license", "Free coast"],
-    emoji: "🛥️",
+    emoji: "🚤",
     is_available: true
   },
   {
@@ -63,7 +63,7 @@ export const vehicles: PublicVehicle[] = [
     price_from: 190,
     features_it: ["Premium", "Full day"],
     features_en: ["Premium", "Full day"],
-    emoji: "🚤",
+    emoji: "🛥️",
     is_available: true
   },
   {

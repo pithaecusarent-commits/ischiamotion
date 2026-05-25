@@ -55,8 +55,8 @@ const emojiMap: Record<VehicleCategorySlug, string> = {
   scooter: "🛵",
   auto: "🚗",
   bici: "🚲",
-  gommone: "🛥️",
-  barca: "🚤",
+  gommone: "🚤",
+  barca: "🛥️",
   skipper: "⛵"
 };
 

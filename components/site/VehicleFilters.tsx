@@ -7,8 +7,8 @@ const labels: Record<Locale, Record<VehicleFilter, string>> = {
     all: "Tutti",
     scooter: "🛵 Scooter",
     auto: "🚗 Auto",
-    gommone: "🛥️ Gommone",
-    barca: "🚤 Barca",
+    gommone: "🚤 Gommone",
+    barca: "🛥️ Barca",
     bici: "🚲 Bici",
     skipper: "⛵ Con skipper"
   },
@@ -16,8 +16,8 @@ const labels: Record<Locale, Record<VehicleFilter, string>> = {
     all: "All",
     scooter: "🛵 Scooter",
     auto: "🚗 Cars",
-    gommone: "🛥️ Rubber dinghy",
-    barca: "🚤 Boats",
+    gommone: "🚤 Rubber dinghy",
+    barca: "🛥️ Boats",
     bici: "🚲 E-bikes",
     skipper: "⛵ With skipper"
   }
