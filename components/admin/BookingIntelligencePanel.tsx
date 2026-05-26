@@ -179,7 +179,7 @@ export function BookingIntelligencePanel({ booking, voucher, checkin }: BookingI
       <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div className="grid gap-4">
           <div className="rounded-[24px] border border-ink/10 bg-cream/65 p-4">
-            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Perche</div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Perché</div>
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-ink/70">
               {priority.reasons.map((reason) => (
                 <li key={reason}>{reason}</li>
