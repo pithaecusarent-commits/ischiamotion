@@ -9,7 +9,8 @@ export function categoryLandingMetadata(content: CategoryLandingContent): Metada
       canonical: content.path,
       languages: {
         it: content.locale === "it" ? content.path : content.alternatePath,
-        en: content.locale === "en" ? content.path : content.alternatePath
+        en: content.locale === "en" ? content.path : content.alternatePath,
+        "x-default": "/it"
       }
     },
     openGraph: {

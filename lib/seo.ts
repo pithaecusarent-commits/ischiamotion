@@ -6,11 +6,11 @@ export const scooterFaq = {
   it: [
     {
       question: "Quanto costa noleggiare uno scooter a Ischia?",
-      answer: "Il costo dipende dal periodo, dalla durata e dalle opzioni disponibili presso i partner locali. Con IschiaMotion invii una richiesta online e ricevi conferma dopo verifica con il noleggiatore selezionato."
+      answer: "Il costo dipende da periodo, durata, cilindrata e disponibilità dei partner locali. Con IschiaMotion invii una richiesta online e ricevi conferma dopo verifica con il partner selezionato."
     },
     {
       question: "Dove posso ritirare lo scooter?",
-      answer: "Puoi indicare un punto ritiro IschiaMotion come Porto d’Ischia, Forio, Casamicciola, Sant’Angelo o Barano. La disponibilità viene confermata dopo verifica con il partner locale."
+      answer: "Puoi indicare un punto ritiro IschiaMotion o una zona comoda come Ischia Porto, Forio, Casamicciola, Sant’Angelo o Barano. La disponibilità viene confermata dopo verifica con il partner locale."
     },
     {
       question: "Posso richiedere il noleggio online?",
@@ -27,16 +27,28 @@ export const scooterFaq = {
     {
       question: "Cosa succede dopo la richiesta?",
       answer: "Ricevi una conferma di ricezione. IschiaMotion verifica disponibilità, date e punto ritiro con i partner locali, poi ti contatta per completare la richiesta."
+    },
+    {
+      question: "Lo scooter conviene per muoversi a Ischia?",
+      answer: "Sì, spesso è pratico per coppie e viaggiatori leggeri perché aiuta negli spostamenti rapidi e nel parcheggio rispetto all'auto, soprattutto tra porto, spiagge e borghi."
+    },
+    {
+      question: "Posso richiedere scooter a Ischia Porto?",
+      answer: "Puoi indicare Ischia Porto come zona preferita. Ritiro, orario e disponibilità vengono verificati con i partner locali prima della conferma."
+    },
+    {
+      question: "Casco, cauzione e documenti sono inclusi?",
+      answer: "Casco, cauzione, documenti richiesti e condizioni dipendono dal partner e dal mezzo. IschiaMotion li verifica e li comunica prima della conferma finale."
     }
   ],
   en: [
     {
       question: "How much does scooter rental in Ischia cost?",
-      answer: "The cost depends on season, rental length and options available from local partners. With IschiaMotion you send an online request and receive confirmation after review with the selected rental partner."
+      answer: "The cost depends on season, rental length, scooter type and options available from local partners. With IschiaMotion you send an online request and receive confirmation after partner review."
     },
     {
       question: "Where can I pick up the scooter?",
-      answer: "You can indicate an IschiaMotion pickup point such as Ischia Port, Forio, Casamicciola, Sant’Angelo or Barano. Availability is confirmed after review with the local partner."
+      answer: "You can indicate an IschiaMotion pickup point or a convenient area such as Ischia Port, Forio, Casamicciola, Sant’Angelo or Barano. Availability is confirmed after review with the local partner."
     },
     {
       question: "Can I request scooter rental online?",
@@ -53,6 +65,18 @@ export const scooterFaq = {
     {
       question: "What happens after I send a request?",
       answer: "You receive a request confirmation. IschiaMotion checks availability, dates and pickup point with local partners, then contacts you to complete the request."
+    },
+    {
+      question: "Is a scooter useful for getting around Ischia?",
+      answer: "Yes, it is often practical for couples and light travellers because it helps with quick movement and easier parking than a car, especially around ports, beaches and villages."
+    },
+    {
+      question: "Can I request scooter rental at Ischia Port?",
+      answer: "You can indicate Ischia Port as your preferred area. Pickup, timing and availability are reviewed with local partners before confirmation."
+    },
+    {
+      question: "Are helmet, deposit and documents included?",
+      answer: "Helmet, deposit, required documents and conditions depend on the partner and scooter. IschiaMotion checks and communicates them before final confirmation."
     }
   ]
 } satisfies Record<Locale, Array<{ question: string; answer: string }>>;

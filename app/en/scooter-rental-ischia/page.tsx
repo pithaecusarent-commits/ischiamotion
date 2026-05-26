@@ -5,13 +5,14 @@ import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Scooter rental Ischia | IschiaMotion",
-  description: "Request scooter rental availability in Ischia through selected local rental partners, with pickup points in Ischia Port, Forio and other island areas.",
+  title: "Scooter rental Ischia: port, beaches and partners",
+  description: "Request scooter rental availability in Ischia through selected local partners: Ischia Port, beaches, villages, helmet, license and confirmation after review.",
   alternates: {
     canonical: "/en/scooter-rental-ischia",
     languages: {
       it: "/it/noleggio-scooter-ischia",
-      en: "/en/scooter-rental-ischia"
+      en: "/en/scooter-rental-ischia",
+      "x-default": "/it"
     }
   }
 };

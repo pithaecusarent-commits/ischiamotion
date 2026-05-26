@@ -1324,7 +1324,8 @@ h1 em {
   flex-wrap: wrap;
   gap: 12px;
 }
-.seo-landing-pickups span {
+.seo-landing-pickups span,
+.seo-landing-pickups a {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
@@ -1334,6 +1335,7 @@ h1 em {
   color: var(--green-dark);
   border: 1px solid rgba(0,151,171,.18);
   font-weight: 800;
+  text-decoration: none;
 }
 
 /* EXPERIENCE STRIP */

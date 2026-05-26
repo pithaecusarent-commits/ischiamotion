@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Informativa privacy di IschiaMotion, piattaforma locale per richieste di noleggio tramite partner selezionati.",
   alternates: {
     canonical: "/it/privacy",
-    languages: { it: "/it/privacy", en: "/en/privacy" }
+    languages: { it: "/it/privacy", en: "/en/privacy", "x-default": "/it" }
   }
 };
 

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Basic privacy information for IschiaMotion, a local rental request platform through selected partners.",
   alternates: {
     canonical: "/en/privacy",
-    languages: { it: "/it/privacy", en: "/en/privacy" }
+    languages: { it: "/it/privacy", en: "/en/privacy", "x-default": "/it" }
   }
 };
 

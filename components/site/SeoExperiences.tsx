@@ -43,6 +43,25 @@ const content = {
   ]
 } satisfies Record<Locale, Array<{ id: string; eyebrow: string; title: string; text: string }>>;
 
+const categoryLinks = {
+  it: [
+    ["Noleggio scooter Ischia", "/it/noleggio-scooter-ischia"],
+    ["Noleggio auto Ischia", "/it/noleggio-auto-ischia"],
+    ["Noleggio bici elettriche Ischia", "/it/noleggio-bici-elettriche-ischia"],
+    ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
+    ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
+    ["Barca con skipper Ischia", "/it/barca-con-skipper-ischia"]
+  ],
+  en: [
+    ["Scooter rental Ischia", "/en/scooter-rental-ischia"],
+    ["Car rental Ischia", "/en/car-rental-ischia"],
+    ["E-bike rental Ischia", "/en/e-bike-rental-ischia"],
+    ["Rubber dinghy rental Ischia", "/en/rubber-dinghy-rental-ischia"],
+    ["Boat rental Ischia", "/en/boat-rental-ischia"],
+    ["Boat with skipper Ischia", "/en/boat-with-skipper-ischia"]
+  ]
+} satisfies Record<Locale, Array<[string, string]>>;
+
 export function SeoExperiences({ locale }: { locale: Locale }) {
   return (
     <section className="seo-section reveal" aria-label={locale === "it" ? "Esperienze a Ischia" : "Ischia experiences"}>
@@ -61,6 +80,12 @@ export function SeoExperiences({ locale }: { locale: Locale }) {
             <p>{item.text}</p>
             <a href="#prenota">{locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}</a>
           </article>
+        ))}
+      </div>
+
+      <div className="mt-6 seo-landing-pickups" aria-label={locale === "it" ? "Categorie noleggio Ischia" : "Ischia rental categories"}>
+        {categoryLinks[locale].map(([label, href]) => (
+          <a key={href} href={href}>{label}</a>
         ))}
       </div>
     </section>

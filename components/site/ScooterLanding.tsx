@@ -13,24 +13,99 @@ function formatPickupLabel(label: string) {
     .replace("Sant'Angelo", "Sant’Angelo");
 }
 
+function webpageJsonLd(locale: Locale, path: string, title: string, description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description,
+    url: `${siteUrl}${path}`,
+    inLanguage: locale,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "IschiaMotion",
+      url: siteUrl
+    }
+  };
+}
+
 export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; pickupPoints: PublicPickupPoint[] }) {
   const isIt = locale === "it";
   const path = isIt ? "/it/noleggio-scooter-ischia" : "/en/scooter-rental-ischia";
   const homePath = isIt ? "/it" : "/en";
+  const searchPath = isIt ? "/it/risultati?category=scooter" : "/en/results?category=scooter";
+  const whatsappUrl = `https://wa.me/393285353722?text=${encodeURIComponent(isIt
+    ? "Ciao IschiaMotion, vorrei verificare la disponibilità per uno scooter a Ischia."
+    : "Hello IschiaMotion, I would like to check scooter availability in Ischia."
+  )}`;
   const title = isIt ? "Noleggio scooter Ischia" : "Scooter rental Ischia";
   const description = isIt
-    ? "Richiedi disponibilità per scooter a Ischia tramite una rete di noleggiatori selezionati e scegli un punto ritiro comodo per porto, spiagge e borghi."
-    : "Request scooter availability in Ischia through selected local rental partners and choose a pickup point close to ports, beaches and villages.";
+    ? "Richiedi disponibilità per noleggio scooter a Ischia tramite partner locali selezionati. Una soluzione agile per coppie, porto, spiagge e borghi, con conferma solo dopo verifica."
+    : "Request scooter rental availability in Ischia through selected local partners. A nimble option for couples, ports, beaches and villages, with confirmation only after review.";
   const advantages = isIt
     ? [
-      ["Network locale", "IschiaMotion collega la tua richiesta a noleggiatori selezionati sull’isola."],
-      ["Richiesta online", "Indichi date, orario e punto ritiro: ricevi conferma dopo verifica disponibilità."],
-      ["Ritiro semplice", "Scegli un punto IschiaMotion comodo per porto, spiagge e borghi."]
+      ["Spostamenti rapidi", "Lo scooter è pratico per muoversi tra Ischia Porto, spiagge, centri abitati e punti panoramici senza la rigidità dell'auto."],
+      ["Parcheggio più semplice", "Per coppie e viaggiatori leggeri può essere più comodo dell'auto, soprattutto nelle zone centrali e nei periodi affollati."],
+      ["Richiesta verificata", "Indichi date, orario e punto ritiro: IschiaMotion controlla disponibilità e condizioni con partner locali selezionati."]
     ]
     : [
-      ["Local network", "IschiaMotion connects your request with selected rental partners on the island."],
-      ["Online request", "Choose dates, time and pickup point: confirmation follows availability review."],
-      ["Simple pickup", "Choose an IschiaMotion point close to ports, beaches and villages."]
+      ["Quick movement", "A scooter is practical for Ischia Port, beaches, town centers and viewpoints without the limits of a car."],
+      ["Easier parking", "For couples and light travellers it can be easier than a car, especially in central areas and busy periods."],
+      ["Reviewed request", "Choose dates, timing and pickup point: IschiaMotion checks availability and conditions with selected local partners."]
+    ];
+  const localItems = isIt
+    ? [
+      ["Ischia Porto", "È il punto più richiesto per chi arriva in aliscafo o traghetto e vuole muoversi subito verso spiagge, hotel o Ischia Ponte."],
+      ["Casamicciola e Lacco Ameno", "Sono zone comode per soggiorni termali, lungomare e spostamenti brevi verso strutture ricettive del versante nord."],
+      ["Forio, Barano e Sant'Angelo", "Lo scooter può aiutare a raggiungere spiagge e borghi, ma conviene valutare distanze, salite e orari prima della richiesta."]
+    ]
+    : [
+      ["Ischia Port", "A key area for guests arriving by ferry or hydrofoil who want to move toward beaches, hotels or Ischia Ponte."],
+      ["Casamicciola and Lacco Ameno", "Useful for thermal stays, seafront areas and short trips around north-side accommodation."],
+      ["Forio, Barano and Sant'Angelo", "A scooter can help reach beaches and villages, but distance, hills and timing should be reviewed before request."]
+    ];
+  const whenItems = isIt
+    ? [
+      ["Ideale per coppie", "Funziona bene con poco bagaglio, soste frequenti e programmi flessibili tra mare, centro e borghi."],
+      ["Quando scegliere altro", "Con bambini piccoli, molte valigie o hotel molto distante dal porto, l'auto può essere più comoda."],
+      ["Attenzione a patente e casco", "Patente valida, casco, cauzione e requisiti dipendono da mezzo e partner; vengono comunicati dopo verifica."]
+    ]
+    : [
+      ["Ideal for couples", "Works well with light luggage, frequent stops and flexible plans between sea, town centers and villages."],
+      ["When to choose another option", "With small children, several bags or accommodation far from the port, a car may be more comfortable."],
+      ["License and helmet", "Valid license, helmet, deposit and requirements depend on scooter and partner; they are shared after review."]
+    ];
+  const pickupItems = isIt
+    ? [
+      ["IschiaMotion Point", "Puoi indicare un punto ritiro comodo. La disponibilità effettiva viene verificata con il partner locale."],
+      ["Porto dove previsto", "Per Ischia Porto o Casamicciola puoi segnalare arrivo e fascia oraria; ritiro e condizioni non sono automatici."],
+      ["Hotel dove previsto", "Per alcune zone e partner puoi indicare hotel o struttura ricettiva, sempre soggetto a verifica."]
+    ]
+    : [
+      ["IschiaMotion Point", "You can indicate a convenient pickup point. Actual availability is reviewed with the local partner."],
+      ["Port where available", "For Ischia Port or Casamicciola, share arrival and timing; pickup and conditions are not automatic."],
+      ["Hotel where available", "For some areas and partners, you can indicate hotel or accommodation, always subject to review."]
+    ];
+  const internalLinks = isIt
+    ? [
+      ["Home", "/it"],
+      ["Verifica disponibilità scooter", searchPath],
+      ["Auto", "/it/noleggio-auto-ischia"],
+      ["E-bike", "/it/noleggio-bici-elettriche-ischia"],
+      ["Gommoni", "/it/noleggio-gommoni-ischia"],
+      ["Barche", "/it/noleggio-barche-ischia"],
+      ["Barca con skipper", "/it/barca-con-skipper-ischia"],
+      ["Contatti", "/it/contatti"]
+    ]
+    : [
+      ["Home", "/en"],
+      ["Check scooter availability", searchPath],
+      ["Cars", "/en/car-rental-ischia"],
+      ["E-bikes", "/en/e-bike-rental-ischia"],
+      ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
+      ["Boats", "/en/boat-rental-ischia"],
+      ["Boat with skipper", "/en/boat-with-skipper-ischia"],
+      ["Contact", "/en/contact"]
     ];
 
   return (
@@ -41,6 +116,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       ])} />
       <JsonLd data={faqJsonLd(scooterFaq[locale])} />
       <JsonLd data={serviceJsonLd(locale, path, title, description)} />
+      <JsonLd data={webpageJsonLd(locale, path, title, description)} />
       <Header locale={locale} />
       <main className="seo-landing">
         <section className="seo-landing-hero">
@@ -49,14 +125,48 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             <h1>{title}</h1>
             <p>{description}</p>
             <div className="hero-actions">
-              <a href={`${homePath}#veicoli`} className="primary-btn">{isIt ? "Vedi opzioni scooter" : "View scooter options"}</a>
-              <a href={`${homePath}#prenota`} className="ghost-btn">{isIt ? "Imposta le date" : "Set dates"}</a>
+              <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità scooter" : "Check scooter availability"}</a>
+              <a href={whatsappUrl} className="ghost-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Scrivici su WhatsApp" : "Message us on WhatsApp"}</a>
             </div>
           </div>
           <div className="seo-landing-card">
             <span>{isIt ? "Ideale per" : "Best for"}</span>
-            <strong>{isIt ? "Spiagge, porti e borghi" : "Beaches, ports and villages"}</strong>
-            <p>{isIt ? "Una richiesta semplice verso partner locali selezionati per muoverti sull’isola con più autonomia." : "A simple request to selected local partners for exploring the island with more independence."}</p>
+            <strong>{isIt ? "Coppie e spostamenti veloci" : "Couples and quick trips"}</strong>
+            <p>{isIt ? "Una richiesta semplice verso partner locali selezionati per muoverti sull'isola con più autonomia, senza conferma immediata." : "A simple request to selected local partners for moving around the island with more independence, without instant confirmation."}</p>
+          </div>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">{isIt ? "Ischia locale" : "Local Ischia"}</div>
+              <h2 className="section-title">{isIt ? "Dove lo scooter è più utile" : "Where a scooter is most useful"}</h2>
+            </div>
+          </div>
+          <div className="seo-landing-grid">
+            {localItems.map(([itemTitle, text]) => (
+              <article className="seo-card" key={itemTitle}>
+                <h3>{itemTitle}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">{isIt ? "Guida pratica" : "Practical guide"}</div>
+              <h2 className="section-title">{isIt ? "Quando conviene lo scooter" : "When a scooter makes sense"}</h2>
+            </div>
+          </div>
+          <div className="seo-landing-grid">
+            {whenItems.map(([itemTitle, text]) => (
+              <article className="seo-card" key={itemTitle}>
+                <h3>{itemTitle}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -92,13 +202,44 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           </div>
         </section>
 
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">{isIt ? "Ritiro e consegna" : "Pickup and delivery"}</div>
+              <h2 className="section-title">{isIt ? "Cosa indicare nella richiesta" : "What to include in the request"}</h2>
+            </div>
+          </div>
+          <div className="seo-landing-grid">
+            {pickupItems.map(([itemTitle, text]) => (
+              <article className="seo-card" key={itemTitle}>
+                <h3>{itemTitle}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">{isIt ? "Link utili" : "Useful links"}</div>
+              <h2 className="section-title">{isIt ? "Esplora il noleggio a Ischia" : "Explore rental in Ischia"}</h2>
+            </div>
+          </div>
+          <div className="seo-landing-pickups">
+            {internalLinks.map(([label, href]) => (
+              <a key={href} href={href}>{label}</a>
+            ))}
+          </div>
+        </section>
+
         <SeoFaqSection locale={locale} faqs={scooterFaq[locale]} />
 
         <section className="final-cta reveal">
           <div className="final-box">
             <h2>{isIt ? "Pronto a muoverti a Ischia?" : "Ready to move around Ischia?"}</h2>
             <p>{isIt ? "Imposta le date, scegli un’opzione e invia una richiesta: riceverai conferma dopo verifica con il partner locale." : "Set your dates, choose an option and send a request: confirmation follows review with the local partner."}</p>
-            <a href={`${homePath}#veicoli`} className="primary-btn">{isIt ? "Vai alle opzioni scooter" : "View scooter options"}</a>
+            <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità scooter" : "Check scooter availability"}</a>
           </div>
         </section>
       </main>

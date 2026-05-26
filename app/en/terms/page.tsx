@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Basic IschiaMotion terms for availability requests through selected local rental partners.",
   alternates: {
     canonical: "/en/terms",
-    languages: { it: "/it/termini", en: "/en/terms" }
+    languages: { it: "/it/termini", en: "/en/terms", "x-default": "/it" }
   }
 };
 

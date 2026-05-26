@@ -5,13 +5,14 @@ import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Noleggio scooter Ischia | IschiaMotion",
-  description: "Richiedi disponibilità per noleggio scooter Ischia tramite una rete di noleggiatori selezionati, con punti ritiro a Porto d’Ischia, Forio e altre zone.",
+  title: "Noleggio scooter Ischia: porto, spiagge e partner",
+  description: "Richiedi disponibilità per noleggio scooter a Ischia tramite partner selezionati: Ischia Porto, spiagge, borghi, casco, patente e conferma dopo verifica.",
   alternates: {
     canonical: "/it/noleggio-scooter-ischia",
     languages: {
       it: "/it/noleggio-scooter-ischia",
-      en: "/en/scooter-rental-ischia"
+      en: "/en/scooter-rental-ischia",
+      "x-default": "/it"
     }
   }
 };

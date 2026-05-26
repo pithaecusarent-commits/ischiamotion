@@ -25,7 +25,7 @@ export function generateMetadata({ params }: Props): Metadata {
       : "Local marketplace for scooter rental Ischia, car rental Ischia, e-bike rental, rubber dinghy rental, boat rental and skipper options via selected partners.",
     alternates: {
       canonical: `/${params.locale}`,
-      languages: { it: "/it", en: "/en" }
+      languages: { it: "/it", en: "/en", "x-default": "/it" }
     },
     keywords: isIt
       ? ["noleggio veicoli Ischia", "noleggio scooter Ischia", "noleggio auto Ischia", "noleggio e-bike Ischia", "noleggio gommoni Ischia", "noleggio barche Ischia", "barca con skipper Ischia"]
