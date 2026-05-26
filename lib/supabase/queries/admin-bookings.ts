@@ -1,5 +1,5 @@
 import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
-import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentStatus, BookingPaymentType } from "@/lib/types";
+import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentStatus, BookingPaymentType, Locale } from "@/lib/types";
 
 export type AdminBookingItem = {
   id: string;
@@ -9,6 +9,8 @@ export type AdminBookingItem = {
   customer_last_name: string;
   customer_email: string;
   customer_phone: string | null;
+  customer_language: Locale;
+  vehicle_id: string | null;
   start_date: string;
   end_date: string;
   pickup_time: string | null;
@@ -29,6 +31,15 @@ export type AdminBookingItem = {
     business_name_internal: string;
     status: string;
   } | null;
+  vehicles: {
+    title_it: string;
+    title_en: string;
+    vehicle_categories: {
+      slug: string;
+      name_it: string;
+      name_en: string;
+    } | null;
+  } | null;
 };
 
 export type AdminRenterOption = {
@@ -48,6 +59,40 @@ type AdminBookingRow = Omit<AdminBookingItem, "renters"> & {
       status: string;
     }[]
     | null;
+  vehicles:
+    | {
+      title_it: string;
+      title_en: string;
+      vehicle_categories:
+        | {
+          slug: string;
+          name_it: string;
+          name_en: string;
+        }
+        | {
+          slug: string;
+          name_it: string;
+          name_en: string;
+        }[]
+        | null;
+    }
+    | {
+      title_it: string;
+      title_en: string;
+      vehicle_categories:
+        | {
+          slug: string;
+          name_it: string;
+          name_en: string;
+        }
+        | {
+          slug: string;
+          name_it: string;
+          name_en: string;
+        }[]
+        | null;
+    }[]
+    | null;
 };
 
 export const adminBookingStatuses = [
@@ -62,12 +107,21 @@ export const adminBookingStatuses = [
 
 export type AdminBookingStatus = (typeof adminBookingStatuses)[number];
 
-const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, start_date, end_date, pickup_time, status, delivery_method, delivery_location, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status)";
+const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(title_it, title_en, vehicle_categories(slug, name_it, name_en))";
 
 function normalizeAdminBooking(row: AdminBookingRow): AdminBookingItem {
+  const vehicle = Array.isArray(row.vehicles) ? row.vehicles[0] || null : row.vehicles;
+  const category = vehicle?.vehicle_categories;
+
   return {
     ...row,
-    renters: Array.isArray(row.renters) ? row.renters[0] || null : row.renters
+    renters: Array.isArray(row.renters) ? row.renters[0] || null : row.renters,
+    vehicles: vehicle
+      ? {
+        ...vehicle,
+        vehicle_categories: Array.isArray(category) ? category[0] || null : category || null
+      }
+      : null
   };
 }
 

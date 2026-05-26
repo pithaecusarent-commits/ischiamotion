@@ -6,6 +6,7 @@ import { PaymentForm } from "@/app/admin/bookings/[id]/PaymentForm";
 import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
 import { VoucherPrintButton } from "@/app/admin/bookings/[id]/VoucherPrintButton";
 import { signOutAdmin } from "@/app/admin/login/actions";
+import { BookingIntelligencePanel } from "@/components/admin/BookingIntelligencePanel";
 import {
   bookingAmountSummary,
   bookingCustomerNotes,
@@ -110,6 +111,8 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 <div className="text-sm text-ink/60">Creata il {formatAdminDateTime(booking.created_at)}</div>
               </div>
             </div>
+
+            <BookingIntelligencePanel booking={booking} voucher={voucher} checkin={checkin} />
 
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <DetailRow label="Cliente" value={`${booking.customer_first_name} ${booking.customer_last_name}`} />
