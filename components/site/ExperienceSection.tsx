@@ -17,9 +17,9 @@ export function ExperienceSection({ locale }: { locale: Locale }) {
           <h2>{locale === "it" ? "Ischia diventa tua." : "Ischia becomes yours."}</h2>
           <p>{locale === "it" ? "Dal porto alle spiagge più nascoste, dai borghi alle terme: IschiaMotion collega la tua richiesta a partner locali per scooter, auto, bici e barche." : "From the port to hidden beaches, villages and spas: IschiaMotion connects your request with local partners for scooters, cars, bikes and boats."}</p>
           <div className="exp-list">
-            <a href="#spiagge-e-calette"><span>🌊</span> {locale === "it" ? "Spiagge e calette" : "Beaches and coves"}</a>
-            <a href="#borghi-e-panorami"><span>🌿</span> {locale === "it" ? "Borghi e panorami" : "Villages and views"}</a>
-            <a href="#giornate-in-mare"><span>☀️</span> {locale === "it" ? "Giornate in mare" : "Days at sea"}</a>
+            <div><span>🌊</span> {locale === "it" ? "Spiagge e calette" : "Beaches and coves"}</div>
+            <div><span>🌿</span> {locale === "it" ? "Borghi e panorami" : "Villages and views"}</div>
+            <div><span>☀️</span> {locale === "it" ? "Giornate in mare" : "Days at sea"}</div>
           </div>
         </div>
       </div>
