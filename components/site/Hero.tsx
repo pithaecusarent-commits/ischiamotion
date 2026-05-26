@@ -105,8 +105,8 @@ export function Hero({
             <div className="hero-stat-label">{locale === "it" ? "Mezzi selezionati" : "Selected vehicles"}</div>
           </div>
           <div className="hero-stat">
-            <span className="hero-stat-val">4.9★</span>
-            <div className="hero-stat-label">{locale === "it" ? "Recensioni clienti" : "Guest reviews"}</div>
+            <span className="hero-stat-val">✓</span>
+            <div className="hero-stat-label">{locale === "it" ? "Partner selezionati" : "Selected partners"}</div>
           </div>
           <div className="hero-stat">
             <span className="hero-stat-val">20+</span>

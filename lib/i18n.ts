@@ -19,7 +19,7 @@ export const dictionary = {
     trust: [
       ["200+", "Mezzi selezionati"],
       ["15+", "Punti di ritiro sull'isola"],
-      ["4.9★", "Valutazione media clienti"],
+      ["✓", "Partner selezionati"],
       ["100%", "Richiesta guidata"]
     ],
     common: {
@@ -48,7 +48,7 @@ export const dictionary = {
     trust: [
       ["200+", "Selected vehicles"],
       ["15+", "Pickup points on the island"],
-      ["4.9★", "Average guest rating"],
+      ["✓", "Selected partners"],
       ["100%", "Guided request"]
     ],
     common: {
