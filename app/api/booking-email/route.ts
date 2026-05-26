@@ -204,7 +204,7 @@ export async function POST(request: Request) {
     resendApiKeyPresent: Boolean(apiKey),
     fromEmail,
     adminEmail,
-    customerEmail: payload.email
+    customerEmailPresent: Boolean(payload.email)
   });
 
   if (!apiKey) {
