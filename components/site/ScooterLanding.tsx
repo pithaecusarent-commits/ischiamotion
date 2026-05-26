@@ -174,7 +174,10 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           <div className="section-header">
             <div>
               <div className="section-eyebrow">{isIt ? "Vantaggi" : "Benefits"}</div>
-              <h2 className="section-title">{isIt ? "Perché scegliere<br><em>lo scooter</em>" : "Why choose<br><em>a scooter</em>"}</h2>
+              <h2
+                className="section-title"
+                dangerouslySetInnerHTML={{ __html: isIt ? "Perché scegliere<br><em>lo scooter</em>" : "Why choose<br><em>a scooter</em>" }}
+              />
             </div>
           </div>
           <div className="seo-landing-grid">
@@ -191,7 +194,10 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           <div className="section-header">
             <div>
               <div className="section-eyebrow">{isIt ? "Ritiro" : "Pickup"}</div>
-              <h2 className="section-title">{isIt ? "Punti ritiro<br><em>IschiaMotion</em>" : "IschiaMotion<br><em>pickup points</em>"}</h2>
+              <h2
+                className="section-title"
+                dangerouslySetInnerHTML={{ __html: isIt ? "Punti ritiro<br><em>IschiaMotion</em>" : "IschiaMotion<br><em>pickup points</em>" }}
+              />
             </div>
           </div>
           <div className="seo-landing-pickups">
