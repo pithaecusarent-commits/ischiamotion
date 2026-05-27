@@ -8,6 +8,8 @@ import {
 } from "@/lib/supabase/renter-auth";
 import { createSupabaseAnonClient } from "@/lib/supabase/admin-auth";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com";
+
 function loginRedirect(error: string): never {
   redirect(`/renter/login?error=${encodeURIComponent(error)}`);
 }
@@ -64,6 +66,7 @@ export async function registerRenter(formData: FormData) {
     email,
     password,
     options: {
+      emailRedirectTo: `${siteUrl}/auth/callback?next=/renter/login`,
       data: {
         business_name: businessName,
         contact_name: contactName,

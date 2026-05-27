@@ -129,7 +129,7 @@ export async function signInRenterWithPassword(input: {
     return {
       session: null,
       user: null,
-      error: "Registrazione ricevuta. Attendi l'autorizzazione dell'admin IschiaMotion."
+      error: "Registrazione ricevuta. Il tuo account è in attesa di approvazione admin."
     };
   }
 
