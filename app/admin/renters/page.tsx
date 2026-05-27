@@ -124,7 +124,12 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                   {applications.map((application) => (
                     <tr className="align-top transition-colors hover:bg-sea/5" key={application.id}>
                       <td className="px-4 py-4">
-                        <div className="font-bold">{application.business_name || "Noleggiatore"}</div>
+                        <a
+                          className="font-bold text-ink transition hover:text-sea hover:underline"
+                          href={`/admin/renters/${application.id}`}
+                        >
+                          {application.business_name || "Noleggiatore"}
+                        </a>
                         <div className="mt-1 text-xs font-semibold text-ink/50">{application.email || "-"}</div>
                       </td>
                       <td className="px-4 py-4 text-ink/70">{application.contact_name || "-"}</td>
