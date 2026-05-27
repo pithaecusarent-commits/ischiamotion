@@ -3,7 +3,6 @@ import { AdminKpiCard } from "@/components/admin/AdminKpiCard";
 import { AdminPeriodFilter } from "@/components/admin/AdminPeriodFilter";
 import { AdminQuickAction } from "@/components/admin/AdminQuickAction";
 import { AdminRecentBookings } from "@/components/admin/AdminRecentBookings";
-import { AdminSearchBar } from "@/components/admin/AdminSearchBar";
 import { AdminSystemStatus } from "@/components/admin/AdminSystemStatus";
 import type { AdminDashboardData, RenterProductivityStat } from "@/lib/supabase/queries/admin-dashboard";
 
@@ -130,57 +129,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
       {/* ─────────────────────────────────────────────────────
           TOP ADMIN NAVBAR
       ───────────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-30 w-full overflow-x-clip border-b border-ink/10 bg-cream/95 backdrop-blur-md">
-        <div className="mx-auto flex h-14 w-full max-w-7xl min-w-0 items-center gap-3 px-3 sm:px-5 lg:px-6">
-          {/* Brand – shrink-0 garantisce che non venga mai compresso */}
-          <a
-            className="flex shrink-0 items-center gap-2 font-black text-green-deep transition hover:text-sea"
-            href="/admin"
-          >
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-green-deep text-[11px] font-black text-white">
-              IM
-            </span>
-            <span className="hidden text-sm sm:block">Admin</span>
-          </a>
-
-          {/* Spazio centrale: flex-1 occupa tutto lo spazio residuo e centra la search */}
-          <div className="hidden min-w-0 flex-1 items-center justify-center px-2 xl:flex">
-            <div className="w-full max-w-[280px]">
-              <AdminSearchBar />
-            </div>
-          </div>
-
-          {/* Controlli destra – shrink-0 garantisce che non vengano compressi */}
-          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2">
-            <span className="hidden shrink-0 items-center gap-1.5 rounded-full border border-sea/20 bg-sea/10 px-3 py-1.5 text-[11px] font-black text-sea lg:flex">
-              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-sea" />
-              Sistemi OK
-            </span>
-
-            {hasPendingBookings && (
-              <span aria-label="Nuove richieste in attesa" className="relative flex h-3 w-3 shrink-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-gold" />
-              </span>
-            )}
-
-            <span className="hidden max-w-[150px] truncate text-xs font-semibold text-ink/40 2xl:block">
-              {maskEmail(adminEmail)}
-            </span>
-
-            <form action={signOutAdmin}>
-              <button
-                className="min-h-[36px] rounded-full border border-ink/10 bg-white/65 px-3.5 py-1.5 text-xs font-bold text-ink/55 transition hover:border-ink/20 hover:text-ink"
-                type="submit"
-              >
-                Esci
-              </button>
-            </form>
-          </div>
-        </div>
-      </nav>
-
-      <main className="mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 sm:pt-8">
+      <main className="mx-auto max-w-7xl px-4 pb-12 pt-5 sm:px-6 sm:pt-7">
         {/* ─────────────────────────────────────────────────────
             PAGE HERO HEADER
         ───────────────────────────────────────────────────── */}
@@ -211,11 +160,6 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               <p className="mt-3 max-w-xl text-sm font-semibold leading-7 text-ink/60 sm:text-base">
                 La control room per richieste, mezzi, noleggiatori e operatività giornaliera.
               </p>
-            </div>
-
-            {/* Barra di ricerca su mobile (sotto il titolo) */}
-            <div className="md:hidden">
-              <AdminSearchBar />
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5">
