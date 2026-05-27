@@ -42,7 +42,7 @@ export async function signInAdmin(formData: FormData) {
     .from("profiles")
     .select("role, account_status")
     .eq("id", user.id)
-    .maybeSingle<{ role: "admin" | "renter"; account_status: "pending" | "approved" | "rejected" }>();
+    .maybeSingle<{ role: "admin" | "renter"; account_status: "pending" | "approved" | "rejected" | "disabled" }>();
 
   if (profileError || profile?.role !== "admin" || profile.account_status !== "approved") {
     loginRedirect("Accesso admin non autorizzato.");

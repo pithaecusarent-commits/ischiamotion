@@ -38,12 +38,14 @@ export function RenterShell({
   );
 }
 
-export function AccessDenied({ accountStatus }: { accountStatus?: "pending" | "approved" | "rejected" }) {
+export function AccessDenied({ accountStatus }: { accountStatus?: "pending" | "approved" | "rejected" | "disabled" }) {
   const message = accountStatus === "pending"
     ? "Registrazione ricevuta. Il tuo account è in attesa di approvazione admin."
     : accountStatus === "rejected"
       ? "La registrazione non è stata autorizzata. Contatta IschiaMotion per maggiori informazioni."
-      : "Il tuo utente non ha il ruolo noleggiatore. Accedi con un account abilitato da IschiaMotion.";
+      : accountStatus === "disabled"
+        ? "Account noleggiatore disattivato. Non puoi accedere o ricevere nuove richieste. Contatta IschiaMotion."
+        : "Il tuo utente non ha il ruolo noleggiatore. Accedi con un account abilitato da IschiaMotion.";
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">

@@ -1,4 +1,5 @@
-import { approveRenterAction, rejectRenterAction } from "@/app/admin/renters/actions";
+import { approveRenterAction, deactivateRenterAction, rejectRenterAction } from "@/app/admin/renters/actions";
+import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { getAdminRenterApplications, type AdminRenterApplication } from "@/lib/supabase/queries/admin-renters";
@@ -6,6 +7,7 @@ import { getAdminRenterApplications, type AdminRenterApplication } from "@/lib/s
 type Props = {
   searchParams?: {
     approved?: string;
+    disabled?: string;
     rejected?: string;
     error?: string;
   };
@@ -22,12 +24,14 @@ function formatDate(value: string | null) {
 function statusLabel(status: AdminRenterApplication["account_status"]) {
   if (status === "approved") return "Approvato";
   if (status === "rejected") return "Rifiutato";
+  if (status === "disabled") return "Disattivato";
   return "In attesa";
 }
 
 function statusClass(status: AdminRenterApplication["account_status"]) {
   if (status === "approved") return "border-sea/20 bg-sea/10 text-green-deep";
   if (status === "rejected") return "border-red-200 bg-red-50 text-red-700";
+  if (status === "disabled") return "border-ink/10 bg-ink/5 text-ink/55";
   return "border-amber-200 bg-amber-50 text-amber-800";
 }
 
@@ -44,6 +48,9 @@ export default async function AdminRentersPage({ searchParams }: Props) {
           <div>
             <h1 className="font-serif text-4xl font-bold">Noleggiatori</h1>
             <p className="mt-4 text-ink/65">Autorizza le nuove registrazioni dei renter IschiaMotion.</p>
+            <p className="mt-2 max-w-2xl text-sm text-ink/55">
+              La disattivazione blocca accesso e nuove richieste senza eliminare storico, booking, veicoli o utente Auth.
+            </p>
           </div>
           <div className="rounded-[24px] border border-ink/10 bg-white/70 px-5 py-4 text-right">
             <p className="section-kicker">In attesa</p>
@@ -77,6 +84,12 @@ export default async function AdminRentersPage({ searchParams }: Props) {
         {searchParams?.rejected ? (
           <div className="mt-6 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-bold text-amber-800">
             Registrazione rifiutata.
+          </div>
+        ) : null}
+
+        {searchParams?.disabled ? (
+          <div className="mt-6 rounded-3xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-700">
+            Noleggiatore disattivato. Lo storico resta disponibile.
           </div>
         ) : null}
 
@@ -146,13 +159,21 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                                 Rifiuta
                               </button>
                             </form>
+                            <DeactivateRenterForm action={deactivateRenterAction} profileId={application.id} />
                           </div>
                         ) : (
-                          <span className="text-xs text-ink/45">
-                            {application.account_status === "approved"
-                              ? `Approvato ${formatDate(application.approved_at)}`
-                              : `Rifiutato ${formatDate(application.rejected_at)}`}
-                          </span>
+                          <div className="grid min-w-44 gap-2">
+                            <span className="text-xs text-ink/45">
+                              {application.account_status === "approved"
+                                ? `Approvato ${formatDate(application.approved_at)}`
+                                : application.account_status === "rejected"
+                                  ? `Rifiutato ${formatDate(application.rejected_at)}`
+                                  : "Accesso disattivato"}
+                            </span>
+                            {application.account_status === "disabled" ? null : (
+                              <DeactivateRenterForm action={deactivateRenterAction} profileId={application.id} />
+                            )}
+                          </div>
                         )}
                       </td>
                     </tr>

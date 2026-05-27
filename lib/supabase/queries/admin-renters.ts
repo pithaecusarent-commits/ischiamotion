@@ -3,7 +3,7 @@ import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
 export type AdminRenterApplication = {
   id: string;
   email: string | null;
-  account_status: "pending" | "approved" | "rejected";
+  account_status: "pending" | "approved" | "rejected" | "disabled";
   business_name: string | null;
   contact_name: string | null;
   phone: string | null;
@@ -40,6 +40,30 @@ export async function getAdminRenterApplications(
   }
 }
 
+export async function getPendingRenterApplicationCount(
+  accessToken: string
+): Promise<{ count: number; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { count, error } = await supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "renter")
+      .eq("account_status", "pending");
+
+    if (error) {
+      return { count: 0, error: error.message };
+    }
+
+    return { count: count || 0, error: null };
+  } catch (error) {
+    return {
+      count: 0,
+      error: error instanceof Error ? error.message : "Unable to load pending renter applications."
+    };
+  }
+}
+
 export async function approveRenterApplication(
   accessToken: string,
   profileId: string
@@ -71,5 +95,21 @@ export async function rejectRenterApplication(
     return { error: error?.message || null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to reject renter." };
+  }
+}
+
+export async function deactivateRenterApplication(
+  accessToken: string,
+  profileId: string
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase.rpc("deactivate_renter_profile", {
+      target_profile_id: profileId
+    });
+
+    return { error: error?.message || null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to deactivate renter." };
   }
 }

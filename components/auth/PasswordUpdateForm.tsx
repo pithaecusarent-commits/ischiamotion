@@ -8,6 +8,8 @@ type Status = {
   message: string;
 };
 
+const invalidResetLinkMessage = "Il link non è valido o è scaduto. Richiedi un nuovo link di reset password.";
+
 export function PasswordUpdateForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,17 +42,36 @@ export function PasswordUpdateForm() {
         return;
       }
 
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
+      const searchParams = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const code = searchParams.get("code");
+      const accessToken = hashParams.get("access_token");
+      const refreshToken = hashParams.get("refresh_token");
 
       if (code) {
         const { error } = await supabase.auth.exchangeCodeForSession(code);
         if (error) {
           if (isMounted) {
-            setStatus({ tone: "error", message: "Link di reset non valido o scaduto." });
+            setStatus({ tone: "error", message: invalidResetLinkMessage });
           }
           return;
         }
+
+        window.history.replaceState(null, "", window.location.pathname);
+      } else if (accessToken && refreshToken) {
+        const { error } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken
+        });
+
+        if (error) {
+          if (isMounted) {
+            setStatus({ tone: "error", message: invalidResetLinkMessage });
+          }
+          return;
+        }
+
+        window.history.replaceState(null, "", window.location.pathname);
       }
 
       const { data } = await supabase.auth.getSession();
@@ -58,7 +79,7 @@ export function PasswordUpdateForm() {
       if (!isMounted) return;
 
       if (!data.session) {
-        setStatus({ tone: "error", message: "Link di reset non valido o scaduto." });
+        setStatus({ tone: "error", message: invalidResetLinkMessage });
         return;
       }
 
@@ -157,6 +178,12 @@ export function PasswordUpdateForm() {
             Vai al login noleggiatore
           </a>
         </div>
+      ) : null}
+
+      {status.tone === "error" ? (
+        <a className="text-sm font-bold text-green-deep hover:text-ink" href="/auth/forgot-password">
+          Richiedi un nuovo link
+        </a>
       ) : null}
     </form>
   );

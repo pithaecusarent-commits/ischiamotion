@@ -5,11 +5,13 @@ import { createSupabaseAnonClient, createSupabaseUserClient } from "@/lib/supaba
 export const renterAccessTokenCookie = "im_renter_access_token";
 export const renterRefreshTokenCookie = "im_renter_refresh_token";
 
+export type RenterAccountStatus = "pending" | "approved" | "rejected" | "disabled";
+
 export type RenterProfile = {
   id: string;
   email: string | null;
   role: "admin" | "renter";
-  account_status: "pending" | "approved" | "rejected";
+  account_status: RenterAccountStatus;
 };
 
 export function setRenterSessionCookies(accessToken: string, refreshToken: string) {
@@ -72,7 +74,9 @@ export async function requireRenter(nextPath = "/renter") {
     redirect(`/renter/login?next=${encodeURIComponent(nextPath)}`);
   }
 
-  if (session.profile?.role !== "renter" || session.profile.account_status !== "approved") {
+  const hasActiveLink = session.accessToken ? await hasActiveRenterLink(session.accessToken) : false;
+
+  if (session.profile?.role !== "renter" || session.profile.account_status !== "approved" || !hasActiveLink) {
     return {
       ...session,
       accessToken: session.accessToken,
@@ -111,7 +115,7 @@ export async function signInRenterWithPassword(input: {
     .from("profiles")
     .select("role, account_status")
     .eq("id", data.user.id)
-    .maybeSingle<{ role: "admin" | "renter"; account_status: "pending" | "approved" | "rejected" }>();
+    .maybeSingle<{ role: "admin" | "renter"; account_status: RenterAccountStatus }>();
 
   if (profileError || profile?.role !== "renter") {
     return {
@@ -137,9 +141,37 @@ export async function signInRenterWithPassword(input: {
     };
   }
 
+  if (profile.account_status === "disabled") {
+    return {
+      session: null,
+      user: null,
+      error: "Account noleggiatore disattivato. Contatta IschiaMotion."
+    };
+  }
+
+  const hasActiveLink = await hasActiveRenterLink(data.session.access_token);
+  if (!hasActiveLink) {
+    return {
+      session: null,
+      user: null,
+      error: "Account noleggiatore non attivo. Contatta IschiaMotion."
+    };
+  }
+
   return {
     session: data.session,
     user: data.user,
     error: null
   };
+}
+
+async function hasActiveRenterLink(accessToken: string) {
+  const supabase = createSupabaseUserClient(accessToken);
+  const { data, error } = await supabase
+    .from("renter_users")
+    .select("renter_id")
+    .limit(1)
+    .maybeSingle<{ renter_id: string }>();
+
+  return !error && Boolean(data?.renter_id);
 }

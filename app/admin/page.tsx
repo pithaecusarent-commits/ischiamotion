@@ -1,8 +1,10 @@
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { getPendingRenterApplicationCount } from "@/lib/supabase/queries/admin-renters";
 
 export default async function AdminPage() {
-  const { profile } = await requireAdmin("/admin");
+  const { accessToken, profile } = await requireAdmin("/admin");
+  const { count: pendingRenterCount, error: pendingRenterError } = await getPendingRenterApplicationCount(accessToken);
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
@@ -15,7 +17,7 @@ export default async function AdminPage() {
             Vedi prenotazioni
           </a>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/renters">
-            Autorizza noleggiatori
+            Noleggiatori{pendingRenterCount > 0 ? ` (${pendingRenterCount})` : ""}
           </a>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
             Gestione veicoli
@@ -29,6 +31,26 @@ export default async function AdminPage() {
             </button>
           </form>
         </div>
+
+        <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/70 p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="section-kicker">Richieste noleggiatori</p>
+              <h2 className="mt-3 font-serif text-3xl font-bold">Richieste noleggiatori</h2>
+              <p className="mt-3 text-sm leading-6 text-ink/65">
+                {pendingRenterError
+                  ? pendingRenterError
+                  : pendingRenterCount > 0
+                    ? `Ci sono ${pendingRenterCount} richieste di noleggiatori in attesa di approvazione.`
+                    : "Nessuna richiesta noleggiatore in attesa."}
+              </p>
+            </div>
+            <a className="inline-flex rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/renters">
+              Vai alle richieste
+            </a>
+          </div>
+        </div>
+
         <p className="mt-6 text-sm text-ink/50">Accesso: {profile.email || "admin"}</p>
       </section>
     </main>

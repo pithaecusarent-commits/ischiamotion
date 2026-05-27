@@ -9,7 +9,7 @@ type AdminProfile = {
   id: string;
   email: string | null;
   role: "admin" | "renter";
-  account_status: "pending" | "approved" | "rejected";
+  account_status: "pending" | "approved" | "rejected" | "disabled";
 };
 
 function getSupabaseEnv() {

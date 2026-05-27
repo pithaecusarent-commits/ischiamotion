@@ -8,18 +8,12 @@ add column if not exists approved_by uuid references public.profiles(id) on dele
 add column if not exists rejected_at timestamptz,
 add column if not exists rejection_reason text;
 
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_constraint
-    where conname = 'profiles_account_status_check'
-  ) then
-    alter table public.profiles
-    add constraint profiles_account_status_check
-    check (account_status in ('pending', 'approved', 'rejected'));
-  end if;
-end $$;
+alter table public.profiles
+drop constraint if exists profiles_account_status_check;
+
+alter table public.profiles
+add constraint profiles_account_status_check
+check (account_status in ('pending', 'approved', 'rejected', 'disabled'));
 
 update public.profiles
 set account_status = 'approved',
@@ -55,6 +49,13 @@ as $$
     where id = auth.uid()
       and role = 'renter'
       and account_status = 'approved'
+      and exists (
+        select 1
+        from public.renter_users ru
+        join public.renters r on r.id = ru.renter_id
+        where ru.profile_id = auth.uid()
+          and r.status = 'active'
+      )
   );
 $$;
 
@@ -161,6 +162,10 @@ begin
     raise exception 'Il profilo selezionato e stato rifiutato.';
   end if;
 
+  if target_profile.account_status = 'disabled' then
+    raise exception 'Il profilo selezionato e disattivato.';
+  end if;
+
   select renter_id
   into linked_renter_id
   from public.renter_users
@@ -255,8 +260,64 @@ begin
 end;
 $$;
 
+create or replace function public.deactivate_renter_profile(target_profile_id uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  target_profile public.profiles%rowtype;
+begin
+  if auth.uid() is null or not public.is_admin() then
+    raise exception 'Admin access required.';
+  end if;
+
+  select *
+  into target_profile
+  from public.profiles
+  where id = target_profile_id
+  limit 1
+  for update;
+
+  if target_profile.id is null then
+    raise exception 'Profilo non trovato.';
+  end if;
+
+  if target_profile.role <> 'renter' then
+    raise exception 'Il profilo selezionato non e un noleggiatore.';
+  end if;
+
+  update public.profiles
+  set account_status = 'disabled',
+      updated_at = now()
+  where id = target_profile_id;
+
+  update public.renters
+  set status = 'disabled',
+      updated_at = now()
+  where id in (
+    select renter_id
+    from public.renter_users
+    where profile_id = target_profile_id
+  );
+
+  update public.vehicles
+  set is_active = false,
+      updated_at = now()
+  where renter_id in (
+    select renter_id
+    from public.renter_users
+    where profile_id = target_profile_id
+  );
+end;
+$$;
+
 revoke all on function public.approve_renter_profile(uuid) from public;
 grant execute on function public.approve_renter_profile(uuid) to authenticated;
 
 revoke all on function public.reject_renter_profile(uuid, text) from public;
 grant execute on function public.reject_renter_profile(uuid, text) to authenticated;
+
+revoke all on function public.deactivate_renter_profile(uuid) from public;
+grant execute on function public.deactivate_renter_profile(uuid) to authenticated;
