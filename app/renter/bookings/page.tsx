@@ -18,7 +18,7 @@ export default async function RenterBookingsPage() {
   const session = await requireRenter("/renter/bookings");
 
   if (session.denied) {
-    return <AccessDenied />;
+    return <AccessDenied accountStatus={session.profile?.account_status} />;
   }
 
   const { bookings, error } = await getRenterBookings(session.accessToken);

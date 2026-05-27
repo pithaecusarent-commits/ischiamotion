@@ -9,6 +9,7 @@ export type RenterProfile = {
   id: string;
   email: string | null;
   role: "admin" | "renter";
+  account_status: "pending" | "approved" | "rejected";
 };
 
 export function setRenterSessionCookies(accessToken: string, refreshToken: string) {
@@ -53,7 +54,7 @@ export async function getRenterSession() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, email, role")
+    .select("id, email, role, account_status")
     .eq("id", userData.user.id)
     .maybeSingle<RenterProfile>();
 
@@ -71,7 +72,7 @@ export async function requireRenter(nextPath = "/renter") {
     redirect(`/renter/login?next=${encodeURIComponent(nextPath)}`);
   }
 
-  if (session.profile?.role !== "renter") {
+  if (session.profile?.role !== "renter" || session.profile.account_status !== "approved") {
     return {
       ...session,
       accessToken: session.accessToken,
@@ -108,15 +109,31 @@ export async function signInRenterWithPassword(input: {
   const userClient = createSupabaseUserClient(data.session.access_token);
   const { data: profile, error: profileError } = await userClient
     .from("profiles")
-    .select("role")
+    .select("role, account_status")
     .eq("id", data.user.id)
-    .maybeSingle<{ role: "admin" | "renter" }>();
+    .maybeSingle<{ role: "admin" | "renter"; account_status: "pending" | "approved" | "rejected" }>();
 
   if (profileError || profile?.role !== "renter") {
     return {
       session: null,
       user: null,
       error: "Accesso noleggiatore non autorizzato."
+    };
+  }
+
+  if (profile.account_status === "pending") {
+    return {
+      session: null,
+      user: null,
+      error: "Registrazione ricevuta. Attendi l'autorizzazione dell'admin IschiaMotion."
+    };
+  }
+
+  if (profile.account_status === "rejected") {
+    return {
+      session: null,
+      user: null,
+      error: "Registrazione non autorizzata. Contatta IschiaMotion."
     };
   }
 

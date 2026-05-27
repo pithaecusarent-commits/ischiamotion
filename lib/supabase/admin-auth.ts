@@ -9,6 +9,7 @@ type AdminProfile = {
   id: string;
   email: string | null;
   role: "admin" | "renter";
+  account_status: "pending" | "approved" | "rejected";
 };
 
 function getSupabaseEnv() {
@@ -91,7 +92,7 @@ export async function getAdminSession() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, email, role")
+    .select("id, email, role, account_status")
     .eq("id", userData.user.id)
     .maybeSingle<AdminProfile>();
 
@@ -109,7 +110,7 @@ export async function requireAdmin(nextPath = "/admin") {
     redirect(`/admin/login?next=${encodeURIComponent(nextPath)}`);
   }
 
-  if (session.profile?.role !== "admin") {
+  if (session.profile?.role !== "admin" || session.profile.account_status !== "approved") {
     redirect(`/admin/login?error=${encodeURIComponent("Admin access required")}`);
   }
 

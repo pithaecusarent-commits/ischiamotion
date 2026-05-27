@@ -14,6 +14,9 @@ export default async function AdminPage() {
           <a className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/bookings">
             Vedi prenotazioni
           </a>
+          <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/renters">
+            Autorizza noleggiatori
+          </a>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
             Gestione veicoli
           </a>

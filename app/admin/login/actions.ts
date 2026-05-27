@@ -40,11 +40,11 @@ export async function signInAdmin(formData: FormData) {
   const userClient = createSupabaseUserClient(session.access_token);
   const { data: profile, error: profileError } = await userClient
     .from("profiles")
-    .select("role")
+    .select("role, account_status")
     .eq("id", user.id)
-    .maybeSingle<{ role: "admin" | "renter" }>();
+    .maybeSingle<{ role: "admin" | "renter"; account_status: "pending" | "approved" | "rejected" }>();
 
-  if (profileError || profile?.role !== "admin") {
+  if (profileError || profile?.role !== "admin" || profile.account_status !== "approved") {
     loginRedirect("Accesso admin non autorizzato.");
   }
 

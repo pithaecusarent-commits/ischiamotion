@@ -5,6 +5,7 @@ type Props = {
   searchParams?: {
     error?: string;
     next?: string;
+    registered?: string;
   };
 };
 
@@ -27,6 +28,12 @@ export default function RenterLoginPage({ searchParams }: Props) {
           </div>
         ) : null}
 
+        {searchParams?.registered ? (
+          <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Registrazione ricevuta. L&apos;admin deve autorizzare l&apos;account prima dell&apos;accesso.
+          </div>
+        ) : null}
+
         <form action={signInRenter} className="mt-8 grid gap-4">
           <input type="hidden" name="next" value={nextPath} />
           <label className="grid gap-2 text-sm font-bold text-ink/70">
@@ -44,6 +51,13 @@ export default function RenterLoginPage({ searchParams }: Props) {
             Entra
           </button>
         </form>
+
+        <p className="mt-6 text-sm text-ink/60">
+          Non hai ancora un account?{" "}
+          <a className="font-bold text-green-deep hover:text-ink" href="/renter/register">
+            Registrati come noleggiatore
+          </a>
+        </p>
       </section>
     </main>
   );

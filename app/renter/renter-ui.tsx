@@ -37,14 +37,20 @@ export function RenterShell({
   );
 }
 
-export function AccessDenied() {
+export function AccessDenied({ accountStatus }: { accountStatus?: "pending" | "approved" | "rejected" }) {
+  const message = accountStatus === "pending"
+    ? "Registrazione ricevuta. Il tuo account è in attesa di approvazione admin."
+    : accountStatus === "rejected"
+      ? "La registrazione non è stata autorizzata. Contatta IschiaMotion per maggiori informazioni."
+      : "Il tuo utente non ha il ruolo noleggiatore. Accedi con un account abilitato da IschiaMotion.";
+
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
       <section className="mx-auto max-w-xl rounded-[30px] bg-cream p-8 shadow-soft">
         <p className="section-kicker">Accesso negato</p>
         <h1 className="mt-3 font-serif text-4xl font-bold">Area noleggiatore non disponibile</h1>
         <p className="mt-4 text-ink/65">
-          Il tuo utente non ha il ruolo noleggiatore. Accedi con un account abilitato da IschiaMotion.
+          {message}
         </p>
         <Link className="mt-6 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/renter/login">
           Torna al login

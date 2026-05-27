@@ -26,7 +26,7 @@ export default async function RenterCheckinPage({ searchParams }: Props) {
   const session = await requireRenter("/renter/checkin");
 
   if (session.denied) {
-    return <AccessDenied />;
+    return <AccessDenied accountStatus={session.profile?.account_status} />;
   }
 
   return (

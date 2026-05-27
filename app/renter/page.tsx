@@ -25,7 +25,7 @@ export default async function RenterPage() {
   const session = await requireRenter("/renter");
 
   if (session.denied) {
-    return <AccessDenied />;
+    return <AccessDenied accountStatus={session.profile?.account_status} />;
   }
 
   const [linksResult, bookingsResult] = await Promise.all([

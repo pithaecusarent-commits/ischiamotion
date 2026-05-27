@@ -23,7 +23,7 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
   const session = await requireRenter("/renter/availability");
 
   if (session.denied) {
-    return <AccessDenied />;
+    return <AccessDenied accountStatus={session.profile?.account_status} />;
   }
 
   const [
