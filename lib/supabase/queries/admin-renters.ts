@@ -104,8 +104,8 @@ export async function deactivateRenterApplication(
 ): Promise<{ error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);
-    const { error } = await supabase.rpc("deactivate_renter_profile", {
-      target_profile_id: profileId
+    const { error } = await supabase.rpc("disable_renter_profile", {
+      p_profile_id: profileId
     });
 
     return { error: error?.message || null };
