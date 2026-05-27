@@ -20,6 +20,9 @@ export default async function AdminPage() {
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
             Gestione veicoli
           </a>
+          <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/account">
+            Account
+          </a>
           <form action={signOutAdmin}>
             <button className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" type="submit">
               Esci

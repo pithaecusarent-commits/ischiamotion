@@ -24,6 +24,7 @@ export function RenterShell({
             <NavLink href="/renter/bookings">Prenotazioni</NavLink>
             <NavLink href="/renter/availability">Disponibilita</NavLink>
             <NavLink href="/renter/checkin">Check-in</NavLink>
+            <NavLink href="/renter/account">Account</NavLink>
             <form action={signOutRenter}>
               <button className="rounded-full border border-ink/10 bg-white/70 px-4 py-2 text-sm font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep">
                 Esci

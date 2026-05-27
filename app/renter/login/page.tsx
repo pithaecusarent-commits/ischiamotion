@@ -53,6 +53,12 @@ export default function RenterLoginPage({ searchParams }: Props) {
         </form>
 
         <p className="mt-6 text-sm text-ink/60">
+          <a className="font-bold text-green-deep hover:text-ink" href="/auth/forgot-password">
+            Password dimenticata?
+          </a>
+        </p>
+
+        <p className="mt-3 text-sm text-ink/60">
           Non hai ancora un account?{" "}
           <a className="font-bold text-green-deep hover:text-ink" href="/renter/register">
             Registrati come noleggiatore

@@ -42,6 +42,12 @@ export default function AdminLoginPage({ searchParams }: Props) {
             Entra
           </button>
         </form>
+
+        <p className="mt-6 text-sm text-ink/60">
+          <a className="font-bold text-green-deep hover:text-ink" href="/auth/forgot-password">
+            Password dimenticata?
+          </a>
+        </p>
       </section>
     </main>
   );
