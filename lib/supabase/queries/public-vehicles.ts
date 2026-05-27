@@ -34,6 +34,8 @@ export type PublicVehicleSearchResult = {
   error: string | null;
 };
 
+export type HomepageCategoryMinPrices = Partial<Record<VehicleCategorySlug, number>>;
+
 const categoryMap: Record<string, VehicleCategorySlug> = {
   scooter: "scooter",
   auto: "auto",
@@ -139,6 +141,21 @@ export async function searchPublicVehicles(params: PublicVehicleQueryParams): Pr
 export async function getPublicVehicles(params: PublicVehicleQueryParams): Promise<PublicVehicle[]> {
   const result = await searchPublicVehicles(params);
   return result.vehicles;
+}
+
+export async function getHomepageCategoryMinPrices(locale: Locale): Promise<HomepageCategoryMinPrices> {
+  const result = await searchPublicVehicles({ locale });
+
+  return result.vehicles.reduce<HomepageCategoryMinPrices>((prices, vehicle) => {
+    if (!vehicle.is_available || vehicle.price_from <= 0) return prices;
+
+    const current = prices[vehicle.category];
+    if (current === undefined || vehicle.price_from < current) {
+      prices[vehicle.category] = vehicle.price_from;
+    }
+
+    return prices;
+  }, {});
 }
 
 function filterMockVehicles(params: PublicVehicleQueryParams) {

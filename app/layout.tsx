@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { HtmlLang } from "@/components/site/HtmlLang";
+import { headers } from "next/headers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,17 +9,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = headers().get("x-pathname") || "";
+  const lang = pathname.split("/")[1] === "en" ? "en" : "it";
+
   return (
-    <html lang="it" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.lang=location.pathname.split('/')[1]==='en'?'en':'it';"
-          }}
-        />
-      </head>
+    <html lang={lang}>
       <body>
-        <HtmlLang />
         {children}
       </body>
     </html>

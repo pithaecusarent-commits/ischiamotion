@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { Locale, PublicVehicle, VehicleFilter } from "@/lib/types";
 import { vehicles } from "@/lib/mock/vehicles";
 import { VehicleCard } from "@/components/site/VehicleCard";
+import type { HomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 
 export function useVehicleFilter() {
   return useState<VehicleFilter>("all");
@@ -12,15 +13,22 @@ export function useVehicleFilter() {
 export function VehicleGrid({
   locale,
   active,
-  onCategoryChange
+  onCategoryChange,
+  categoryMinPrices = {}
 }: {
   locale: Locale;
   active: VehicleFilter;
   onCategoryChange: (category: VehicleFilter) => void;
+  categoryMinPrices?: HomepageCategoryMinPrices;
 }) {
   const filtered = useMemo(
-    () => vehicles.filter((vehicle) => vehicle.is_available),
-    []
+    () => vehicles
+      .filter((vehicle) => vehicle.is_available)
+      .map((vehicle) => ({
+        ...vehicle,
+        price_from: categoryMinPrices[vehicle.category] ?? 0
+      })),
+    [categoryMinPrices]
   );
   const visibleIds = useMemo(
     () => new Set(filtered.filter((vehicle) => active === "all" || vehicle.category === active).map((vehicle) => vehicle.id)),

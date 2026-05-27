@@ -15,6 +15,7 @@ export function VehicleCard({
   const title = locale === "it" ? vehicle.title_it : vehicle.title_en;
   const features = locale === "it" ? vehicle.features_it : vehicle.features_en;
   const location = locale === "it" ? vehicle.location_it : vehicle.location_en;
+  const hasPrice = vehicle.price_from > 0;
   const typeLabels: Record<string, string> = {
     scooter: vehicle.emoji === "🏍️" ? (locale === "it" ? "Moto" : "Motorbike") : "Scooter",
     auto: locale === "it" ? "Auto" : "Car",
@@ -43,7 +44,15 @@ export function VehicleCard({
           {features.map((feature) => <span className="feature" key={feature}>{feature}</span>)}
         </div>
         <div className="vcard-foot">
-          <div className="vcard-price"><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></div>
+          <div className="vcard-price">
+            {hasPrice ? (
+              <>
+                <small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small>
+              </>
+            ) : (
+              <small>{locale === "it" ? "Su richiesta" : "On request"}</small>
+            )}
+          </div>
           <button className="book-btn" type="button" onClick={() => onBook(vehicle)}>
             {locale === "it" ? "Verifica" : "Check"}
           </button>

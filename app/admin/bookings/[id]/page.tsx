@@ -360,12 +360,20 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
                   <div className="grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
                     <div className="rounded-[28px] border border-ink/10 bg-white p-4 print-qr-card">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={voucherQrDataUrl}
-                        alt={`QR voucher ${voucher.voucher_code}`}
-                        className="h-auto w-full"
-                      />
+                      {voucherQrDataUrl ? (
+                        <>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={voucherQrDataUrl}
+                            alt={`QR voucher ${voucher.voucher_code}`}
+                            className="h-auto w-full"
+                          />
+                        </>
+                      ) : (
+                        <div className="flex aspect-square items-center justify-center rounded-[22px] border border-amber-200 bg-amber-50 p-4 text-center text-sm font-semibold leading-6 text-amber-800">
+                          QR non disponibile. Usa il codice voucher.
+                        </div>
+                      )}
                     </div>
                     <div className="grid gap-4 md:grid-cols-2 print-voucher-details">
                       <DetailRow label="Codice voucher" value={voucher.voucher_code} />

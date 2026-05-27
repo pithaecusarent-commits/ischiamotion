@@ -55,8 +55,16 @@ export default async function PublicCheckinPage({ params }: Props) {
             </div>
 
             <div className="print-qr-card mx-auto mt-8 max-w-[240px] rounded-[28px] border border-ink/10 bg-white p-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={qrDataUrl} alt={`QR voucher ${voucher.voucher_code}`} className="h-auto w-full" />
+              {qrDataUrl ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={qrDataUrl} alt={`QR voucher ${voucher.voucher_code}`} className="h-auto w-full" />
+                </>
+              ) : (
+                <div className="flex aspect-square items-center justify-center rounded-[22px] border border-amber-200 bg-amber-50 p-4 text-center text-sm font-semibold leading-6 text-amber-800">
+                  {locale === "it" ? "QR non disponibile. Usa il codice voucher." : "QR unavailable. Use the voucher code."}
+                </div>
+              )}
             </div>
 
             <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/70 p-6">

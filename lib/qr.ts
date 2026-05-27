@@ -1,5 +1,6 @@
+import QRCode from "qrcode";
+
 const fallbackSiteUrl = "https://ischiamotion.com";
-const qrApiUrl = "https://api.qrserver.com/v1/create-qr-code/";
 
 function normalizeSiteUrl() {
   return (process.env.NEXT_PUBLIC_SITE_URL || fallbackSiteUrl).replace(/\/$/, "");
@@ -16,15 +17,19 @@ export function toAbsoluteCheckinUrl(payload: string) {
 
 export async function generateQrDataUrl(payload: string) {
   const absolutePayload = toAbsoluteCheckinUrl(payload);
-  const params = new URLSearchParams({
-    data: absolutePayload,
-    size: "320x320",
-    margin: "16",
-    format: "svg",
-    ecc: "M",
-    color: "151512",
-    bgcolor: "FFFFFF"
-  });
 
-  return `${qrApiUrl}?${params.toString()}`;
+  try {
+    return await QRCode.toDataURL(absolutePayload, {
+      type: "image/png",
+      width: 320,
+      margin: 2,
+      errorCorrectionLevel: "M",
+      color: {
+        dark: "#151512",
+        light: "#FFFFFF"
+      }
+    });
+  } catch {
+    return null;
+  }
 }

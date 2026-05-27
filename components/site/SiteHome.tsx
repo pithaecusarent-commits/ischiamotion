@@ -15,13 +15,16 @@ import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
+import type { HomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 
 export function SiteHome({
   locale,
-  pickupPoints = mockPickupPoints
+  pickupPoints = mockPickupPoints,
+  categoryMinPrices = {}
 }: {
   locale: Locale;
   pickupPoints?: PublicPickupPoint[];
+  categoryMinPrices?: HomepageCategoryMinPrices;
 }) {
   const [activeFilter, setActiveFilter] = useVehicleFilter();
   const [startDate, setStartDate] = useState("");
@@ -55,7 +58,7 @@ export function SiteHome({
           onEndDateChange={setEndDate}
           onDeliveryMethodChange={setDeliveryMethod}
         />
-        <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} />
+        <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
         <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />
