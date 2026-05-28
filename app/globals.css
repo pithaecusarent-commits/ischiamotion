@@ -236,11 +236,12 @@ h1 em {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  min-height: 50px;
-  padding: 14px 22px;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 20px;
   border-radius: 999px;
   text-decoration: none;
+  font-size: 14px;
   font-weight: 700;
   transition: all .25s ease;
 }
@@ -1600,6 +1601,10 @@ h1 em {
 }
 .final-box .hero-actions {
   justify-content: center;
+}
+.final-box .primary-btn,
+.final-box .ghost-btn {
+  min-width: 210px;
 }
 .final-box .primary-btn {
   position: relative;

@@ -245,7 +245,10 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           <div className="final-box">
             <h2>{isIt ? "Pronto a muoverti a Ischia?" : "Ready to move around Ischia?"}</h2>
             <p>{isIt ? "Imposta le date, scegli un’opzione e invia una richiesta: riceverai conferma dopo verifica con il partner locale." : "Set your dates, choose an option and send a request: confirmation follows review with the local partner."}</p>
-            <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità scooter" : "Check scooter availability"}</a>
+            <div className="hero-actions">
+              <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità" : "Check availability"}</a>
+              <a href={whatsappUrl} className="ghost-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Contattaci su WhatsApp" : "Contact us on WhatsApp"}</a>
+            </div>
           </div>
         </section>
       </main>
