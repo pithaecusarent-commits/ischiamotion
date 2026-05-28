@@ -109,7 +109,7 @@ export function HeroSearch({
         {error ? <div className="booking-message error">{error}</div> : null}
         <button type="button" className="search-btn" onClick={handleSearch}>
           <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="white" strokeWidth="1.5" /><path d="M10.5 10.5L13 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" /></svg>
-          {locale === "it" ? "Invia richiesta disponibilità" : "Request availability"}
+          {locale === "it" ? "Richiedi disponibilità" : "Request availability"}
         </button>
       </div>
     </div>

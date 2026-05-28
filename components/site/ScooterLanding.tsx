@@ -41,7 +41,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const title = isIt ? "Noleggio scooter Ischia" : "Scooter rental Ischia";
   const description = isIt
     ? "Richiedi disponibilità per noleggio scooter a Ischia tramite partner locali selezionati. Una soluzione agile per coppie, porto, spiagge e borghi, con conferma solo dopo verifica."
-    : "Request scooter rental availability in Ischia through selected local partners. A nimble option for couples, ports, beaches and villages, with confirmation only after review.";
+    : "Request scooter rental availability in Ischia through selected local partners. A practical choice for couples, ports, beaches and villages, with confirmation only after review.";
   const advantages = isIt
     ? [
       ["Spostamenti rapidi", "Lo scooter è pratico per muoversi tra Ischia Porto, spiagge, centri abitati e punti panoramici senza la rigidità dell'auto."],

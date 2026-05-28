@@ -150,7 +150,7 @@ const landingGuides = {
       ]
     },
     gommone: {
-      pickupTitle: "Rubber dinghy pickup and nautical points",
+      pickupTitle: "Rubber dinghy and RIB pickup points",
       pickupItems: [
         ["Defined point", "Rubber dinghies are not delivered to hotels: pickup is at an indicated nautical point or IschiaMotion Point, depending on partner."],
         ["Coast and coves", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help choose departure and return areas."],
@@ -159,7 +159,7 @@ const landingGuides = {
       practicalTitle: "What to know before requesting a rubber dinghy",
       practicalItems: [
         ["Boating license", "It depends on the vehicle and engine. Requirements, documents and capacity are reviewed with the partner."],
-        ["Rubber dinghy or boat", "A rubber dinghy is often agile for coast and coves; a boat may offer more space and comfort, depending on model."],
+        ["Rubber dinghy, RIB or boat", "A rubber dinghy or RIB is often agile for coast and coves; a boat may offer more space and comfort, depending on model."],
         ["When to choose skipper", "If you do not want to manage navigation, route or sea conditions, boat with skipper is more relaxed."]
       ]
     },
@@ -178,13 +178,13 @@ const landingGuides = {
       ]
     },
     skipper: {
-      pickupTitle: "Boat with skipper departure in Ischia",
+      pickupTitle: "Skippered boat departure in Ischia",
       pickupItems: [
         ["Nautical points", "Departure is coordinated at a defined nautical point or IschiaMotion Point, depending on partner availability."],
         ["Scenic areas", "Ischia Port, Forio, Lacco Ameno and Sant'Angelo are useful references for sea experiences, coves and scenic coast."],
         ["Timing and weather", "Route, timing and duration are confirmed only after availability and marine conditions are reviewed."]
       ],
-      practicalTitle: "What to know before requesting boat with skipper",
+      practicalTitle: "What to know before requesting a skippered boat experience",
       practicalItems: [
         ["No navigation to manage", "This option is for guests who do not want to handle the boat, route or maneuvers. Final conditions remain partner-based."],
         ["Preferences", "Share couple, family or group size, preferred timing and experience type: relax, coves, coast or special occasion."],

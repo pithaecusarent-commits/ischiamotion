@@ -4,8 +4,8 @@ export function FinalCTA({ locale }: { locale: Locale }) {
   return (
     <section className="final-cta reveal">
       <div className="final-box">
-        <h2 dangerouslySetInnerHTML={{ __html: locale === "it" ? "Pronto a vivere<br>l'isola senza limiti?" : "Ready to explore<br>the island freely?" }} />
-        <p>{locale === "it" ? "Scegli un’opzione, invia la richiesta e attendi la verifica della disponibilità con i partner locali selezionati. IschiaMotion rende la ricerca del noleggio più semplice e chiara." : "Choose an option, send your request and wait for availability review with selected local partners. IschiaMotion makes the rental search simpler and clearer."}</p>
+        <h2 dangerouslySetInnerHTML={{ __html: locale === "it" ? "Muoviti a Ischia<br>con più semplicità." : "Plan your Ischia days<br>with less friction." }} />
+        <p>{locale === "it" ? "Scegli la soluzione più adatta al tuo viaggio, invia una richiesta e ricevi un riscontro dopo il controllo della disponibilità. IschiaMotion rende il noleggio a Ischia più chiaro, locale e guidato." : "Choose the option that fits your trip, send a request and receive a reply after availability is reviewed. IschiaMotion makes rental planning in Ischia clearer, local and easier to manage."}</p>
         <a href="#prenota" className="primary-btn">
           {locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}
         </a>

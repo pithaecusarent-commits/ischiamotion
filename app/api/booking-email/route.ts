@@ -95,7 +95,7 @@ function adminEmailText(payload: BookingEmailPayload, adminUrl: string) {
     textLine("Cliente", name),
     textLine("Email cliente", payload.email),
     textLine("Telefono cliente", payload.phone),
-    textLine("Lingua cliente", payload.language),
+    textLine("Lingua di contatto", payload.language),
     textLine("Veicolo/tipologia pubblica", payload.vehicleLabel),
     textLine("Date", `${payload.startDate} -> ${payload.endDate}`),
     textLine("Orario", payload.pickupTime),
@@ -118,8 +118,8 @@ function customerEmailText(payload: BookingEmailPayload) {
     return [
       `Ciao ${name},`,
       "",
-      "abbiamo ricevuto la tua richiesta per un noleggio a Ischia.",
-      "Verificheremo la disponibilità tramite i nostri partner locali selezionati e ti contatteremo per la conferma.",
+      "grazie per aver scelto IschiaMotion.",
+      "Abbiamo ricevuto la tua richiesta per un noleggio a Ischia e la stiamo verificando con operatori locali selezionati.",
       "",
       "Dettagli richiesta:",
       `- Codice richiesta: ${payload.bookingCode}`,
@@ -128,8 +128,9 @@ function customerEmailText(payload: BookingEmailPayload) {
       `- Ritiro/consegna: ${summary}`,
       "",
       "Importante:",
-      "La disponibilità non è ancora confermata. Riceverai un aggiornamento appena completata la verifica.",
+      "La disponibilità non è ancora confermata. Ti ricontatteremo appena avremo verificato opzioni, condizioni e punto di ritiro.",
       "",
+      "A presto,",
       "IschiaMotion"
     ].join("\n");
   }
@@ -137,8 +138,8 @@ function customerEmailText(payload: BookingEmailPayload) {
   return [
     `Hello ${name},`,
     "",
-    "we have received your rental request in Ischia.",
-    "We will check availability through selected local rental partners and contact you with confirmation.",
+    "thank you for choosing IschiaMotion.",
+    "We have received your rental request in Ischia and are reviewing it with selected local operators.",
     "",
     "Request details:",
     `- Request code: ${payload.bookingCode}`,
@@ -147,8 +148,9 @@ function customerEmailText(payload: BookingEmailPayload) {
     `- Pickup/delivery: ${summary}`,
     "",
     "Important:",
-    "Availability is not confirmed yet. You will receive an update after verification.",
+    "Availability is not confirmed yet. We will contact you once options, conditions and pickup details have been reviewed.",
     "",
+    "See you soon,",
     "IschiaMotion"
   ].join("\n");
 }

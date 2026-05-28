@@ -43,8 +43,8 @@ const commonIt = {
   howTitle: "Come funziona",
   steps: [
     ["Scegli categoria e date", "Imposti il tipo di mezzo, le date e la modalità più comoda tra le opzioni previste."],
-    ["Invia richiesta", "La richiesta arriva a IschiaMotion con i dettagli necessari per verificare disponibilità e condizioni."],
-    ["Verifica con partner", "Controlliamo le opzioni tramite partner locali selezionati, senza esporre dati interni al pubblico."],
+    ["Richiedi disponibilità", "La richiesta arriva a IschiaMotion con i dettagli utili per controllare disponibilità e condizioni."],
+    ["Controllo con i partner", "Collaboriamo con operatori scelti per affidabilità, disponibilità e conoscenza del territorio."],
     ["Ricevi conferma", "Ti ricontattiamo con disponibilità, punto ritiro o consegna e prossimi passaggi."]
   ] as Array<[string, string]>
 };
@@ -57,8 +57,8 @@ const commonEn = {
   howTitle: "How it works",
   steps: [
     ["Choose category and dates", "Select the vehicle type, dates and the most convenient option where available."],
-    ["Send a request", "Your request reaches IschiaMotion with the details needed to review availability and conditions."],
-    ["Partner review", "We check options through selected local partners, without exposing internal partner data publicly."],
+    ["Check availability", "Your request reaches IschiaMotion with the details needed to review availability and conditions."],
+    ["Partner review", "We work with operators selected for reliability, availability and local knowledge."],
     ["Receive confirmation", "We contact you with availability, pickup or delivery details and next steps."]
   ] as Array<[string, string]>
 };
@@ -80,7 +80,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       cardText: "L'auto è pratica quando devi muoverti tra Ischia Porto, Forio, Lacco Ameno, Barano e Sant'Angelo con più comfort.",
       categoryParam: "auto",
       benefits: [
-        ["Partner locali selezionati", "La richiesta viene verificata con operatori locali, mantenendo il modello marketplace corretto."],
+        ["Partner scelti con cura", "Collaboriamo con operatori locali selezionati per affidabilità, disponibilità e conoscenza del territorio."],
         ["Richiesta rapida", "Indichi date, preferenze e zona: la conferma arriva dopo verifica della disponibilità."],
         ["Ritiro o consegna dove previsto", "Per le auto possono essere disponibili porto, hotel o punti concordati, secondo condizioni partner."],
         ["Prezzi chiari", "I prezzi a partire da sono indicativi: il totale dipende da date, durata e condizioni finali."]
@@ -157,20 +157,20 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Noleggio gommoni Ischia: calette, costa e meteo",
       metaDescription: "Richiedi disponibilità per noleggio gommoni a Ischia tramite partner selezionati. Costa, calette, punto nautico e condizioni meteo da verificare.",
       eyebrow: "Gommoni a Ischia",
-      description: "Richiedi disponibilità per noleggio gommoni a Ischia tramite partner locali selezionati. Una scelta agile per costa e calette, con ritiro presso punto nautico e condizioni meteo-marine sempre da verificare.",
+      description: "Richiedi disponibilità per noleggio gommoni a Ischia tramite partner locali selezionati. Una scelta agile per vivere la costa, le calette e una giornata in mare, con ritiro presso punto nautico e condizioni meteo-marine sempre da verificare.",
       cardTitle: "Costa e calette",
       cardText: "Per le categorie nautiche il ritiro avviene presso IschiaMotion Point o punto definito, non con consegna in hotel.",
       categoryParam: "gommone",
       benefits: [
-        ["Categoria distinta", "Il gommone viene gestito separatamente dalla barca, così la richiesta è più precisa."],
-        ["Verifica meteo", "Disponibilità e uscita possono dipendere da condizioni del mare, periodo e regole partner."],
+        ["Costa più vicina", "Il gommone è una soluzione agile per calette, tratti panoramici e giornate in mare intorno all'isola."],
+        ["Meteo e mare controllati", "Disponibilità e uscita dipendono da mare, vento, periodo e condizioni operative del partner."],
         ["Punto ritiro definito", "Per gommoni e nautica si usa un punto concordato o IschiaMotion Point."],
-        ["Conferma dopo controllo", "Nessuna promessa immediata: la richiesta viene verificata prima della conferma."]
+        ["Partner scelti con cura", "La richiesta viene controllata con operatori locali selezionati per affidabilità e conoscenza della costa."]
       ],
-      zonesText: "Per un gommone contano soprattutto punto nautico, costa da raggiungere e rientro. Ischia Porto e Casamicciola sono pratici per chi arriva sull'isola; Forio, Lacco Ameno e Sant'Angelo aiutano a orientare calette e tratti panoramici. Barano è più utile come riferimento per itinerari via terra, mentre la partenza resta legata ai punti definiti dai partner.",
+      zonesText: "Per un gommone contano soprattutto punto nautico, costa da raggiungere e rientro. Ischia Porto e Casamicciola sono pratici per chi arriva sull'isola; Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a orientare calette e tratti panoramici. Citara e Maronti sono riferimenti utili per immaginare la giornata in mare, mentre la partenza resta legata ai punti definiti dai partner.",
       whenTitle: "Quando conviene il gommone",
       whenItems: [
-        ["Giornata in mare", "Adatto a chi vuole vivere costa e calette con un mezzo nautico agile."],
+        ["Giornata in mare", "Adatto a chi vuole vivere costa, calette e soste panoramiche con un mezzo nautico agile."],
         ["Piccoli gruppi", "Utile per uscite tra amici o famiglia, secondo capienza e condizioni partner."],
         ["Alternativa alla barca", "Più essenziale e maneggevole rispetto ad alcune barche, ma con meno comfort secondo modello."],
         ["Quando scegliere skipper", "Se non vuoi gestire conduzione, rotta o meteo, meglio valutare una barca con skipper."]
@@ -198,20 +198,20 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Noleggio barche Ischia: costa, calette e partner",
       metaDescription: "Richiedi disponibilità per noleggio barche a Ischia tramite partner selezionati. Costa, calette, requisiti, meteo e condizioni dopo verifica.",
       eyebrow: "Barche a Ischia",
-      description: "Richiedi disponibilità per noleggio barche a Ischia tramite partner locali selezionati. Ideale per vivere costa e calette dal mare, con requisiti, punto di ritiro e meteo verificati prima della conferma.",
+      description: "Richiedi disponibilità per noleggio barche a Ischia tramite partner locali selezionati. Ideale per vivere la costa dal mare, tra calette, comfort a bordo e condizioni verificate prima della conferma.",
       cardTitle: "Uscite in mare",
       cardText: "Barca senza skipper solo dove previsto da partner, requisiti e condizioni. Per esperienza guidata scegli la pagina skipper.",
       categoryParam: "barca",
       benefits: [
-        ["Opzioni selezionate", "La richiesta viene orientata verso partner locali e mezzi compatibili con periodo e disponibilità."],
-        ["Condizioni chiare", "Requisiti, documenti e condizioni finali vengono comunicati dopo verifica."],
+        ["Esperienza su misura", "La richiesta viene abbinata a opzioni compatibili con periodo, disponibilità e tipo di giornata in mare."],
+        ["Condizioni chiare", "Requisiti, documenti, meteo e condizioni finali vengono comunicati prima della conferma."],
         ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."]
       ],
-      zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto e Casamicciola sono riferimenti comodi per arrivi e partenze; Forio, Lacco Ameno e Sant'Angelo aiutano a definire costa e calette da raggiungere. Barano può rientrare nella pianificazione dell'itinerario terrestre, ma la partenza resta soggetta al punto indicato dal partner.",
+      zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto e Casamicciola sono riferimenti comodi per arrivi e partenze; Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Citara e Maronti possono orientare l'idea di itinerario, mentre la partenza resta soggetta al punto indicato dal partner.",
       whenTitle: "Quando conviene la barca",
       whenItems: [
         ["Autonomia in mare", "Adatta quando il partner prevede noleggio senza skipper e i requisiti sono rispettati."],
-        ["Costa e calette", "Ideale per esplorare tratti di costa con tempi e condizioni concordate."],
+        ["Costa e calette", "Ideale per esplorare tratti di costa, soste in rada e panorami dal mare con tempi concordati."],
         ["Più comfort", "Rispetto al gommone può offrire più spazio, ombra o stabilità, secondo modello disponibile."],
         ["Quando scegliere skipper", "Se vuoi un'esperienza guidata o non vuoi gestire conduzione e rotta, meglio la pagina skipper."]
       ],
@@ -238,17 +238,17 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Barca con skipper Ischia: esperienza guidata via mare",
       metaDescription: "Richiedi disponibilità per barca con skipper a Ischia tramite partner selezionati. Costa, calette, itinerario rilassato e conferma dopo verifica.",
       eyebrow: "Skipper a Ischia",
-      description: "La barca con skipper a Ischia è pensata per chi vuole vivere il mare senza gestire conduzione, rotta o dettagli tecnici. IschiaMotion raccoglie la richiesta e verifica disponibilità, orari e condizioni tramite partner selezionati.",
+      description: "La barca con skipper a Ischia è pensata per chi vuole vivere il mare con più comfort, senza gestire conduzione, rotta o dettagli tecnici. IschiaMotion raccoglie la richiesta e verifica disponibilità, orari e condizioni tramite partner selezionati.",
       cardTitle: "Esperienza guidata",
       cardText: "Tour via mare, calette e costa con disponibilità partner da confermare prima della partenza.",
       categoryParam: "boat-with-skipper",
       benefits: [
-        ["Meno pensieri", "Lo skipper gestisce conduzione e indicazioni operative secondo condizioni del partner."],
-        ["Itinerari via mare", "Una soluzione per scoprire costa, calette e panorami con guida locale."],
-        ["Richiesta verificata", "Disponibilità, orari e condizioni vengono confermati dopo controllo."],
+        ["Meno pensieri", "Lo skipper gestisce conduzione, rotta e indicazioni operative secondo condizioni del partner."],
+        ["Itinerari via mare", "Una soluzione per scoprire costa, calette, Sant'Angelo, San Montano o Citara con guida locale."],
+        ["Esperienza verificata", "Disponibilità, orari, meteo e condizioni vengono confermati dopo controllo."],
         ["Supporto WhatsApp", "Puoi chiarire esigenze e preferenze prima della verifica finale."]
       ],
-      zonesText: "Per un'uscita con skipper contano punto di partenza, durata e tipo di esperienza. Ischia Porto e Casamicciola sono comodi per arrivi e collegamenti; Forio, Lacco Ameno e Sant'Angelo sono riferimenti utili per costa, calette e panorami. Anche chi soggiorna a Barano o in hotel può indicare esigenze logistiche, ma la partenza resta presso punto nautico verificato.",
+      zonesText: "Per un'uscita con skipper contano punto di partenza, durata e tipo di esperienza. Ischia Porto e Casamicciola sono comodi per arrivi e collegamenti; Forio, Lacco Ameno, Sant'Angelo, San Montano e Citara sono riferimenti utili per costa, calette e panorami. Anche chi soggiorna a Barano o in hotel può indicare esigenze logistiche, ma la partenza resta presso punto nautico verificato.",
       whenTitle: "Quando conviene lo skipper",
       whenItems: [
         ["Prima volta in zona", "Utile se non conosci costa, approdi e condizioni locali."],
@@ -286,10 +286,10 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       cardText: "A car is useful for Ischia Port, Forio, Lacco Ameno, Barano and Sant'Angelo when you need more comfort.",
       categoryParam: "auto",
       benefits: [
-        ["Selected local partners", "Your request is reviewed with local operators while keeping the marketplace model clear."],
+        ["Carefully selected partners", "We work with local operators selected for reliability, availability and knowledge of the island."],
         ["Quick request", "Set dates, preferences and area: confirmation follows availability review."],
         ["Pickup or delivery where available", "For cars, port, hotel or agreed points may be available depending on partner conditions."],
-        ["Clear from-prices", "From-prices are indicative: final conditions depend on dates, duration and availability."]
+        ["Clear starting prices", "Starting prices are indicative: final conditions depend on dates, duration and availability."]
       ],
       zonesText: "A car is useful when arriving at Ischia Port or Casamicciola and staying elsewhere. Forio and Lacco Ameno work well for west-side beaches and hotels; Barano and Sant'Angelo need better planning for distance and timing. Add your hotel, port or preferred point: delivery and pickup are always reviewed with the partner.",
       whenTitle: "When a car makes sense",
@@ -300,7 +300,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["When to avoid it", "If you travel light and stay around the port or town center, scooter or e-bike may be easier for parking and traffic."]
       ],
       faqs: [
-        { question: "How much does car rental in Ischia cost?", answer: "It depends on season, length, category and partner availability. IschiaMotion shows from-prices and checks final conditions after request." },
+        { question: "How much does car rental in Ischia cost?", answer: "It depends on season, length, category and partner availability. IschiaMotion shows starting prices and checks final conditions after request." },
         { question: "Can I request hotel delivery?", answer: "Where offered by the partner and area, you can request hotel or accommodation delivery. Availability is always reviewed." },
         { question: "Is the booking instantly confirmed?", answer: "No. The request is received and then reviewed through selected local partners before confirmation." },
         { question: "Do I need a card or deposit?", answer: "Deposits, documents and conditions are communicated after review with the local partner." },
@@ -363,20 +363,20 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Rubber dinghy rental Ischia: coves, coast and weather",
       metaDescription: "Request rubber dinghy rental availability in Ischia through selected partners. Coast, coves, nautical pickup point and weather review.",
       eyebrow: "Rubber dinghies in Ischia",
-      description: "Request rubber dinghy rental availability in Ischia through selected local partners. An agile way to enjoy coast and coves, with nautical pickup and marine weather always reviewed.",
+      description: "Request rubber dinghy or RIB rental availability in Ischia through selected local partners. An agile way to enjoy the coast, coves and a day at sea, with nautical pickup and marine weather always reviewed.",
       cardTitle: "Coast and coves",
       cardText: "For nautical categories, pickup is at an IschiaMotion Point or defined point, not hotel delivery.",
       categoryParam: "gommone",
       benefits: [
-        ["Clear category", "Rubber dinghy is handled separately from boat rental for a more precise request."],
-        ["Weather review", "Availability may depend on sea, wind, season and partner rules."],
+        ["Close to the coast", "A rubber dinghy or RIB is an agile choice for coves, scenic coastline and relaxed sea days around the island."],
+        ["Weather and sea review", "Availability may depend on sea, wind, season and partner operating rules."],
         ["Defined pickup point", "Rubber dinghies and nautical services use an agreed point or IschiaMotion Point."],
-        ["Confirmation after review", "No instant promise: the request is checked before confirmation."]
+        ["Carefully selected partners", "We review the request with local operators selected for reliability and knowledge of the coast."]
       ],
-      zonesText: "For a rubber dinghy, the nautical pickup point matters more than hotel location. Ischia Port and Casamicciola are useful for arrivals; Forio, Lacco Ameno and Sant'Angelo help define coves and scenic coast. Barano may help with land planning, while departure remains tied to partner-defined nautical points.",
+      zonesText: "For a rubber dinghy or RIB, the nautical pickup point matters more than hotel location. Ischia Port and Casamicciola are useful for arrivals; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coves and scenic coast. Citara and Maronti can shape the idea of the day at sea, while departure remains tied to partner-defined nautical points.",
       whenTitle: "When a rubber dinghy makes sense",
       whenItems: [
-        ["Day at sea", "Good for enjoying coast and coves with an agile nautical option."],
+        ["Day at sea", "Good for enjoying coast, coves and scenic stops with an agile nautical option."],
         ["Small groups", "Useful for friends or family, depending on capacity and partner conditions."],
         ["Alternative to a boat", "Usually more essential and agile than some boats, but with less comfort depending on model."],
         ["When to choose skipper", "If you do not want to handle navigation, route or weather, boat with skipper is more relaxed."]
@@ -386,7 +386,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Can it be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or IschiaMotion Point." },
         { question: "Does weather affect availability?", answer: "Yes. Sea, wind and operational conditions can affect final confirmation." },
         { question: "Do I need a boating license?", answer: "It depends on the vehicle and partner conditions. Requirements and documents are reviewed before confirmation." },
-        { question: "How much does rubber dinghy rental in Ischia cost?", answer: "Price depends on season, length, category and availability. The request checks real options." },
+        { question: "How much does rubber dinghy rental in Ischia cost?", answer: "Price depends on season, length, category and availability. The request checks real options before confirmation." },
         { question: "Where do I pick up a rubber dinghy in Ischia?", answer: "The point is shared after partner review: it may be a defined nautical point or IschiaMotion Point, not hotel delivery." },
         { question: "Can I request a preferred departure area?", answer: "Yes. You can mention Ischia Port, Forio, Lacco Ameno, Sant'Angelo or another useful area; feasibility depends on the partner." },
         { question: "What happens if sea conditions are not suitable?", answer: "Safety and operating conditions come first. The partner may adjust or not confirm the trip depending on marine weather." }
@@ -404,20 +404,20 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Boat rental Ischia: coast, coves and local partners",
       metaDescription: "Request boat rental availability in Ischia through selected partners. Coast, coves, requirements, weather and final conditions after review.",
       eyebrow: "Boats in Ischia",
-      description: "Request boat rental availability in Ischia through selected local partners. Ideal for experiencing the coast and coves from the sea, with requirements, pickup point and weather reviewed before confirmation.",
+      description: "Request boat rental availability in Ischia through selected local partners. Ideal for experiencing the coast from the sea, with coves, onboard comfort, pickup point and weather reviewed before confirmation.",
       cardTitle: "Days at sea",
       cardText: "Boat without skipper only where offered by partners, requirements and conditions. For guided service choose boat with skipper.",
       categoryParam: "barca",
       benefits: [
-        ["Selected options", "The request is oriented toward local partners and vehicles compatible with season and availability."],
-        ["Clear conditions", "Requirements, documents and final conditions are shared after review."],
+        ["Matched options", "We match your request with suitable local partners and boats compatible with season and availability."],
+        ["Clear conditions", "Requirements, documents, weather and final conditions are shared before confirmation."],
         ["Defined nautical points", "Boat pickup is at an indicated point or IschiaMotion Point, not hotel delivery."]
       ],
-      zonesText: "Boat rental depends on nautical points rather than hotel delivery. Ischia Port and Casamicciola are convenient for arrivals and departures; Forio, Lacco Ameno and Sant'Angelo help define coastal areas and coves. Barano can be part of land planning, while departure remains subject to the partner's confirmed point.",
+      zonesText: "Boat rental depends on nautical points rather than hotel delivery. Ischia Port and Casamicciola are convenient for arrivals and departures; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coastal areas and coves. Citara and Maronti can shape the itinerary idea, while departure remains subject to the partner's confirmed point.",
       whenTitle: "When boat rental works well",
       whenItems: [
         ["Autonomy at sea", "Suitable when a partner offers rental without skipper and requirements are met."],
-        ["Coast and coves", "Ideal for exploring selected coast areas with agreed timing and conditions."],
+        ["Coast and coves", "Ideal for exploring selected coast areas, quiet stops and sea views with agreed timing and conditions."],
         ["More comfort", "Compared with a rubber dinghy, a boat may offer more space, shade or stability depending on model."],
         ["When to choose skipper", "If you want a guided experience or do not want to manage navigation and route, choose the skipper page."]
       ],
@@ -444,17 +444,17 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Boat with skipper Ischia: guided sea experience",
       metaDescription: "Request boat with skipper availability in Ischia through selected partners. Coast, coves, relaxed route and confirmation after review.",
       eyebrow: "Skipper in Ischia",
-      description: "A boat with skipper in Ischia is ideal when you want the sea without managing navigation, route or technical details. IschiaMotion collects the request and reviews availability, timing and conditions through selected partners.",
+      description: "A boat with skipper in Ischia is ideal when you want the sea with more comfort, without managing navigation, route or technical details. IschiaMotion collects the request and reviews availability, timing and conditions through selected partners.",
       cardTitle: "Guided experience",
       cardText: "Sea tours, coves and coast with partner availability to confirm before departure.",
       categoryParam: "boat-with-skipper",
       benefits: [
-        ["Less to manage", "The skipper handles navigation and operational guidance according to partner conditions."],
-        ["Sea itineraries", "A way to discover coast, coves and views with local guidance."],
-        ["Reviewed request", "Availability, timing and conditions are confirmed after review."],
+        ["Less to manage", "The skipper handles navigation, route and operational guidance according to partner conditions."],
+        ["Skippered boat experience", "A way to discover coves, Sant'Angelo, San Montano or Citara with local guidance."],
+        ["Reviewed experience", "Availability, timing, weather and conditions are confirmed after review."],
         ["WhatsApp support", "Clarify preferences before the final review."]
       ],
-      zonesText: "For a skipper experience, departure point, duration and style matter most. Ischia Port and Casamicciola are convenient for arrivals; Forio, Lacco Ameno and Sant'Angelo are useful references for coves and scenic coast. Guests staying in Barano or hotels can share logistics, while departure is confirmed at a reviewed nautical point.",
+      zonesText: "For a skippered boat experience, departure point, duration and style matter most. Ischia Port and Casamicciola are convenient for arrivals; Forio, Lacco Ameno, Sant'Angelo, San Montano and Citara are useful references for coves and scenic coast. Guests staying in Barano or hotels can share logistics, while departure is confirmed at a reviewed nautical point.",
       whenTitle: "When skipper service is useful",
       whenItems: [
         ["First time in the area", "Useful if you do not know the coastline, landing points or local conditions."],
@@ -467,7 +467,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Can I choose route and timing?", answer: "You can share preferences; final route and timing depend on availability, weather and partner conditions." },
         { question: "Do guests need a boating license?", answer: "Guests do not operate the boat when skipper service is included, unless specific partner conditions apply." },
         { question: "Where does departure happen?", answer: "Departure is confirmed at a defined nautical point or IschiaMotion Point, depending on availability." },
-        { question: "Is the price final?", answer: "From-prices are indicative. Final cost depends on length, season, itinerary and conditions." },
+        { question: "Is the price final?", answer: "Starting prices are indicative. Final cost depends on length, season, itinerary and conditions." },
         { question: "Is it suitable for families or small groups?", answer: "Yes, it can work well for families, couples or groups looking for a guided and more relaxed sea experience." },
         { question: "Can weather change the itinerary?", answer: "Yes. The skipper and partner review sea, wind and safety before confirming route and timing." },
         { question: "Can I depart near Sant'Angelo or Forio?", answer: "You can share the preferred area. Actual departure depends on partner availability and the confirmed nautical point." }
