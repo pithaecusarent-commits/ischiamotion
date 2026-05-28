@@ -205,8 +205,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       benefits: [
         ["Opzioni selezionate", "La richiesta viene orientata verso partner locali e mezzi compatibili con periodo e disponibilità."],
         ["Condizioni chiare", "Requisiti, documenti e condizioni finali vengono comunicati dopo verifica."],
-        ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."],
-        ["Nessuna confusione", "Barca e barca con skipper restano categorie distinte."]
+        ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."]
       ],
       zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto e Casamicciola sono riferimenti comodi per arrivi e partenze; Forio, Lacco Ameno e Sant'Angelo aiutano a definire costa e calette da raggiungere. Barano può rientrare nella pianificazione dell'itinerario terrestre, ma la partenza resta soggetta al punto indicato dal partner.",
       whenTitle: "Quando conviene la barca",
@@ -412,8 +411,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       benefits: [
         ["Selected options", "The request is oriented toward local partners and vehicles compatible with season and availability."],
         ["Clear conditions", "Requirements, documents and final conditions are shared after review."],
-        ["Defined nautical points", "Boat pickup is at an indicated point or IschiaMotion Point, not hotel delivery."],
-        ["No category confusion", "Boat rental and boat with skipper remain separate categories."]
+        ["Defined nautical points", "Boat pickup is at an indicated point or IschiaMotion Point, not hotel delivery."]
       ],
       zonesText: "Boat rental depends on nautical points rather than hotel delivery. Ischia Port and Casamicciola are convenient for arrivals and departures; Forio, Lacco Ameno and Sant'Angelo help define coastal areas and coves. Barano can be part of land planning, while departure remains subject to the partner's confirmed point.",
       whenTitle: "When boat rental works well",

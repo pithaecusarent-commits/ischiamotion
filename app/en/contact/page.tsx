@@ -30,10 +30,6 @@ export default function ContactEnPage() {
             body: "You can write to info@ischiamotion.com with dates, vehicle category, preferred area and number of guests, if relevant."
           },
           {
-            title: "Details",
-            body: "IschiaMotion - Luigi Schiano. Via Fundera, 104, Lacco Ameno, Ischia. VAT number: 10784981218. Website: https://ischiamotion.com."
-          },
-          {
             title: "How it works",
             body: "IschiaMotion collects your request and checks options with selected rental partners. We do not promise instant confirmation or guaranteed availability."
           }

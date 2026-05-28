@@ -30,10 +30,6 @@ export default function ContactItPage() {
             body: "Puoi scrivere a info@ischiamotion.com indicando date, categoria mezzo, zona preferita e numero di persone, se utile."
           },
           {
-            title: "Riferimenti",
-            body: "IschiaMotion - Luigi Schiano. Via Fundera, 104, Lacco Ameno, Ischia. P.IVA 10784981218. Sito: https://ischiamotion.com."
-          },
-          {
             title: "Come funziona",
             body: "IschiaMotion raccoglie la tua richiesta e verifica le opzioni con noleggiatori o partner selezionati. Non promettiamo conferma immediata o disponibilità garantita."
           }

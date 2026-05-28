@@ -241,7 +241,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
 
         <SeoFaqSection locale={locale} faqs={scooterFaq[locale]} />
 
-        <section className="final-cta reveal">
+        <section className="final-cta">
           <div className="final-box">
             <h2>{isIt ? "Pronto a muoverti a Ischia?" : "Ready to move around Ischia?"}</h2>
             <p>{isIt ? "Imposta le date, scegli un’opzione e invia una richiesta: riceverai conferma dopo verifica con il partner locale." : "Set your dates, choose an option and send a request: confirmation follows review with the local partner."}</p>

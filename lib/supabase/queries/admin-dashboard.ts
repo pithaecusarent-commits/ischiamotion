@@ -277,7 +277,10 @@ export async function getAdminDashboardData(accessToken: string): Promise<AdminD
       { column: "account_status", value: "pending" }
     ]),
     countRows(accessToken, "vehicles", [{ column: "is_active", value: true }]),
-    countRows(accessToken, "renters", [{ column: "status", value: "active" }]),
+    countRows(accessToken, "profiles", [
+      { column: "role", value: "renter" },
+      { column: "account_status", value: "approved" }
+    ]),
     countRows(accessToken, "bookings", [{ column: "status", value: "confirmed" }]),
     countRows(accessToken, "booking_vouchers"),
     countRows(accessToken, "checkins"),

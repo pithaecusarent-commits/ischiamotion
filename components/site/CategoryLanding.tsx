@@ -366,7 +366,7 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
 
         <SeoFaqSection locale={content.locale} faqs={content.faqs} />
 
-        <section className="final-cta reveal">
+        <section className="final-cta">
           <div className="final-box">
             <h2>{content.finalTitle}</h2>
             <p>{content.finalText}</p>
