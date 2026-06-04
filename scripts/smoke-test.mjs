@@ -18,6 +18,8 @@ const routes = [
   "/it/noleggio-auto-ischia",
   "/it/noleggio-gommoni-ischia",
   "/it/noleggio-barche-ischia",
+  "/it/beach-club-ischia",
+  "/en/ischia-beach-club",
   "/it/barca-con-skipper-ischia",
 ];
 

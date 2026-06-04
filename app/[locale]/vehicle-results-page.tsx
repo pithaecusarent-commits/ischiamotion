@@ -15,12 +15,13 @@ type SearchParams = {
 };
 
 const locales: Locale[] = ["it", "en"];
-const categories: VehicleFilter[] = ["all", "scooter", "auto", "bici", "gommone", "barca", "skipper"];
+const categories: VehicleFilter[] = ["all", "scooter", "auto", "bici", "gommone", "barca", "beach_club"];
 const deliveryMethods: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
 
 // Maps URL params (which may contain DB slugs or aliases) to frontend VehicleFilter slugs.
 const categoryAliases: Record<string, VehicleFilter> = {
-  "boat-with-skipper": "skipper",
+  "beach-club": "beach_club",
+  "beach_club": "beach_club",
   "bici-elettriche": "bici",
   "gommoni": "gommone",
   "rib": "gommone",

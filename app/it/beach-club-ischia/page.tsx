@@ -2,7 +2,7 @@ import { CategoryLanding } from "@/components/site/CategoryLanding";
 import { getCategoryLanding } from "@/lib/category-landings";
 import { categoryLandingMetadata } from "@/lib/category-landing-metadata";
 
-const content = getCategoryLanding("en", "skipper");
+const content = getCategoryLanding("it", "beach_club");
 
 export const metadata = categoryLandingMetadata(content);
 

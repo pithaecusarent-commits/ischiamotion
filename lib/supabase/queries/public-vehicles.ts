@@ -49,8 +49,8 @@ const categoryMap: Record<string, VehicleCategorySlug> = {
   barche: "barca",
   boat: "barca",
   "barche-gommoni": "barca",
-  "boat-with-skipper": "skipper",
-  skipper: "skipper"
+  "beach-club": "beach_club",
+  "beach_club": "beach_club"
 };
 
 const emojiMap: Record<VehicleCategorySlug, string> = {
@@ -59,7 +59,7 @@ const emojiMap: Record<VehicleCategorySlug, string> = {
   bici: "🚲",
   gommone: "🚤",
   barca: "🛥️",
-  skipper: "⛵"
+  beach_club: "🏖️"
 };
 
 function canUseMockFallback() {
@@ -75,6 +75,8 @@ export function mapPublicVehicleToVehicleCardModel(row: PublicVehicleListingRow)
     category,
     title_it: row.title_it,
     title_en: row.title_en,
+    description_it: row.description_it,
+    description_en: row.description_en,
     location_it: row.pickup_label_it || row.pickup_zone,
     location_en: row.pickup_label_en || row.pickup_zone,
     price_from: Number(row.price_from || 0),
@@ -171,7 +173,7 @@ function filterMockVehicles(params: PublicVehicleQueryParams) {
 function toDatabaseCategorySlug(categorySlug?: string) {
   if (!categorySlug || categorySlug === "all") return null;
   if (categorySlug === "bici") return "bici-elettriche";
-  if (categorySlug === "skipper") return "boat-with-skipper";
+  if (categorySlug === "beach_club") return "beach_club";
   // "barca" and "gommone" use their own DB slugs directly
   return categorySlug;
 }

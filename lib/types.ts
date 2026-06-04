@@ -1,6 +1,6 @@
 export type Locale = "it" | "en";
 
-export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "gommone" | "bici" | "skipper";
+export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "gommone" | "bici" | "beach_club";
 
 export type BookingDeliveryMethod = "pickup_point" | "port_delivery" | "hotel_delivery";
 
@@ -15,6 +15,8 @@ export type PublicVehicle = {
   category: VehicleCategorySlug;
   title_it: string;
   title_en: string;
+  description_it?: string | null;
+  description_en?: string | null;
   location_it: string;
   location_en: string;
   price_from: number;

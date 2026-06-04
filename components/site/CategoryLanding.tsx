@@ -29,7 +29,7 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
       ["E-bike", "/it/noleggio-bici-elettriche-ischia"],
       ["Gommoni", "/it/noleggio-gommoni-ischia"],
       ["Barche", "/it/noleggio-barche-ischia"],
-      ["Barca con skipper", "/it/barca-con-skipper-ischia"],
+      ["Beach Club", "/it/beach-club-ischia"],
       ["Contatti", "/it/contatti"]
     ];
   }
@@ -42,7 +42,7 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
     ["E-bikes", "/en/e-bike-rental-ischia"],
     ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
     ["Boats", "/en/boat-rental-ischia"],
-    ["Boat with skipper", "/en/boat-with-skipper-ischia"],
+    ["Beach Club", "/en/ischia-beach-club"],
     ["Contact", "/en/contact"]
   ];
 }
@@ -88,7 +88,7 @@ const landingGuides = {
       practicalItems: [
         ["Patente nautica", "Dipende dal mezzo e dalla motorizzazione. Requisiti, documenti e capienza vengono verificati con il partner."],
         ["Gommone o barca", "Il gommone è spesso più agile per costa e calette; la barca può offrire più spazio e comfort, secondo modello."],
-        ["Quando valutare skipper", "Se non vuoi gestire conduzione, rotta o condizioni marine, la barca con skipper è la scelta più rilassata."]
+        ["Quando valutare un beach club", "Se preferisci servizi a terra, lettini e ombrelloni, un beach club può essere più comodo."]
       ]
     },
     barca: {
@@ -100,23 +100,23 @@ const landingGuides = {
       ],
       practicalTitle: "Cosa sapere prima di richiedere una barca",
       practicalItems: [
-        ["Requisiti", "Barca senza skipper solo dove prevista dal partner e se requisiti, documenti e condizioni sono compatibili."],
+        ["Requisiti", "Barca disponibile solo dove prevista dal partner e se requisiti, documenti e condizioni sono compatibili."],
         ["Barca o gommone", "La barca è utile se cerchi più comfort e spazio; il gommone può essere più essenziale e agile."],
-        ["Quando scegliere skipper", "Se vuoi solo goderti costa e calette senza occuparti della conduzione, valuta la pagina barca con skipper."]
+        ["Quando scegliere un beach club", "Se cerchi comfort in spiaggia, valuta la pagina Beach Club."]
       ]
     },
-    skipper: {
-      pickupTitle: "Partenza con skipper a Ischia",
+    beach_club: {
+      pickupTitle: "Accesso beach club a Ischia",
       pickupItems: [
-        ["Punti nautici", "La partenza viene coordinata presso punto nautico definito o IschiaMotion Point, secondo disponibilità del partner."],
-        ["Zone panoramiche", "Ischia Porto, Forio, Lacco Ameno e Sant'Angelo sono riferimenti utili per esperienze via mare, calette e costa più scenografica."],
-        ["Orari e meteo", "Itinerario, fascia oraria e durata sono confermati solo dopo verifica di disponibilità e condizioni marine."]
+        ["Data e persone", "Indica giorno richiesto, numero persone, adulti e bambini per verificare soluzioni coerenti."],
+        ["Zona preferita", "Forio, Lacco Ameno, Ischia Porto, Sant'Angelo e altre zone possono orientare la ricerca tra strutture locali."],
+        ["Servizi desiderati", "Puoi segnalare lettini, ombrelloni, giornata intera, pranzo, aperitivo o preferenze premium."]
       ],
-      practicalTitle: "Cosa sapere prima di richiedere una barca con skipper",
+      practicalTitle: "Cosa puoi richiedere",
       practicalItems: [
-        ["Nessuna conduzione", "La formula è pensata per chi non vuole gestire mezzo, rotta o manovre. Le condizioni finali restano quelle del partner."],
-        ["Preferenze", "Indica coppia, famiglia o gruppo, orari desiderati e tipo di esperienza: relax, calette, costa o occasione speciale."],
-        ["Quando scegliere altro", "Se hai requisiti e vuoi autonomia, può bastare una barca senza skipper; se cerchi agilità essenziale, valuta il gommone."]
+        ["Accesso giornaliero", "Richiedi disponibilità per accesso, lettini, ombrelloni e servizi spiaggia."],
+        ["Food e drink", "Puoi indicare pranzo o aperitivo vista mare, se disponibili presso la struttura selezionata."],
+        ["Partner locali", "IschiaMotion facilita il contatto con strutture selezionate e verifica condizioni prima della conferma."]
       ]
     }
   },
@@ -160,7 +160,7 @@ const landingGuides = {
       practicalItems: [
         ["Boating license", "It depends on the vehicle and engine. Requirements, documents and capacity are reviewed with the partner."],
         ["Rubber dinghy, RIB or boat", "A rubber dinghy or RIB is often agile for coast and coves; a boat may offer more space and comfort, depending on model."],
-        ["When to choose skipper", "If you do not want to manage navigation, route or sea conditions, boat with skipper is more relaxed."]
+        ["When to choose a beach club", "If you prefer reserved seaside services on shore, beach club access may fit better."]
       ]
     },
     barca: {
@@ -172,23 +172,23 @@ const landingGuides = {
       ],
       practicalTitle: "What to know before requesting a boat",
       practicalItems: [
-        ["Requirements", "Boat rental without skipper is available only where offered by the partner and when documents and conditions match."],
+        ["Requirements", "Boat rental is available only where offered by the partner and when documents and conditions match."],
         ["Boat or rubber dinghy", "A boat is useful for more comfort and space; a rubber dinghy can be simpler and more agile."],
-        ["When to choose skipper", "If you want coast and coves without handling navigation, consider boat with skipper."]
+        ["When to choose a beach club", "If you want comfort on shore, consider beach club access with selected local venues."]
       ]
     },
-    skipper: {
-      pickupTitle: "Skippered boat departure in Ischia",
+    beach_club: {
+      pickupTitle: "Beach club access in Ischia",
       pickupItems: [
-        ["Nautical points", "Departure is coordinated at a defined nautical point or IschiaMotion Point, depending on partner availability."],
-        ["Scenic areas", "Ischia Port, Forio, Lacco Ameno and Sant'Angelo are useful references for sea experiences, coves and scenic coast."],
-        ["Timing and weather", "Route, timing and duration are confirmed only after availability and marine conditions are reviewed."]
+        ["Date and guests", "Share requested date, guest count, adults and children to review suitable options."],
+        ["Preferred area", "Forio, Lacco Ameno, Ischia Port, Sant'Angelo and other areas can guide the search among local venues."],
+        ["Requested services", "Mention sunbeds, umbrellas, full day access, lunch, aperitif or premium preferences."]
       ],
-      practicalTitle: "What to know before requesting a skippered boat experience",
+      practicalTitle: "What you can request",
       practicalItems: [
-        ["No navigation to manage", "This option is for guests who do not want to handle the boat, route or maneuvers. Final conditions remain partner-based."],
-        ["Preferences", "Share couple, family or group size, preferred timing and experience type: relax, coves, coast or special occasion."],
-        ["When to choose another option", "If you meet requirements and want autonomy, boat rental may fit; if you want a simpler agile option, consider a rubber dinghy."]
+        ["Daily access", "Request availability for access, sunbeds, umbrellas and beach services."],
+        ["Food and drinks", "You can mention seaside lunch or aperitif where available at the selected venue."],
+        ["Local partners", "IschiaMotion facilitates contact with selected venues and reviews conditions before confirmation."]
       ]
     }
   }

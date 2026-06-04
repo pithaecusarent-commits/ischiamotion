@@ -5,7 +5,7 @@ export type CategoryLandingKey =
   | "ebike"
   | "gommone"
   | "barca"
-  | "skipper";
+  | "beach_club";
 
 export type CategoryLandingContent = {
   locale: Locale;
@@ -173,7 +173,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Giornata in mare", "Adatto a chi vuole vivere costa, calette e soste panoramiche con un mezzo nautico agile."],
         ["Piccoli gruppi", "Utile per uscite tra amici o famiglia, secondo capienza e condizioni partner."],
         ["Alternativa alla barca", "Più essenziale e maneggevole rispetto ad alcune barche, ma con meno comfort secondo modello."],
-        ["Quando scegliere skipper", "Se non vuoi gestire conduzione, rotta o meteo, meglio valutare una barca con skipper."]
+        ["Quando scegliere un beach club", "Se preferisci lettino riservato, ombrellone e servizi a terra, valuta un beach club."]
       ],
       faqs: [
         { question: "Gommone e barca sono la stessa cosa?", answer: "No. Su IschiaMotion sono categorie separate: il gommone ha caratteristiche, disponibilità e condizioni diverse dalla barca." },
@@ -200,7 +200,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       eyebrow: "Barche a Ischia",
       description: "Richiedi disponibilità per noleggio barche a Ischia tramite partner locali selezionati. Ideale per vivere la costa dal mare, tra calette, comfort a bordo e condizioni verificate prima della conferma.",
       cardTitle: "Uscite in mare",
-      cardText: "Barca senza skipper solo dove previsto da partner, requisiti e condizioni. Per esperienza guidata scegli la pagina skipper.",
+      cardText: "Barca disponibile solo dove previsto da partner, requisiti e condizioni. Per una giornata relax a terra puoi valutare un beach club.",
       categoryParam: "barca",
       benefits: [
         ["Esperienza su misura", "La richiesta viene abbinata a opzioni compatibili con periodo, disponibilità e tipo di giornata in mare."],
@@ -210,13 +210,13 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto e Casamicciola sono riferimenti comodi per arrivi e partenze; Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Citara e Maronti possono orientare l'idea di itinerario, mentre la partenza resta soggetta al punto indicato dal partner.",
       whenTitle: "Quando conviene la barca",
       whenItems: [
-        ["Autonomia in mare", "Adatta quando il partner prevede noleggio senza skipper e i requisiti sono rispettati."],
+        ["Autonomia in mare", "Adatta quando il partner prevede noleggio in autonomia e i requisiti sono rispettati."],
         ["Costa e calette", "Ideale per esplorare tratti di costa, soste in rada e panorami dal mare con tempi concordati."],
         ["Più comfort", "Rispetto al gommone può offrire più spazio, ombra o stabilità, secondo modello disponibile."],
-        ["Quando scegliere skipper", "Se vuoi un'esperienza guidata o non vuoi gestire conduzione e rotta, meglio la pagina skipper."]
+        ["Quando scegliere altro", "Se preferisci lettini, ombrelloni e servizi a terra, valuta la pagina Beach Club."]
       ],
       faqs: [
-        { question: "La barca include sempre lo skipper?", answer: "No. Questa pagina riguarda il noleggio barche; per esperienza guidata usa la pagina barca con skipper." },
+        { question: "La barca è una prenotazione immediata?", answer: "No. IschiaMotion raccoglie la richiesta e verifica disponibilità, requisiti e condizioni con partner selezionati." },
         { question: "Posso noleggiare barche senza patente?", answer: "Dipende dal mezzo e dalle condizioni del partner. Requisiti e documenti vengono verificati prima della conferma." },
         { question: "Il ritiro può avvenire in hotel?", answer: "No. Per le categorie nautiche il ritiro avviene presso punto definito o IschiaMotion Point." },
         { question: "Il meteo può bloccare l'uscita?", answer: "Sì. Condizioni meteo-marine e operative sono parte della verifica." },
@@ -228,46 +228,43 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       finalTitle: "Cerchi una barca a Ischia?",
       finalText: "Invia una richiesta e verifica disponibilità reale, condizioni e punto ritiro."
     },
-    skipper: {
+    beach_club: {
       ...commonIt,
       locale: "it",
-      key: "skipper",
-      path: "/it/barca-con-skipper-ischia",
-      alternatePath: "/en/boat-with-skipper-ischia",
-      title: "Barca con skipper a Ischia",
-      metaTitle: "Barca con skipper Ischia: esperienza guidata via mare",
-      metaDescription: "Richiedi disponibilità per barca con skipper a Ischia tramite partner selezionati. Costa, calette, itinerario rilassato e conferma dopo verifica.",
-      eyebrow: "Skipper a Ischia",
-      description: "La barca con skipper a Ischia è pensata per chi vuole vivere il mare con più comfort, senza gestire conduzione, rotta o dettagli tecnici. IschiaMotion raccoglie la richiesta e verifica disponibilità, orari e condizioni tramite partner selezionati.",
-      cardTitle: "Esperienza guidata",
-      cardText: "Tour via mare, calette e costa con disponibilità partner da confermare prima della partenza.",
-      categoryParam: "boat-with-skipper",
+      key: "beach_club",
+      path: "/it/beach-club-ischia",
+      alternatePath: "/en/ischia-beach-club",
+      title: "Beach Club a Ischia",
+      metaTitle: "Beach Club Ischia | Prenota lettini, ombrelloni e servizi mare",
+      metaDescription: "Scopri i migliori beach club a Ischia. Prenota lettini, ombrelloni e servizi esclusivi per una giornata di relax al mare nei luoghi più belli dell'isola.",
+      eyebrow: "Beach Club a Ischia",
+      description: "Vivi il mare di Ischia con il comfort di un beach club selezionato. Con IschiaMotion puoi trovare soluzioni per trascorrere una giornata di relax in riva al mare, scegliendo tra stabilimenti attrezzati, lettini, ombrelloni, servizi dedicati e location panoramiche. Che tu voglia rilassarti su una spiaggia comoda, goderti un pranzo vista mare o passare una giornata elegante tra sole, mare e comfort, i beach club di Ischia sono la scelta ideale per vivere l'isola con semplicità e stile. IschiaMotion ti aiuta a metterti in contatto con strutture e partner locali selezionati, semplificando la richiesta e rendendo più facile organizzare la tua giornata al mare.",
+      cardTitle: "Relax, lettini e servizi mare",
+      cardText: "Prenota l'accesso ai migliori beach club di Ischia e vivi una giornata di mare tra relax, lettini, ombrelloni, servizi esclusivi e panorami unici.",
+      primaryCta: "Richiedi disponibilità per un Beach Club",
+      categoryParam: "beach_club",
       benefits: [
-        ["Meno pensieri", "Lo skipper gestisce conduzione, rotta e indicazioni operative secondo condizioni del partner."],
-        ["Itinerari via mare", "Una soluzione per scoprire costa, calette, Sant'Angelo, San Montano o Citara con guida locale."],
-        ["Esperienza verificata", "Disponibilità, orari, meteo e condizioni vengono confermati dopo controllo."],
-        ["Supporto WhatsApp", "Puoi chiarire esigenze e preferenze prima della verifica finale."]
+        ["Lettino riservato", "Un beach club ti permette di vivere il mare senza pensieri con lettino, ombrellone e servizi in spiaggia."],
+        ["Servizi curati", "Ristorazione, assistenza e ambienti organizzati rendono la giornata più semplice per coppie, famiglie e gruppi."],
+        ["Partner selezionati", "IschiaMotion ti aiuta a contattare strutture e partner locali selezionati, senza presentarsi come gestore diretto."],
+        ["Richiesta facile", "Indichi data, persone, fascia oraria, zona preferita ed eventuali esigenze per ricevere supporto mirato."]
       ],
-      zonesText: "Per un'uscita con skipper contano punto di partenza, durata e tipo di esperienza. Ischia Porto e Casamicciola sono comodi per arrivi e collegamenti; Forio, Lacco Ameno, Sant'Angelo, San Montano e Citara sono riferimenti utili per costa, calette e panorami. Anche chi soggiorna a Barano o in hotel può indicare esigenze logistiche, ma la partenza resta presso punto nautico verificato.",
-      whenTitle: "Quando conviene lo skipper",
+      zonesText: "Ischia offre spiagge e baie diverse tra loro: zone sabbiose, scorci panoramici, stabilimenti eleganti e luoghi perfetti per una giornata lenta e rigenerante. Attraverso IschiaMotion puoi inviare una richiesta e ricevere supporto per trovare la soluzione più adatta alle tue esigenze.",
+      whenTitle: "Beach club a Ischia: relax, mare e panorami",
       whenItems: [
-        ["Prima volta in zona", "Utile se non conosci costa, approdi e condizioni locali."],
-        ["Relax totale", "Ideale se vuoi goderti la giornata senza occuparti della conduzione."],
-        ["Coppie e famiglie", "Adatta a chi cerca un'esperienza più curata, con tempi e itinerario da concordare."],
-        ["Quando scegliere altro", "Se vuoi autonomia e hai requisiti adeguati, valuta barca senza skipper; per uscite agili, gommone."]
+        ["Lettini e ombrelloni", "Puoi richiedere soluzioni con lettini, ombrelloni e servizi spiaggia in base alla disponibilità."],
+        ["Accesso giornaliero", "Ideale per organizzare una giornata intera o una fascia oraria al mare con più comfort."],
+        ["Pranzo o aperitivo vista mare", "Puoi indicare preferenze per ristorazione, aperitivo o servizi premium in location selezionate."],
+        ["Coppie, famiglie e gruppi", "La richiesta può includere numero persone, adulti e bambini, zona preferita e note cliente."]
       ],
       faqs: [
-        { question: "La barca con skipper è una prenotazione immediata?", answer: "No. IschiaMotion riceve la richiesta e verifica disponibilità, orari e condizioni con partner selezionati." },
-        { question: "Posso scegliere itinerario e orari?", answer: "Puoi indicare preferenze; itinerario e orari finali dipendono da disponibilità, meteo e condizioni partner." },
-        { question: "Serve patente nautica?", answer: "Per l'ospite non è richiesta conduzione del mezzo quando il servizio include skipper, salvo condizioni specifiche comunicate dal partner." },
-        { question: "Da dove si parte?", answer: "La partenza viene confermata presso punto nautico definito o IschiaMotion Point, secondo disponibilità." },
-        { question: "Il prezzo è definitivo?", answer: "I prezzi a partire da sono indicativi. Il totale dipende da durata, periodo, itinerario e condizioni finali." },
-        { question: "È adatta a famiglie o piccoli gruppi?", answer: "Sì, può essere una buona soluzione per famiglie, coppie o gruppi che preferiscono un'esperienza guidata e più rilassata." },
-        { question: "Il meteo può cambiare l'itinerario?", answer: "Sì. Lo skipper e il partner valutano mare, vento e sicurezza prima di confermare rotta e orari." },
-        { question: "Posso partire vicino a Sant'Angelo o Forio?", answer: "Puoi indicare la zona preferita. La partenza effettiva dipende da disponibilità del partner e punto nautico confermato." }
+        { question: "IschiaMotion gestisce direttamente i beach club?", answer: "No. IschiaMotion facilita la richiesta e il contatto con strutture e partner locali selezionati." },
+        { question: "Cosa posso richiedere?", answer: "Puoi richiedere lettini, ombrelloni, accesso giornaliero, servizi spiaggia, pranzo o aperitivo vista mare." },
+        { question: "La disponibilità è confermata subito?", answer: "No. La disponibilità viene verificata con la struttura o il partner locale prima della conferma." },
+        { question: "È adatto a famiglie e gruppi?", answer: "Sì. Puoi indicare numero persone, adulti e bambini, fascia oraria e preferenze di zona." }
       ],
-      finalTitle: "Vuoi una barca con skipper?",
-      finalText: "Invia una richiesta e ricevi conferma dopo verifica con partner locali selezionati."
+      finalTitle: "Vuoi organizzare una giornata in beach club?",
+      finalText: "Invia una richiesta e ricevi supporto per trovare la soluzione più adatta tra strutture e partner locali selezionati."
     }
   },
   en: {
@@ -379,7 +376,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Day at sea", "Good for enjoying coast, coves and scenic stops with an agile nautical option."],
         ["Small groups", "Useful for friends or family, depending on capacity and partner conditions."],
         ["Alternative to a boat", "Usually more essential and agile than some boats, but with less comfort depending on model."],
-        ["When to choose skipper", "If you do not want to handle navigation, route or weather, boat with skipper is more relaxed."]
+        ["When to choose a beach club", "If you prefer reserved sunbeds, umbrellas and services on shore, consider a beach club."]
       ],
       faqs: [
         { question: "Is a rubber dinghy the same as a boat?", answer: "No. On IschiaMotion they are separate categories with different availability and conditions." },
@@ -406,7 +403,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       eyebrow: "Boats in Ischia",
       description: "Request boat rental availability in Ischia through selected local partners. Ideal for experiencing the coast from the sea, with coves, onboard comfort, pickup point and weather reviewed before confirmation.",
       cardTitle: "Days at sea",
-      cardText: "Boat without skipper only where offered by partners, requirements and conditions. For guided service choose boat with skipper.",
+      cardText: "Boat rental is available only where offered by partners, requirements and conditions. For a relaxed day on shore, consider a beach club.",
       categoryParam: "barca",
       benefits: [
         ["Matched options", "We match your request with suitable local partners and boats compatible with season and availability."],
@@ -416,13 +413,13 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       zonesText: "Boat rental depends on nautical points rather than hotel delivery. Ischia Port and Casamicciola are convenient for arrivals and departures; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coastal areas and coves. Citara and Maronti can shape the itinerary idea, while departure remains subject to the partner's confirmed point.",
       whenTitle: "When boat rental works well",
       whenItems: [
-        ["Autonomy at sea", "Suitable when a partner offers rental without skipper and requirements are met."],
+        ["Autonomy at sea", "Suitable when a partner offers independent rental and requirements are met."],
         ["Coast and coves", "Ideal for exploring selected coast areas, quiet stops and sea views with agreed timing and conditions."],
         ["More comfort", "Compared with a rubber dinghy, a boat may offer more space, shade or stability depending on model."],
-        ["When to choose skipper", "If you want a guided experience or do not want to manage navigation and route, choose the skipper page."]
+        ["When to choose another option", "If you prefer sunbeds, umbrellas and seaside services, consider the Beach Club page."]
       ],
       faqs: [
-        { question: "Does boat rental always include a skipper?", answer: "No. This page is for boat rental; for a guided experience use the boat with skipper page." },
+        { question: "Is boat rental instantly confirmed?", answer: "No. IschiaMotion collects the request and reviews availability, requirements and conditions with selected partners." },
         { question: "Can I rent without a license?", answer: "It depends on the boat and partner conditions. Requirements and documents are reviewed before confirmation." },
         { question: "Can the boat be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or IschiaMotion Point." },
         { question: "Can weather stop the trip?", answer: "Yes. Marine weather and operational conditions are part of the review." },
@@ -434,46 +431,43 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       finalTitle: "Looking for a boat in Ischia?",
       finalText: "Send a request and review real availability, conditions and pickup point."
     },
-    skipper: {
+    beach_club: {
       ...commonEn,
       locale: "en",
-      key: "skipper",
-      path: "/en/boat-with-skipper-ischia",
-      alternatePath: "/it/barca-con-skipper-ischia",
-      title: "Boat with skipper in Ischia",
-      metaTitle: "Boat with skipper Ischia: guided sea experience",
-      metaDescription: "Request boat with skipper availability in Ischia through selected partners. Coast, coves, relaxed route and confirmation after review.",
-      eyebrow: "Skipper in Ischia",
-      description: "A boat with skipper in Ischia is ideal when you want the sea with more comfort, without managing navigation, route or technical details. IschiaMotion collects the request and reviews availability, timing and conditions through selected partners.",
-      cardTitle: "Guided experience",
-      cardText: "Sea tours, coves and coast with partner availability to confirm before departure.",
-      categoryParam: "boat-with-skipper",
+      key: "beach_club",
+      path: "/en/ischia-beach-club",
+      alternatePath: "/it/beach-club-ischia",
+      title: "Beach Clubs in Ischia",
+      metaTitle: "Ischia Beach Club | Book sunbeds, umbrellas and seaside services",
+      metaDescription: "Discover selected beach clubs in Ischia. Book sunbeds, umbrellas and seaside services for a relaxing day by the sea in beautiful island locations.",
+      eyebrow: "Beach Clubs in Ischia",
+      description: "Enjoy the sea in Ischia with the comfort of a selected beach club. With IschiaMotion, you can find options for a relaxing seaside day with sunbeds, umbrellas, beach services and panoramic locations. Whether you are looking for a comfortable beach day, a seaside lunch or a refined experience between sun, sea and comfort, beach clubs in Ischia are a perfect way to enjoy the island with ease and style. IschiaMotion helps you connect with selected local partners and venues, making it easier to request availability and organize your day by the sea.",
+      cardTitle: "Sea, comfort and views",
+      cardText: "Book access to selected beach clubs in Ischia and enjoy a relaxing seaside day with sunbeds, umbrellas, premium services and unforgettable views.",
+      primaryCta: "Request Beach Club Availability",
+      categoryParam: "beach_club",
       benefits: [
-        ["Less to manage", "The skipper handles navigation, route and operational guidance according to partner conditions."],
-        ["Skippered boat experience", "A way to discover coves, Sant'Angelo, San Montano or Citara with local guidance."],
-        ["Reviewed experience", "Availability, timing, weather and conditions are confirmed after review."],
-        ["WhatsApp support", "Clarify preferences before the final review."]
+        ["Reserved sunbeds", "A beach club allows you to enjoy the sea without stress with sunbeds, umbrellas and beach assistance."],
+        ["Curated services", "Food, drinks, organized spaces and dedicated services make the day easier for couples, families and groups."],
+        ["Selected local partners", "IschiaMotion helps you connect with selected venues and partners without acting as the direct operator."],
+        ["Easy request", "Share date, guests, preferred timing, area, sunbed or umbrella needs and customer notes."]
       ],
-      zonesText: "For a skippered boat experience, departure point, duration and style matter most. Ischia Port and Casamicciola are convenient for arrivals; Forio, Lacco Ameno, Sant'Angelo, San Montano and Citara are useful references for coves and scenic coast. Guests staying in Barano or hotels can share logistics, while departure is confirmed at a reviewed nautical point.",
-      whenTitle: "When skipper service is useful",
+      zonesText: "Ischia offers many different seaside locations: sandy beaches, panoramic bays, elegant beach venues and relaxing corners by the sea. Through IschiaMotion, you can send a request and receive support in finding the most suitable option for your needs.",
+      whenTitle: "Beach clubs in Ischia: sea, comfort and views",
       whenItems: [
-        ["First time in the area", "Useful if you do not know the coastline, landing points or local conditions."],
-        ["Full relaxation", "Ideal if you want to enjoy the day without managing navigation."],
-        ["Couples and families", "Good for a more curated experience with timing and route to agree."],
-        ["When to choose another option", "If you want autonomy and meet requirements, boat rental may fit; for a simpler agile option, consider a rubber dinghy."]
+        ["Sunbeds and umbrellas", "You can request sunbeds, umbrellas and beach services depending on venue availability."],
+        ["Daily access", "Ideal for organizing a full day or selected time slot by the sea with more comfort."],
+        ["Seaside lunch or aperitif", "Share preferences for food, drinks or premium experiences in selected locations."],
+        ["Couples, families and groups", "The request can include guest count, adults and children, preferred area and customer notes."]
       ],
       faqs: [
-        { question: "Is boat with skipper instantly confirmed?", answer: "No. IschiaMotion receives the request and reviews availability, timing and conditions with selected partners." },
-        { question: "Can I choose route and timing?", answer: "You can share preferences; final route and timing depend on availability, weather and partner conditions." },
-        { question: "Do guests need a boating license?", answer: "Guests do not operate the boat when skipper service is included, unless specific partner conditions apply." },
-        { question: "Where does departure happen?", answer: "Departure is confirmed at a defined nautical point or IschiaMotion Point, depending on availability." },
-        { question: "Is the price final?", answer: "Starting prices are indicative. Final cost depends on length, season, itinerary and conditions." },
-        { question: "Is it suitable for families or small groups?", answer: "Yes, it can work well for families, couples or groups looking for a guided and more relaxed sea experience." },
-        { question: "Can weather change the itinerary?", answer: "Yes. The skipper and partner review sea, wind and safety before confirming route and timing." },
-        { question: "Can I depart near Sant'Angelo or Forio?", answer: "You can share the preferred area. Actual departure depends on partner availability and the confirmed nautical point." }
+        { question: "Does IschiaMotion directly operate beach clubs?", answer: "No. IschiaMotion facilitates requests and contact with selected local venues and partners." },
+        { question: "What can I request?", answer: "You can request sunbeds, umbrellas, daily access, beach services, seaside lunch or aperitif." },
+        { question: "Is availability confirmed instantly?", answer: "No. Availability is reviewed with the selected venue or local partner before confirmation." },
+        { question: "Is it suitable for families and groups?", answer: "Yes. You can share guest count, adults and children, preferred timing and area." }
       ],
-      finalTitle: "Want a boat with skipper?",
-      finalText: "Send a request and receive confirmation after review with selected local partners."
+      finalTitle: "Want to plan a beach club day?",
+      finalText: "Send a request and receive support in finding the most suitable option through selected local venues and partners."
     }
   }
 };

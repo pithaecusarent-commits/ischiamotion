@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import type { KeyboardEvent } from "react";
 import { BookingRequestModal } from "@/components/site/BookingRequestModal";
+import { getCategoryLandingPath } from "@/lib/category-landing-paths";
 import { t } from "@/lib/i18n";
 import type { BookingDeliveryMethod, Locale, PublicPickupPoint, PublicVehicle, VehicleFilter } from "@/lib/types";
 
@@ -13,7 +15,7 @@ const categoryLabels: Record<Locale, Record<VehicleFilter, string>> = {
     bici: "E-bike",
     gommone: "Gommone",
     barca: "Barca",
-    skipper: "Barca con skipper"
+    beach_club: "Beach Club"
   },
   en: {
     all: "All vehicles",
@@ -22,7 +24,7 @@ const categoryLabels: Record<Locale, Record<VehicleFilter, string>> = {
     bici: "E-bike",
     gommone: "Rubber dinghy",
     barca: "Boat",
-    skipper: "Boat with skipper"
+    beach_club: "Beach Club"
   }
 };
 
@@ -48,6 +50,16 @@ export function SearchResults({
   isFallback
 }: Props) {
   const [selectedVehicle, setSelectedVehicle] = useState<PublicVehicle | null>(null);
+  const selectVehicle = (vehicle: PublicVehicle) => setSelectedVehicle(vehicle);
+  const openLanding = (vehicle: PublicVehicle) => {
+    window.location.href = getCategoryLandingPath(locale, vehicle.category);
+  };
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>, vehicle: PublicVehicle) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openLanding(vehicle);
+    }
+  };
   const emptyText = locale === "it"
     ? "Al momento non ci sono mezzi disponibili per questa ricerca. Prova a cambiare date o categoria."
     : "No vehicles are currently available for this search. Try changing dates or category.";
@@ -81,7 +93,15 @@ export function SearchResults({
               const location = locale === "it" ? vehicle.location_it : vehicle.location_en;
               const features = locale === "it" ? vehicle.features_it : vehicle.features_en;
               return (
-                <article className="result-card" key={vehicle.id}>
+                <article
+                  className="result-card"
+                  key={vehicle.id}
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => openLanding(vehicle)}
+                  onKeyDown={(event) => handleCardKeyDown(event, vehicle)}
+                  aria-label={locale === "it" ? `Apri landing: ${title}` : `Open landing: ${title}`}
+                >
                   <div className="result-media">
                     {vehicle.image_url ? (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -98,8 +118,17 @@ export function SearchResults({
                       {features.slice(0, 3).map((feature) => <span className="feature" key={feature}>{feature}</span>)}
                     </div>
                     <div className="result-foot">
-                      <div className="vcard-price"><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></div>
-                      <button className="book-btn" type="button" onClick={() => setSelectedVehicle(vehicle)}>
+                      <div className="vcard-price">
+                        {vehicle.price_from > 0 ? (
+                          <><small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small></>
+                        ) : (
+                          <small>{locale === "it" ? "Su richiesta" : "On request"}</small>
+                        )}
+                      </div>
+                      <button className="book-btn" type="button" onClick={(event) => {
+                        event.stopPropagation();
+                        selectVehicle(vehicle);
+                      }}>
                         {locale === "it" ? "Richiedi verifica" : "Request review"}
                       </button>
                     </div>

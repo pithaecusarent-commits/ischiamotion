@@ -17,8 +17,8 @@ const content = {
     {
       id: "giornate-in-mare",
       eyebrow: "Giornate in mare",
-      title: "Noleggio barche Ischia, gommoni e barca con skipper.",
-      text: "Per chi vuole vedere l'isola dal mare, IschiaMotion raccoglie richieste per noleggio gommoni Ischia, noleggio barche Ischia e barca con skipper Ischia tramite partner nautici selezionati."
+      title: "Noleggio barche Ischia, gommoni e Beach Club.",
+      text: "Per chi vuole vivere il mare, IschiaMotion raccoglie richieste per noleggio gommoni Ischia, noleggio barche Ischia e Beach Club tramite partner e strutture locali selezionate."
     }
   ],
   en: [
@@ -37,8 +37,8 @@ const content = {
     {
       id: "giornate-in-mare",
       eyebrow: "Days at sea",
-      title: "Boat rental Ischia, rubber dinghies and boat with skipper.",
-      text: "For guests who want to see the island from the water, IschiaMotion collects requests for rubber dinghy rental Ischia, boat rental Ischia and boat with skipper Ischia through selected nautical partners."
+      title: "Boat rental Ischia, rubber dinghies and Beach Clubs.",
+      text: "For guests who want to enjoy the sea, IschiaMotion collects requests for rubber dinghy rental Ischia, boat rental Ischia and Beach Clubs through selected local partners and venues."
     }
   ]
 } satisfies Record<Locale, Array<{ id: string; eyebrow: string; title: string; text: string }>>;
@@ -50,7 +50,7 @@ const categoryLinks = {
     ["Noleggio bici elettriche Ischia", "/it/noleggio-bici-elettriche-ischia"],
     ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
     ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
-    ["Barca con skipper Ischia", "/it/barca-con-skipper-ischia"]
+    ["Beach Club Ischia", "/it/beach-club-ischia"]
   ],
   en: [
     ["Scooter rental Ischia", "/en/scooter-rental-ischia"],
@@ -58,7 +58,7 @@ const categoryLinks = {
     ["E-bike rental Ischia", "/en/e-bike-rental-ischia"],
     ["Rubber dinghy rental Ischia", "/en/rubber-dinghy-rental-ischia"],
     ["Boat rental Ischia", "/en/boat-rental-ischia"],
-    ["Boat with skipper Ischia", "/en/boat-with-skipper-ischia"]
+    ["Ischia Beach Club", "/en/ischia-beach-club"]
   ]
 } satisfies Record<Locale, Array<[string, string]>>;
 

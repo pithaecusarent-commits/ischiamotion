@@ -70,7 +70,7 @@ function formatDate(value: string, locale: "it" | "en") {
 function nauticalFromBooking(booking: AdminBookingItem) {
   const slug = booking.vehicles?.vehicle_categories?.slug;
   const label = `${getVehicleLabel(booking)} ${booking.vehicles?.vehicle_categories?.name_it || ""}`.toLowerCase();
-  return isNauticalCategory(slug) || ["barca", "gommone", "skipper", "boat"].some((term) => label.includes(term));
+  return isNauticalCategory(slug) || ["barca", "gommone", "beach club", "boat"].some((term) => label.includes(term));
 }
 
 function analyzePriority(booking: AdminBookingItem, isNautical: boolean) {

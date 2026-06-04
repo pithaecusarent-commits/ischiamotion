@@ -82,7 +82,7 @@ export function HeroSearch({
               <option value="bici">E-bike</option>
               <option value="gommone">{locale === "it" ? "Gommone" : "Rubber dinghy"}</option>
               <option value="barca">{locale === "it" ? "Barca" : "Boat"}</option>
-              <option value="skipper">{locale === "it" ? "Barca con skipper" : "Boat with skipper"}</option>
+              <option value="beach_club">Beach Club</option>
             </select>
           </div>
           <div className="s-field">

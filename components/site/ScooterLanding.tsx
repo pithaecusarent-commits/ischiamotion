@@ -94,7 +94,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       ["E-bike", "/it/noleggio-bici-elettriche-ischia"],
       ["Gommoni", "/it/noleggio-gommoni-ischia"],
       ["Barche", "/it/noleggio-barche-ischia"],
-      ["Barca con skipper", "/it/barca-con-skipper-ischia"],
+      ["Beach Club", "/it/beach-club-ischia"],
       ["Contatti", "/it/contatti"]
     ]
     : [
@@ -104,7 +104,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       ["E-bikes", "/en/e-bike-rental-ischia"],
       ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
       ["Boats", "/en/boat-rental-ischia"],
-      ["Boat with skipper", "/en/boat-with-skipper-ischia"],
+      ["Beach Club", "/en/ischia-beach-club"],
       ["Contact", "/en/contact"]
     ];
 
