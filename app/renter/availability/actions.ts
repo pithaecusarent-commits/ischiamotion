@@ -21,6 +21,12 @@ function getReturnPath(formData: FormData) {
   return path.startsWith("/renter/") && !path.startsWith("//") ? path : "/renter/availability";
 }
 
+function isValidIsoDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
 export async function saveRenterAvailability(formData: FormData) {
   const session = await requireRenter("/renter/availability");
 
@@ -248,8 +254,12 @@ export async function savePriceRuleAction(formData: FormData) {
     redirect(`${returnPath}?error=Compila%20veicolo%20e%20date`);
   }
 
-  if (dateTo < dateFrom) {
-    redirect(`${returnPath}?error=La%20data%20fine%20deve%20essere%20successiva%20alla%20data%20inizio`);
+  if (!isValidIsoDate(dateFrom) || !isValidIsoDate(dateTo)) {
+    redirect(`${returnPath}?error=Formato%20date%20non%20valido`);
+  }
+
+  if (new Date(`${dateTo}T00:00:00Z`).getTime() < new Date(`${dateFrom}T00:00:00Z`).getTime()) {
+    redirect(`${returnPath}?error=La%20data%20fine%20deve%20essere%20successiva%20o%20uguale%20alla%20data%20inizio`);
   }
 
   const { error } = ruleId

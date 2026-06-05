@@ -282,6 +282,13 @@ export type AdminPriceRuleInput = {
 
 const maxPriceRulesPerVehicle = 5;
 
+function priceRuleErrorMessage(message: string) {
+  if (message.includes("vehicle_price_rules_dates_check")) {
+    return "La data fine deve essere successiva o uguale alla data inizio.";
+  }
+  return message;
+}
+
 export async function getAdminVehiclePriceRules(
   accessToken: string,
   vehicleId: string
@@ -328,7 +335,7 @@ export async function createAdminVehiclePriceRule(
       is_active:       data.is_active,
       notes:           data.notes.trim() || null
     });
-    if (error) return { error: error.message };
+    if (error) return { error: priceRuleErrorMessage(error.message) };
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to create price rule." };
@@ -356,7 +363,7 @@ export async function updateAdminVehiclePriceRule(
         notes:           data.notes.trim() || null
       })
       .eq("id", ruleId);
-    if (error) return { error: error.message };
+    if (error) return { error: priceRuleErrorMessage(error.message) };
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to update price rule." };

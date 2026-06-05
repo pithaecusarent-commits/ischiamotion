@@ -165,7 +165,12 @@ function parsePriceRuleFormData(formData: FormData): { data: AdminPriceRuleInput
 
   if (!vehicleId || !renterId) return { data: null, error: "Veicolo obbligatorio." };
   if (!dateFrom || !dateTo)    return { data: null, error: "Date obbligatorie." };
-  if (dateTo < dateFrom)       return { data: null, error: "La data fine deve essere successiva alla data inizio." };
+  if (!isValidIsoDate(dateFrom) || !isValidIsoDate(dateTo)) {
+    return { data: null, error: "Formato date non valido." };
+  }
+  if (new Date(`${dateTo}T00:00:00Z`).getTime() < new Date(`${dateFrom}T00:00:00Z`).getTime()) {
+    return { data: null, error: "La data fine deve essere successiva o uguale alla data inizio." };
+  }
   if (!Number.isFinite(priceRaw) || priceRaw < 0) return { data: null, error: "Prezzo non valido." };
 
   return {
@@ -182,6 +187,12 @@ function parsePriceRuleFormData(formData: FormData): { data: AdminPriceRuleInput
     },
     error: null
   };
+}
+
+function isValidIsoDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
 }
 
 export async function saveAdminVehiclePriceRuleAction(formData: FormData) {

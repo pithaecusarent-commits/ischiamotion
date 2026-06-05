@@ -661,6 +661,13 @@ export async function getRenterPriceRules(accessToken: string): Promise<{ rules:
 
 const maxPriceRulesPerVehicle = 5;
 
+function priceRuleErrorMessage(message: string) {
+  if (message.includes("vehicle_price_rules_dates_check")) {
+    return "La data fine deve essere successiva o uguale alla data inizio.";
+  }
+  return message;
+}
+
 export async function createRenterPriceRule(input: {
   accessToken: string;
   vehicleId: string;
@@ -709,7 +716,7 @@ export async function createRenterPriceRule(input: {
       notes:          input.notes.trim() || null
     });
 
-    if (error) return { error: error.message };
+    if (error) return { error: priceRuleErrorMessage(error.message) };
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to create price rule." };
@@ -757,7 +764,7 @@ export async function updateRenterPriceRule(input: {
       })
       .eq("id", input.ruleId);
 
-    if (error) return { error: error.message };
+    if (error) return { error: priceRuleErrorMessage(error.message) };
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to update price rule." };
