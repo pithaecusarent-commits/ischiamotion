@@ -1,9 +1,13 @@
-import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
+import { randomBytes } from "crypto";
+import { createSupabaseServiceRoleClient, createSupabaseUserClient } from "@/lib/supabase/admin-auth";
+import { sendRenterSetupEmail } from "@/lib/email/renter-emails";
+
+export type RenterAccountStatus = "pending" | "approved" | "rejected" | "disabled";
 
 export type AdminRenterApplication = {
   id: string;
   email: string | null;
-  account_status: "pending" | "approved" | "rejected" | "disabled";
+  account_status: RenterAccountStatus;
   business_name: string | null;
   contact_name: string | null;
   phone: string | null;
@@ -11,6 +15,16 @@ export type AdminRenterApplication = {
   approved_at: string | null;
   rejected_at: string | null;
   rejection_reason: string | null;
+  privacy_accepted_at: string | null;
+  force_password_change: boolean;
+  created_by_admin: boolean;
+  vat_number: string | null;
+  fiscal_code: string | null;
+  business_address: string | null;
+  business_city: string | null;
+  operating_zones: string[];
+  service_categories: string[];
+  admin_notes: string | null;
 };
 
 export type AdminRenterVehicle = {
@@ -30,6 +44,14 @@ export type AdminRenterDetail = {
     email: string | null;
     phone: string | null;
     status: string;
+    vat_number: string | null;
+    fiscal_code: string | null;
+    business_address: string | null;
+    business_city: string | null;
+    operating_zones: string[];
+    service_categories: string[];
+    admin_notes: string | null;
+    onboarding_status: string;
   } | null;
   vehicles: AdminRenterVehicle[];
   bookingStats: {
@@ -41,6 +63,62 @@ export type AdminRenterDetail = {
   };
 };
 
+export type AdminRenterFilters = {
+  status?: RenterAccountStatus | "all";
+  q?: string;
+};
+
+export type CreateAdminRenterInput = {
+  businessName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  vatNumber: string;
+  fiscalCode: string;
+  businessAddress: string;
+  businessCity: string;
+  operatingZones: string[];
+  serviceCategories: string[];
+  adminNotes: string;
+  createAuthUser: boolean;
+};
+
+const profileSelect = [
+  "id",
+  "email",
+  "account_status",
+  "business_name",
+  "contact_name",
+  "phone",
+  "created_at",
+  "approved_at",
+  "rejected_at",
+  "rejection_reason",
+  "privacy_accepted_at",
+  "force_password_change",
+  "created_by_admin",
+  "vat_number",
+  "fiscal_code",
+  "business_address",
+  "business_city",
+  "operating_zones",
+  "service_categories",
+  "admin_notes"
+].join(", ");
+
+function clean(value: string | null | undefined) {
+  return value?.trim() || null;
+}
+
+function randomTemporaryPassword() {
+  return `${randomBytes(18).toString("base64url")}A1!`;
+}
+
+function setupRedirectUrl() {
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com").replace(/\/$/, "");
+  return `${siteUrl}/auth/callback?next=/renter/change-password`;
+}
+
 export async function getRenterDetailByProfileId(
   accessToken: string,
   profileId: string
@@ -50,7 +128,7 @@ export async function getRenterDetailByProfileId(
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("id, email, account_status, business_name, contact_name, phone, created_at, approved_at, rejected_at, rejection_reason")
+      .select(profileSelect)
       .eq("id", profileId)
       .single();
 
@@ -74,7 +152,7 @@ export async function getRenterDetailByProfileId(
       const [renterResult, vehiclesResult, bookingsResult] = await Promise.all([
         supabase
           .from("renters")
-          .select("id, business_name_internal, contact_name, email, phone, status")
+          .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, admin_notes, onboarding_status")
           .eq("id", renterId)
           .single(),
         supabase
@@ -115,7 +193,7 @@ export async function getRenterDetailByProfileId(
 
     return {
       detail: {
-        profile: profile as AdminRenterApplication,
+        profile: profile as unknown as AdminRenterApplication,
         renter,
         vehicles,
         bookingStats
@@ -131,22 +209,34 @@ export async function getRenterDetailByProfileId(
 }
 
 export async function getAdminRenterApplications(
-  accessToken: string
+  accessToken: string,
+  filters: AdminRenterFilters = {}
 ): Promise<{ applications: AdminRenterApplication[]; error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);
-    const { data, error } = await supabase
+    let query = supabase
       .from("profiles")
-      .select("id, email, account_status, business_name, contact_name, phone, created_at, approved_at, rejected_at, rejection_reason")
+      .select(profileSelect)
       .eq("role", "renter")
       .order("created_at", { ascending: false });
+
+    if (filters.status && filters.status !== "all") {
+      query = query.eq("account_status", filters.status);
+    }
+
+    const term = filters.q?.trim();
+    if (term) {
+      query = query.or(`email.ilike.%${term}%,business_name.ilike.%${term}%,contact_name.ilike.%${term}%,phone.ilike.%${term}%`);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       return { applications: [], error: error.message };
     }
 
     return {
-      applications: (data || []) as AdminRenterApplication[],
+      applications: (data || []) as unknown as AdminRenterApplication[],
       error: null
     };
   } catch (error) {
@@ -184,16 +274,16 @@ export async function getPendingRenterApplicationCount(
 export async function approveRenterApplication(
   accessToken: string,
   profileId: string
-): Promise<{ error: string | null }> {
+): Promise<{ renterId: string | null; error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);
-    const { error } = await supabase.rpc("approve_renter_profile", {
+    const { data, error } = await supabase.rpc("approve_renter_profile", {
       target_profile_id: profileId
     });
 
-    return { error: error?.message || null };
+    return { renterId: typeof data === "string" ? data : null, error: error?.message || null };
   } catch (error) {
-    return { error: error instanceof Error ? error.message : "Unable to approve renter." };
+    return { renterId: null, error: error instanceof Error ? error.message : "Unable to approve renter." };
   }
 }
 
@@ -228,5 +318,128 @@ export async function deactivateRenterApplication(
     return { error: error?.message || null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to deactivate renter." };
+  }
+}
+
+export async function createAdminRenterRecord(
+  accessToken: string,
+  input: CreateAdminRenterInput
+): Promise<{ renterId: string | null; profileId: string | null; setupUrl: string | null; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const baseRenter = {
+      business_name_internal: input.businessName,
+      contact_name: clean(input.contactName),
+      email: clean(input.email),
+      phone: clean(input.phone),
+      status: "active",
+      vat_number: clean(input.vatNumber),
+      fiscal_code: clean(input.fiscalCode),
+      business_address: clean(input.businessAddress),
+      business_city: clean(input.businessCity),
+      operating_zones: input.operatingZones,
+      service_categories: input.serviceCategories,
+      admin_notes: clean(input.adminNotes),
+      onboarding_status: input.createAuthUser ? "pending_first_login" : "not_started"
+    };
+
+    if (!input.createAuthUser) {
+      const { data, error } = await supabase
+        .from("renters")
+        .insert(baseRenter)
+        .select("id")
+        .single();
+
+      return { renterId: data?.id || null, profileId: null, setupUrl: null, error: error?.message || null };
+    }
+
+    if (!input.email) {
+      return { renterId: null, profileId: null, setupUrl: null, error: "Email obbligatoria per creare l'accesso Auth." };
+    }
+
+    const service = createSupabaseServiceRoleClient();
+    const temporaryPassword = randomTemporaryPassword();
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
+    const { data: authData, error: authError } = await service.auth.admin.createUser({
+      email: input.email,
+      password: temporaryPassword,
+      email_confirm: true,
+      user_metadata: {
+        business_name: input.businessName,
+        contact_name: input.contactName,
+        phone: input.phone,
+        vat_number: input.vatNumber,
+        fiscal_code: input.fiscalCode,
+        business_address: input.businessAddress,
+        business_city: input.businessCity,
+        operating_zones: input.operatingZones,
+        service_categories: input.serviceCategories,
+        admin_notes: input.adminNotes,
+        created_by_admin: true,
+        force_password_change: true
+      }
+    });
+
+    const profileId = authData.user?.id || null;
+    if (authError || !profileId) {
+      return { renterId: null, profileId: null, setupUrl: null, error: authError?.message || "Impossibile creare utente Auth." };
+    }
+
+    await supabase
+      .from("profiles")
+      .update({
+        business_name: input.businessName,
+        contact_name: clean(input.contactName),
+        phone: clean(input.phone),
+        account_status: "pending",
+        force_password_change: true,
+        temp_password_created_at: now.toISOString(),
+        temp_password_expires_at: expiresAt,
+        created_by_admin: true,
+        vat_number: clean(input.vatNumber),
+        fiscal_code: clean(input.fiscalCode),
+        business_address: clean(input.businessAddress),
+        business_city: clean(input.businessCity),
+        operating_zones: input.operatingZones,
+        service_categories: input.serviceCategories,
+        admin_notes: clean(input.adminNotes)
+      })
+      .eq("id", profileId);
+
+    const approved = await approveRenterApplication(accessToken, profileId);
+    if (approved.error) {
+      return { renterId: null, profileId, setupUrl: null, error: approved.error };
+    }
+
+    let setupUrl: string | null = null;
+    const linkResult = await (service.auth.admin as unknown as {
+      generateLink: (params: Record<string, unknown>) => Promise<{ data: { properties?: { action_link?: string; actionLink?: string } } | null; error: { message: string } | null }>;
+    }).generateLink({
+      type: "recovery",
+      email: input.email,
+      options: {
+        redirectTo: setupRedirectUrl()
+      }
+    });
+
+    setupUrl = linkResult.data?.properties?.action_link || linkResult.data?.properties?.actionLink || null;
+
+    await sendRenterSetupEmail({
+      businessName: input.businessName,
+      contactName: input.contactName,
+      email: input.email,
+      setupUrl
+    }).catch(() => null);
+
+    return { renterId: approved.renterId, profileId, setupUrl, error: null };
+  } catch (error) {
+    return {
+      renterId: null,
+      profileId: null,
+      setupUrl: null,
+      error: error instanceof Error ? error.message : "Unable to create renter."
+    };
   }
 }

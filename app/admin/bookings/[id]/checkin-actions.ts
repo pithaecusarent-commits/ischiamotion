@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { getAdminBookingById, updateAdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
 import { createAdminCheckin } from "@/lib/supabase/queries/checkins";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
@@ -18,7 +19,7 @@ export async function markBookingCheckedInAction(formData: FormData) {
     redirectWithCheckinMessage(bookingId, "error");
   }
 
-  const { accessToken, user } = await requireAdmin(`/admin/bookings/${bookingId}`);
+  const { accessToken, user, profile } = await requireAdmin(`/admin/bookings/${bookingId}`);
   const { booking, error: bookingError } = await getAdminBookingById(accessToken, bookingId);
 
   if (bookingError || !booking || !["voucher_sent", "confirmed"].includes(booking.status)) {
@@ -47,6 +48,16 @@ export async function markBookingCheckedInAction(formData: FormData) {
   if (statusError) {
     redirectWithCheckinMessage(bookingId, "error");
   }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: user.id,
+    actorEmail: profile.email,
+    action: "booking.checkin_mark",
+    targetTable: "bookings",
+    targetId: bookingId,
+    metadata: { voucherCode: voucher.voucher_code }
+  });
 
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);

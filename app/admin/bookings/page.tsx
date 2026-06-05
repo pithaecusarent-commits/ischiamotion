@@ -1,5 +1,5 @@
 import { signOutAdmin } from "@/app/admin/login/actions";
-import { getAdminBookingRequests } from "@/lib/supabase/queries/admin-bookings";
+import { getActiveAdminRenters, getAdminBookingCategories, getAdminBookingRequests, type AdminBookingFilters } from "@/lib/supabase/queries/admin-bookings";
 import {
   bookingAmountSummary,
   bookingDeliveryLocation,
@@ -10,13 +10,58 @@ import {
   bookingVehicle,
   formatAdminDate,
   formatAdminDateTime,
-  StatusBadge
+  StatusBadge,
+  statusOptions
 } from "@/app/admin/bookings/booking-ui";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 
-export default async function AdminBookingsPage() {
+type Props = {
+  searchParams?: {
+    status?: string;
+    renter?: string;
+    category?: string;
+    from?: string;
+    to?: string;
+    q?: string;
+  };
+};
+
+function clean(value?: string) {
+  return String(value || "").trim();
+}
+
+function buildExportHref(filters: AdminBookingFilters) {
+  const params = new URLSearchParams();
+  if (filters.status) params.set("status", filters.status);
+  if (filters.renterId) params.set("renter", filters.renterId);
+  if (filters.category) params.set("category", filters.category);
+  if (filters.dateFrom) params.set("from", filters.dateFrom);
+  if (filters.dateTo) params.set("to", filters.dateTo);
+  if (filters.q) params.set("q", filters.q);
+  const query = params.toString();
+  return `/admin/bookings/export${query ? `?${query}` : ""}`;
+}
+
+export default async function AdminBookingsPage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/bookings");
-  const { bookings, error } = await getAdminBookingRequests(accessToken);
+  const filters: AdminBookingFilters = {
+    status: clean(searchParams?.status),
+    renterId: clean(searchParams?.renter),
+    category: clean(searchParams?.category),
+    dateFrom: clean(searchParams?.from),
+    dateTo: clean(searchParams?.to),
+    q: clean(searchParams?.q)
+  };
+  const [
+    { bookings, error },
+    { renters },
+    { categories }
+  ] = await Promise.all([
+    getAdminBookingRequests(accessToken, filters),
+    getActiveAdminRenters(accessToken),
+    getAdminBookingCategories(accessToken)
+  ]);
+  const exportHref = buildExportHref(filters);
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
@@ -35,6 +80,48 @@ export default async function AdminBookingsPage() {
           </form>
         </div>
 
+        <form className="mt-8 grid gap-3 rounded-[28px] border border-ink/10 bg-white/70 p-4 md:grid-cols-[1.4fr_repeat(5,minmax(0,1fr))_auto_auto]" action="/admin/bookings">
+          <label className="grid gap-1 text-xs font-bold uppercase tracking-[0.12em] text-ink/50">
+            Cerca
+            <input className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-sm normal-case tracking-normal text-ink outline-none focus:border-sea/50" name="q" defaultValue={filters.q} placeholder="Codice, cliente, email" />
+          </label>
+          <label className="grid gap-1 text-xs font-bold uppercase tracking-[0.12em] text-ink/50">
+            Stato
+            <select className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-sm normal-case tracking-normal text-ink outline-none focus:border-sea/50" name="status" defaultValue={filters.status}>
+              <option value="">Tutti</option>
+              {statusOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-1 text-xs font-bold uppercase tracking-[0.12em] text-ink/50">
+            Renter
+            <select className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-sm normal-case tracking-normal text-ink outline-none focus:border-sea/50" name="renter" defaultValue={filters.renterId}>
+              <option value="">Tutti</option>
+              {renters.map((renter) => <option key={renter.id} value={renter.id}>{renter.business_name_internal}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-1 text-xs font-bold uppercase tracking-[0.12em] text-ink/50">
+            Categoria
+            <select className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-sm normal-case tracking-normal text-ink outline-none focus:border-sea/50" name="category" defaultValue={filters.category}>
+              <option value="">Tutte</option>
+              {categories.map((category) => <option key={category.slug} value={category.slug}>{category.name_it}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-1 text-xs font-bold uppercase tracking-[0.12em] text-ink/50">
+            Da
+            <input className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-sm normal-case tracking-normal text-ink outline-none focus:border-sea/50" name="from" type="date" defaultValue={filters.dateFrom} />
+          </label>
+          <label className="grid gap-1 text-xs font-bold uppercase tracking-[0.12em] text-ink/50">
+            A
+            <input className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-sm normal-case tracking-normal text-ink outline-none focus:border-sea/50" name="to" type="date" defaultValue={filters.dateTo} />
+          </label>
+          <button className="self-end rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-white" type="submit">
+            Filtra
+          </button>
+          <a className="self-end rounded-full border border-ink/10 px-5 py-2.5 text-center text-sm font-bold text-ink/70" href={exportHref}>
+            CSV
+          </a>
+        </form>
+
         {error ? (
           <div className="mt-8 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm text-ink/70">
             Impossibile caricare le prenotazioni. Verifica che l&apos;utente abbia ruolo admin e che le policy Supabase siano applicate.
@@ -43,7 +130,7 @@ export default async function AdminBookingsPage() {
 
         {!error && bookings.length === 0 ? (
           <div className="mt-8 rounded-3xl border border-sea/10 bg-white/60 p-8 text-center text-ink/60">
-            Nessuna prenotazione ricevuta per ora.
+            Nessuna prenotazione trovata.
           </div>
         ) : null}
 

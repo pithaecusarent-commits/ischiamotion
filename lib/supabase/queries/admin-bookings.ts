@@ -48,6 +48,20 @@ export type AdminRenterOption = {
   status: string;
 };
 
+export type AdminBookingFilters = {
+  status?: string;
+  renterId?: string;
+  category?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  q?: string;
+};
+
+export type AdminBookingCategoryOption = {
+  slug: string;
+  name_it: string;
+};
+
 type AdminBookingRow = Omit<AdminBookingItem, "renters"> & {
   renters:
     | {
@@ -125,19 +139,51 @@ function normalizeAdminBooking(row: AdminBookingRow): AdminBookingItem {
   };
 }
 
-export async function getAdminBookingRequests(accessToken: string): Promise<{ bookings: AdminBookingItem[]; error: string | null }> {
+export async function getAdminBookingRequests(
+  accessToken: string,
+  filters: AdminBookingFilters = {}
+): Promise<{ bookings: AdminBookingItem[]; error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);
-    const { data, error } = await supabase
+    let query = supabase
       .from("bookings")
       .select(bookingSelect)
       .order("created_at", { ascending: false });
+
+    if (filters.status) {
+      query = query.eq("status", filters.status);
+    }
+
+    if (filters.renterId) {
+      query = query.eq("renter_id", filters.renterId);
+    }
+
+    if (filters.dateFrom) {
+      query = query.gte("start_date", filters.dateFrom);
+    }
+
+    if (filters.dateTo) {
+      query = query.lte("start_date", filters.dateTo);
+    }
+
+    if (filters.q) {
+      const term = filters.q.replace(/[%_,]/g, "").trim();
+      if (term) {
+        query = query.or(`booking_code.ilike.%${term}%,customer_first_name.ilike.%${term}%,customer_last_name.ilike.%${term}%,customer_email.ilike.%${term}%,customer_phone.ilike.%${term}%`);
+      }
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       return { bookings: [], error: error.message };
     }
 
-    return { bookings: ((data || []) as unknown as AdminBookingRow[]).map(normalizeAdminBooking), error: null };
+    const bookings = ((data || []) as unknown as AdminBookingRow[])
+      .map(normalizeAdminBooking)
+      .filter((booking) => !filters.category || booking.vehicles?.vehicle_categories?.slug === filters.category);
+
+    return { bookings, error: null };
   } catch (error) {
     return { bookings: [], error: error instanceof Error ? error.message : "Unable to load bookings." };
   }
@@ -208,6 +254,22 @@ export async function getActiveAdminRenters(accessToken: string): Promise<{ rent
     return { renters: (data || []) as AdminRenterOption[], error: null };
   } catch (error) {
     return { renters: [], error: error instanceof Error ? error.message : "Unable to load renters." };
+  }
+}
+
+export async function getAdminBookingCategories(accessToken: string): Promise<{ categories: AdminBookingCategoryOption[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { data, error } = await supabase
+      .from("vehicle_categories")
+      .select("slug, name_it")
+      .eq("is_active", true)
+      .order("name_it", { ascending: true });
+
+    if (error) return { categories: [], error: error.message };
+    return { categories: (data || []) as AdminBookingCategoryOption[], error: null };
+  } catch (error) {
+    return { categories: [], error: error instanceof Error ? error.message : "Unable to load categories." };
   }
 }
 

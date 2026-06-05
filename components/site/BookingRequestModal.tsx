@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { deliveryMethodLabels, paymentMethodLabels, paymentTypeLabels } from "@/lib/booking-labels";
+import { deliveryMethodLabels } from "@/lib/booking-labels";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
@@ -37,9 +37,6 @@ const copy = {
     port: "Porto",
     hotelName: "Nome hotel / struttura",
     deliveryNotes: "Note consegna opzionali",
-    paymentTitle: "Condizioni di pagamento",
-    paymentMethod: "Metodo preferito",
-    paymentNotes: "Note pagamento opzionali",
     paymentNotice: "Eventuali acconti, saldi o pagamenti anticipati vengono definiti solo dopo la verifica della disponibilità con il partner locale.",
     notes: "Note",
     language: "Lingua di contatto",
@@ -67,9 +64,6 @@ const copy = {
     port: "Port",
     hotelName: "Hotel / property name",
     deliveryNotes: "Optional delivery notes",
-    paymentTitle: "Payment conditions",
-    paymentMethod: "Preferred method",
-    paymentNotes: "Optional payment notes",
     paymentNotice: "Deposits, balances or prepayments are defined only after availability is reviewed with the local partner.",
     notes: "Notes",
     language: "Contact language",
@@ -87,9 +81,6 @@ const copy = {
 
 const portOptions = ["Porto d'Ischia", "Casamicciola", "Forio"];
 const deliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
-const paymentTypeOptions: BookingPaymentType[] = ["pay_on_pickup", "deposit_required", "prepaid_full"];
-const paymentMethodOptions: BookingPaymentMethod[] = ["unknown", "cash", "card", "bank_transfer"];
-
 function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   const label = locale === "it" ? point.public_label_it : point.public_label_en;
   return label.replace(" - ", " — ");
@@ -103,7 +94,6 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
   const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(
     isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point")
   );
-  const [paymentType, setPaymentType] = useState<BookingPaymentType>("pay_on_pickup");
   const vehicleLabel = useMemo(() => {
     if (!vehicle) return "";
     return locale === "it" ? vehicle.title_it : vehicle.title_en;
@@ -144,11 +134,10 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
     setStatus("submitting");
 
     try {
-      const userPaymentNotes = String(formData.get("paymentNotes") || "");
       const priceNote = currentVehicle.price_from > 0
         ? `Prezzo visto in ricerca: €${currentVehicle.price_from}/giorno`
         : "";
-      const paymentNotes = [priceNote, userPaymentNotes].filter(Boolean).join("\n");
+      const paymentNotes = priceNote;
 
       const response = await fetch("/api/booking-request", {
         method: "POST",
@@ -167,8 +156,8 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
           deliveryMethod: selectedDeliveryMethod,
           deliveryLocation,
           deliveryNotes: String(formData.get("deliveryNotes") || ""),
-          paymentType: String(formData.get("paymentType") || "pay_on_pickup") as BookingPaymentType,
-          paymentMethod: String(formData.get("paymentMethod") || "unknown") as BookingPaymentMethod,
+          paymentType: "pay_on_pickup" as BookingPaymentType,
+          paymentMethod: "unknown" as BookingPaymentMethod,
           paymentNotes,
           notes: String(formData.get("notes") || ""),
           vehicleId: currentVehicle.source === "supabase" ? currentVehicle.id : null,
@@ -303,35 +292,6 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
                 <option value="it">Italiano</option>
                 <option value="en">English</option>
               </select>
-            </label>
-            <div className="booking-notes">
-              <span>{text.paymentTitle}</span>
-              <div className="booking-option-grid">
-                {paymentTypeOptions.map((option) => (
-                  <label key={option}>
-                    <input
-                      type="radio"
-                      name="paymentType"
-                      value={option}
-                      checked={paymentType === option}
-                      onChange={() => setPaymentType(option)}
-                    />
-                    <span>{paymentTypeLabels[locale][option]}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <label>
-              <span>{text.paymentMethod}</span>
-              <select name="paymentMethod" defaultValue="unknown">
-                {paymentMethodOptions.map((option) => (
-                  <option key={option} value={option}>{paymentMethodLabels[locale][option]}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              <span>{text.paymentNotes}</span>
-              <input name="paymentNotes" />
             </label>
             <div className="booking-message">{text.paymentNotice}</div>
             <label className="booking-notes">

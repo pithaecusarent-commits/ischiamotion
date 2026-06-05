@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import {
   adminBookingStatuses,
   assignAdminBookingRenter,
@@ -25,7 +26,7 @@ export async function updateBookingStatusAction(formData: FormData) {
     redirectWithMessage(bookingId, "error");
   }
 
-  const { accessToken } = await requireAdmin(`/admin/bookings/${bookingId}`);
+  const { accessToken, user, profile } = await requireAdmin(`/admin/bookings/${bookingId}`);
 
   if (nextStatus === "checked_in") {
     const { voucher } = await getAdminVoucherByBookingId(accessToken, bookingId);
@@ -41,6 +42,16 @@ export async function updateBookingStatusAction(formData: FormData) {
     redirectWithMessage(bookingId, "error");
   }
 
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: user.id,
+    actorEmail: profile.email,
+    action: "booking.status_update",
+    targetTable: "bookings",
+    targetId: bookingId,
+    metadata: { status: nextStatus }
+  });
+
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);
   redirectWithMessage(bookingId, "success");
@@ -54,12 +65,22 @@ export async function assignBookingRenterAction(formData: FormData) {
     redirectWithMessage(bookingId, "renterError");
   }
 
-  const { accessToken } = await requireAdmin(`/admin/bookings/${bookingId}`);
+  const { accessToken, user, profile } = await requireAdmin(`/admin/bookings/${bookingId}`);
   const { error } = await assignAdminBookingRenter(accessToken, bookingId, renterId);
 
   if (error) {
     redirectWithMessage(bookingId, "renterError");
   }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: user.id,
+    actorEmail: profile.email,
+    action: "booking.renter_assign",
+    targetTable: "bookings",
+    targetId: bookingId,
+    metadata: { renterId }
+  });
 
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);

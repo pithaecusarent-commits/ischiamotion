@@ -23,10 +23,32 @@ function getSupabaseEnv() {
   return { supabaseUrl, supabaseAnonKey };
 }
 
+function getSupabaseServiceEnv() {
+  const env = getSupabaseEnv();
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseServiceRoleKey) {
+    throw new Error("Missing Supabase service role environment variable.");
+  }
+
+  return { ...env, supabaseServiceRoleKey };
+}
+
 export function createSupabaseAnonClient() {
   const env = getSupabaseEnv();
 
   return createClient(env.supabaseUrl, env.supabaseAnonKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false
+    }
+  });
+}
+
+export function createSupabaseServiceRoleClient() {
+  const env = getSupabaseServiceEnv();
+
+  return createClient(env.supabaseUrl, env.supabaseServiceRoleKey, {
     auth: {
       persistSession: false,
       autoRefreshToken: false

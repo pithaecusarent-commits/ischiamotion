@@ -12,6 +12,8 @@ export type RenterProfile = {
   email: string | null;
   role: "admin" | "renter";
   account_status: RenterAccountStatus;
+  force_password_change: boolean;
+  temp_password_expires_at: string | null;
 };
 
 export function setRenterSessionCookies(accessToken: string, refreshToken: string) {
@@ -56,7 +58,7 @@ export async function getRenterSession() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, email, role, account_status")
+    .select("id, email, role, account_status, force_password_change, temp_password_expires_at")
     .eq("id", userData.user.id)
     .maybeSingle<RenterProfile>();
 
@@ -86,6 +88,24 @@ export async function requireRenter(nextPath = "/renter") {
     };
   }
 
+  if (
+    session.profile.force_password_change &&
+    session.profile.temp_password_expires_at &&
+    new Date(session.profile.temp_password_expires_at).getTime() < Date.now()
+  ) {
+    return {
+      ...session,
+      accessToken: session.accessToken,
+      user: session.user,
+      profile: session.profile,
+      denied: true
+    };
+  }
+
+  if (session.profile.force_password_change && nextPath !== "/renter/change-password") {
+    redirect(`/renter/change-password?next=${encodeURIComponent(nextPath)}`);
+  }
+
   return {
     ...session,
     accessToken: session.accessToken,
@@ -113,9 +133,14 @@ export async function signInRenterWithPassword(input: {
   const userClient = createSupabaseUserClient(data.session.access_token);
   const { data: profile, error: profileError } = await userClient
     .from("profiles")
-    .select("role, account_status")
+    .select("role, account_status, force_password_change, temp_password_expires_at")
     .eq("id", data.user.id)
-    .maybeSingle<{ role: "admin" | "renter"; account_status: RenterAccountStatus }>();
+    .maybeSingle<{
+      role: "admin" | "renter";
+      account_status: RenterAccountStatus;
+      force_password_change: boolean;
+      temp_password_expires_at: string | null;
+    }>();
 
   if (profileError || profile?.role !== "renter") {
     return {
@@ -146,6 +171,18 @@ export async function signInRenterWithPassword(input: {
       session: null,
       user: null,
       error: "Account noleggiatore disattivato. Contatta IschiaMotion."
+    };
+  }
+
+  if (
+    profile.force_password_change &&
+    profile.temp_password_expires_at &&
+    new Date(profile.temp_password_expires_at).getTime() < Date.now()
+  ) {
+    return {
+      session: null,
+      user: null,
+      error: "Accesso temporaneo scaduto. Contatta IschiaMotion per ricevere un nuovo invito."
     };
   }
 

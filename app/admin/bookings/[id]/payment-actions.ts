@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { updateAdminBookingPayment } from "@/lib/supabase/queries/admin-bookings";
 import type { BookingPaymentMethod, BookingPaymentStatus, BookingPaymentType } from "@/lib/types";
 
@@ -20,7 +21,7 @@ export async function updateBookingPaymentAction(formData: FormData) {
     redirect("/admin/bookings?error=Prenotazione%20non%20valida");
   }
 
-  const { accessToken } = await requireAdmin(`/admin/bookings/${bookingId}`);
+  const { accessToken, user, profile } = await requireAdmin(`/admin/bookings/${bookingId}`);
 
   const totalAmount   = parseAmount(formData.get("total_amount"));
   const depositAmount = parseAmount(formData.get("deposit_amount"));
@@ -46,6 +47,21 @@ export async function updateBookingPaymentAction(formData: FormData) {
   if (error) {
     redirect(`/admin/bookings/${bookingId}?payment=error`);
   }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: user.id,
+    actorEmail: profile.email,
+    action: "booking.payment_update",
+    targetTable: "bookings",
+    targetId: bookingId,
+    metadata: {
+      totalAmount,
+      depositAmount,
+      balanceDue,
+      paymentStatus: String(formData.get("payment_status") || "unpaid")
+    }
+  });
 
   redirect(`/admin/bookings/${bookingId}?payment=success`);
 }

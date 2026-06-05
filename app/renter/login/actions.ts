@@ -9,6 +9,7 @@ import {
 } from "@/lib/supabase/renter-auth";
 import { createSupabaseAnonClient } from "@/lib/supabase/admin-auth";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sendNewRenterRequestEmail } from "@/lib/email/renter-emails";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com";
 
@@ -62,9 +63,24 @@ export async function registerRenter(formData: FormData) {
   const businessName = String(formData.get("business_name") || "").trim();
   const contactName = String(formData.get("contact_name") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
+  const vatNumber = String(formData.get("vat_number") || "").trim();
+  const fiscalCode = String(formData.get("fiscal_code") || "").trim();
+  const businessAddress = String(formData.get("business_address") || "").trim();
+  const businessCity = String(formData.get("business_city") || "").trim();
+  const serviceCategories = formData.getAll("service_categories").map((value) => String(value).trim()).filter(Boolean);
+  const operatingZones = String(formData.get("operating_zones") || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const adminNotes = String(formData.get("admin_notes") || "").trim();
+  const privacyAccepted = String(formData.get("privacy_accepted") || "") === "1";
 
   if (!email || !password || !businessName || !contactName) {
     redirect(`/renter/register?error=${encodeURIComponent("Compila i campi obbligatori.")}`);
+  }
+
+  if (!privacyAccepted) {
+    redirect(`/renter/register?error=${encodeURIComponent("Accetta l'informativa privacy per inviare la richiesta.")}`);
   }
 
   if (password.length < 8) {
@@ -86,7 +102,8 @@ export async function registerRenter(formData: FormData) {
   }
 
   const supabase = createSupabaseAnonClient();
-  const { error } = await supabase.auth.signUp({
+  const acceptedAt = new Date().toISOString();
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -94,7 +111,16 @@ export async function registerRenter(formData: FormData) {
       data: {
         business_name: businessName,
         contact_name: contactName,
-        phone
+        phone,
+        vat_number: vatNumber,
+        fiscal_code: fiscalCode,
+        business_address: businessAddress,
+        business_city: businessCity,
+        service_categories: serviceCategories,
+        operating_zones: operatingZones,
+        admin_notes: adminNotes,
+        privacy_accepted_at: acceptedAt,
+        terms_accepted_at: acceptedAt
       }
     }
   });
@@ -102,6 +128,17 @@ export async function registerRenter(formData: FormData) {
   if (error) {
     redirect(`/renter/register?error=${encodeURIComponent(`Errore registrazione: ${error.message}`)}`);
   }
+
+  await sendNewRenterRequestEmail({
+    profileId: data.user?.id || null,
+    businessName,
+    contactName,
+    email,
+    phone,
+    businessCity,
+    serviceCategories,
+    operatingZones
+  }).catch(() => null);
 
   redirect(`/renter/login?registered=${encodeURIComponent("1")}`);
 }

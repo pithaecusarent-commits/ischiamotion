@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseAnonClient } from "@/lib/supabase/admin-auth";
+import { adminAccessTokenCookie, adminRefreshTokenCookie, createSupabaseAnonClient } from "@/lib/supabase/admin-auth";
+import { renterAccessTokenCookie, renterRefreshTokenCookie } from "@/lib/supabase/renter-auth";
 
 function getSafeNextPath(value: string | null) {
   if (!value || !value.startsWith("/") || value.startsWith("//")) {
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
   }
 
   const supabase = createSupabaseAnonClient();
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
     redirectUrl.pathname = "/renter/login";
@@ -30,5 +31,27 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  return NextResponse.redirect(redirectUrl);
+  const response = NextResponse.redirect(redirectUrl);
+  const isAdminPath = nextPath.startsWith("/admin");
+  const accessCookie = isAdminPath ? adminAccessTokenCookie : renterAccessTokenCookie;
+  const refreshCookie = isAdminPath ? adminRefreshTokenCookie : renterRefreshTokenCookie;
+
+  if (data.session?.access_token && data.session.refresh_token) {
+    response.cookies.set(accessCookie, data.session.access_token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 8
+    });
+    response.cookies.set(refreshCookie, data.session.refresh_token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30
+    });
+  }
+
+  return response;
 }

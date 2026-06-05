@@ -137,6 +137,17 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                     <span className="font-black">Motivo:</span> {profile.rejection_reason}
                   </p>
                 )}
+                <p className="text-ink/60">
+                  <span className="font-black">Privacy:</span> {formatDate(profile.privacy_accepted_at)}
+                </p>
+                <p className="text-ink/60">
+                  <span className="font-black">Origine:</span> {profile.created_by_admin ? "Admin" : "Registrazione pubblica"}
+                </p>
+                {profile.force_password_change && (
+                  <p className="col-span-2 text-amber-700">
+                    <span className="font-black">Primo accesso:</span> cambio password richiesto
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -330,6 +341,33 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 <span className="font-black">Stato renter:</span>{" "}
                 <span className="capitalize">{renter.status}</span>
               </p>
+              <p className="text-ink/60">
+                <span className="font-black">Onboarding:</span>{" "}
+                <span className="capitalize">{renter.onboarding_status.replace(/_/g, " ")}</span>
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">P.IVA:</span> {renter.vat_number || "-"}
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">Codice fiscale:</span> {renter.fiscal_code || "-"}
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">Indirizzo:</span> {renter.business_address || "-"}
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">Comune/zona:</span> {renter.business_city || "-"}
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">Categorie:</span> {renter.service_categories?.join(", ") || "-"}
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">Zone operative:</span> {renter.operating_zones?.join(", ") || "-"}
+              </p>
+              {renter.admin_notes ? (
+                <p className="sm:col-span-2 text-ink/60">
+                  <span className="font-black">Note:</span> {renter.admin_notes}
+                </p>
+              ) : null}
             </div>
           </section>
         )}

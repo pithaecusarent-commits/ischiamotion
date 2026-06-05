@@ -6,6 +6,10 @@ import { getAdminRenterApplications, type AdminRenterApplication } from "@/lib/s
 
 type Props = {
   searchParams?: {
+    status?: string;
+    q?: string;
+    created?: string;
+    profile?: string;
     approved?: string;
     disabled?: string;
     rejected?: string;
@@ -37,7 +41,13 @@ function statusClass(status: AdminRenterApplication["account_status"]) {
 
 export default async function AdminRentersPage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/renters");
-  const { applications, error } = await getAdminRenterApplications(accessToken);
+  const filters = {
+    status: ["pending", "approved", "rejected", "disabled"].includes(searchParams?.status || "")
+      ? searchParams?.status as AdminRenterApplication["account_status"]
+      : "all" as const,
+    q: searchParams?.q || ""
+  };
+  const { applications, error } = await getAdminRenterApplications(accessToken, filters);
   const pendingCount = applications.filter((item) => item.account_status === "pending").length;
 
   return (
@@ -68,12 +78,49 @@ export default async function AdminRentersPage({ searchParams }: Props) {
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
             Veicoli
           </a>
+          <a className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/renters/new">
+            Nuovo renter
+          </a>
           <form action={signOutAdmin}>
             <button className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" type="submit">
               Esci
             </button>
           </form>
         </div>
+
+        <form className="mt-6 grid gap-3 rounded-[24px] border border-ink/10 bg-white/65 p-4 md:grid-cols-[1fr_220px_auto]">
+          <input
+            className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-sea/50"
+            defaultValue={filters.q}
+            name="q"
+            placeholder="Cerca attività, referente, email, telefono"
+          />
+          <select
+            className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-bold text-ink/70 outline-none focus:border-sea/50"
+            defaultValue={filters.status}
+            name="status"
+          >
+            <option value="all">Tutti gli stati</option>
+            <option value="pending">In attesa</option>
+            <option value="approved">Approvati</option>
+            <option value="rejected">Rifiutati</option>
+            <option value="disabled">Disattivati</option>
+          </select>
+          <button className="rounded-full bg-green-deep px-5 py-3 text-sm font-bold text-white" type="submit">
+            Filtra
+          </button>
+        </form>
+
+        {searchParams?.created ? (
+          <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Renter creato correttamente.
+            {searchParams.profile ? (
+              <a className="ml-2 underline" href={`/admin/renters/${searchParams.profile}`}>
+                Apri profilo
+              </a>
+            ) : null}
+          </div>
+        ) : null}
 
         {searchParams?.approved ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
@@ -139,6 +186,12 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                         <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${statusClass(application.account_status)}`}>
                           {statusLabel(application.account_status)}
                         </span>
+                        {application.created_by_admin ? (
+                          <div className="mt-2 text-xs font-bold text-ink/45">Creato da admin</div>
+                        ) : null}
+                        {application.force_password_change ? (
+                          <div className="mt-1 text-xs font-bold text-amber-700">Cambio password richiesto</div>
+                        ) : null}
                         {application.rejection_reason ? (
                           <div className="mt-2 max-w-xs text-xs text-ink/50">{application.rejection_reason}</div>
                         ) : null}

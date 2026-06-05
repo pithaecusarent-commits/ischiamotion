@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { getAdminBookingById, updateAdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
 import { createAdminVoucher } from "@/lib/supabase/queries/vouchers";
 
@@ -17,7 +18,7 @@ export async function generateVoucherAction(formData: FormData) {
     redirectWithVoucherMessage(bookingId, "error");
   }
 
-  const { accessToken } = await requireAdmin(`/admin/bookings/${bookingId}`);
+  const { accessToken, user, profile } = await requireAdmin(`/admin/bookings/${bookingId}`);
   const { booking, error: bookingError } = await getAdminBookingById(accessToken, bookingId);
 
   if (bookingError || !booking || !["confirmed", "voucher_sent"].includes(booking.status)) {
@@ -35,6 +36,16 @@ export async function generateVoucherAction(formData: FormData) {
   if (statusError) {
     redirectWithVoucherMessage(bookingId, "error");
   }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: user.id,
+    actorEmail: profile.email,
+    action: "booking.voucher_generate",
+    targetTable: "bookings",
+    targetId: bookingId,
+    metadata: { status: "voucher_sent" }
+  });
 
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);

@@ -28,6 +28,21 @@ const nextConfig = {
         destination: "/en/ischia-beach-club",
         permanent: true,
       },
+      {
+        source: "/en/ischia-scooter-rental",
+        destination: "/en/scooter-rental-ischia",
+        permanent: true,
+      },
+      {
+        source: "/en/ischia-car-rental",
+        destination: "/en/car-rental-ischia",
+        permanent: true,
+      },
+      {
+        source: "/en/ischia-boat-rental",
+        destination: "/en/boat-rental-ischia",
+        permanent: true,
+      },
     ];
   },
 };

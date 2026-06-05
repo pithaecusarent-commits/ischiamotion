@@ -8,6 +8,16 @@ type Props = {
 };
 
 export default function RenterRegisterPage({ searchParams }: Props) {
+  const categories = [
+    "Scooter",
+    "Auto",
+    "Barche",
+    "Gommoni",
+    "E-bike",
+    "Quad",
+    "Beach Club"
+  ];
+
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
       <section className="mx-auto max-w-2xl rounded-[30px] bg-cream p-8 shadow-soft">
@@ -23,7 +33,7 @@ export default function RenterRegisterPage({ searchParams }: Props) {
           </div>
         ) : null}
 
-        <form action={registerRenter} className="mt-8 grid gap-4">
+        <form action={registerRenter} className="mt-8 grid gap-5">
           <label className="grid gap-2 text-sm font-bold text-ink/70">
             Nome attivita
             <input
@@ -56,6 +66,78 @@ export default function RenterRegisterPage({ searchParams }: Props) {
             />
           </label>
 
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="grid gap-2 text-sm font-bold text-ink/70">
+              Partita IVA
+              <input
+                className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+                name="vat_number"
+                type="text"
+                inputMode="text"
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-bold text-ink/70">
+              Codice fiscale
+              <input
+                className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+                name="fiscal_code"
+                type="text"
+                inputMode="text"
+              />
+            </label>
+          </div>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Indirizzo attivita
+            <input
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="business_address"
+              type="text"
+              autoComplete="street-address"
+            />
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Comune / zona operativa principale
+            <input
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="business_city"
+              type="text"
+              autoComplete="address-level2"
+            />
+          </label>
+
+          <fieldset className="grid gap-3 rounded-3xl border border-ink/10 bg-white/60 p-4">
+            <legend className="px-1 text-sm font-bold text-ink/70">Categorie offerte</legend>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {categories.map((category) => (
+                <label className="flex items-center gap-2 text-sm font-semibold text-ink/65" key={category}>
+                  <input className="h-4 w-4 accent-green-deep" name="service_categories" type="checkbox" value={category} />
+                  {category}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Zone operative
+            <input
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="operating_zones"
+              type="text"
+              placeholder="Es. Ischia Porto, Forio, Casamicciola"
+            />
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Note
+            <textarea
+              className="min-h-28 rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="admin_notes"
+              placeholder="Servizi, disponibilita o dettagli utili per la valutazione"
+            />
+          </label>
+
           <label className="grid gap-2 text-sm font-bold text-ink/70">
             Email
             <input
@@ -78,6 +160,16 @@ export default function RenterRegisterPage({ searchParams }: Props) {
               autoComplete="new-password"
               required
             />
+          </label>
+
+          <label className="flex items-start gap-3 rounded-3xl border border-ink/10 bg-white/70 p-4 text-sm font-semibold leading-6 text-ink/65">
+            <input className="mt-1 h-4 w-4 shrink-0 accent-green-deep" name="privacy_accepted" type="checkbox" value="1" required />
+            <span>
+              Ho letto l&apos;informativa privacy e autorizzo il trattamento dei dati per la gestione della richiesta partner.{" "}
+              <a className="font-bold text-green-deep hover:text-ink" href="/it/privacy" target="_blank">
+                Leggi privacy
+              </a>
+            </span>
           </label>
 
           <button className="mt-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
