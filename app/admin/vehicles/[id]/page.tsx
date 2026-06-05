@@ -29,9 +29,16 @@ export default async function EditAdminVehiclePage({ params, searchParams }: Pro
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
       <section className="mx-auto max-w-5xl rounded-[30px] bg-cream p-8 shadow-soft">
-        <p className="section-kicker">Admin</p>
-        <h1 className="mt-3 font-serif text-4xl font-bold">Modifica veicolo</h1>
-        <p className="mt-4 text-ink/65">Aggiorna i dati interni del mezzo.</p>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="section-kicker">Admin</p>
+            <h1 className="mt-3 font-serif text-4xl font-bold">Modifica veicolo</h1>
+            <p className="mt-4 text-ink/65">Aggiorna i dati interni del mezzo.</p>
+          </div>
+          <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
+            Torna ai veicoli
+          </a>
+        </div>
 
         {searchParams?.saved ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
