@@ -15,6 +15,11 @@ const cards = [
     href: "/renter/availability"
   },
   {
+    title: "Listino stagionale",
+    text: "Imposta prezzi dal/al per ogni mezzo e periodo.",
+    href: "/renter/pricing"
+  },
+  {
     title: "Check-in voucher",
     text: "Registra il ritiro inserendo il codice voucher.",
     href: "/renter/checkin"
@@ -35,7 +40,7 @@ export default async function RenterPage() {
 
   return (
     <RenterShell title="Mini area noleggiatore">
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         {cards.map((card) => (
           <Link key={card.href} href={card.href} className="rounded-[28px] border border-ink/10 bg-white/70 p-6 hover:border-sea/30">
             <h2 className="font-serif text-2xl font-bold">{card.title}</h2>

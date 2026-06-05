@@ -23,6 +23,7 @@ export function RenterShell({
             <NavLink href="/renter">Area</NavLink>
             <NavLink href="/renter/bookings">Prenotazioni</NavLink>
             <NavLink href="/renter/availability">Disponibilita</NavLink>
+            <NavLink href="/renter/pricing">Listino</NavLink>
             <NavLink href="/renter/checkin">Check-in</NavLink>
             <NavLink href="/renter/account">Account</NavLink>
             <form action={signOutRenter}>

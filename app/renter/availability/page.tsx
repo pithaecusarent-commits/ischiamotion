@@ -1,14 +1,12 @@
 import { saveRenterAvailability } from "@/app/renter/availability/actions";
 import { AvailabilityCalendar } from "@/app/renter/availability/AvailabilityCalendar";
 import { CategoryDeliverySection } from "@/app/renter/availability/CategoryDeliverySection";
-import { PriceRulesSection } from "@/app/renter/availability/PriceRulesSection";
 import { AccessDenied, EmptyState, RenterShell } from "@/app/renter/renter-ui";
 import { requireRenter } from "@/lib/supabase/renter-auth";
 import {
   getRenterAvailability,
   getRenterAvailabilityRules,
   getRenterCategoryDeliveryCapabilities,
-  getRenterPriceRules,
   getRenterVehicles
 } from "@/lib/supabase/queries/renter";
 
@@ -30,16 +28,14 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
     { availability, error },
     { groups: categoryDeliveryGroups, error: categoryDeliveryError },
     { vehicles, error: vehiclesError },
-    { rules, error: rulesError },
-    { rules: priceRules, error: priceRulesError }
+    { rules, error: rulesError }
   ] = await Promise.all([
     getRenterAvailability(session.accessToken),
     getRenterCategoryDeliveryCapabilities(session.accessToken),
     getRenterVehicles(session.accessToken),
-    getRenterAvailabilityRules(session.accessToken),
-    getRenterPriceRules(session.accessToken)
+    getRenterAvailabilityRules(session.accessToken)
   ]);
-  const pageError = error || categoryDeliveryError || vehiclesError || rulesError || priceRulesError;
+  const pageError = error || categoryDeliveryError || vehiclesError || rulesError;
 
   return (
     <RenterShell title="Disponibilita categorie">
@@ -128,15 +124,6 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
       ) : (
         <AvailabilityCalendar vehicles={vehicles} rules={rules} />
       )}
-
-      <div className="mb-4 mt-8">
-        <h2 className="font-serif text-3xl font-bold">Prezzi stagionali</h2>
-        <p className="mt-2 text-sm text-ink/60">
-          Imposta prezzi diversi per periodi specifici. Nei risultati di ricerca pubblica verrà mostrato il prezzo più alto tra le regole attive nel range cercato.
-        </p>
-      </div>
-
-      <PriceRulesSection vehicles={vehicles} rules={priceRules} />
     </RenterShell>
   );
 }

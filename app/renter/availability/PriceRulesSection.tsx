@@ -7,6 +7,7 @@ import type { RenterPriceRuleItem, RenterVehicleItem } from "@/lib/supabase/quer
 type Props = {
   vehicles: RenterVehicleItem[];
   rules: RenterPriceRuleItem[];
+  returnPath?: string;
 };
 
 type Draft = {
@@ -33,7 +34,7 @@ const emptyDraft: Draft = {
   notes: ""
 };
 
-export function PriceRulesSection({ vehicles, rules }: Props) {
+export function PriceRulesSection({ vehicles, rules, returnPath = "/renter/pricing" }: Props) {
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const vehicleById = useMemo(() => new Map(vehicles.map((v) => [v.id, v])), [vehicles]);
   const isEditing = Boolean(draft.priceRuleId);
@@ -64,6 +65,7 @@ export function PriceRulesSection({ vehicles, rules }: Props) {
     <div className="grid gap-5">
       <form action={savePriceRuleAction} className="rounded-[28px] border border-ink/10 bg-white/70 p-5">
         <input type="hidden" name="priceRuleId" value={draft.priceRuleId} />
+        <input type="hidden" name="returnPath" value={returnPath} />
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="font-serif text-2xl font-bold">{isEditing ? "Modifica prezzo" : "Nuovo prezzo stagionale"}</h3>
@@ -93,7 +95,7 @@ export function PriceRulesSection({ vehicles, rules }: Props) {
               <option value="">Seleziona veicolo</option>
               {vehicles.map((v) => (
                 <option key={v.id} value={`${v.id}|${v.renter_id}`}>
-                  {v.title_it}{v.internal_name ? ` - ${v.internal_name}` : ""}
+                  {v.vehicle_categories?.name_it ? `${v.vehicle_categories.name_it} - ` : ""}{v.title_it}{v.internal_name ? ` - ${v.internal_name}` : ""}
                 </option>
               ))}
             </select>
@@ -227,6 +229,11 @@ export function PriceRulesSection({ vehicles, rules }: Props) {
                     <tr key={rule.id}>
                       <td className="px-5 py-4 font-semibold">
                         {vehicle?.title_it || rule.vehicles?.title_it || "-"}
+                        {vehicle?.vehicle_categories?.name_it ? (
+                          <span className="block text-xs text-ink/50">
+                            {vehicle.vehicle_categories.name_it}
+                          </span>
+                        ) : null}
                         {(vehicle?.internal_name || rule.vehicles?.internal_name) ? (
                           <span className="block text-xs text-ink/50">
                             {vehicle?.internal_name || rule.vehicles?.internal_name}
@@ -259,6 +266,7 @@ export function PriceRulesSection({ vehicles, rules }: Props) {
                             }}
                           >
                             <input type="hidden" name="priceRuleId" value={rule.id} />
+                            <input type="hidden" name="returnPath" value={returnPath} />
                             <button className="rounded-full border border-red-200 px-4 py-2 text-xs font-bold text-red-700 hover:bg-red-50" type="submit">
                               Elimina
                             </button>

@@ -16,6 +16,11 @@ import {
 } from "@/lib/supabase/queries/renter";
 import type { BookingDeliveryMethod } from "@/lib/types";
 
+function getReturnPath(formData: FormData) {
+  const path = String(formData.get("returnPath") || "/renter/availability");
+  return path.startsWith("/renter/") && !path.startsWith("//") ? path : "/renter/availability";
+}
+
 export async function saveRenterAvailability(formData: FormData) {
   const session = await requireRenter("/renter/availability");
 
@@ -220,10 +225,11 @@ export async function deleteRenterAvailabilityRuleAction(formData: FormData) {
 }
 
 export async function savePriceRuleAction(formData: FormData) {
-  const session = await requireRenter("/renter/availability");
+  const returnPath = getReturnPath(formData);
+  const session = await requireRenter(returnPath);
 
   if (session.denied) {
-    redirect("/renter/availability?error=Accesso%20negato");
+    redirect(`${returnPath}?error=Accesso%20negato`);
   }
 
   const vehicleValue = String(formData.get("vehicle") || "");
@@ -239,11 +245,11 @@ export async function savePriceRuleAction(formData: FormData) {
   const notes = String(formData.get("notes") || "");
 
   if (!vehicleId || !renterId || !dateFrom || !dateTo) {
-    redirect("/renter/availability?error=Compila%20veicolo%20e%20date");
+    redirect(`${returnPath}?error=Compila%20veicolo%20e%20date`);
   }
 
   if (dateTo < dateFrom) {
-    redirect("/renter/availability?error=La%20data%20fine%20deve%20essere%20successiva%20alla%20data%20inizio");
+    redirect(`${returnPath}?error=La%20data%20fine%20deve%20essere%20successiva%20alla%20data%20inizio`);
   }
 
   const { error } = ruleId
@@ -274,25 +280,27 @@ export async function savePriceRuleAction(formData: FormData) {
     });
 
   revalidatePath("/renter/availability");
+  revalidatePath("/renter/pricing");
 
   if (error) {
-    redirect(`/renter/availability?error=${encodeURIComponent(error)}`);
+    redirect(`${returnPath}?error=${encodeURIComponent(error)}`);
   }
 
-  redirect("/renter/availability?saved=1");
+  redirect(`${returnPath}?saved=1`);
 }
 
 export async function deletePriceRuleAction(formData: FormData) {
-  const session = await requireRenter("/renter/availability");
+  const returnPath = getReturnPath(formData);
+  const session = await requireRenter(returnPath);
 
   if (session.denied) {
-    redirect("/renter/availability?error=Accesso%20negato");
+    redirect(`${returnPath}?error=Accesso%20negato`);
   }
 
   const ruleId = String(formData.get("priceRuleId") || "");
 
   if (!ruleId) {
-    redirect("/renter/availability?error=Regola%20prezzo%20non%20valida");
+    redirect(`${returnPath}?error=Regola%20prezzo%20non%20valida`);
   }
 
   const { error } = await deleteRenterPriceRule({
@@ -301,10 +309,11 @@ export async function deletePriceRuleAction(formData: FormData) {
   });
 
   revalidatePath("/renter/availability");
+  revalidatePath("/renter/pricing");
 
   if (error) {
-    redirect(`/renter/availability?error=${encodeURIComponent(error)}`);
+    redirect(`${returnPath}?error=${encodeURIComponent(error)}`);
   }
 
-  redirect("/renter/availability?saved=1");
+  redirect(`${returnPath}?saved=1`);
 }

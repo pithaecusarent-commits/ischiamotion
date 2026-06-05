@@ -83,6 +83,10 @@ export type RenterVehicleItem = {
   internal_name: string | null;
   price_from: number | null;
   is_active: boolean;
+  vehicle_categories: {
+    name_it: string;
+    slug: string;
+  } | null;
 };
 
 export type RenterAvailabilityRuleItem = {
@@ -355,7 +359,7 @@ export async function getRenterVehicles(accessToken: string): Promise<{ vehicles
 
     const { data, error } = await supabase
       .from("vehicles")
-      .select("id, renter_id, title_it, internal_name, price_from, is_active")
+      .select("id, renter_id, title_it, internal_name, price_from, is_active, vehicle_categories(name_it, slug)")
       .in("renter_id", renterResult.renterIds)
       .order("title_it", { ascending: true });
 
@@ -363,7 +367,16 @@ export async function getRenterVehicles(accessToken: string): Promise<{ vehicles
       return { vehicles: [], error: error.message };
     }
 
-    return { vehicles: (data || []) as unknown as RenterVehicleItem[], error: null };
+    const vehicles = ((data || []) as unknown as Array<Omit<RenterVehicleItem, "vehicle_categories"> & {
+      vehicle_categories: RenterVehicleItem["vehicle_categories"] | RenterVehicleItem["vehicle_categories"][];
+    }>).map((vehicle) => ({
+      ...vehicle,
+      vehicle_categories: Array.isArray(vehicle.vehicle_categories)
+        ? vehicle.vehicle_categories[0] || null
+        : vehicle.vehicle_categories
+    }));
+
+    return { vehicles, error: null };
   } catch (error) {
     return { vehicles: [], error: error instanceof Error ? error.message : "Unable to load renter vehicles." };
   }

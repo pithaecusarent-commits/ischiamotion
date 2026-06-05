@@ -1,0 +1,652 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 3 0 R 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R ] /Count 7 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 2943 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+(Audit IschiaMotion - Frontend, Backend, SEO, Admin e Renter) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Executive Summary) Tj
+0 -16 Td
+(Il progetto e gia ben impostato: Next.js App Router, struttura bilingue IT/EN, Supabase con) Tj
+0 -16 Td
+(RLS, area admin, area renter, richieste pubbliche, voucher/QR/check-in, sitemap e pagine SEO) Tj
+0 -16 Td
+(dedicate.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Priorita principali:) Tj
+0 -16 Td
+(1. Beach Club non e ancora pienamente coerente lato database: nel codice esiste, ma nelle) Tj
+0 -16 Td
+(migrazioni resta boat-with-skipper e non e evidente una migrazione che inserisca beach_club.) Tj
+0 -16 Td
+(2. Endpoint email pubblico abusabile: /api/booking-email puo essere chiamato direttamente) Tj
+0 -16 Td
+(per inviare email via Resend se la key e configurata.) Tj
+0 -16 Td
+(3. Voucher/check-in pubblici con codice prevedibile: i codici sono basati su timestamp,) Tj
+0 -16 Td
+(quindi non abbastanza robusti per una pagina pubblica che mostra dati cliente/pagamento.) Tj
+0 -16 Td
+(4. Next.js va aggiornato: il progetto usa Next ^14.2.15; advisories ufficiali indicano fix) Tj
+0 -16 Td
+(successivi nella linea 14.2.x.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Stato generale progetto) Tj
+0 -16 Td
+(- Struttura Next.js: buona. App Router, route chiare, componenti separati. Priorita media.) Tj
+0 -16 Td
+(- Frontend pubblico: buono. Chiaro, bilingue, CTA presenti. Priorita media.) Tj
+0 -16 Td
+(- SEO: medio. Metadata e JSON-LD ok, ma alcuni slug EN non coincidono con il brief. Priorita) Tj
+0 -16 Td
+(alta.) Tj
+0 -16 Td
+(- Beach Club / skipper: fragile. Codice aggiornato, DB/migrazioni non allineate. Priorita) Tj
+0 -16 Td
+(alta.) Tj
+0 -16 Td
+(- Backend/API: medio. Supabase RPC buone, email endpoint fragile. Priorita alta.) Tj
+0 -16 Td
+(- Supabase/RLS: buono, ma da verificare con test ruoli anon/auth/renter/admin. Priorita) Tj
+0 -16 Td
+(alta.) Tj
+0 -16 Td
+(- Area renter: media. Funzionale, ma tecnica e poco guidata. Priorita media.) Tj
+0 -16 Td
+(- Area admin: buona. Operativa, ma mancano filtri/export/conferme robuste. Priorita media.) Tj
+0 -16 Td
+(- Email/Resend: parziale. Custom fetch Resend, no PDF/attachments integrati. Priorita media.) Tj
+0 -16 Td
+(- Sicurezza: media. Nessun service role evidente, ma rate limit assente. Priorita alta.) Tj
+0 -16 Td
+(- Performance: media. Immagini spesso img, client components migliorabili. Priorita media.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Frontend pubblico) Tj
+0 -16 Td
+(Cosa funziona:) Tj
+0 -16 Td
+(- Brand coerente.) Tj
+0 -16 Td
+(- CTA frequenti.) Tj
+0 -16 Td
+(- Testi gia spiegano richiesta non conferma.) Tj
+0 -16 Td
+(- Pagine SEO ricche.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Problemi e soluzioni:) Tj
+0 -16 Td
+(- Form richiesta lungo. Dove: BookingRequestModal.tsx. Impatto: attrito conversione.) Tj
+0 -16 Td
+(Priorita media. Soluzione: step form o campi progressivi.) Tj
+0 -16 Td
+(- Modello marketplace da rinforzare. Dove: Home, landing, email. Impatto: cliente puo) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 2723 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+(pensare che IschiaMotion sia noleggiatore diretto. Priorita media. Soluzione: trust copy) Tj
+0 -16 Td
+(vicino a ogni CTA.) Tj
+0 -16 Td
+(- Poche prove sociali. Dove: homepage/landing. Impatto: fiducia limitata. Priorita media.) Tj
+0 -16 Td
+(Soluzione: recensioni, partner verified, badge locali.) Tj
+0 -16 Td
+(- Mobile da verificare visivamente. Dove: CSS globale. Impatto: possibili overflow) Tj
+0 -16 Td
+(tabelle/card. Priorita media. Soluzione: QA Playwright mobile.) Tj
+0 -16 Td
+(- Card/category UX delicata. Corpo card landing, bottone richiesta. Priorita bassa.) Tj
+0 -16 Td
+(Soluzione: mantenere distinzione visiva Scopri vs Verifica.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(SEO) Tj
+0 -16 Td
+(SEO tecnico:) Tj
+0 -16 Td
+(- Metadata presenti su homepage e landing.) Tj
+0 -16 Td
+(- Canonical e hreflang presenti tramite alternates.) Tj
+0 -16 Td
+(- Sitemap e robots presenti.) Tj
+0 -16 Td
+(- JSON-LD presente: WebSite, Organization, Service, FAQPage, BreadcrumbList, WebPage.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Problemi:) Tj
+0 -16 Td
+(- Il brief cita slug EN come /en/ischia-scooter-rental, /en/ischia-car-rental,) Tj
+0 -16 Td
+(/en/ischia-boat-rental; il codice usa /en/scooter-rental-ischia, /en/car-rental-ischia,) Tj
+0 -16 Td
+(/en/boat-rental-ischia.) Tj
+0 -16 Td
+(- Mancano redirect dagli alias attesi agli slug reali.) Tj
+0 -16 Td
+(- Nessuna metadata Twitter card esplicita.) Tj
+0 -16 Td
+(- Sitemap usa lastModified = new Date\(\) a ogni generazione: puo sembrare che tutte le pagine) Tj
+0 -16 Td
+(cambino sempre.) Tj
+0 -16 Td
+(- Admin/renter sono disallow in robots, ma non hanno noindex esplicito.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Quick win SEO:) Tj
+0 -16 Td
+(- Aggiungere redirect alias EN verso slug reali.) Tj
+0 -16 Td
+(- Aggiungere Twitter metadata.) Tj
+0 -16 Td
+(- Stabilizzare lastModified o usare date reali.) Tj
+0 -16 Td
+(- Aggiungere noindex a admin/renter/login/checkin se non devono indicizzare.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Opportunita keyword:) Tj
+0 -16 Td
+(- IT: noleggio scooter ischia porto, noleggio auto ischia senza carta, beach club ischia) Tj
+0 -16 Td
+(lettini, noleggio gommone ischia senza patente.) Tj
+0 -16 Td
+(- EN: scooter rental Ischia port, Ischia beach club booking, rubber dinghy rental Ischia,) Tj
+0 -16 Td
+(car rental Ischia ferry port.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Categoria Barca con skipper -> Beach Club) Tj
+0 -16 Td
+(Dove compare oggi:) Tj
+0 -16 Td
+(- Codice pubblico: Beach Club presente in VehicleFilters, HeroSearch, SearchResults,) Tj
+0 -16 Td
+(VehicleCard, category-landings, category-landing-paths.) Tj
+0 -16 Td
+(- Pagine SEO: /it/beach-club-ischia e /en/ischia-beach-club presenti.) Tj
+0 -16 Td
+(- Redirect: presenti in next.config.mjs da vecchi slug skipper.) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 2807 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+(- Sitemap: include Beach Club.) Tj
+0 -16 Td
+(- Migrazioni: restano 0016_add_boat_with_skipper_category.sql,) Tj
+0 -16 Td
+(0018_split_boat_and_rib_categories.sql e 0022_renter_category_delivery_capabilities.sql con) Tj
+0 -16 Td
+(boat-with-skipper.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Problema principale:) Tj
+0 -16 Td
+(Non e evidente una migrazione che inserisca beach_club in vehicle_categories. Il codice puo) Tj
+0 -16 Td
+(cercare Beach Club, ma il DB potrebbe non avere la categoria reale.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Intervento futuro consigliato:) Tj
+0 -16 Td
+(- Creare migrazione DB per inserire beach_club.) Tj
+0 -16 Td
+(- Disattivare o rinominare boat-with-skipper.) Tj
+0 -16 Td
+(- Aggiornare RPC SQL togliendo boat-with-skipper dalle regole nautiche.) Tj
+0 -16 Td
+(- Verificare seed/mock/veicoli reali con categoria beach_club.) Tj
+0 -16 Td
+(- Mantenere redirect 301 dagli slug skipper.) Tj
+0 -16 Td
+(- Verificare Search Console dopo redirect.) Tj
+0 -16 Td
+(Priorita: alta.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Backend/API) Tj
+0 -16 Td
+(- /api/booking-email: invia email admin e cliente. Problema: endpoint pubblico senza) Tj
+0 -16 Td
+(firma/rate limit. Rischio alto. Miglioria: token interno, firma HMAC o invio server-side) Tj
+0 -16 Td
+(post-RPC.) Tj
+0 -16 Td
+(- create_public_booking_request RPC: crea booking pubblico. Buona validazione) Tj
+0 -16 Td
+(date/disponibilita. Mancano limiti robusti lunghezze/email/telefono. Rischio medio.) Tj
+0 -16 Td
+(- search_public_vehicles RPC: ricerca pubblica. Buona sanitizzazione via RPC. Rischio basso.) Tj
+0 -16 Td
+(Da aggiornare per categoria Beach Club DB.) Tj
+0 -16 Td
+(- auth/callback: conferma auth. Basic ok. Validare meglio next. Rischio basso.) Tj
+0 -16 Td
+(- Server actions admin: CRUD booking/vehicles/renters protetti da requireAdmin. Rischio) Tj
+0 -16 Td
+(medio. Aggiungere conferme per azioni critiche.) Tj
+0 -16 Td
+(- Server actions renter: disponibilita/prezzi/check-in. RLS protegge, ma form passa) Tj
+0 -16 Td
+(renterId. Rischio medio. Ricavare renterId solo dalla sessione.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Supabase/database) Tj
+0 -16 Td
+(Tabelle dedotte:) Tj
+0 -16 Td
+(profiles, renters, renter_users, vehicle_categories, pickup_points, vehicles, bookings,) Tj
+0 -16 Td
+(booking_vouchers, checkins, renter_category_availability, renter_delivery_capabilities,) Tj
+0 -16 Td
+(renter_category_delivery_capabilities, vehicle_availability_rules, vehicle_price_rules.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Cose buone:) Tj
+0 -16 Td
+(- RLS abilitato su molte tabelle.) Tj
+0 -16 Td
+(- Accesso pubblico booking diretto rimosso in 0023_lock_public_booking_insert.sql.) Tj
+0 -16 Td
+(- Admin/renter separati tramite is_admin\(\), is_renter\(\), current_renter_ids\(\).) Tj
+0 -16 Td
+(- Storage immagini limitato ad admin per upload.) Tj
+0 -16 Td
+() Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 1884 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+(Rischi:) Tj
+0 -16 Td
+(- boat-with-skipper ancora attivo nelle migrazioni.) Tj
+0 -16 Td
+(- beach_club non seminato via migrazione.) Tj
+0 -16 Td
+(- Voucher pubblico espone dati se il codice e conosciuto.) Tj
+0 -16 Td
+(- Funzioni security definer da testare periodicamente con ruoli anon/auth/renter/admin.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Area renter) Tj
+0 -16 Td
+(Funziona:) Tj
+0 -16 Td
+(- Login/register.) Tj
+0 -16 Td
+(- Approvazione admin.) Tj
+0 -16 Td
+(- Prenotazioni assegnate.) Tj
+0 -16 Td
+(- Disponibilita categoria.) Tj
+0 -16 Td
+(- Disponibilita calendario mezzi.) Tj
+0 -16 Td
+(- Prezzi stagionali.) Tj
+0 -16 Td
+(- Check-in.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Manca o e fragile:) Tj
+0 -16 Td
+(- UX molto tecnica per partner non digitali.) Tj
+0 -16 Td
+(- Nessun onboarding guidato.) Tj
+0 -16 Td
+(- Nessun riepilogo cosa devo fare oggi.) Tj
+0 -16 Td
+(- Tabelle potenzialmente pesanti su mobile.) Tj
+0 -16 Td
+(- Partner non puo gestire anagrafica mezzi completa, solo disponibilita/prezzi.) Tj
+0 -16 Td
+(- Renter vede clienti abbreviati: buono per privacy, ma potrebbe mancare telefono operativo) Tj
+0 -16 Td
+(se deve consegnare.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Area admin) Tj
+0 -16 Td
+(Funziona:) Tj
+0 -16 Td
+(- Dashboard.) Tj
+0 -16 Td
+(- Booking.) Tj
+0 -16 Td
+(- Renter approval/reject/disable.) Tj
+0 -16 Td
+(- Veicoli.) Tj
+0 -16 Td
+(- Prezzi stagionali.) Tj
+0 -16 Td
+(- Voucher.) Tj
+0 -16 Td
+(- Check-in.) Tj
+0 -16 Td
+(- Pagamenti manuali.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Migliorie operative:) Tj
+0 -16 Td
+(- Filtri booking per stato/data/categoria/renter.) Tj
+0 -16 Td
+(- Ricerca globale booking.) Tj
+0 -16 Td
+(- Export CSV.) Tj
+0 -16 Td
+(- Timeline eventi booking.) Tj
+0 -16 Td
+(- Conferme piu forti per disattivazioni e cancellazioni regole.) Tj
+0 -16 Td
+(- Log audit admin: chi ha cambiato cosa e quando.) Tj
+0 -16 Td
+(- Vista oggi/domani per consegne/ritiri.) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 2485 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+() Tj
+0 -16 Td
+(Email/Resend) Tj
+0 -16 Td
+(Stato:) Tj
+0 -16 Td
+(- .env.example prevede RESEND_API_KEY, BOOKING_ADMIN_EMAIL, BOOKING_FROM_EMAIL.) Tj
+0 -16 Td
+(- package.json non installa resend; il progetto usa una classe custom con fetch verso) Tj
+0 -16 Td
+(Resend.) Tj
+0 -16 Td
+(- Email admin e cliente sono generate in /api/booking-email.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(PDF audit:) Tj
+0 -16 Td
+(- Tecnicamente possibile usando API Resend con attachment base64.) Tj
+0 -16 Td
+(- Serve dominio mittente verificato, SPF/DKIM/DMARC corretti.) Tj
+0 -16 Td
+(- Endpoint attuale non gestisce allegati PDF, quindi l'invio PDF richiede script o sviluppo) Tj
+0 -16 Td
+(dedicato.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Performance) Tj
+0 -16 Td
+(Problemi:) Tj
+0 -16 Td
+(- Molte immagini usano img invece di next/image.) Tj
+0 -16 Td
+(- Tabelle admin/renter possono diventare lente senza paginazione.) Tj
+0 -16 Td
+(- Nessuna evidenza di loading/error boundary dedicati.) Tj
+0 -16 Td
+(- Client surface della home migliorabile.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Azioni consigliate:) Tj
+0 -16 Td
+(- Migrare immagini pubbliche principali a next/image.) Tj
+0 -16 Td
+(- Paginare booking/admin/renter.) Tj
+0 -16 Td
+(- Aggiungere skeleton/loading.) Tj
+0 -16 Td
+(- Separare parti statiche e interattive homepage.) Tj
+0 -16 Td
+(- Usare caching mirato per pickup/category prices.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Sicurezza) Tj
+0 -16 Td
+(- Email endpoint abusabile. Dove: /api/booking-email. Gravita alta. Soluzione: firma) Tj
+0 -16 Td
+(HMAC/internal token/rate limit.) Tj
+0 -16 Td
+(- Voucher prevedibile. Dove: buildVoucherCode\(\). Gravita alta. Soluzione: codici random) Tj
+0 -16 Td
+(lunghi, scadenza, rate limit.) Tj
+0 -16 Td
+(- Rate limiting assente. Dove: form, email, register. Gravita alta. Soluzione:) Tj
+0 -16 Td
+(Upstash/Vercel firewall/Supabase edge guard.) Tj
+0 -16 Td
+(- Next.js non aggiornato. Dove: package.json. Gravita alta. Soluzione: aggiornare almeno a) Tj
+0 -16 Td
+(patched 14.2.x.) Tj
+0 -16 Td
+(- Beach Club DB non allineato. Dove: migrazioni. Gravita alta. Soluzione: migrazione) Tj
+0 -16 Td
+(dedicata.) Tj
+0 -16 Td
+(- CSRF server actions. Dove: admin/renter actions. Gravita media. Soluzione: CSRF token o) Tj
+0 -16 Td
+(double-submit.) Tj
+0 -16 Td
+(- Input poco limitati. Dove: booking/email/forms. Gravita media. Soluzione: schema) Tj
+0 -16 Td
+(validation e limiti lunghezza.) Tj
+0 -16 Td
+(- Public voucher dati pagamento. Dove: /checkin/[code]. Gravita medio/alta. Soluzione:) Tj
+ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 14 0 R >>
+endobj
+14 0 obj
+<< /Length 2227 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+(minimizzare dati pubblici.) Tj
+0 -16 Td
+(- Form renter registra spam. Dove: /renter/register. Gravita media. Soluzione: captcha o) Tj
+0 -16 Td
+(throttling.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Roadmap consigliata) Tj
+0 -16 Td
+(Fase 1 - Urgente:) Tj
+0 -16 Td
+(- Aggiornare Next.js a release patchata.) Tj
+0 -16 Td
+(- Proteggere /api/booking-email.) Tj
+0 -16 Td
+(- Rendere voucher code random e non prevedibili.) Tj
+0 -16 Td
+(- Creare migrazione Beach Club e disattivare/redirectare boat-with-skipper.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Fase 2 - SEO e conversione:) Tj
+0 -16 Td
+(- Redirect alias EN richiesti dal brief.) Tj
+0 -16 Td
+(- Aggiungere Twitter metadata.) Tj
+0 -16 Td
+(- Rafforzare trust/reviews/partner verification.) Tj
+0 -16 Td
+(- Rendere form richiesta piu breve o progressivo.) Tj
+0 -16 Td
+(- Aggiungere pagine SEO porto, Forio, Casamicciola, senza patente dove corretto.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Fase 3 - Admin/Renter operativo:) Tj
+0 -16 Td
+(- Filtri, search, export admin.) Tj
+0 -16 Td
+(- Dashboard renter azioni di oggi.) Tj
+0 -16 Td
+(- Audit log admin.) Tj
+0 -16 Td
+(- Conferme robuste per azioni critiche.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Fase 4 - Scalabilita:) Tj
+0 -16 Td
+(- Paginazione server.) Tj
+0 -16 Td
+(- Event timeline booking.) Tj
+0 -16 Td
+(- Email template strutturati.) Tj
+0 -16 Td
+(- PDF/voucher automatico.) Tj
+0 -16 Td
+(- Monitoring errori e analytics conversioni.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Checklist pronta per sviluppo) Tj
+0 -16 Td
+([ ] Aggiornare Next.js a release patchata.) Tj
+0 -16 Td
+([ ] Aggiungere rate limit a booking, renter register, email route.) Tj
+0 -16 Td
+([ ] Proteggere /api/booking-email con firma interna.) Tj
+0 -16 Td
+([ ] Generare booking/voucher code random non timestamp.) Tj
+0 -16 Td
+([ ] Migrazione beach_club in Supabase.) Tj
+0 -16 Td
+([ ] Disattivare o rinominare boat-with-skipper nel DB.) Tj
+0 -16 Td
+([ ] Aggiornare RPC SQL per togliere boat-with-skipper.) Tj
+0 -16 Td
+([ ] Aggiungere redirect alias EN SEO.) Tj
+0 -16 Td
+([ ] Aggiungere noindex per admin/renter/checkin se necessario.) Tj
+0 -16 Td
+([ ] Migrare immagini principali a next/image.) Tj
+0 -16 Td
+([ ] Aggiungere filtri admin booking.) Tj
+0 -16 Td
+([ ] Aggiungere export CSV admin.) Tj
+ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 17 0 R >> >> /Contents 16 0 R >>
+endobj
+16 0 obj
+<< /Length 304 >>
+stream
+BT
+/F1 10 Tf
+50 750 Td
+([ ] Aggiungere audit log admin.) Tj
+0 -16 Td
+([ ] Semplificare form pubblico.) Tj
+0 -16 Td
+([ ] Aggiungere trust signals e recensioni.) Tj
+0 -16 Td
+([ ] Preparare endpoint PDF/email solo dopo hardening email.) Tj
+0 -16 Td
+() Tj
+0 -16 Td
+(Validazione eseguita: pnpm lint ok.) Tj
+ET
+endstream
+endobj
+17 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 18
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000156 00000 n 
+0000000283 00000 n 
+0000003278 00000 n 
+0000003405 00000 n 
+0000006180 00000 n 
+0000006307 00000 n 
+0000009166 00000 n 
+0000009294 00000 n 
+0000011231 00000 n 
+0000011360 00000 n 
+0000013898 00000 n 
+0000014027 00000 n 
+0000016307 00000 n 
+0000016436 00000 n 
+0000016792 00000 n 
+trailer
+<< /Size 18 /Root 1 0 R >>
+startxref
+16863
+%%EOF
