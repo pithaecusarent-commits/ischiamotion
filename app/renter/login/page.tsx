@@ -6,6 +6,7 @@ type Props = {
     error?: string;
     next?: string;
     registered?: string;
+    confirmed?: string;
   };
 };
 
@@ -31,6 +32,12 @@ export default function RenterLoginPage({ searchParams }: Props) {
         {searchParams?.registered ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
             Registrazione ricevuta. L&apos;admin deve autorizzare l&apos;account prima dell&apos;accesso.
+          </div>
+        ) : null}
+
+        {searchParams?.confirmed ? (
+          <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Email confermata. Se l&apos;account è stato approvato puoi accedere.
           </div>
         ) : null}
 

@@ -15,10 +15,21 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get("code");
   const nextPath = getSafeNextPath(requestUrl.searchParams.get("next"));
   const redirectUrl = new URL(nextPath, requestUrl.origin);
+  const authError = requestUrl.searchParams.get("error_description") || requestUrl.searchParams.get("error");
 
-  if (!code) {
+  if (authError) {
     redirectUrl.pathname = "/renter/login";
     redirectUrl.search = `?error=${encodeURIComponent("Link di conferma non valido o scaduto.")}`;
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (!code) {
+    if (nextPath === "/renter/login") {
+      redirectUrl.search = "?confirmed=1";
+    } else {
+      redirectUrl.pathname = "/renter/login";
+      redirectUrl.search = `?error=${encodeURIComponent("Link di conferma non valido o scaduto.")}`;
+    }
     return NextResponse.redirect(redirectUrl);
   }
 
@@ -26,8 +37,12 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
-    redirectUrl.pathname = "/renter/login";
-    redirectUrl.search = `?error=${encodeURIComponent("Link di conferma non valido o scaduto.")}`;
+    if (nextPath === "/renter/login") {
+      redirectUrl.search = "?confirmed=1";
+    } else {
+      redirectUrl.pathname = "/renter/login";
+      redirectUrl.search = `?error=${encodeURIComponent("Link di conferma non valido o scaduto.")}`;
+    }
     return NextResponse.redirect(redirectUrl);
   }
 

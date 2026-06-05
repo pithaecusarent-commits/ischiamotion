@@ -164,7 +164,7 @@ export async function registerRenter(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: `${siteUrl}/auth/callback?next=/renter/login`,
+      emailRedirectTo: `${siteUrl}/renter/login?confirmed=1`,
       data: {
         business_name: businessName,
         contact_name: contactName,
