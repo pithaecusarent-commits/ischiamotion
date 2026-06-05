@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
-import { sendRenterApprovedEmail, sendRenterRejectedEmail } from "@/lib/email/renter-emails";
+import { sendAdminManagedRenterCreatedEmail, sendRenterApprovedEmail, sendRenterRejectedEmail } from "@/lib/email/renter-emails";
 import {
   approveRenterApplication,
   createAdminRenterRecord,
@@ -152,6 +152,14 @@ export async function createRenterFromAdminAction(formData: FormData) {
     redirect(`/admin/renters/new?error=${encodeURIComponent(result.error)}`);
   }
 
+  if (!createAuthUser) {
+    await sendAdminManagedRenterCreatedEmail({
+      businessName,
+      contactName,
+      email
+    }).catch(() => null);
+  }
+
   await logAdminAuditEvent({
     accessToken,
     actorProfileId: profile.id,
@@ -159,8 +167,14 @@ export async function createRenterFromAdminAction(formData: FormData) {
     action: createAuthUser ? "renter.created_with_auth" : "renter.created",
     targetTable: result.profileId ? "profiles" : "renters",
     targetId: result.profileId || result.renterId || undefined,
-    metadata: { renterId: result.renterId, setupUrlGenerated: Boolean(result.setupUrl) }
+    metadata: { renterId: result.renterId, setupUrlGenerated: Boolean(result.setupUrl), managedByAdmin: !createAuthUser }
   });
 
-  redirect(`/admin/renters?created=1${result.profileId ? `&profile=${encodeURIComponent(result.profileId)}` : ""}`);
+  const createdTarget = result.profileId
+    ? `&profile=${encodeURIComponent(result.profileId)}`
+    : result.renterId
+      ? `&renter=${encodeURIComponent(result.renterId)}`
+      : "";
+
+  redirect(`/admin/renters?created=1${createdTarget}`);
 }

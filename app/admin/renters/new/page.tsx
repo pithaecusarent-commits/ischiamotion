@@ -20,7 +20,7 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
             <p className="section-kicker">Admin</p>
             <h1 className="mt-3 font-serif text-4xl font-bold">Nuovo renter</h1>
             <p className="mt-4 text-ink/65">
-              Crea l&apos;anagrafica partner e, se serve, invia un accesso temporaneo alla mini-area.
+              Crea l&apos;anagrafica partner gestita dallo staff e invia una conferma al renter.
             </p>
           </div>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/renters">
@@ -111,7 +111,7 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
 
           <label className="flex items-start gap-3 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold leading-6 text-green-deep">
             <input className="mt-1 h-4 w-4 shrink-0 accent-green-deep" name="create_auth_user" type="checkbox" value="1" />
-            <span>Crea anche l&apos;accesso Auth e invia email al renter per impostare la password.</span>
+            <span>Crea anche l&apos;accesso Auth solo se il renter deve entrare nella mini-area e impostare la password.</span>
           </label>
 
           <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">

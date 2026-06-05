@@ -67,6 +67,27 @@ export type AdminRenterDetail = {
   };
 };
 
+export type AdminStandaloneRenter = {
+  id: string;
+  business_name_internal: string | null;
+  contact_name: string | null;
+  email: string | null;
+  phone: string | null;
+  status: string;
+  vat_number: string | null;
+  fiscal_code: string | null;
+  business_address: string | null;
+  business_city: string | null;
+  operating_zones: string[];
+  service_categories: string[];
+  seasonality_notes: string | null;
+  seasonality_periods: unknown[];
+  admin_notes: string | null;
+  onboarding_status: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type AdminRenterFilters = {
   status?: RenterAccountStatus | "all";
   q?: string;
@@ -250,6 +271,65 @@ export async function getAdminRenterApplications(
     return {
       applications: [],
       error: error instanceof Error ? error.message : "Unable to load renter applications."
+    };
+  }
+}
+
+export async function getStandaloneAdminRenters(
+  accessToken: string,
+  filters: AdminRenterFilters = {}
+): Promise<{ renters: AdminStandaloneRenter[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const [rentersResult, linksResult] = await Promise.all([
+      supabase
+        .from("renters")
+        .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status, created_at, updated_at")
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("renter_users")
+        .select("renter_id")
+    ]);
+
+    if (rentersResult.error) {
+      return { renters: [], error: rentersResult.error.message };
+    }
+
+    if (linksResult.error) {
+      return { renters: [], error: linksResult.error.message };
+    }
+
+    const linkedRenterIds = new Set((linksResult.data || []).map((link) => link.renter_id).filter(Boolean));
+    let renters = ((rentersResult.data || []) as unknown as AdminStandaloneRenter[])
+      .filter((renter) => !linkedRenterIds.has(renter.id));
+
+    if (filters.status && filters.status !== "all") {
+      if (filters.status === "approved") {
+        renters = renters.filter((renter) => renter.status === "active");
+      } else if (filters.status === "disabled") {
+        renters = renters.filter((renter) => renter.status === "disabled");
+      } else if (filters.status === "pending") {
+        renters = renters.filter((renter) => renter.status === "pending");
+      } else {
+        renters = [];
+      }
+    }
+
+    const term = filters.q?.trim().toLowerCase();
+    if (term) {
+      renters = renters.filter((renter) => [
+        renter.business_name_internal,
+        renter.contact_name,
+        renter.email,
+        renter.phone
+      ].some((value) => value?.toLowerCase().includes(term)));
+    }
+
+    return { renters, error: null };
+  } catch (error) {
+    return {
+      renters: [],
+      error: error instanceof Error ? error.message : "Unable to load standalone renters."
     };
   }
 }

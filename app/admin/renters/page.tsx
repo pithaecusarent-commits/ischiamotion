@@ -2,7 +2,12 @@ import { approveRenterAction, deactivateRenterAction, rejectRenterAction } from 
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { getAdminRenterApplications, type AdminRenterApplication } from "@/lib/supabase/queries/admin-renters";
+import {
+  getAdminRenterApplications,
+  getStandaloneAdminRenters,
+  type AdminRenterApplication,
+  type AdminStandaloneRenter
+} from "@/lib/supabase/queries/admin-renters";
 
 type Props = {
   searchParams?: {
@@ -10,6 +15,7 @@ type Props = {
     q?: string;
     created?: string;
     profile?: string;
+    renter?: string;
     approved?: string;
     disabled?: string;
     rejected?: string;
@@ -39,6 +45,20 @@ function statusClass(status: AdminRenterApplication["account_status"]) {
   return "border-amber-200 bg-amber-50 text-amber-800";
 }
 
+function standaloneStatusLabel(status: AdminStandaloneRenter["status"]) {
+  if (status === "active") return "Attivo";
+  if (status === "disabled") return "Disattivato";
+  if (status === "pending") return "In attesa";
+  return status || "-";
+}
+
+function standaloneStatusClass(status: AdminStandaloneRenter["status"]) {
+  if (status === "active") return "border-sea/20 bg-sea/10 text-green-deep";
+  if (status === "disabled") return "border-ink/10 bg-ink/5 text-ink/55";
+  if (status === "pending") return "border-amber-200 bg-amber-50 text-amber-800";
+  return "border-ink/10 bg-white text-ink/60";
+}
+
 export default async function AdminRentersPage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/renters");
   const filters = {
@@ -47,7 +67,14 @@ export default async function AdminRentersPage({ searchParams }: Props) {
       : "all" as const,
     q: searchParams?.q || ""
   };
-  const { applications, error } = await getAdminRenterApplications(accessToken, filters);
+  const [
+    { applications, error },
+    { renters: standaloneRenters, error: standaloneError }
+  ] = await Promise.all([
+    getAdminRenterApplications(accessToken, filters),
+    getStandaloneAdminRenters(accessToken, filters)
+  ]);
+  const pageError = error || standaloneError;
   const pendingCount = applications.filter((item) => item.account_status === "pending").length;
 
   return (
@@ -65,6 +92,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
           <div className="rounded-[24px] border border-ink/10 bg-white/70 px-5 py-4 text-right">
             <p className="section-kicker">In attesa</p>
             <p className="mt-1 text-3xl font-bold">{pendingCount}</p>
+            <p className="mt-1 text-xs font-bold text-ink/45">{standaloneRenters.length} anagrafiche</p>
           </div>
         </div>
 
@@ -119,6 +147,11 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                 Apri profilo
               </a>
             ) : null}
+            {searchParams.renter ? (
+              <a className="ml-2 underline" href="#admin-managed-renters">
+                Vedi anagrafica
+              </a>
+            ) : null}
           </div>
         ) : null}
 
@@ -140,13 +173,13 @@ export default async function AdminRentersPage({ searchParams }: Props) {
           </div>
         ) : null}
 
-        {searchParams?.error || error ? (
+        {searchParams?.error || pageError ? (
           <div className="mt-6 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-ink/70">
-            {searchParams?.error || error}
+            {searchParams?.error || pageError}
           </div>
         ) : null}
 
-        {!error && applications.length === 0 ? (
+        {!pageError && applications.length === 0 && standaloneRenters.length === 0 ? (
           <div className="mt-8 rounded-3xl border border-sea/10 bg-white/60 p-8 text-center">
             <h2 className="font-serif text-3xl font-bold">Nessuna registrazione</h2>
             <p className="mt-3 text-ink/60">Le richieste dei noleggiatori compariranno qui.</p>
@@ -233,6 +266,55 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                             )}
                           </div>
                         )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null}
+
+        {standaloneRenters.length > 0 ? (
+          <div id="admin-managed-renters" className="mt-8 overflow-hidden rounded-[28px] border border-ink/10 bg-white/75 shadow-card">
+            <div className="border-b border-ink/10 px-5 py-4">
+              <h2 className="font-serif text-2xl font-bold">Renter gestiti da admin</h2>
+              <p className="mt-1 text-sm text-ink/55">
+                Anagrafiche operative create dallo staff: listini, disponibilità e prenotazioni restano in gestione admin.
+              </p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-left text-sm">
+                <thead className="bg-ink/5 text-[11px] uppercase tracking-[0.14em] text-ink/55">
+                  <tr>
+                    <th className="px-4 py-4">Attivita</th>
+                    <th className="px-4 py-4">Referente</th>
+                    <th className="px-4 py-4">Contatti</th>
+                    <th className="px-4 py-4">Creazione</th>
+                    <th className="px-4 py-4">Stato</th>
+                    <th className="px-4 py-4">Accesso</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-ink/10">
+                  {standaloneRenters.map((renter) => (
+                    <tr className="align-top transition-colors hover:bg-sea/5" key={renter.id}>
+                      <td className="px-4 py-4">
+                        <div className="font-bold text-ink">{renter.business_name_internal || "Noleggiatore"}</div>
+                        <div className="mt-1 text-xs font-semibold text-ink/50">{renter.email || "-"}</div>
+                      </td>
+                      <td className="px-4 py-4 text-ink/70">{renter.contact_name || "-"}</td>
+                      <td className="px-4 py-4 text-ink/70">{renter.phone || "-"}</td>
+                      <td className="px-4 py-4 text-ink/70">{formatDate(renter.created_at)}</td>
+                      <td className="px-4 py-4">
+                        <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${standaloneStatusClass(renter.status)}`}>
+                          {standaloneStatusLabel(renter.status)}
+                        </span>
+                        <div className="mt-2 text-xs font-bold text-ink/45">Onboarding: {renter.onboarding_status || "-"}</div>
+                      </td>
+                      <td className="px-4 py-4">
+                        <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
+                          Gestito da admin
+                        </span>
                       </td>
                     </tr>
                   ))}

@@ -91,6 +91,26 @@ export async function sendRenterRejectedEmail(input: RenterEmailInput) {
   });
 }
 
+export async function sendAdminManagedRenterCreatedEmail(input: RenterEmailInput) {
+  if (!input.email) return { ok: false, error: "Renter email missing." };
+
+  return sendEmail({
+    to: input.email,
+    subject: "Conferma anagrafica partner IschiaMotion",
+    text: [
+      `Ciao ${input.contactName || input.businessName},`,
+      "",
+      "IschiaMotion ha registrato la tua anagrafica partner.",
+      "Le disponibilità, i listini e le prenotazioni saranno gestiti direttamente dallo staff IschiaMotion.",
+      "Non devi creare una password o accedere alla mini-area partner.",
+      "",
+      "Per modifiche o aggiornamenti puoi rispondere a questa email.",
+      "",
+      "IschiaMotion"
+    ].join("\n")
+  });
+}
+
 export async function sendRenterSetupEmail(input: RenterEmailInput) {
   if (!input.email) return { ok: false, error: "Renter email missing." };
 
