@@ -7,7 +7,7 @@ import {
   setRenterSessionCookies,
   signInRenterWithPassword
 } from "@/lib/supabase/renter-auth";
-import { createSupabaseAnonClient } from "@/lib/supabase/admin-auth";
+import { createSupabaseAnonClient, createSupabaseServiceRoleClient } from "@/lib/supabase/admin-auth";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendNewRenterRequestEmail } from "@/lib/email/renter-emails";
 
@@ -15,6 +15,62 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com";
 
 function loginRedirect(error: string): never {
   redirect(`/renter/login?error=${encodeURIComponent(error)}`);
+}
+
+async function syncRenterProfileAfterSignup(input: {
+  userId: string | null | undefined;
+  email: string;
+  businessName: string;
+  contactName: string;
+  phone: string;
+  vatNumber: string;
+  fiscalCode: string;
+  businessAddress: string;
+  businessCity: string;
+  serviceCategories: string[];
+  operatingZones: string[];
+  seasonalityNotes: string;
+  adminNotes: string;
+  acceptedAt: string;
+}) {
+  if (!input.userId) {
+    return { error: "Utente Auth non creato." };
+  }
+
+  try {
+    const supabase = createSupabaseServiceRoleClient();
+    const { error } = await supabase.from("profiles").upsert({
+      id: input.userId,
+      email: input.email,
+      role: "renter",
+      account_status: "pending",
+      business_name: input.businessName,
+      contact_name: input.contactName,
+      phone: input.phone || null,
+      privacy_accepted_at: input.acceptedAt,
+      terms_accepted_at: input.acceptedAt,
+      force_password_change: false,
+      created_by_admin: false,
+      vat_number: input.vatNumber || null,
+      fiscal_code: input.fiscalCode || null,
+      business_address: input.businessAddress || null,
+      business_city: input.businessCity || null,
+      operating_zones: input.operatingZones,
+      service_categories: input.serviceCategories,
+      seasonality_notes: input.seasonalityNotes || null,
+      seasonality_periods: [],
+      admin_notes: input.adminNotes || null,
+      updated_at: new Date().toISOString()
+    }, {
+      onConflict: "id"
+    });
+
+    return { error: error?.message || null };
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Impossibile sincronizzare il profilo renter."
+    };
+  }
 }
 
 export async function signInRenter(formData: FormData) {
@@ -130,6 +186,27 @@ export async function registerRenter(formData: FormData) {
 
   if (error) {
     redirect(`/renter/register?error=${encodeURIComponent(`Errore registrazione: ${error.message}`)}`);
+  }
+
+  const profileSync = await syncRenterProfileAfterSignup({
+    userId: data.user?.id,
+    email,
+    businessName,
+    contactName,
+    phone,
+    vatNumber,
+    fiscalCode,
+    businessAddress,
+    businessCity,
+    serviceCategories,
+    operatingZones,
+    seasonalityNotes,
+    adminNotes,
+    acceptedAt
+  });
+
+  if (profileSync.error) {
+    redirect(`/renter/register?error=${encodeURIComponent(`Registrazione creata, ma profilo partner non sincronizzato: ${profileSync.error}`)}`);
   }
 
   await sendNewRenterRequestEmail({
