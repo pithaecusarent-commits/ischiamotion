@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { generateVoucherCode } from "@/lib/public-codes";
 import { createSupabaseUserClient } from "@/lib/supabase/admin-auth";
 import type { AdminBookingItem } from "@/lib/supabase/queries/admin-bookings";
 import type { BookingDeliveryMethod, BookingPaymentStatus, BookingPaymentType } from "@/lib/types";
@@ -50,9 +51,7 @@ function createPublicSupabaseClient() {
   });
 }
 
-export function buildVoucherCode() {
-  return `IM-${new Date().getFullYear()}-${Date.now()}`;
-}
+export const buildVoucherCode = generateVoucherCode;
 
 export function buildVoucherPayload(voucherCode: string) {
   return `/checkin/${encodeURIComponent(voucherCode)}`;

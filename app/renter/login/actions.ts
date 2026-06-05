@@ -1,12 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import {
   clearRenterSessionCookies,
   setRenterSessionCookies,
   signInRenterWithPassword
 } from "@/lib/supabase/renter-auth";
 import { createSupabaseAnonClient } from "@/lib/supabase/admin-auth";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com";
 
@@ -42,6 +44,18 @@ export async function signOutRenter() {
 }
 
 export async function registerRenter(formData: FormData) {
+  const requestHeaders = headers();
+  const clientIp = getClientIp(requestHeaders);
+  const ipLimit = checkRateLimit({
+    key: `renter-register:ip:${clientIp}`,
+    limit: 5,
+    windowMs: 60 * 60 * 1000
+  });
+
+  if (!ipLimit.allowed) {
+    redirect(`/renter/register?error=${encodeURIComponent("Troppe richieste. Riprova più tardi.")}`);
+  }
+
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
   const confirmPassword = String(formData.get("confirm_password") || "");
@@ -59,6 +73,16 @@ export async function registerRenter(formData: FormData) {
 
   if (password !== confirmPassword) {
     redirect(`/renter/register?error=${encodeURIComponent("Le password non coincidono.")}`);
+  }
+
+  const emailLimit = checkRateLimit({
+    key: `renter-register:email:${email}`,
+    limit: 3,
+    windowMs: 24 * 60 * 60 * 1000
+  });
+
+  if (!emailLimit.allowed) {
+    redirect(`/renter/register?error=${encodeURIComponent("Troppe richieste per questa email. Riprova più tardi.")}`);
   }
 
   const supabase = createSupabaseAnonClient();

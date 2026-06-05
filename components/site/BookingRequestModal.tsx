@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels, paymentMethodLabels, paymentTypeLabels } from "@/lib/booking-labels";
-import { createBookingRequest, generateBookingCode } from "@/lib/supabase/queries/bookings";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
@@ -151,28 +150,37 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
         : "";
       const paymentNotes = [priceNote, userPaymentNotes].filter(Boolean).join("\n");
 
-      await createBookingRequest({
-        bookingCode: generateBookingCode(),
-        firstName: String(formData.get("firstName") || ""),
-        lastName: String(formData.get("lastName") || ""),
-        email: String(formData.get("email") || ""),
-        phone: String(formData.get("phone") || ""),
-        language: String(formData.get("language") || locale) as Locale,
-        startDate: String(formData.get("startDate") || ""),
-        endDate: String(formData.get("endDate") || ""),
-        pickupTime: String(formData.get("pickupTime") || ""),
-        deliveryMethod: selectedDeliveryMethod,
-        deliveryLocation,
-        deliveryNotes: String(formData.get("deliveryNotes") || ""),
-        paymentType: String(formData.get("paymentType") || "pay_on_pickup") as BookingPaymentType,
-        paymentMethod: String(formData.get("paymentMethod") || "unknown") as BookingPaymentMethod,
-        paymentNotes,
-        notes: String(formData.get("notes") || ""),
-        vehicleId: currentVehicle.source === "supabase" ? currentVehicle.id : null,
-        pickupPointId: currentVehicle.source === "supabase" ? currentVehicle.pickup_point_id || pickupPoint.id : null,
-        vehicleLabel,
-        pickupPointLabel: formatPickupLabel(pickupPoint, locale)
+      const response = await fetch("/api/booking-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          firstName: String(formData.get("firstName") || ""),
+          lastName: String(formData.get("lastName") || ""),
+          email: String(formData.get("email") || ""),
+          phone: String(formData.get("phone") || ""),
+          language: String(formData.get("language") || locale) as Locale,
+          startDate: String(formData.get("startDate") || ""),
+          endDate: String(formData.get("endDate") || ""),
+          pickupTime: String(formData.get("pickupTime") || ""),
+          deliveryMethod: selectedDeliveryMethod,
+          deliveryLocation,
+          deliveryNotes: String(formData.get("deliveryNotes") || ""),
+          paymentType: String(formData.get("paymentType") || "pay_on_pickup") as BookingPaymentType,
+          paymentMethod: String(formData.get("paymentMethod") || "unknown") as BookingPaymentMethod,
+          paymentNotes,
+          notes: String(formData.get("notes") || ""),
+          vehicleId: currentVehicle.source === "supabase" ? currentVehicle.id : null,
+          pickupPointId: currentVehicle.source === "supabase" ? currentVehicle.pickup_point_id || pickupPoint.id : null,
+          vehicleLabel,
+          pickupPointLabel: formatPickupLabel(pickupPoint, locale)
+        })
       });
+
+      if (!response.ok) {
+        throw new Error("Booking request failed.");
+      }
 
       setStatus("success");
     } catch {

@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { initialPaymentStatus } from "@/lib/booking-labels";
+import { generateBookingCode } from "@/lib/public-codes";
 import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentType } from "@/lib/types";
 
 export type BookingRequestInput = {
@@ -41,9 +42,7 @@ function createPublicSupabaseClient() {
   });
 }
 
-export function generateBookingCode() {
-  return `IM-${Date.now()}`;
-}
+export { generateBookingCode };
 
 export function buildBookingNotes(input: Pick<BookingRequestInput, "notes" | "vehicleLabel" | "pickupPointLabel">) {
   const parts = [
@@ -58,44 +57,10 @@ export function buildBookingNotes(input: Pick<BookingRequestInput, "notes" | "ve
   return parts.join("\n");
 }
 
-async function sendBookingEmails(bookingId: string | null, input: BookingRequestInput) {
-  try {
-    await fetch("/api/booking-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        bookingId,
-        bookingCode: input.bookingCode,
-        firstName: input.firstName,
-        lastName: input.lastName,
-        email: input.email,
-        phone: input.phone,
-        language: input.language,
-        startDate: input.startDate,
-        endDate: input.endDate,
-        pickupTime: input.pickupTime,
-        deliveryMethod: input.deliveryMethod,
-        deliveryLocation: input.deliveryLocation,
-        deliveryNotes: input.deliveryNotes,
-        paymentType: input.paymentType,
-        paymentMethod: input.paymentMethod,
-        paymentNotes: input.paymentNotes,
-        notes: input.notes,
-        vehicleLabel: input.vehicleLabel,
-        pickupPointLabel: input.pickupPointLabel
-      })
-    });
-  } catch (error) {
-    console.warn("Booking email notification failed after successful insert.", error);
-  }
-}
-
 export async function createBookingRequest(input: BookingRequestInput) {
   const supabase = createPublicSupabaseClient();
 
-  const { data, error } = await supabase.rpc("create_public_booking_request", {
+  const { error } = await supabase.rpc("create_public_booking_request", {
     p_booking_code: input.bookingCode,
     p_customer_first_name: input.firstName,
     p_customer_last_name: input.lastName,
@@ -120,8 +85,6 @@ export async function createBookingRequest(input: BookingRequestInput) {
   if (error) {
     throw error;
   }
-
-  await sendBookingEmails(typeof data === "string" ? data : null, input);
 }
 
 export function getBookingNoteValue(notes: string | null, label: "Vehicle" | "Pickup point") {

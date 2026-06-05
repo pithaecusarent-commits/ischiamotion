@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { deliveryMethodLabels, paymentMethodLabels, paymentTypeLabels } from "@/lib/booking-labels";
+import { verifyInternalSignature } from "@/lib/internal-signature";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentType, Locale } from "@/lib/types";
 
 type BookingEmailPayload = {
@@ -189,7 +191,29 @@ function isValidPayload(payload: Partial<BookingEmailPayload>): payload is Booki
 }
 
 export async function POST(request: Request) {
-  const payload = await request.json().catch(() => null) as Partial<BookingEmailPayload> | null;
+  const rawBody = await request.text();
+
+  if (!verifyInternalSignature(request.headers, rawBody)) {
+    return NextResponse.json({ ok: false, error: "Unauthorized." }, { status: 401 });
+  }
+
+  const rateLimit = checkRateLimit({
+    key: `booking-email:${getClientIp(request.headers)}`,
+    limit: 20,
+    windowMs: 60 * 1000
+  });
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ ok: false, error: "Too many requests." }, { status: 429 });
+  }
+
+  let payload: Partial<BookingEmailPayload> | null = null;
+
+  try {
+    payload = JSON.parse(rawBody || "null") as Partial<BookingEmailPayload> | null;
+  } catch {
+    return NextResponse.json({ ok: false, error: "Invalid JSON." }, { status: 400 });
+  }
 
   if (!payload || !isValidPayload(payload)) {
     return NextResponse.json({ ok: false, error: "Invalid booking email payload." }, { status: 400 });
