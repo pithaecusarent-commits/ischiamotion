@@ -363,6 +363,9 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
               <p className="text-ink/60">
                 <span className="font-black">Zone operative:</span> {renter.operating_zones?.join(", ") || "-"}
               </p>
+              <p className="sm:col-span-2 text-ink/60">
+                <span className="font-black">Stagionalità:</span> {renter.seasonality_notes || "-"}
+              </p>
               {renter.admin_notes ? (
                 <p className="sm:col-span-2 text-ink/60">
                   <span className="font-black">Note:</span> {renter.admin_notes}

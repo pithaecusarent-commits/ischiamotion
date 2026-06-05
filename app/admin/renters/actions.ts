@@ -143,6 +143,7 @@ export async function createRenterFromAdminAction(formData: FormData) {
     businessCity: String(formData.get("business_city") || "").trim(),
     operatingZones: splitList(formData.get("operating_zones")),
     serviceCategories: formData.getAll("service_categories").map((item) => String(item).trim()).filter(Boolean),
+    seasonalityNotes: String(formData.get("seasonality_notes") || "").trim(),
     adminNotes: String(formData.get("admin_notes") || "").trim(),
     createAuthUser
   });

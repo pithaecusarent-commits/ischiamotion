@@ -12,6 +12,7 @@ type RenterEmailInput = {
   businessCity?: string | null;
   serviceCategories?: string[];
   operatingZones?: string[];
+  seasonalityNotes?: string | null;
   reason?: string | null;
   setupUrl?: string | null;
 };
@@ -44,6 +45,7 @@ export async function sendNewRenterRequestEmail(input: RenterEmailInput) {
       line("Comune/zona", input.businessCity),
       line("Categorie offerte", input.serviceCategories?.join(", ")),
       line("Zone operative", input.operatingZones?.join(", ")),
+      line("Stagionalità", input.seasonalityNotes),
       line("Link admin", adminRenterUrl(input.profileId))
     ].join("\n")
   });

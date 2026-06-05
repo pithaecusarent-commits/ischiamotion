@@ -72,6 +72,7 @@ export async function registerRenter(formData: FormData) {
     .split(",")
     .map((value) => value.trim())
     .filter(Boolean);
+  const seasonalityNotes = String(formData.get("seasonality_notes") || "").trim();
   const adminNotes = String(formData.get("admin_notes") || "").trim();
   const privacyAccepted = String(formData.get("privacy_accepted") || "") === "1";
 
@@ -118,6 +119,8 @@ export async function registerRenter(formData: FormData) {
         business_city: businessCity,
         service_categories: serviceCategories,
         operating_zones: operatingZones,
+        seasonality_notes: seasonalityNotes,
+        seasonality_periods: [],
         admin_notes: adminNotes,
         privacy_accepted_at: acceptedAt,
         terms_accepted_at: acceptedAt
@@ -137,7 +140,8 @@ export async function registerRenter(formData: FormData) {
     phone,
     businessCity,
     serviceCategories,
-    operatingZones
+    operatingZones,
+    seasonalityNotes
   }).catch(() => null);
 
   redirect(`/renter/login?registered=${encodeURIComponent("1")}`);

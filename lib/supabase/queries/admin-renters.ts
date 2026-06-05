@@ -24,6 +24,8 @@ export type AdminRenterApplication = {
   business_city: string | null;
   operating_zones: string[];
   service_categories: string[];
+  seasonality_notes: string | null;
+  seasonality_periods: unknown[];
   admin_notes: string | null;
 };
 
@@ -50,6 +52,8 @@ export type AdminRenterDetail = {
     business_city: string | null;
     operating_zones: string[];
     service_categories: string[];
+    seasonality_notes: string | null;
+    seasonality_periods: unknown[];
     admin_notes: string | null;
     onboarding_status: string;
   } | null;
@@ -79,6 +83,7 @@ export type CreateAdminRenterInput = {
   businessCity: string;
   operatingZones: string[];
   serviceCategories: string[];
+  seasonalityNotes: string;
   adminNotes: string;
   createAuthUser: boolean;
 };
@@ -103,6 +108,8 @@ const profileSelect = [
   "business_city",
   "operating_zones",
   "service_categories",
+  "seasonality_notes",
+  "seasonality_periods",
   "admin_notes"
 ].join(", ");
 
@@ -152,7 +159,7 @@ export async function getRenterDetailByProfileId(
       const [renterResult, vehiclesResult, bookingsResult] = await Promise.all([
         supabase
           .from("renters")
-          .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, admin_notes, onboarding_status")
+          .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status")
           .eq("id", renterId)
           .single(),
         supabase
@@ -339,6 +346,8 @@ export async function createAdminRenterRecord(
       business_city: clean(input.businessCity),
       operating_zones: input.operatingZones,
       service_categories: input.serviceCategories,
+      seasonality_notes: clean(input.seasonalityNotes),
+      seasonality_periods: [],
       admin_notes: clean(input.adminNotes),
       onboarding_status: input.createAuthUser ? "pending_first_login" : "not_started"
     };
@@ -376,6 +385,8 @@ export async function createAdminRenterRecord(
         business_city: input.businessCity,
         operating_zones: input.operatingZones,
         service_categories: input.serviceCategories,
+        seasonality_notes: input.seasonalityNotes,
+        seasonality_periods: [],
         admin_notes: input.adminNotes,
         created_by_admin: true,
         force_password_change: true
@@ -404,6 +415,8 @@ export async function createAdminRenterRecord(
         business_city: clean(input.businessCity),
         operating_zones: input.operatingZones,
         service_categories: input.serviceCategories,
+        seasonality_notes: clean(input.seasonalityNotes),
+        seasonality_periods: [],
         admin_notes: clean(input.adminNotes)
       })
       .eq("id", profileId);

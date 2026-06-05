@@ -130,6 +130,15 @@ export default function RenterRegisterPage({ searchParams }: Props) {
           </label>
 
           <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Stagionalità
+            <textarea
+              className="min-h-28 rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="seasonality_notes"
+              placeholder="Es. bassa stagione fino a maggio, alta stagione luglio-agosto, chiusure o fasce particolari"
+            />
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
             Note
             <textarea
               className="min-h-28 rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
