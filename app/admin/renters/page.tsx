@@ -1,4 +1,4 @@
-import { approveRenterAction, deactivateRenterAction, rejectRenterAction } from "@/app/admin/renters/actions";
+import { activateAdminManagedRenterAccessAction, approveRenterAction, deactivateRenterAction, rejectRenterAction } from "@/app/admin/renters/actions";
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
@@ -17,6 +17,7 @@ type Props = {
     profile?: string;
     renter?: string;
     approved?: string;
+    access?: string;
     disabled?: string;
     rejected?: string;
     error?: string;
@@ -158,6 +159,17 @@ export default async function AdminRentersPage({ searchParams }: Props) {
         {searchParams?.approved ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
             Noleggiatore approvato e collegato correttamente.
+          </div>
+        ) : null}
+
+        {searchParams?.access ? (
+          <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Accesso renter creato e email per impostare la password inviata.
+            {searchParams.profile ? (
+              <a className="ml-2 underline" href={`/admin/renters/${searchParams.profile}`}>
+                Apri profilo
+              </a>
+            ) : null}
           </div>
         ) : null}
 
@@ -312,9 +324,21 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                         <div className="mt-2 text-xs font-bold text-ink/45">Onboarding: {renter.onboarding_status || "-"}</div>
                       </td>
                       <td className="px-4 py-4">
-                        <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
-                          Gestito da admin
-                        </span>
+                        <div className="grid min-w-40 gap-2">
+                          <span className="inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
+                            Gestito da admin
+                          </span>
+                          {renter.email ? (
+                            <form action={activateAdminManagedRenterAccessAction}>
+                              <input type="hidden" name="renter_id" value={renter.id} />
+                              <button className="rounded-full bg-ink px-4 py-2 text-xs font-bold text-white" type="submit">
+                                Crea accesso
+                              </button>
+                            </form>
+                          ) : (
+                            <span className="text-xs font-bold text-ink/45">Email mancante</span>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))}

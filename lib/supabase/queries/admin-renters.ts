@@ -408,6 +408,138 @@ export async function deactivateRenterApplication(
   }
 }
 
+export async function activateAdminManagedRenterAccess(
+  renterId: string
+): Promise<{ renterId: string | null; profileId: string | null; setupUrl: string | null; error: string | null }> {
+  try {
+    const service = createSupabaseServiceRoleClient();
+    const { data: renter, error: renterError } = await service
+      .from("renters")
+      .select("id, business_name_internal, contact_name, email, phone, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes")
+      .eq("id", renterId)
+      .single();
+
+    if (renterError || !renter) {
+      return { renterId: null, profileId: null, setupUrl: null, error: renterError?.message || "Renter non trovato." };
+    }
+
+    if (!renter.email) {
+      return { renterId, profileId: null, setupUrl: null, error: "Email obbligatoria per creare l'accesso Auth." };
+    }
+
+    const existingLink = await service
+      .from("renter_users")
+      .select("profile_id")
+      .eq("renter_id", renterId)
+      .maybeSingle();
+
+    if (existingLink.data?.profile_id) {
+      return { renterId, profileId: existingLink.data.profile_id, setupUrl: null, error: "Questo renter ha gia un accesso collegato." };
+    }
+
+    const temporaryPassword = randomTemporaryPassword();
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
+    const seasonalityPeriods = Array.isArray(renter.seasonality_periods) ? renter.seasonality_periods : [];
+
+    const { data: authData, error: authError } = await service.auth.admin.createUser({
+      email: renter.email,
+      password: temporaryPassword,
+      email_confirm: true,
+      user_metadata: {
+        business_name: renter.business_name_internal,
+        contact_name: renter.contact_name,
+        phone: renter.phone,
+        vat_number: renter.vat_number,
+        fiscal_code: renter.fiscal_code,
+        business_address: renter.business_address,
+        business_city: renter.business_city,
+        operating_zones: renter.operating_zones || [],
+        service_categories: renter.service_categories || [],
+        seasonality_notes: renter.seasonality_notes,
+        seasonality_periods: seasonalityPeriods,
+        admin_notes: renter.admin_notes,
+        created_by_admin: true,
+        force_password_change: true
+      }
+    });
+
+    const profileId = authData.user?.id || null;
+    if (authError || !profileId) {
+      return { renterId, profileId: null, setupUrl: null, error: authError?.message || "Impossibile creare utente Auth." };
+    }
+
+    await service
+      .from("profiles")
+      .update({
+        business_name: renter.business_name_internal,
+        contact_name: clean(renter.contact_name),
+        phone: clean(renter.phone),
+        account_status: "approved",
+        approved_at: now.toISOString(),
+        force_password_change: true,
+        temp_password_created_at: now.toISOString(),
+        temp_password_expires_at: expiresAt,
+        created_by_admin: true,
+        vat_number: clean(renter.vat_number),
+        fiscal_code: clean(renter.fiscal_code),
+        business_address: clean(renter.business_address),
+        business_city: clean(renter.business_city),
+        operating_zones: renter.operating_zones || [],
+        service_categories: renter.service_categories || [],
+        seasonality_notes: clean(renter.seasonality_notes),
+        seasonality_periods: seasonalityPeriods,
+        admin_notes: clean(renter.admin_notes),
+        updated_at: now.toISOString()
+      })
+      .eq("id", profileId);
+
+    const { error: linkError } = await service
+      .from("renter_users")
+      .insert({ renter_id: renterId, profile_id: profileId });
+
+    if (linkError) {
+      return { renterId, profileId, setupUrl: null, error: linkError.message };
+    }
+
+    await service
+      .from("renters")
+      .update({
+        onboarding_status: "pending_first_login",
+        updated_at: now.toISOString()
+      })
+      .eq("id", renterId);
+
+    const linkResult = await (service.auth.admin as unknown as {
+      generateLink: (params: Record<string, unknown>) => Promise<{ data: { properties?: { action_link?: string; actionLink?: string } } | null; error: { message: string } | null }>;
+    }).generateLink({
+      type: "recovery",
+      email: renter.email,
+      options: {
+        redirectTo: setupRedirectUrl()
+      }
+    });
+
+    const setupUrl = linkResult.data?.properties?.action_link || linkResult.data?.properties?.actionLink || null;
+
+    await sendRenterSetupEmail({
+      businessName: renter.business_name_internal || "Noleggiatore",
+      contactName: renter.contact_name,
+      email: renter.email,
+      setupUrl
+    }).catch(() => null);
+
+    return { renterId, profileId, setupUrl, error: null };
+  } catch (error) {
+    return {
+      renterId,
+      profileId: null,
+      setupUrl: null,
+      error: error instanceof Error ? error.message : "Unable to activate renter access."
+    };
+  }
+}
+
 export async function createAdminRenterRecord(
   accessToken: string,
   input: CreateAdminRenterInput

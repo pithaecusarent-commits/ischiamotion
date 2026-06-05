@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { sendAdminManagedRenterCreatedEmail, sendRenterApprovedEmail, sendRenterRejectedEmail } from "@/lib/email/renter-emails";
 import {
+  activateAdminManagedRenterAccess,
   approveRenterApplication,
   createAdminRenterRecord,
   deactivateRenterApplication,
@@ -107,6 +108,32 @@ export async function deactivateRenterAction(formData: FormData) {
   });
 
   rentersRedirect("disabled=1");
+}
+
+export async function activateAdminManagedRenterAccessAction(formData: FormData) {
+  const renterId = String(formData.get("renter_id") || "");
+  const { accessToken, profile } = await requireAdmin("/admin/renters");
+
+  if (!renterId) {
+    rentersRedirect(`error=${encodeURIComponent("Renter non valido.")}`);
+  }
+
+  const result = await activateAdminManagedRenterAccess(renterId);
+  if (result.error) {
+    rentersRedirect(`error=${encodeURIComponent(result.error)}`);
+  }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: profile.id,
+    actorEmail: profile.email,
+    action: "renter.access_created",
+    targetTable: "renters",
+    targetId: renterId,
+    metadata: { profileId: result.profileId, setupUrlGenerated: Boolean(result.setupUrl) }
+  });
+
+  rentersRedirect(`access=1${result.profileId ? `&profile=${encodeURIComponent(result.profileId)}` : ""}`);
 }
 
 function splitList(value: FormDataEntryValue | null) {
