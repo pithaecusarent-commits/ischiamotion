@@ -659,6 +659,8 @@ export async function getRenterPriceRules(accessToken: string): Promise<{ rules:
   }
 }
 
+const maxPriceRulesPerVehicle = 5;
+
 export async function createRenterPriceRule(input: {
   accessToken: string;
   vehicleId: string;
@@ -683,6 +685,17 @@ export async function createRenterPriceRule(input: {
 
     if (vehicleError) return { error: vehicleError.message };
     if (!vehicle) return { error: "Veicolo non assegnato al tuo noleggio." };
+
+    const { count, error: countError } = await supabase
+      .from("vehicle_price_rules")
+      .select("id", { count: "exact", head: true })
+      .eq("vehicle_id", input.vehicleId)
+      .eq("renter_id", input.renterId);
+
+    if (countError) return { error: countError.message };
+    if ((count || 0) >= maxPriceRulesPerVehicle) {
+      return { error: `Puoi creare al massimo ${maxPriceRulesPerVehicle} fasce prezzo per veicolo.` };
+    }
 
     const { error } = await supabase.from("vehicle_price_rules").insert({
       vehicle_id:     input.vehicleId,

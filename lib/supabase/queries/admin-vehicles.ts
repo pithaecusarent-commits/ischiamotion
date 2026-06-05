@@ -280,6 +280,8 @@ export type AdminPriceRuleInput = {
   notes: string;
 };
 
+const maxPriceRulesPerVehicle = 5;
+
 export async function getAdminVehiclePriceRules(
   accessToken: string,
   vehicleId: string
@@ -305,6 +307,16 @@ export async function createAdminVehiclePriceRule(
 ): Promise<{ error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);
+    const { count, error: countError } = await supabase
+      .from("vehicle_price_rules")
+      .select("id", { count: "exact", head: true })
+      .eq("vehicle_id", data.vehicle_id);
+
+    if (countError) return { error: countError.message };
+    if ((count || 0) >= maxPriceRulesPerVehicle) {
+      return { error: `Puoi creare al massimo ${maxPriceRulesPerVehicle} fasce prezzo per veicolo.` };
+    }
+
     const { error } = await supabase.from("vehicle_price_rules").insert({
       vehicle_id:      data.vehicle_id,
       renter_id:       data.renter_id,

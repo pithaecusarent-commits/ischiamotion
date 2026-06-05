@@ -34,10 +34,17 @@ const emptyDraft: Draft = {
   notes: ""
 };
 
+const maxPriceRulesPerVehicle = 5;
+
 export function PriceRulesSection({ vehicles, rules, returnPath = "/renter/pricing" }: Props) {
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const vehicleById = useMemo(() => new Map(vehicles.map((v) => [v.id, v])), [vehicles]);
   const isEditing = Boolean(draft.priceRuleId);
+  const selectedVehicleId = draft.vehicleValue.split("|")[0] || "";
+  const selectedVehicleRuleCount = selectedVehicleId
+    ? rules.filter((rule) => rule.vehicle_id === selectedVehicleId).length
+    : 0;
+  const hasReachedRuleLimit = !isEditing && Boolean(selectedVehicleId) && selectedVehicleRuleCount >= maxPriceRulesPerVehicle;
 
   function editRule(rule: RenterPriceRuleItem) {
     setDraft({
@@ -46,6 +53,20 @@ export function PriceRulesSection({ vehicles, rules, returnPath = "/renter/prici
       name: rule.name || "",
       dateFrom: rule.date_from,
       dateTo: rule.date_to,
+      pricePerDay: String(rule.price_per_day),
+      minRentalDays: String(rule.min_rental_days),
+      isActive: String(rule.is_active),
+      notes: rule.notes || ""
+    });
+  }
+
+  function copyRule(rule: RenterPriceRuleItem) {
+    setDraft({
+      priceRuleId: "",
+      vehicleValue: `${rule.vehicle_id}|${rule.renter_id}`,
+      name: rule.name || "",
+      dateFrom: "",
+      dateTo: "",
       pricePerDay: String(rule.price_per_day),
       minRentalDays: String(rule.min_rental_days),
       isActive: String(rule.is_active),
@@ -69,7 +90,12 @@ export function PriceRulesSection({ vehicles, rules, returnPath = "/renter/prici
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="font-serif text-2xl font-bold">{isEditing ? "Modifica prezzo" : "Nuovo prezzo stagionale"}</h3>
-            <p className="mt-1 text-sm text-ink/55">Imposta un prezzo per un periodo specifico.</p>
+            <p className="mt-1 text-sm text-ink/55">Imposta fino a {maxPriceRulesPerVehicle} fasce di prezzo per veicolo.</p>
+            {selectedVehicleId ? (
+              <p className="mt-1 text-xs font-bold text-ink/45">
+                {selectedVehicleRuleCount}/{maxPriceRulesPerVehicle} fasce configurate per il veicolo selezionato
+              </p>
+            ) : null}
           </div>
           {isEditing ? (
             <button
@@ -200,10 +226,19 @@ export function PriceRulesSection({ vehicles, rules, returnPath = "/renter/prici
               </label>
             </div>
           </div>
-          <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
+          <button
+            className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:bg-ink/30"
+            type="submit"
+            disabled={hasReachedRuleLimit}
+          >
             Salva prezzo
           </button>
         </div>
+        {hasReachedRuleLimit ? (
+          <p className="mt-3 text-xs font-bold text-amber-800">
+            Hai raggiunto il limite di {maxPriceRulesPerVehicle} fasce per questo veicolo. Modifica o elimina una fascia esistente.
+          </p>
+        ) : null}
       </form>
 
       {rules.length > 0 ? (
@@ -258,6 +293,14 @@ export function PriceRulesSection({ vehicles, rules, returnPath = "/renter/prici
                             onClick={() => editRule(rule)}
                           >
                             Modifica
+                          </button>
+                          <button
+                            className="rounded-full border border-sea/20 px-4 py-2 text-xs font-bold text-green-deep hover:bg-sea/10 disabled:cursor-not-allowed disabled:border-ink/10 disabled:text-ink/35"
+                            type="button"
+                            onClick={() => copyRule(rule)}
+                            disabled={rules.filter((item) => item.vehicle_id === rule.vehicle_id).length >= maxPriceRulesPerVehicle}
+                          >
+                            Copia listino
                           </button>
                           <form
                             action={deletePriceRuleAction}

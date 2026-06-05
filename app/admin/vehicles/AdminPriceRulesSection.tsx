@@ -35,9 +35,12 @@ const emptyDraft: Draft = {
   notes: ""
 };
 
+const maxPriceRulesPerVehicle = 5;
+
 export function AdminPriceRulesSection({ vehicleId, renterId, rules }: Props) {
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const isEditing = Boolean(draft.priceRuleId);
+  const hasReachedRuleLimit = !isEditing && rules.length >= maxPriceRulesPerVehicle;
 
   function editRule(rule: AdminPriceRuleItem) {
     setDraft({
@@ -52,11 +55,24 @@ export function AdminPriceRulesSection({ vehicleId, renterId, rules }: Props) {
     });
   }
 
+  function copyRule(rule: AdminPriceRuleItem) {
+    setDraft({
+      priceRuleId: "",
+      name: rule.name || "",
+      dateFrom: "",
+      dateTo: "",
+      pricePerDay: String(rule.price_per_day),
+      minRentalDays: String(rule.min_rental_days),
+      isActive: String(rule.is_active),
+      notes: rule.notes || ""
+    });
+  }
+
   return (
     <div className="mt-10">
       <h2 className="font-serif text-3xl font-bold">Prezzi stagionali</h2>
       <p className="mt-2 text-sm text-ink/60">
-        Imposta fasce di prezzo per periodi specifici. Sovrascrivono il prezzo base nei risultati di ricerca.
+        Imposta fino a {maxPriceRulesPerVehicle} fasce di prezzo per periodi specifici. Sovrascrivono il prezzo base nei risultati di ricerca.
       </p>
 
       <div className="mt-5 grid gap-5">
@@ -66,7 +82,12 @@ export function AdminPriceRulesSection({ vehicleId, renterId, rules }: Props) {
           <input type="hidden" name="priceRuleId"  value={draft.priceRuleId} />
 
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <h3 className="font-serif text-2xl font-bold">{isEditing ? "Modifica prezzo" : "Nuovo prezzo stagionale"}</h3>
+            <div>
+              <h3 className="font-serif text-2xl font-bold">{isEditing ? "Modifica prezzo" : "Nuovo prezzo stagionale"}</h3>
+              <p className="mt-1 text-xs font-bold text-ink/45">
+                {rules.length}/{maxPriceRulesPerVehicle} fasce configurate
+              </p>
+            </div>
             {isEditing ? (
               <button
                 className="rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink/65 hover:border-sea/30 hover:text-green-deep"
@@ -165,10 +186,19 @@ export function AdminPriceRulesSection({ vehicleId, renterId, rules }: Props) {
               value={draft.notes}
               onChange={(e) => setDraft((d) => ({ ...d, notes: e.target.value }))}
             />
-            <button className="self-end rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
+            <button
+              className="self-end rounded-full bg-ink px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:bg-ink/30"
+              type="submit"
+              disabled={hasReachedRuleLimit}
+            >
               Salva
             </button>
           </div>
+          {hasReachedRuleLimit ? (
+            <p className="mt-3 text-xs font-bold text-amber-800">
+              Hai raggiunto il limite di {maxPriceRulesPerVehicle} fasce per questo veicolo. Modifica o elimina una fascia esistente.
+            </p>
+          ) : null}
         </form>
 
         {rules.length > 0 ? (
@@ -207,6 +237,14 @@ export function AdminPriceRulesSection({ vehicleId, renterId, rules }: Props) {
                             onClick={() => editRule(rule)}
                           >
                             Modifica
+                          </button>
+                          <button
+                            className="rounded-full border border-sea/20 px-4 py-2 text-xs font-bold text-green-deep hover:bg-sea/10 disabled:cursor-not-allowed disabled:border-ink/10 disabled:text-ink/35"
+                            type="button"
+                            onClick={() => copyRule(rule)}
+                            disabled={rules.length >= maxPriceRulesPerVehicle}
+                          >
+                            Copia listino
                           </button>
                           <form
                             action={deleteAdminVehiclePriceRuleAction}
