@@ -20,10 +20,10 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!locales.includes(params.locale)) notFound();
   const isIt = params.locale === "it";
   return {
-    title: isIt ? "Noleggio scooter auto barche Ischia | IschiaMotion" : "Scooter car boat rental Ischia | IschiaMotion",
+    title: isIt ? "IschiaMotion | Noleggi e servizi turistici a Ischia" : "IschiaMotion | Rentals and Travel Services in Ischia",
     description: isIt
-      ? "Piattaforma locale per noleggio scooter Ischia, noleggio auto Ischia, noleggio e-bike Ischia, noleggio gommoni Ischia, noleggio barche Ischia e Beach Club tramite partner selezionati."
-      : "Local marketplace for scooter rental Ischia, car rental Ischia, e-bike rental, rubber dinghy rental, boat rental and Beach Club options via selected partners.",
+      ? "Scopri scooter, auto, e-bike, gommoni e Beach Club a Ischia. IschiaMotion ti connette con partner locali per organizzare la tua esperienza sull’isola."
+      : "Discover scooters, cars, e-bikes, boat rentals and Beach Clubs in Ischia. IschiaMotion connects you with local partners for your island experience.",
     alternates: {
       canonical: `/${params.locale}`,
       languages: { it: "/it", en: "/en", "x-default": "/it" }

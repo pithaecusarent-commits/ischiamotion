@@ -5,7 +5,7 @@ import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Noleggio scooter Ischia: porto, spiagge e partner",
+  title: "Noleggio Scooter Ischia | Prenota scooter sull’isola",
   description: "Richiedi disponibilità per noleggio scooter a Ischia tramite partner selezionati: Ischia Porto, spiagge, borghi, casco, patente e conferma dopo verifica.",
   alternates: {
     canonical: "/it/noleggio-scooter-ischia",
