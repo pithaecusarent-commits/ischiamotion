@@ -50,16 +50,17 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
 const landingGuides = {
   it: {
     auto: {
-      pickupTitle: "Ritiro e consegna auto a Ischia",
+      pickupTitle: "Ritiro al porto e consegna dove prevista",
       pickupItems: [
         ["Porto e arrivi", "Ischia Porto e Casamicciola sono zone decisive quando arrivi con traghetto, aliscafo o bagagli: puoi indicarle nella richiesta e attendere verifica del partner."],
         ["Hotel e strutture", "Per auto e spostamenti familiari può essere utile chiedere consegna in hotel o presso una struttura ricettiva, dove prevista dal partner locale."],
         ["Comuni più distanti", "Forio, Barano, Lacco Ameno e Sant'Angelo richiedono pianificazione migliore: ritiro, orari e disponibilità vengono confermati dopo controllo."]
       ],
-      practicalTitle: "Cosa sapere prima di richiedere un'auto",
+      practicalTitle: "Parcheggi, strade e consigli di guida",
       practicalItems: [
         ["Documenti e patente", "Prepara patente valida, documento e dati di contatto. Età minima, categoria veicolo ed eventuali requisiti dipendono dal partner."],
         ["Cauzione e condizioni", "Cauzione, coperture e franchigie non vanno date per scontate: IschiaMotion le verifica prima della conferma finale."],
+        ["Parcheggi e strade", "Strade strette, traffico e parcheggi cambiano tra porto, centri e borghi: valuta itinerario e zona prima della richiesta."],
         ["Quando valutare altro", "Se viaggi leggero e resti tra porto, spiagge e centro, scooter o e-bike possono essere più agili; con famiglia e bagagli l'auto resta più comoda."]
       ]
     },
@@ -78,13 +79,13 @@ const landingGuides = {
       ]
     },
     gommone: {
-      pickupTitle: "Ritiro gommoni e punti nautici",
+      pickupTitle: "Meteo, requisiti e punti nautici",
       pickupItems: [
         ["Punto definito", "Per i gommoni non è prevista consegna in hotel: il ritiro avviene presso punto nautico indicato o IschiaMotion Point, secondo partner."],
         ["Costa e calette", "Ischia Porto, Casamicciola, Forio, Lacco Ameno e Sant'Angelo possono essere riferimenti utili per scegliere zona di partenza e rientro."],
         ["Meteo e mare", "Vento, mare e condizioni operative possono cambiare la disponibilità anche dopo la richiesta iniziale."]
       ],
-      practicalTitle: "Cosa sapere prima di richiedere un gommone",
+      practicalTitle: "Gommoni con o senza patente",
       practicalItems: [
         ["Patente nautica", "Dipende dal mezzo e dalla motorizzazione. Requisiti, documenti e capienza vengono verificati con il partner."],
         ["Gommone o barca", "Il gommone è spesso più agile per costa e calette; la barca può offrire più spazio e comfort, secondo modello."],
@@ -106,13 +107,13 @@ const landingGuides = {
       ]
     },
     beach_club: {
-      pickupTitle: "Accesso beach club a Ischia",
+      pickupTitle: "Zone e disponibilità Beach Club",
       pickupItems: [
         ["Data e persone", "Indica giorno richiesto, numero persone, adulti e bambini per verificare soluzioni coerenti."],
         ["Zona preferita", "Forio, Lacco Ameno, Ischia Porto, Sant'Angelo e altre zone possono orientare la ricerca tra strutture locali."],
-        ["Servizi desiderati", "Puoi segnalare lettini, ombrelloni, giornata intera, pranzo, aperitivo o preferenze premium."]
+        ["Servizi desiderati", "Puoi segnalare lettini, ombrelloni, giornata intera, pranzo, aperitivo o altri servizi dove disponibili."]
       ],
-      practicalTitle: "Cosa puoi richiedere",
+      practicalTitle: "Lettini, ombrelloni e servizi mare",
       practicalItems: [
         ["Accesso giornaliero", "Richiedi disponibilità per accesso, lettini, ombrelloni e servizi spiaggia."],
         ["Food e drink", "Puoi indicare pranzo o aperitivo vista mare, se disponibili presso la struttura selezionata."],
@@ -122,16 +123,17 @@ const landingGuides = {
   },
   en: {
     auto: {
-      pickupTitle: "Car pickup and delivery in Ischia",
+      pickupTitle: "Port pickup and delivery where offered",
       pickupItems: [
         ["Ports and arrivals", "Ischia Port and Casamicciola matter when you arrive by ferry, hydrofoil or with luggage. Add them to the request and wait for partner review."],
         ["Hotels and stays", "For families, hotel or accommodation delivery may be useful where offered by the local partner."],
         ["Further towns", "Forio, Barano, Lacco Ameno and Sant'Angelo need better planning: pickup, timing and availability are confirmed after review."]
       ],
-      practicalTitle: "What to know before requesting a car",
+      practicalTitle: "Parking, roads and driving advice",
       practicalItems: [
         ["Documents and license", "Prepare a valid driving license, ID and contact details. Age, vehicle category and requirements depend on the partner."],
         ["Deposit and conditions", "Deposit, coverage and excess are not automatic: IschiaMotion checks them before final confirmation."],
+        ["Parking and roads", "Narrow roads, traffic and parking vary between ports, towns and villages: consider route and area before requesting."],
         ["When to choose another option", "If you travel light around port, beaches and town centers, scooter or e-bike may be easier; with family and luggage, a car is more comfortable."]
       ]
     },
@@ -150,13 +152,13 @@ const landingGuides = {
       ]
     },
     gommone: {
-      pickupTitle: "Rubber dinghy and RIB pickup points",
+      pickupTitle: "Weather, requirements and nautical points",
       pickupItems: [
         ["Defined point", "Rubber dinghies are not delivered to hotels: pickup is at an indicated nautical point or IschiaMotion Point, depending on partner."],
         ["Coast and coves", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help choose departure and return areas."],
         ["Weather and sea", "Wind, sea state and operational conditions can affect availability even after the first request."]
       ],
-      practicalTitle: "What to know before requesting a rubber dinghy",
+      practicalTitle: "Rubber dinghies with or without a license",
       practicalItems: [
         ["Boating license", "It depends on the vehicle and engine. Requirements, documents and capacity are reviewed with the partner."],
         ["Rubber dinghy, RIB or boat", "A rubber dinghy or RIB is often agile for coast and coves; a boat may offer more space and comfort, depending on model."],
@@ -164,27 +166,27 @@ const landingGuides = {
       ]
     },
     barca: {
-      pickupTitle: "Boat pickup and departure areas",
+      pickupTitle: "Marine conditions, requirements and nautical points",
       pickupItems: [
         ["Nautical point", "Boat pickup is at a defined point or IschiaMotion Point. Nautical categories do not use hotel delivery."],
         ["Island coast", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help plan departure, route and timing, subject to partner availability."],
         ["Marine conditions", "Weather, wind, timing and operating rules are part of the review before confirmation."]
       ],
-      practicalTitle: "What to know before requesting a boat",
+      practicalTitle: "Boats with or without a license",
       practicalItems: [
-        ["Requirements", "Boat rental is available only where offered by the partner and when documents and conditions match."],
+        ["License and requirements", "Availability with or without a boating license depends on the boat, documents and conditions confirmed by the partner."],
         ["Boat or rubber dinghy", "A boat is useful for more comfort and space; a rubber dinghy can be simpler and more agile."],
         ["When to choose a beach club", "If you want comfort on shore, consider beach club access with selected local venues."]
       ]
     },
     beach_club: {
-      pickupTitle: "Beach club access in Ischia",
+      pickupTitle: "Beach Club areas and availability",
       pickupItems: [
         ["Date and guests", "Share requested date, guest count, adults and children to review suitable options."],
         ["Preferred area", "Forio, Lacco Ameno, Ischia Port, Sant'Angelo and other areas can guide the search among local venues."],
-        ["Requested services", "Mention sunbeds, umbrellas, full day access, lunch, aperitif or premium preferences."]
+        ["Requested services", "Mention sunbeds, umbrellas, full day access, lunch, aperitif or other services where available."]
       ],
-      practicalTitle: "What you can request",
+      practicalTitle: "Sunbeds, umbrellas and seaside services",
       practicalItems: [
         ["Daily access", "Request availability for access, sunbeds, umbrellas and beach services."],
         ["Food and drinks", "You can mention seaside lunch or aperitif where available at the selected venue."],
@@ -231,7 +233,7 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
       <JsonLd data={faqJsonLd(content.faqs)} />
       <JsonLd data={serviceJsonLd(content.locale, content.path, content.title, content.description)} />
       <JsonLd data={webpageJsonLd(content)} />
-      <Header locale={content.locale} />
+      <Header locale={content.locale} alternateHref={content.alternatePath} />
       <main className="seo-landing">
         <section className="seo-landing-hero">
           <div>

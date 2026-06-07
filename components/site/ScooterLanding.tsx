@@ -32,6 +32,7 @@ function webpageJsonLd(locale: Locale, path: string, title: string, description:
 export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; pickupPoints: PublicPickupPoint[] }) {
   const isIt = locale === "it";
   const path = isIt ? "/it/noleggio-scooter-ischia" : "/en/scooter-rental-ischia";
+  const alternatePath = isIt ? "/en/scooter-rental-ischia" : "/it/noleggio-scooter-ischia";
   const homePath = isIt ? "/it" : "/en";
   const searchPath = isIt ? "/it/risultati?category=scooter" : "/en/results?category=scooter";
   const whatsappUrl = `https://wa.me/393285353722?text=${encodeURIComponent(isIt
@@ -79,12 +80,14 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
     ? [
       ["IschiaMotion Point", "Puoi indicare un punto ritiro comodo. La disponibilità effettiva viene verificata con il partner locale."],
       ["Porto dove previsto", "Per Ischia Porto o Casamicciola puoi segnalare arrivo e fascia oraria; ritiro e condizioni non sono automatici."],
-      ["Hotel dove previsto", "Per alcune zone e partner puoi indicare hotel o struttura ricettiva, sempre soggetto a verifica."]
+      ["Hotel dove previsto", "Per alcune zone e partner puoi indicare hotel o struttura ricettiva, sempre soggetto a verifica."],
+      ["Documenti e casco", "Patente, documento, casco, cauzione e condizioni dipendono dal mezzo e vengono confermati dal partner prima del ritiro."]
     ]
     : [
       ["IschiaMotion Point", "You can indicate a convenient pickup point. Actual availability is reviewed with the local partner."],
       ["Port where available", "For Ischia Port or Casamicciola, share arrival and timing; pickup and conditions are not automatic."],
-      ["Hotel where available", "For some areas and partners, you can indicate hotel or accommodation, always subject to review."]
+      ["Hotel where available", "For some areas and partners, you can indicate hotel or accommodation, always subject to review."],
+      ["Documents and helmet", "License, ID, helmet, deposit and conditions depend on the scooter and are confirmed by the partner before pickup."]
     ];
   const internalLinks = isIt
     ? [
@@ -117,7 +120,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       <JsonLd data={faqJsonLd(scooterFaq[locale])} />
       <JsonLd data={serviceJsonLd(locale, path, title, description)} />
       <JsonLd data={webpageJsonLd(locale, path, title, description)} />
-      <Header locale={locale} />
+      <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
         <section className="seo-landing-hero">
           <div>
@@ -140,7 +143,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           <div className="section-header">
             <div>
               <div className="section-eyebrow">{isIt ? "Ischia locale" : "Local Ischia"}</div>
-              <h2 className="section-title">{isIt ? "Dove lo scooter è più utile" : "Where a scooter is most useful"}</h2>
+              <h2 className="section-title">{isIt ? "Zone di ritiro a Ischia" : "Scooter pickup areas in Ischia"}</h2>
             </div>
           </div>
           <div className="seo-landing-grid">
@@ -212,7 +215,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           <div className="section-header">
             <div>
               <div className="section-eyebrow">{isIt ? "Ritiro e consegna" : "Pickup and delivery"}</div>
-              <h2 className="section-title">{isIt ? "Cosa indicare nella richiesta" : "What to include in the request"}</h2>
+              <h2 className="section-title">{isIt ? "Documenti, casco e ritiro" : "Documents, helmet and pickup"}</h2>
             </div>
           </div>
           <div className="seo-landing-grid">
@@ -243,7 +246,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
 
         <section className="final-cta">
           <div className="final-box">
-            <h2>{isIt ? "Pronto a muoverti a Ischia?" : "Ready to move around Ischia?"}</h2>
+            <h2>{isIt ? "Verifica disponibilità tramite partner locali" : "Check availability through local partners"}</h2>
             <p>{isIt ? "Imposta le date, scegli un’opzione e invia una richiesta: riceverai conferma dopo verifica con il partner locale." : "Set your dates, choose an option and send a request: confirmation follows review with the local partner."}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità" : "Check availability"}</a>
