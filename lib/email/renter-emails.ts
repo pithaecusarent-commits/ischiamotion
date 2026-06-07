@@ -1,7 +1,7 @@
 import { sendEmail } from "@/lib/email/resend";
 
 const defaultAdminEmail = "info@ischiamotion.com";
-const defaultSiteUrl = "https://ischiamotion.com";
+const defaultSiteUrl = "https://www.ischiamotion.com";
 
 type RenterEmailInput = {
   profileId?: string | null;

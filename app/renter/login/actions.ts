@@ -11,7 +11,7 @@ import { createSupabaseAnonClient, createSupabaseServiceRoleClient } from "@/lib
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendNewRenterRequestEmail } from "@/lib/email/renter-emails";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com";
 
 function loginRedirect(error: string): never {
   redirect(`/renter/login?error=${encodeURIComponent(error)}`);

@@ -143,7 +143,7 @@ function randomTemporaryPassword() {
 }
 
 function setupRedirectUrl() {
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ischiamotion.com").replace(/\/$/, "");
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com").replace(/\/$/, "");
   return `${siteUrl}/auth/callback?next=/renter/change-password`;
 }
 
