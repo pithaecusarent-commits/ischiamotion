@@ -6,7 +6,7 @@ const nextConfig = {
       {
         source: "/",
         destination: "/it",
-        permanent: false,
+        permanent: true,
       },
       {
         source: "/it/barca-con-skipper-ischia",
