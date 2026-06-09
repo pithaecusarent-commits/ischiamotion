@@ -330,6 +330,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
             <AdminKpiCard
               available={metrics.generatedVouchers.available}
               detail="Voucher presenti in piattaforma"
+              href="/admin/bookings?status=voucher_sent"
               icon="V"
               label="Voucher generati"
               value={metrics.generatedVouchers.value}
@@ -337,6 +338,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
             <AdminKpiCard
               available={metrics.completedCheckins.available}
               detail="Ritiri registrati dai renter"
+              href="/admin/bookings?status=checked_in"
               icon="Q"
               label="Check-in effettuati"
               value={metrics.completedCheckins.value}
@@ -344,6 +346,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
             <AdminKpiCard
               available={conversionAvailable}
               detail="Richieste confermate su totale attive"
+              href="/admin/bookings"
               icon="%"
               label="Tasso conversione"
               suffix="%"
