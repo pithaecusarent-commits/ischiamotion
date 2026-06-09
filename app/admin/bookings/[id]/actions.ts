@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { sendBookingVoucherEmail } from "@/lib/email/booking-voucher-email";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import {
@@ -12,7 +13,7 @@ import {
 } from "@/lib/supabase/queries/admin-bookings";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithMessage(id: string, type: "success" | "error" | "voucherRequired" | "renterAssigned" | "renterError") {
+function redirectWithMessage(id: string, type: "success" | "error" | "voucherRequired" | "voucherEmailError" | "voucherSent" | "renterAssigned" | "renterError") {
   const param = type === "renterAssigned" || type === "renterError" ? "renterAssign" : "statusUpdate";
   const value = type === "renterAssigned" ? "success" : type === "renterError" ? "error" : type;
   redirect(`/admin/bookings/${id}?${param}=${value}`);
@@ -27,6 +28,54 @@ export async function updateBookingStatusAction(formData: FormData) {
   }
 
   const { accessToken, user, profile } = await requireAdmin(`/admin/bookings/${bookingId}`);
+
+  if (nextStatus === "confirmed" || nextStatus === "voucher_sent") {
+    const { error } = await updateAdminBookingStatus(accessToken, bookingId, "confirmed");
+
+    if (error) {
+      redirectWithMessage(bookingId, "error");
+    }
+
+    await logAdminAuditEvent({
+      accessToken,
+      actorProfileId: user.id,
+      actorEmail: profile.email,
+      action: "booking.status_update",
+      targetTable: "bookings",
+      targetId: bookingId,
+      metadata: { status: "confirmed" }
+    });
+
+    const voucherEmail = await sendBookingVoucherEmail(bookingId);
+
+    if (!voucherEmail.ok) {
+      await logAdminAuditEvent({
+        accessToken,
+        actorProfileId: user.id,
+        actorEmail: profile.email,
+        action: "booking.voucher_send_failed",
+        targetTable: "bookings",
+        targetId: bookingId,
+        metadata: { error: voucherEmail.error, voucherCode: voucherEmail.voucherCode || null }
+      });
+      revalidatePath("/admin/bookings");
+      revalidatePath(`/admin/bookings/${bookingId}`);
+      redirectWithMessage(bookingId, "voucherEmailError");
+    }
+
+    await logAdminAuditEvent({
+      accessToken,
+      actorProfileId: user.id,
+      actorEmail: profile.email,
+      action: "booking.voucher_sent",
+      targetTable: "bookings",
+      targetId: bookingId,
+      metadata: { status: "voucher_sent", voucherCode: voucherEmail.voucherCode }
+    });
+    revalidatePath("/admin/bookings");
+    revalidatePath(`/admin/bookings/${bookingId}`);
+    redirectWithMessage(bookingId, "voucherSent");
+  }
 
   if (nextStatus === "checked_in") {
     const { voucher } = await getAdminVoucherByBookingId(accessToken, bookingId);

@@ -236,6 +236,18 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {statusMessage === "voucherSent" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Prenotazione confermata e voucher QR inviato al cliente.
+                </div>
+              ) : null}
+
+              {statusMessage === "voucherEmailError" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Prenotazione confermata, ma invio voucher QR fallito.
+                </div>
+              ) : null}
+
               {statusMessage === "error" ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
                   Impossibile aggiornare lo stato. Riprova.
@@ -288,14 +300,14 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Voucher cliente</div>
                   <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Voucher QR per il ritiro</h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
-                    Il voucher serve al cliente per presentarsi al punto ritiro IschiaMotion. In questa fase non viene inviata alcuna email.
+                    Genera o recupera il voucher e invia al cliente l&apos;email con QR Code. I reinvii mantengono lo stesso codice voucher.
                   </p>
                 </div>
               </div>
 
               {voucherMessage === "success" ? (
                 <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
-                  Voucher generato correttamente.
+                  Voucher QR inviato correttamente al cliente.
                 </div>
               ) : null}
 
@@ -305,9 +317,9 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
-              {voucherMessage === "statusError" ? (
-                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
-                  Voucher generato correttamente, ma non è stato possibile aggiornare lo stato della prenotazione.
+              {voucherMessage === "error" && voucher ? (
+                <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+                  Invio voucher QR fallito. La prenotazione resta confermata.
                 </div>
               ) : null}
 
@@ -331,7 +343,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   <form action={generateVoucherAction} className="mt-4">
                     <input type="hidden" name="bookingId" value={booking.id} />
                     <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
-                      Genera voucher
+                      Genera e invia voucher QR
                     </button>
                   </form>
                 </div>
@@ -354,6 +366,14 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
                   <div className="mb-5 flex flex-wrap gap-3 print-hidden">
                     <VoucherPrintButton />
+                    {["confirmed", "voucher_sent"].includes(booking.status) ? (
+                      <form action={generateVoucherAction}>
+                        <input type="hidden" name="bookingId" value={booking.id} />
+                        <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
+                          Reinvia voucher QR
+                        </button>
+                      </form>
+                    ) : null}
                     <a
                       className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep"
                       href={voucherPath}

@@ -2,12 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { sendBookingVoucherEmail } from "@/lib/email/booking-voucher-email";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { getAdminBookingById, updateAdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
-import { createAdminVoucher } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithVoucherMessage(id: string, type: "success" | "error" | "statusError"): never {
+function redirectWithVoucherMessage(id: string, type: "success" | "error"): never {
   redirect(`/admin/bookings/${id}?voucher=${type}`);
 }
 
@@ -25,26 +25,34 @@ export async function generateVoucherAction(formData: FormData) {
     redirectWithVoucherMessage(bookingId, "error");
   }
 
-  const { error: voucherError } = await createAdminVoucher(accessToken, booking);
-
-  if (voucherError) {
+  const { error: confirmationError } = await updateAdminBookingStatus(accessToken, bookingId, "confirmed");
+  if (confirmationError) {
     redirectWithVoucherMessage(bookingId, "error");
   }
 
-  const { error: statusError } = await updateAdminBookingStatus(accessToken, bookingId, "voucher_sent");
+  const voucherEmail = await sendBookingVoucherEmail(booking.id);
 
-  if (statusError) {
-    redirectWithVoucherMessage(bookingId, "statusError");
+  if (!voucherEmail.ok) {
+    await logAdminAuditEvent({
+      accessToken,
+      actorProfileId: user.id,
+      actorEmail: profile.email,
+      action: "booking.voucher_send_failed",
+      targetTable: "bookings",
+      targetId: bookingId,
+      metadata: { error: voucherEmail.error, voucherCode: voucherEmail.voucherCode || null }
+    });
+    redirectWithVoucherMessage(bookingId, "error");
   }
 
   await logAdminAuditEvent({
     accessToken,
     actorProfileId: user.id,
     actorEmail: profile.email,
-    action: "booking.voucher_generate",
+    action: "booking.voucher_sent",
     targetTable: "bookings",
     targetId: bookingId,
-    metadata: { status: "voucher_sent" }
+    metadata: { status: "voucher_sent", voucherCode: voucherEmail.voucherCode }
   });
 
   revalidatePath("/admin/bookings");
