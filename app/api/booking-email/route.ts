@@ -77,7 +77,12 @@ function escapeHtml(value: string) {
 }
 
 function toHtml(text: string) {
-  return `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#151512;white-space:pre-wrap">${escapeHtml(text)}</div>`;
+  const paragraphs = text
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${paragraph.split("\n").map(escapeHtml).join("<br>")}</p>`)
+    .join("");
+
+  return `<!doctype html><html><body style="font-family:Arial,sans-serif;line-height:1.5;color:#151512">${paragraphs}</body></html>`;
 }
 
 function deliverySummary(payload: BookingEmailPayload, locale: Locale) {
@@ -112,50 +117,62 @@ function adminEmailText(payload: BookingEmailPayload, adminUrl: string) {
   ].join("\n");
 }
 
-function customerEmailText(payload: BookingEmailPayload) {
+function customerEmailContent(payload: BookingEmailPayload) {
   const isIt = payload.language === "it";
-  const name = payload.firstName.trim() || (isIt ? "ciao" : "there");
-  const summary = deliverySummary(payload, payload.language);
-
-  if (isIt) {
-    return [
-      `Ciao ${name},`,
-      "",
-      "grazie per aver scelto IschiaMotion.",
-      "Abbiamo ricevuto la tua richiesta per un noleggio a Ischia e la stiamo verificando con operatori locali selezionati.",
-      "",
-      "Dettagli richiesta:",
-      `- Codice richiesta: ${payload.bookingCode}`,
-      `- Mezzo: ${payload.vehicleLabel}`,
-      `- Date: ${payload.startDate} → ${payload.endDate}`,
-      `- Ritiro/consegna: ${summary}`,
-      "",
-      "Importante:",
-      "La disponibilità non è ancora confermata. Ti ricontatteremo appena avremo verificato opzioni, condizioni e punto di ritiro.",
-      "",
-      "A presto,",
-      "IschiaMotion"
-    ].join("\n");
-  }
-
-  return [
-    `Hello ${name},`,
+  const name = payload.firstName.trim() || (isIt ? "cliente" : "there");
+  const pickup = payload.pickupPointLabel.trim() || "-";
+  const delivery = payload.deliveryLocation?.trim() || "-";
+  const labels = isIt
+    ? {
+      greeting: `Ciao ${name},`,
+      intro: "abbiamo ricevuto la tua richiesta di noleggio.",
+      code: "Codice richiesta",
+      vehicle: "Mezzo",
+      period: "Periodo",
+      pickup: "Ritiro",
+      delivery: "Consegna",
+      pending: "La disponibilità non è ancora confermata.",
+      followUp: "Ti ricontatteremo appena avremo verificato la richiesta con gli operatori locali.",
+      thanks: "Grazie"
+    }
+    : {
+      greeting: `Hello ${name},`,
+      intro: "we have received your rental request.",
+      code: "Request code",
+      vehicle: "Vehicle",
+      period: "Period",
+      pickup: "Pickup",
+      delivery: "Delivery",
+      pending: "Availability is not confirmed yet.",
+      followUp: "We will contact you once we have checked the request with local operators.",
+      thanks: "Thank you"
+    };
+  const details = [
+    [labels.code, payload.bookingCode],
+    [labels.vehicle, payload.vehicleLabel],
+    [labels.period, `${payload.startDate} - ${payload.endDate}`],
+    [labels.pickup, pickup],
+    [labels.delivery, delivery]
+  ];
+  const text = [
+    labels.greeting,
     "",
-    "thank you for choosing IschiaMotion.",
-    "We have received your rental request in Ischia and are reviewing it with selected local operators.",
+    labels.intro,
     "",
-    "Request details:",
-    `- Request code: ${payload.bookingCode}`,
-    `- Vehicle: ${payload.vehicleLabel}`,
-    `- Dates: ${payload.startDate} → ${payload.endDate}`,
-    `- Pickup/delivery: ${summary}`,
+    ...details.map(([label, value]) => `${label}: ${value}`),
     "",
-    "Important:",
-    "Availability is not confirmed yet. We will contact you once options, conditions and pickup details have been reviewed.",
+    labels.pending,
+    labels.followUp,
     "",
-    "See you soon,",
+    `${labels.thanks},`,
     "IschiaMotion"
   ].join("\n");
+  const rows = details
+    .map(([label, value]) => `<tr><td style="padding:3px 12px 3px 0">${escapeHtml(label)}:</td><td style="padding:3px 0">${escapeHtml(value)}</td></tr>`)
+    .join("");
+  const html = `<!doctype html><html lang="${isIt ? "it" : "en"}"><body style="font-family:Arial,sans-serif;line-height:1.5;color:#151512"><p>${escapeHtml(labels.greeting)}</p><p>${escapeHtml(labels.intro)}</p><table role="presentation" cellspacing="0" cellpadding="0">${rows}</table><p>${escapeHtml(labels.pending)}<br>${escapeHtml(labels.followUp)}</p><p>${escapeHtml(labels.thanks)},<br>IschiaMotion</p></body></html>`;
+
+  return { text, html };
 }
 
 async function sendResendEmail(input: {
@@ -165,6 +182,7 @@ async function sendResendEmail(input: {
   to: string;
   subject: string;
   text: string;
+  html?: string;
 }) {
   return input.resend.emails.send({
     from: input.from,
@@ -172,7 +190,7 @@ async function sendResendEmail(input: {
     to: input.to,
     subject: input.subject,
     text: input.text,
-    html: toHtml(input.text)
+    html: input.html || toHtml(input.text)
   });
 }
 
@@ -254,7 +272,7 @@ export async function POST(request: Request) {
     from: fromEmail,
     replyTo: replyToEmail,
     to: adminEmail,
-    subject: `Nuova richiesta IschiaMotion — ${payload.bookingCode}`,
+    subject: `Nuova richiesta IschiaMotion ${payload.bookingCode}`,
     text: adminEmailText(payload, adminUrl)
   }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Admin email failed." } }));
   const adminEmailSent = !adminResult.error;
@@ -265,13 +283,15 @@ export async function POST(request: Request) {
     console.error("[booking-email] admin email error", { bookingCode: payload.bookingCode, error: adminResult.error.message });
   }
 
+  const customerContent = customerEmailContent(payload);
   const customerResult = await sendResendEmail({
     resend,
     from: fromEmail,
     replyTo: replyToEmail,
     to: payload.email,
-    subject: payload.language === "it" ? "Richiesta ricevuta — IschiaMotion" : "Request received — IschiaMotion",
-    text: customerEmailText(payload)
+    subject: payload.language === "it" ? "Richiesta ricevuta IschiaMotion" : "Request received IschiaMotion",
+    text: customerContent.text,
+    html: customerContent.html
   }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Customer email failed." } }));
   const customerEmailSent = !customerResult.error;
 
