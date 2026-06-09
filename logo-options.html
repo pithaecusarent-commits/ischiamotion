@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IschiaMotion — Opzioni Logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #EDEAE4;
+  color: #151512;
+}
+.page-header {
+  background: #151512; color: #fff;
+  padding: 28px 40px;
+}
+.page-header h1 { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
+.page-header p  { font-size: .82rem; color: rgba(255,255,255,.45); }
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  gap: 0;
+}
+.option-block {
+  border-right: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding: 36px 32px 40px;
+  background: #EDEAE4;
+}
+.option-block:nth-child(even) { background: #E6E2DB; }
+
+.opt-number {
+  font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #18A36F; margin-bottom: 6px;
+}
+.opt-name {
+  font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700;
+  color: #151512; margin-bottom: 4px;
+}
+.opt-concept {
+  font-size: .82rem; color: #6a6a6a; margin-bottom: 24px; line-height: 1.55;
+}
+
+/* Icon previews */
+.icon-row {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.icon-chip {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.icon-chip span { font-size: .65rem; color: #999; text-transform: uppercase; letter-spacing: .05em; }
+
+/* Horizontal logo previews */
+.horiz-row {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.horiz-cell {
+  border-radius: 12px; padding: 18px 24px;
+  display: flex; align-items: center;
+}
+.horiz-light { background: #FFFDF7; border: 1px solid #ddd9d0; }
+.horiz-dark  { background: #151512; }
+.horiz-green { background: #075D40; }
+
+.horiz-label {
+  font-size: .68rem; color: #aaa; text-transform: uppercase;
+  letter-spacing: .06em; margin-top: 6px; padding-left: 4px;
+}
+
+@media (max-width: 640px) {
+  .page-header { padding: 24px 20px; }
+  .option-block { padding: 28px 20px 32px; }
+  .options-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>IschiaMotion — Opzioni Logo Alternative</h1>
+  <p>4 concept distinti · confronta e scegli quello più vicino alla tua visione</p>
+</div>
+
+<div class="options-grid">
+
+<!-- ══════════════════════════════════════════
+     OPZIONE 1 — ONDA DOPPIA
+══════════════════════════════════════════ -->
+<div class="option-block">
+  <div class="opt-number">Opzione 01</div>
+  <div class="opt-name">Onda Doppia</div>
+  <div class="opt-concept">
+    Due archi sovrapposti: in alto l'arco della baia (la "i" / orizzonte), in basso l'onda doppia del mare (la "M"). Minimal, marino, elegante. Funziona benissimo come favicon e app icon.
+  </div>
+
+  <div class="icon-row">
+    <!-- 160px -->
+    <div class="icon-chip">
+      <svg width="160" height="160" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_A1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_A1)"/>
+        <!-- arco superiore (orizzonte / i) -->
+        <path d="M 48,84 Q 100,42 152,84" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+        <!-- onda doppia inferiore (mare / M) -->
+        <polyline points="28,128 65,92 100,128 135,92 172,128"
+                  fill="none" stroke="#fff" stroke-width="13"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- onda terza leggera (profondità) -->
+        <path d="M 44,158 Q 72,146 100,158 Q 128,170 156,158"
+              fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span>Grande</span>
+    </div>
+    <!-- 72px -->
+    <div class="icon-chip">
+      <svg width="72" height="72" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_A2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_A2)"/>
+        <path d="M 48,84 Q 100,42 152,84" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+        <polyline points="28,128 65,92 100,128 135,92 172,128" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 44,158 Q 72,146 100,158 Q 128,170 156,158" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span>Media</span>
+    </div>
+    <!-- 36px -->
+    <div class="icon-chip">
+      <svg width="36" height="36" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_A3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_A3)"/>
+        <path d="M 48,84 Q 100,42 152,84" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+        <polyline points="28,128 65,92 100,128 135,92 172,128" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Favicon</span>
+    </div>
+  </div>
+
+  <div class="horiz-row">
+    <div class="horiz-cell horiz-light">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Ah" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Ah)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <path d="M 48,84 Q 100,42 152,84" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+          <polyline points="28,128 65,92 100,128 135,92 172,128" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 44,158 Q 72,146 100,158 Q 128,170 156,158" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#18A36F" stroke-width="1" opacity="0.3"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#151512">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo chiaro</div>
+    <div class="horiz-cell horiz-dark">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Ahd" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Ahd)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <path d="M 48,84 Q 100,42 152,84" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+          <polyline points="28,128 65,92 100,128 135,92 172,128" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#7CE3BB" stroke-width="1" opacity="0.35"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#7CE3BB" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo scuro</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     OPZIONE 2 — PIN ISOLA
+══════════════════════════════════════════ -->
+<div class="option-block">
+  <div class="opt-number">Opzione 02</div>
+  <div class="opt-name">Pin Isola</div>
+  <div class="opt-concept">
+    Il classico segnaposto del GPS trasformato in brand mark. Il pin racconta "sei qui, sull'isola". Dentro: un'onda che suggerisce il mare. Riconoscibile, moderno, perfetto per app e mappe.
+  </div>
+
+  <div class="icon-row">
+    <div class="icon-chip">
+      <svg width="160" height="160" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_B1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_B1)"/>
+        <!-- pin shape -->
+        <path d="M 100,178 C 62,154 34,118 34,80 A 66,66 0 1,1 166,80 C 166,118 138,154 100,178 Z"
+              fill="rgba(255,255,255,0.18)" stroke="#fff" stroke-width="7"/>
+        <!-- onda dentro il pin -->
+        <path d="M 52,80 Q 76,58 100,80 Q 124,102 148,80"
+              fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+        <!-- dot in alto dentro il cerchio -->
+        <circle cx="100" cy="46" r="7" fill="rgba(255,255,255,0.7)"/>
+      </svg>
+      <span>Grande</span>
+    </div>
+    <div class="icon-chip">
+      <svg width="72" height="72" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_B2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_B2)"/>
+        <path d="M 100,178 C 62,154 34,118 34,80 A 66,66 0 1,1 166,80 C 166,118 138,154 100,178 Z"
+              fill="rgba(255,255,255,0.18)" stroke="#fff" stroke-width="7"/>
+        <path d="M 52,80 Q 76,58 100,80 Q 124,102 148,80" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="100" cy="46" r="7" fill="rgba(255,255,255,0.7)"/>
+      </svg>
+      <span>Media</span>
+    </div>
+    <div class="icon-chip">
+      <svg width="36" height="36" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_B3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_B3)"/>
+        <path d="M 100,178 C 62,154 34,118 34,80 A 66,66 0 1,1 166,80 C 166,118 138,154 100,178 Z"
+              fill="rgba(255,255,255,0.18)" stroke="#fff" stroke-width="8"/>
+        <path d="M 52,80 Q 76,58 100,80 Q 124,102 148,80" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+      </svg>
+      <span>Favicon</span>
+    </div>
+  </div>
+
+  <div class="horiz-row">
+    <div class="horiz-cell horiz-light">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Bh" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Bh)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <path d="M 100,178 C 62,154 34,118 34,80 A 66,66 0 1,1 166,80 C 166,118 138,154 100,178 Z" fill="rgba(255,255,255,0.18)" stroke="#fff" stroke-width="7"/>
+          <path d="M 52,80 Q 76,58 100,80 Q 124,102 148,80" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+          <circle cx="100" cy="46" r="7" fill="rgba(255,255,255,0.7)"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#18A36F" stroke-width="1" opacity="0.3"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#151512">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo chiaro</div>
+    <div class="horiz-cell horiz-dark">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Bhd" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Bhd)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <path d="M 100,178 C 62,154 34,118 34,80 A 66,66 0 1,1 166,80 C 166,118 138,154 100,178 Z" fill="rgba(255,255,255,0.18)" stroke="#fff" stroke-width="7"/>
+          <path d="M 52,80 Q 76,58 100,80 Q 124,102 148,80" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#7CE3BB" stroke-width="1" opacity="0.35"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#7CE3BB" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo scuro</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     OPZIONE 3 — STRADA SUL MARE
+══════════════════════════════════════════ -->
+<div class="option-block">
+  <div class="opt-number">Opzione 03</div>
+  <div class="opt-name">Strada sul Mare</div>
+  <div class="opt-concept">
+    Una linea verticale bianca (la strada, il percorso, la "I") attraversata da un'onda menta (il mare, la "M"). Il contrasto cromatico è forte. Racconta movimento e mare con un simbolo grafico immediato.
+  </div>
+
+  <div class="icon-row">
+    <div class="icon-chip">
+      <svg width="160" height="160" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_C1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_C1)"/>
+        <!-- onda menta (mare / M) — disegnata PRIMA -->
+        <path d="M 28,100 Q 52,68 76,100 Q 100,132 124,100 Q 148,68 172,100"
+              fill="none" stroke="#7CE3BB" stroke-width="14" stroke-linecap="round"/>
+        <!-- strada bianca (I) — sopra all'onda -->
+        <line x1="100" y1="32" x2="100" y2="168"
+              stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+        <!-- pallino in cima (destinazione) -->
+        <circle cx="100" cy="32" r="9" fill="#fff"/>
+        <!-- piccolo pallino in basso (punto di partenza) -->
+        <circle cx="100" cy="168" r="6" fill="rgba(255,255,255,0.45)"/>
+      </svg>
+      <span>Grande</span>
+    </div>
+    <div class="icon-chip">
+      <svg width="72" height="72" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_C2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_C2)"/>
+        <path d="M 28,100 Q 52,68 76,100 Q 100,132 124,100 Q 148,68 172,100" fill="none" stroke="#7CE3BB" stroke-width="14" stroke-linecap="round"/>
+        <line x1="100" y1="32" x2="100" y2="168" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+        <circle cx="100" cy="32" r="9" fill="#fff"/>
+      </svg>
+      <span>Media</span>
+    </div>
+    <div class="icon-chip">
+      <svg width="36" height="36" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_C3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_C3)"/>
+        <path d="M 28,100 Q 52,68 76,100 Q 100,132 124,100 Q 148,68 172,100" fill="none" stroke="#7CE3BB" stroke-width="16" stroke-linecap="round"/>
+        <line x1="100" y1="32" x2="100" y2="168" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+        <circle cx="100" cy="32" r="10" fill="#fff"/>
+      </svg>
+      <span>Favicon</span>
+    </div>
+  </div>
+
+  <div class="horiz-row">
+    <div class="horiz-cell horiz-light">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Ch" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Ch)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <path d="M 28,100 Q 52,68 76,100 Q 100,132 124,100 Q 148,68 172,100" fill="none" stroke="#7CE3BB" stroke-width="14" stroke-linecap="round"/>
+          <line x1="100" y1="32" x2="100" y2="168" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+          <circle cx="100" cy="32" r="9" fill="#fff"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#18A36F" stroke-width="1" opacity="0.3"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#151512">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo chiaro</div>
+    <div class="horiz-cell horiz-dark">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Chd" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Chd)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <path d="M 28,100 Q 52,68 76,100 Q 100,132 124,100 Q 148,68 172,100" fill="none" stroke="#7CE3BB" stroke-width="14" stroke-linecap="round"/>
+          <line x1="100" y1="32" x2="100" y2="168" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+          <circle cx="100" cy="32" r="9" fill="#fff"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#7CE3BB" stroke-width="1" opacity="0.35"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#7CE3BB" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo scuro</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     OPZIONE 4 — CERCHIO IM
+══════════════════════════════════════════ -->
+<div class="option-block">
+  <div class="opt-number">Opzione 04</div>
+  <div class="opt-name">Cerchio IM</div>
+  <div class="opt-concept">
+    Il monogramma "IM" racchiuso in un cerchio. Classico, elegante, molto riconoscibile. Il cerchio richiama l'isola vista dall'alto circondata dal mare. Ottimo per timbri, voucher e vetrofanie.
+  </div>
+
+  <div class="icon-row">
+    <div class="icon-chip">
+      <svg width="160" height="160" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_D1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_D1)"/>
+        <!-- cerchio esterno -->
+        <circle cx="100" cy="100" r="76" fill="rgba(255,255,255,0.08)" stroke="#fff" stroke-width="7"/>
+        <!-- cerchio interno sottile -->
+        <circle cx="100" cy="100" r="64" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-dasharray="4 6"/>
+        <!-- IM -->
+        <text x="100" y="118" text-anchor="middle"
+              font-family="Fraunces, Georgia, serif"
+              font-size="60" font-weight="700" fill="#fff"
+              style="letter-spacing:-2px">IM</text>
+        <!-- onda sotto -->
+        <path d="M 38,148 Q 62,136 86,148 Q 110,160 134,148 Q 148,141 162,148"
+              fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="4.5" stroke-linecap="round"/>
+      </svg>
+      <span>Grande</span>
+    </div>
+    <div class="icon-chip">
+      <svg width="72" height="72" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_D2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_D2)"/>
+        <circle cx="100" cy="100" r="76" fill="rgba(255,255,255,0.08)" stroke="#fff" stroke-width="7"/>
+        <text x="100" y="118" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="60" font-weight="700" fill="#fff" style="letter-spacing:-2px">IM</text>
+        <path d="M 38,148 Q 62,136 86,148 Q 110,160 134,148 Q 148,141 162,148" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="4.5" stroke-linecap="round"/>
+      </svg>
+      <span>Media</span>
+    </div>
+    <div class="icon-chip">
+      <svg width="36" height="36" viewBox="0 0 200 200">
+        <defs><linearGradient id="g_D3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect width="200" height="200" rx="44" fill="url(#g_D3)"/>
+        <circle cx="100" cy="100" r="76" fill="rgba(255,255,255,0.08)" stroke="#fff" stroke-width="8"/>
+        <text x="100" y="118" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="60" font-weight="700" fill="#fff" style="letter-spacing:-2px">IM</text>
+      </svg>
+      <span>Favicon</span>
+    </div>
+  </div>
+
+  <div class="horiz-row">
+    <div class="horiz-cell horiz-light">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Dh" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Dh)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <circle cx="100" cy="100" r="76" fill="rgba(255,255,255,0.08)" stroke="#fff" stroke-width="7"/>
+          <text x="100" y="118" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="60" font-weight="700" fill="#fff" style="letter-spacing:-2px">IM</text>
+          <path d="M 38,148 Q 62,136 86,148 Q 110,160 134,148 Q 148,141 162,148" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="4.5" stroke-linecap="round"/>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#18A36F" stroke-width="1" opacity="0.3"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#151512">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#18A36F" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo chiaro</div>
+    <div class="horiz-cell horiz-dark">
+      <svg viewBox="0 0 380 80" width="320" height="67">
+        <defs><linearGradient id="g_Dhd" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#075D40"/>
+          <stop offset="55%" stop-color="#18A36F"/>
+          <stop offset="100%" stop-color="#0A7899"/>
+        </linearGradient></defs>
+        <rect x="10" y="10" width="60" height="60" rx="14" fill="url(#g_Dhd)"/>
+        <g transform="translate(10,10) scale(0.3)">
+          <circle cx="100" cy="100" r="76" fill="rgba(255,255,255,0.08)" stroke="#fff" stroke-width="7"/>
+          <text x="100" y="118" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="60" font-weight="700" fill="#fff" style="letter-spacing:-2px">IM</text>
+        </g>
+        <line x1="82" y1="16" x2="82" y2="64" stroke="#7CE3BB" stroke-width="1" opacity="0.35"/>
+        <text x="96" y="44" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+        <text x="98" y="61" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="300" fill="#7CE3BB" style="letter-spacing:4px">MOTION</text>
+      </svg>
+    </div>
+    <div class="horiz-label">Su sfondo scuro</div>
+  </div>
+</div>
+
+</div><!-- /options-grid -->
+
+
+<!-- ══ CONFRONTO CON ORIGINALE ══ -->
+<div style="background:#151512; padding:36px 40px;">
+  <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#18A36F;margin-bottom:6px;">Originale</div>
+  <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:4px;">Versione attuale (IM con gambo e onda)</div>
+  <div style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:24px;">La versione già sviluppata — come punto di riferimento</div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;">
+    <svg width="80" height="80" viewBox="0 0 200 200">
+      <defs><linearGradient id="g_orig" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#075D40"/>
+        <stop offset="55%" stop-color="#18A36F"/>
+        <stop offset="100%" stop-color="#0A7899"/>
+      </linearGradient></defs>
+      <rect width="200" height="200" rx="44" fill="url(#g_orig)"/>
+      <circle cx="100" cy="42" r="11" fill="#fff"/>
+      <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+      <polyline points="57,150 79,92 100,115 121,92 143,150" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <div style="font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.7;">
+      Monogramma IM con punto della i e onda sottostante.<br/>
+      Già sviluppato in tutte le varianti (file in public/images/).
+    </div>
+  </div>
+</div>
+
+<!-- ══ NOTA ══ -->
+<div style="padding:28px 40px;background:#EDEAE4;border-top:1px solid rgba(0,0,0,.08);">
+  <p style="font-size:.82rem;color:#888;line-height:1.7;">
+    <strong style="color:#151512;">Come scegliere:</strong> apri questo file nel browser e valuta quale concept comunica meglio il brand.
+    Una volta scelto, si sviluppano tutte le varianti (bianca, scura, badge, favicon) nel concept selezionato.
+    I file SVG delle opzioni sono inline in questo HTML — nessuna dipendenza esterna obbligatoria.
+  </p>
+</div>
+
+</body>
+</html>

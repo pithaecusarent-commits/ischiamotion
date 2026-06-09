@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80">
+  <!-- Versione bianca · per sfondi scuri e colorati -->
+  <!-- mark bianco -->
+  <g transform="translate(0,8) scale(0.32)">
+    <circle cx="100" cy="42" r="11" fill="#fff"/>
+    <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+    <polyline points="57,150 79,92 100,115 121,92 143,150"
+              fill="none" stroke="#fff" stroke-width="11"
+              stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168"
+          fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <!-- separatore -->
+  <line x1="74" y1="12" x2="74" y2="62" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  <!-- testo bianco -->
+  <text x="88" y="45"
+        font-family="Fraunces, Georgia, 'Times New Roman', serif"
+        font-size="32" font-weight="700" fill="#ffffff">Ischia</text>
+  <text x="90" y="62"
+        font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif"
+        font-size="11" font-weight="300" fill="rgba(255,255,255,0.72)"
+        style="letter-spacing:4px">MOTION</text>
+</svg>

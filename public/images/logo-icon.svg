@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="gi" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#075D40"/>
+      <stop offset="55%"  stop-color="#18A36F"/>
+      <stop offset="100%" stop-color="#0A7899"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="44" fill="url(#gi)"/>
+  <!-- i · dot -->
+  <circle cx="100" cy="42" r="11" fill="#fff"/>
+  <!-- i · stem -->
+  <line x1="100" y1="56" x2="100" y2="82" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+  <!-- M -->
+  <polyline points="57,150 79,92 100,115 121,92 143,150"
+            fill="none" stroke="#fff" stroke-width="11"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- onda / mare -->
+  <path d="M44,168 Q63,157 82,168 Q101,179 120,168 Q139,157 158,168"
+        fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="5" stroke-linecap="round"/>
+</svg>
