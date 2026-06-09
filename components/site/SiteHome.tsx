@@ -27,7 +27,9 @@ export function SiteHome({
   categoryMinPrices?: HomepageCategoryMinPrices;
 }) {
   const [activeFilter, setActiveFilter] = useVehicleFilter();
-  const [startDate, setStartDate] = useState("");
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const [startDate, setStartDate] = useState(todayStr);
   const [endDate, setEndDate] = useState("");
   const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>("pickup_point");
 

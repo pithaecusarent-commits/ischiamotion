@@ -40,6 +40,13 @@ export function HeroSearch({
 }) {
   const router = useRouter();
   const [error, setError] = useState("");
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+
+  function handleStartDateChange(value: string) {
+    onStartDateChange(value);
+    if (endDate && endDate < value) onEndDateChange(value);
+  }
 
   function handleSearch() {
     if (!startDate || !endDate) {
@@ -99,11 +106,11 @@ export function HeroSearch({
           </div>
           <div className="s-field">
             <div className="search-label">{locale === "it" ? "Data inizio" : "Start date"}</div>
-            <input type="date" value={startDate} onChange={(event) => onStartDateChange(event.target.value)} aria-label={locale === "it" ? "Data inizio" : "Start date"} />
+            <input type="date" value={startDate} min={todayStr} onChange={(event) => handleStartDateChange(event.target.value)} aria-label={locale === "it" ? "Data inizio" : "Start date"} />
           </div>
           <div className="s-field">
             <div className="search-label">{locale === "it" ? "Data fine" : "End date"}</div>
-            <input type="date" value={endDate} onChange={(event) => onEndDateChange(event.target.value)} aria-label={locale === "it" ? "Data fine" : "End date"} />
+            <input type="date" value={endDate} min={startDate || todayStr} onChange={(event) => onEndDateChange(event.target.value)} aria-label={locale === "it" ? "Data fine" : "End date"} />
           </div>
         </div>
         {error ? <div className="booking-message error">{error}</div> : null}
