@@ -236,6 +236,36 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {statusMessage === "confirmedVoucherSent" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Prenotazione confermata e voucher QR inviato al cliente.
+                </div>
+              ) : null}
+
+              {statusMessage === "confirmedVoucherMissingEmail" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Prenotazione confermata, ma il voucher non è stato inviato perché manca l&apos;email del cliente.
+                </div>
+              ) : null}
+
+              {statusMessage === "confirmedVoucherProviderError" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Prenotazione confermata, ma il voucher non è stato inviato perché il provider email non è configurato correttamente.
+                </div>
+              ) : null}
+
+              {statusMessage === "confirmedVoucherFailed" ? (
+                <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+                  Prenotazione confermata, ma invio voucher QR fallito. Controllare configurazione email.
+                </div>
+              ) : null}
+
+              {statusMessage === "confirmedVoucherStatusError" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Voucher QR inviato, ma non è stato possibile aggiornare lo stato della prenotazione.
+                </div>
+              ) : null}
+
               {statusMessage === "error" ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
                   Impossibile aggiornare lo stato. Riprova.
@@ -288,26 +318,38 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Voucher cliente</div>
                   <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Voucher QR per il ritiro</h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
-                    Il voucher serve al cliente per presentarsi al punto ritiro IschiaMotion. In questa fase non viene inviata alcuna email.
+                    Il voucher viene inviato al cliente via email con QR Code e link alternativo.
                   </p>
                 </div>
               </div>
 
               {voucherMessage === "success" ? (
                 <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
-                  Voucher generato correttamente.
+                  Voucher QR inviato correttamente al cliente.
                 </div>
               ) : null}
 
-              {voucherMessage === "error" && !voucher ? (
+              {voucherMessage === "error" ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
-                  Impossibile generare il voucher. Verifica che la prenotazione sia confermata e che la migration 0006 sia applicata su Supabase.
+                  Voucher generato o recuperato, ma invio email fallito. Controllare i log e la configurazione email.
+                </div>
+              ) : null}
+
+              {voucherMessage === "missingEmail" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Il voucher non è stato inviato perché manca l&apos;email del cliente.
+                </div>
+              ) : null}
+
+              {voucherMessage === "providerError" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Il voucher non è stato inviato perché il provider email non è configurato correttamente.
                 </div>
               ) : null}
 
               {voucherMessage === "statusError" ? (
                 <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
-                  Voucher generato correttamente, ma non è stato possibile aggiornare lo stato della prenotazione.
+                  Voucher inviato, ma non è stato possibile aggiornare lo stato della prenotazione.
                 </div>
               ) : null}
 
@@ -323,15 +365,17 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
-              {booking.status === "confirmed" && !voucher ? (
+              {["confirmed", "voucher_sent"].includes(booking.status) ? (
                 <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-5">
                   <div className="text-sm font-semibold text-green-deep">
-                    Prenotazione confermata: puoi generare il voucher cliente.
+                    {voucher
+                      ? "Il voucher esiste già: puoi reinviare lo stesso QR Code al cliente."
+                      : "Prenotazione confermata: puoi generare e inviare il voucher cliente."}
                   </div>
                   <form action={generateVoucherAction} className="mt-4">
                     <input type="hidden" name="bookingId" value={booking.id} />
                     <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
-                      Genera voucher
+                      {voucher ? "Reinvia voucher" : "Genera e invia voucher"}
                     </button>
                   </form>
                 </div>

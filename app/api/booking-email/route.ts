@@ -28,19 +28,20 @@ type BookingEmailPayload = {
 
 const resendEndpoint = "https://api.resend.com/emails";
 const defaultAdminEmail = "info@ischiamotion.com";
-const defaultFromEmail = "IschiaMotion <noreply@mail.ischiamotion.com>";
-const defaultSiteUrl = "https://www.ischiamotion.com";
+const defaultFromEmail = "IschiaMotion <booking@mail.ischiamotion.com>";
+const defaultSiteUrl = "https://ischiamotion.com";
 
 class Resend {
   constructor(private readonly apiKey: string) {}
 
   emails = {
-    send: async (input: { from: string; to: string; subject: string; html: string; text?: string }) => {
+    send: async (input: { from: string; to: string; subject: string; html: string; text?: string; reply_to?: string }) => {
       const response = await fetch(resendEndpoint, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.apiKey}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "User-Agent": "IschiaMotion/1.0"
         },
         body: JSON.stringify(input)
       });
@@ -160,12 +161,14 @@ function customerEmailText(payload: BookingEmailPayload) {
 async function sendResendEmail(input: {
   resend: Resend;
   from: string;
+  replyTo: string;
   to: string;
   subject: string;
   text: string;
 }) {
   return input.resend.emails.send({
     from: input.from,
+    reply_to: input.replyTo,
     to: input.to,
     subject: input.subject,
     text: input.text,
@@ -222,6 +225,7 @@ export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   const adminEmail = process.env.BOOKING_ADMIN_EMAIL || defaultAdminEmail;
   const fromEmail = process.env.BOOKING_FROM_EMAIL || defaultFromEmail;
+  const replyToEmail = process.env.BOOKING_REPLY_TO_EMAIL || adminEmail;
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl).replace(/\/$/, "");
   const adminUrl = payload.bookingId ? `${siteUrl}/admin/bookings/${encodeURIComponent(payload.bookingId)}` : `${siteUrl}/admin/bookings`;
 
@@ -229,6 +233,7 @@ export async function POST(request: Request) {
     bookingCode: payload.bookingCode,
     resendApiKeyPresent: Boolean(apiKey),
     fromEmail,
+    replyToEmail,
     adminEmail,
     customerEmailPresent: Boolean(payload.email)
   });
@@ -247,6 +252,7 @@ export async function POST(request: Request) {
   const adminResult = await sendResendEmail({
     resend,
     from: fromEmail,
+    replyTo: replyToEmail,
     to: adminEmail,
     subject: `Nuova richiesta IschiaMotion — ${payload.bookingCode}`,
     text: adminEmailText(payload, adminUrl)
@@ -262,6 +268,7 @@ export async function POST(request: Request) {
   const customerResult = await sendResendEmail({
     resend,
     from: fromEmail,
+    replyTo: replyToEmail,
     to: payload.email,
     subject: payload.language === "it" ? "Richiesta ricevuta — IschiaMotion" : "Request received — IschiaMotion",
     text: customerEmailText(payload)

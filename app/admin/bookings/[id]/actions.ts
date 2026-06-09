@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { sendBookingVoucherEmail, type VoucherEmailResult } from "@/lib/email/booking-voucher-email";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import {
   adminBookingStatuses,
@@ -12,10 +13,29 @@ import {
 } from "@/lib/supabase/queries/admin-bookings";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithMessage(id: string, type: "success" | "error" | "voucherRequired" | "renterAssigned" | "renterError") {
+type StatusMessage =
+  | "success"
+  | "error"
+  | "voucherRequired"
+  | "confirmedVoucherSent"
+  | "confirmedVoucherMissingEmail"
+  | "confirmedVoucherProviderError"
+  | "confirmedVoucherFailed"
+  | "confirmedVoucherStatusError"
+  | "renterAssigned"
+  | "renterError";
+
+function redirectWithMessage(id: string, type: StatusMessage) {
   const param = type === "renterAssigned" || type === "renterError" ? "renterAssign" : "statusUpdate";
   const value = type === "renterAssigned" ? "success" : type === "renterError" ? "error" : type;
   redirect(`/admin/bookings/${id}?${param}=${value}`);
+}
+
+function confirmationMessage(result: VoucherEmailResult): StatusMessage {
+  if (result.ok) return "confirmedVoucherSent";
+  if (result.reason === "missing_customer_email") return "confirmedVoucherMissingEmail";
+  if (result.reason === "provider_not_configured") return "confirmedVoucherProviderError";
+  return "confirmedVoucherFailed";
 }
 
 export async function updateBookingStatusAction(formData: FormData) {
@@ -51,6 +71,35 @@ export async function updateBookingStatusAction(formData: FormData) {
     targetId: bookingId,
     metadata: { status: nextStatus }
   });
+
+  if (nextStatus === "confirmed") {
+    await logAdminAuditEvent({
+      accessToken,
+      actorProfileId: user.id,
+      actorEmail: profile.email,
+      action: "booking_confirmed",
+      targetTable: "bookings",
+      targetId: bookingId
+    });
+
+    console.info("[booking-confirmation] booking confirmed", { bookingId });
+    const voucherEmailResult = await sendBookingVoucherEmail(bookingId, {
+      accessToken,
+      actorProfileId: user.id,
+      actorEmail: profile.email
+    });
+
+    if (voucherEmailResult.ok) {
+      const { error: voucherStatusError } = await updateAdminBookingStatus(accessToken, bookingId, "voucher_sent");
+      if (voucherStatusError) {
+        redirectWithMessage(bookingId, "confirmedVoucherStatusError");
+      }
+    }
+
+    revalidatePath("/admin/bookings");
+    revalidatePath(`/admin/bookings/${bookingId}`);
+    redirectWithMessage(bookingId, confirmationMessage(voucherEmailResult));
+  }
 
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);

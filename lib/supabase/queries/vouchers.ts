@@ -111,6 +111,23 @@ export async function createAdminVoucher(
   }
 }
 
+export async function markAdminVoucherSent(
+  accessToken: string,
+  voucherId: string
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase
+      .from("booking_vouchers")
+      .update({ sent_at: new Date().toISOString() })
+      .eq("id", voucherId);
+
+    return { error: error?.message || null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to mark voucher as sent." };
+  }
+}
+
 export async function getPublicCheckinVoucher(code: string): Promise<{ voucher: PublicCheckinVoucher | null; error: string | null }> {
   try {
     const supabase = createPublicSupabaseClient();

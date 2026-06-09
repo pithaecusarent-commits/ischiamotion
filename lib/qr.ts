@@ -1,6 +1,6 @@
 import QRCode from "qrcode";
 
-const fallbackSiteUrl = "https://www.ischiamotion.com";
+const fallbackSiteUrl = "https://ischiamotion.com";
 
 function normalizeSiteUrl() {
   return (process.env.NEXT_PUBLIC_SITE_URL || fallbackSiteUrl).replace(/\/$/, "");

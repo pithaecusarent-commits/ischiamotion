@@ -2,13 +2,21 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { sendBookingVoucherEmail, type VoucherEmailResult } from "@/lib/email/booking-voucher-email";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { getAdminBookingById, updateAdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
-import { createAdminVoucher } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithVoucherMessage(id: string, type: "success" | "error" | "statusError"): never {
+type VoucherMessage = "success" | "error" | "missingEmail" | "providerError" | "statusError";
+
+function redirectWithVoucherMessage(id: string, type: VoucherMessage): never {
   redirect(`/admin/bookings/${id}?voucher=${type}`);
+}
+
+function voucherMessage(result: VoucherEmailResult): VoucherMessage {
+  if (result.ok) return "success";
+  if (result.reason === "missing_customer_email") return "missingEmail";
+  if (result.reason === "provider_not_configured") return "providerError";
+  return "error";
 }
 
 export async function generateVoucherAction(formData: FormData) {
@@ -25,27 +33,21 @@ export async function generateVoucherAction(formData: FormData) {
     redirectWithVoucherMessage(bookingId, "error");
   }
 
-  const { error: voucherError } = await createAdminVoucher(accessToken, booking);
+  const result = await sendBookingVoucherEmail(bookingId, {
+    accessToken,
+    actorProfileId: user.id,
+    actorEmail: profile.email
+  });
 
-  if (voucherError) {
-    redirectWithVoucherMessage(bookingId, "error");
+  if (!result.ok) {
+    revalidatePath(`/admin/bookings/${bookingId}`);
+    redirectWithVoucherMessage(bookingId, voucherMessage(result));
   }
 
   const { error: statusError } = await updateAdminBookingStatus(accessToken, bookingId, "voucher_sent");
-
   if (statusError) {
     redirectWithVoucherMessage(bookingId, "statusError");
   }
-
-  await logAdminAuditEvent({
-    accessToken,
-    actorProfileId: user.id,
-    actorEmail: profile.email,
-    action: "booking.voucher_generate",
-    targetTable: "bookings",
-    targetId: bookingId,
-    metadata: { status: "voucher_sent" }
-  });
 
   revalidatePath("/admin/bookings");
   revalidatePath(`/admin/bookings/${bookingId}`);
