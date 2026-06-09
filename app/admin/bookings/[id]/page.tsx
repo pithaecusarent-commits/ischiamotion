@@ -35,6 +35,7 @@ type Props = {
   searchParams?: {
     statusUpdate?: string;
     voucher?: string;
+    voucherError?: string;
     checkin?: string;
     payment?: string;
     renterAssign?: string;
@@ -58,6 +59,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
   const statusMessage  = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
+  const voucherErrorDetail = searchParams?.voucherError;
   const checkinMessage = searchParams?.checkin;
   const paymentMessage = searchParams?.payment;
   const renterAssignMessage = searchParams?.renterAssign;
@@ -320,6 +322,9 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
               {voucherMessage === "error" && voucher ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
                   Invio voucher QR fallito. La prenotazione resta confermata.
+                  {voucherErrorDetail ? (
+                    <div className="mt-2 font-mono text-xs font-normal opacity-75">{voucherErrorDetail}</div>
+                  ) : null}
                 </div>
               ) : null}
 

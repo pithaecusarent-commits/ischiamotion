@@ -7,8 +7,10 @@ import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { getAdminBookingById, updateAdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
 
-function redirectWithVoucherMessage(id: string, type: "success" | "error"): never {
-  redirect(`/admin/bookings/${id}?voucher=${type}`);
+function redirectWithVoucherMessage(id: string, type: "success" | "error", reason?: string | null): never {
+  const params = new URLSearchParams({ voucher: type });
+  if (reason) params.set("voucherError", reason.slice(0, 400));
+  redirect(`/admin/bookings/${id}?${params.toString()}`);
 }
 
 export async function generateVoucherAction(formData: FormData) {
@@ -42,7 +44,7 @@ export async function generateVoucherAction(formData: FormData) {
       targetId: bookingId,
       metadata: { error: voucherEmail.error, voucherCode: voucherEmail.voucherCode || null }
     });
-    redirectWithVoucherMessage(bookingId, "error");
+    redirectWithVoucherMessage(bookingId, "error", voucherEmail.error);
   }
 
   await logAdminAuditEvent({
