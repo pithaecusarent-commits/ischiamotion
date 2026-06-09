@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { localTodayIso } from "@/lib/dates";
 import type { BookingDeliveryMethod, Locale, VehicleFilter } from "@/lib/types";
 
 const deliveryLabels: Record<Locale, Record<BookingDeliveryMethod, string>> = {
@@ -40,6 +41,20 @@ export function HeroSearch({
 }) {
   const router = useRouter();
   const [error, setError] = useState("");
+  const today = localTodayIso();
+
+  function handleStartDateChange(value: string) {
+    onStartDateChange(value);
+    if (endDate && endDate < value) {
+      onEndDateChange("");
+    }
+    setError("");
+  }
+
+  function handleEndDateChange(value: string) {
+    onEndDateChange(value);
+    setError("");
+  }
 
   function handleSearch() {
     if (!startDate || !endDate) {
@@ -47,8 +62,13 @@ export function HeroSearch({
       return;
     }
 
+    if (startDate < today) {
+      setError(locale === "it" ? "La data inizio non può essere precedente a oggi." : "Start date cannot be before today.");
+      return;
+    }
+
     if (endDate < startDate) {
-      setError(locale === "it" ? "La data fine deve essere successiva alla data inizio." : "End date must be after start date.");
+      setError(locale === "it" ? "La data fine non può essere precedente alla data inizio." : "End date cannot be before start date.");
       return;
     }
 
@@ -99,11 +119,11 @@ export function HeroSearch({
           </div>
           <div className="s-field">
             <div className="search-label">{locale === "it" ? "Data inizio" : "Start date"}</div>
-            <input type="date" value={startDate} onChange={(event) => onStartDateChange(event.target.value)} aria-label={locale === "it" ? "Data inizio" : "Start date"} />
+            <input type="date" min={today} value={startDate} onChange={(event) => handleStartDateChange(event.target.value)} aria-label={locale === "it" ? "Data inizio" : "Start date"} />
           </div>
           <div className="s-field">
             <div className="search-label">{locale === "it" ? "Data fine" : "End date"}</div>
-            <input type="date" value={endDate} onChange={(event) => onEndDateChange(event.target.value)} aria-label={locale === "it" ? "Data fine" : "End date"} />
+            <input type="date" min={startDate || today} value={endDate} onChange={(event) => handleEndDateChange(event.target.value)} aria-label={locale === "it" ? "Data fine" : "End date"} />
           </div>
         </div>
         {error ? <div className="booking-message error">{error}</div> : null}

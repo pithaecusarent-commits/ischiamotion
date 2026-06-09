@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { initialPaymentStatus } from "@/lib/booking-labels";
+import { localTodayIso } from "@/lib/dates";
 import { createInternalSignature } from "@/lib/internal-signature";
 import { generateBookingCode } from "@/lib/public-codes";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
@@ -122,7 +123,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Invalid booking request payload." }, { status: 400 });
   }
 
-  if (input.endDate < input.startDate) {
+  if (input.startDate < localTodayIso() || input.endDate < input.startDate) {
     return NextResponse.json({ ok: false, error: "Invalid booking dates." }, { status: 400 });
   }
 

@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
+import { localTodayIso } from "@/lib/dates";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
@@ -89,11 +90,16 @@ function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
 export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, endDate, initialDeliveryMethod, onClose }: Props) {
   const text = copy[locale];
   const isNautical = isNauticalCategory(vehicle?.category);
+  const today = localTodayIso();
+  const validStartDate = startDate >= today ? startDate : "";
+  const validEndDate = endDate >= (validStartDate || today) ? endDate : "";
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [selectedPickupPointId, setSelectedPickupPointId] = useState(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
   const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(
     isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point")
   );
+  const [selectedStartDate, setSelectedStartDate] = useState(validStartDate);
+  const [selectedEndDate, setSelectedEndDate] = useState(validEndDate);
   const vehicleLabel = useMemo(() => {
     if (!vehicle) return "";
     return locale === "it" ? vehicle.title_it : vehicle.title_en;
@@ -102,8 +108,17 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
   useEffect(() => {
     setSelectedPickupPointId(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
     setDeliveryMethod(isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point"));
+    setSelectedStartDate(validStartDate);
+    setSelectedEndDate(validEndDate);
     setStatus("idle");
-  }, [initialDeliveryMethod, isNautical, pickupPoints, vehicle]);
+  }, [initialDeliveryMethod, isNautical, pickupPoints, validEndDate, validStartDate, vehicle]);
+
+  function handleStartDateChange(value: string) {
+    setSelectedStartDate(value);
+    if (selectedEndDate && selectedEndDate < value) {
+      setSelectedEndDate("");
+    }
+  }
 
   if (!vehicle) return null;
   const currentVehicle = vehicle;
@@ -276,11 +291,11 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
             </label>
             <label>
               <span>{text.startDate}</span>
-              <input name="startDate" type="date" defaultValue={startDate} required />
+              <input name="startDate" type="date" min={today} value={selectedStartDate} onChange={(event) => handleStartDateChange(event.target.value)} required />
             </label>
             <label>
               <span>{text.endDate}</span>
-              <input name="endDate" type="date" defaultValue={endDate} required />
+              <input name="endDate" type="date" min={selectedStartDate || today} value={selectedEndDate} onChange={(event) => setSelectedEndDate(event.target.value)} required />
             </label>
             <label>
               <span>{text.pickupTime}</span>
