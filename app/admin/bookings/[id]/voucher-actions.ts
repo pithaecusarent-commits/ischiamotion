@@ -7,7 +7,7 @@ import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { getAdminBookingById, updateAdminBookingStatus } from "@/lib/supabase/queries/admin-bookings";
 import { createAdminVoucher } from "@/lib/supabase/queries/vouchers";
 
-function redirectWithVoucherMessage(id: string, type: "success" | "error"): never {
+function redirectWithVoucherMessage(id: string, type: "success" | "error" | "statusError"): never {
   redirect(`/admin/bookings/${id}?voucher=${type}`);
 }
 
@@ -34,7 +34,7 @@ export async function generateVoucherAction(formData: FormData) {
   const { error: statusError } = await updateAdminBookingStatus(accessToken, bookingId, "voucher_sent");
 
   if (statusError) {
-    redirectWithVoucherMessage(bookingId, "error");
+    redirectWithVoucherMessage(bookingId, "statusError");
   }
 
   await logAdminAuditEvent({

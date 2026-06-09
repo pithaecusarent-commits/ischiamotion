@@ -299,9 +299,15 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
-              {voucherMessage === "error" ? (
+              {voucherMessage === "error" && !voucher ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
                   Impossibile generare il voucher. Verifica che la prenotazione sia confermata e che la migration 0006 sia applicata su Supabase.
+                </div>
+              ) : null}
+
+              {voucherMessage === "statusError" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Voucher generato correttamente, ma non è stato possibile aggiornare lo stato della prenotazione.
                 </div>
               ) : null}
 
