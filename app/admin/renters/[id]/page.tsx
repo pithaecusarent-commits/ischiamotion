@@ -271,11 +271,12 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-bold text-ink">{vehicle.title_it}</p>
-                      {vehicle.vehicle_categories && (
-                        <p className="mt-0.5 text-xs font-semibold text-ink/45">
-                          {vehicle.vehicle_categories.name_it}
-                        </p>
-                      )}
+                      <p className="mt-0.5 text-xs font-semibold text-ink/45">
+                        {vehicle.vehicle_categories?.name_it || "-"}
+                        {vehicle.price_from != null && (
+                          <span className="ml-2">· da €{vehicle.price_from}/g</span>
+                        )}
+                      </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
                       <span

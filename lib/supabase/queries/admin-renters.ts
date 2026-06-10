@@ -35,7 +35,7 @@ export type AdminRenterVehicle = {
   id: string;
   title_it: string;
   is_active: boolean;
-  slug: string | null;
+  price_from: number | null;
   vehicle_categories: { name_it: string } | null;
 };
 
@@ -84,7 +84,7 @@ async function buildAdminRenterDetailFromRenterId(
       .maybeSingle(),
     supabase
       .from("vehicles")
-      .select("id, title_it, is_active, slug, vehicle_categories(name_it)")
+      .select("id, title_it, is_active, price_from, vehicle_categories(name_it)")
       .eq("renter_id", renterId)
       .order("is_active", { ascending: false }),
     supabase
@@ -127,7 +127,7 @@ async function buildAdminRenterDetailFromRenterId(
     id: string;
     title_it: string;
     is_active: boolean;
-    slug: string | null;
+    price_from: number | null;
     vehicle_categories: { name_it: string } | { name_it: string }[] | null;
   }>;
 
@@ -278,7 +278,7 @@ export async function getRenterDetailByProfileId(
           .single(),
         supabase
           .from("vehicles")
-          .select("id, title_it, is_active, slug, vehicle_categories(name_it)")
+          .select("id, title_it, is_active, price_from, vehicle_categories(name_it)")
           .eq("renter_id", renterId)
           .order("is_active", { ascending: false }),
         supabase
@@ -293,7 +293,7 @@ export async function getRenterDetailByProfileId(
         id: string;
         title_it: string;
         is_active: boolean;
-        slug: string | null;
+        price_from: number | null;
         vehicle_categories: { name_it: string } | { name_it: string }[] | null;
       }>;
       vehicles = rawVehicles.map((v) => ({
