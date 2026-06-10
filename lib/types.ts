@@ -121,6 +121,8 @@ export type Booking = {
   delivery_method: BookingDeliveryMethod;
   delivery_location: string | null;
   hotel_municipality: string | null;
+  pickup_municipality: string | null;
+  port_slug: string | null;
   delivery_notes: string | null;
   payment_type: BookingPaymentType;
   payment_method: BookingPaymentMethod;

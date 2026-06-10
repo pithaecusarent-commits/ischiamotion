@@ -1,6 +1,6 @@
 import type { AdminBookingItem } from "@/lib/supabase/queries/admin-bookings";
 import { deliveryMethodLabels, formatMoney, municipalityLabels, paymentMethodLabels, paymentStatusLabels, paymentTypeLabels } from "@/lib/booking-labels";
-import { isValidHotelMunicipality } from "@/lib/delivery-zones";
+import { isValidDeliveryPort, isValidHotelMunicipality, portLabels } from "@/lib/delivery-zones";
 import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
 
 export const statusStyles: Record<string, { label: string; className: string }> = {
@@ -89,6 +89,20 @@ export function bookingDeliveryMethod(booking: AdminBookingItem) {
 
 export function bookingDeliveryLocation(booking: AdminBookingItem) {
   return booking.delivery_location || bookingPickupPoint(booking);
+}
+
+export function bookingPickupMunicipality(booking: AdminBookingItem) {
+  const m = booking.pickup_municipality;
+  if (!m) return null;
+  if (isValidHotelMunicipality(m)) return municipalityLabels.it[m];
+  return m;
+}
+
+export function bookingPort(booking: AdminBookingItem) {
+  const port = booking.port_slug;
+  if (!port) return null;
+  if (isValidDeliveryPort(port)) return portLabels.it[port];
+  return port;
 }
 
 export function bookingHotelMunicipality(booking: AdminBookingItem) {

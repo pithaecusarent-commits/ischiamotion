@@ -36,6 +36,9 @@ type Props = {
   startDate: string;
   endDate: string;
   deliveryMethod: BookingDeliveryMethod | null;
+  pickupMunicipality: string;
+  portSlug: string;
+  hotelMunicipality: string;
   isFallback: boolean;
   hasZoneFilter?: boolean;
 };
@@ -48,6 +51,9 @@ export function SearchResults({
   startDate,
   endDate,
   deliveryMethod,
+  pickupMunicipality,
+  portSlug,
+  hotelMunicipality,
   isFallback,
   hasZoneFilter = false
 }: Props) {
@@ -158,6 +164,9 @@ export function SearchResults({
         startDate={startDate}
         endDate={endDate}
         initialDeliveryMethod={deliveryMethod}
+        initialPickupMunicipality={pickupMunicipality}
+        initialPortSlug={portSlug}
+        initialHotelMunicipality={hotelMunicipality}
         onClose={() => setSelectedVehicle(null)}
       />
     </>

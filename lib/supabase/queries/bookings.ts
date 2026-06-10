@@ -15,6 +15,8 @@ export type BookingRequestInput = {
   pickupTime: string;
   deliveryMethod: BookingDeliveryMethod;
   deliveryLocation: string;
+  pickupMunicipality: string;
+  portSlug: string;
   hotelMunicipality: string;
   deliveryNotes: string;
   paymentType: BookingPaymentType;
@@ -75,6 +77,9 @@ export async function createBookingRequest(input: BookingRequestInput) {
     p_pickup_time: input.pickupTime || null,
     p_delivery_method: input.deliveryMethod,
     p_delivery_location: input.deliveryLocation || null,
+    p_hotel_municipality: input.hotelMunicipality || null,
+    p_pickup_municipality: input.pickupMunicipality || null,
+    p_port_slug: input.portSlug || null,
     p_delivery_notes: input.deliveryNotes || null,
     p_payment_type: input.paymentType,
     p_payment_method: input.paymentMethod,

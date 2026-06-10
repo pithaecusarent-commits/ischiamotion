@@ -13,6 +13,8 @@ import {
   bookingDeliveryLocation,
   bookingDeliveryMethod,
   bookingHotelMunicipality,
+  bookingPickupMunicipality,
+  bookingPort,
   bookingPaymentMethod,
   bookingPaymentStatus,
   bookingPaymentType,
@@ -24,7 +26,7 @@ import {
   StatusBadge
 } from "@/app/admin/bookings/booking-ui";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { getActiveAdminRenters, getAdminBookingById } from "@/lib/supabase/queries/admin-bookings";
+import { getActiveAdminRenters, getAdminBookingById, getAdminBookingRenterCompatibility } from "@/lib/supabase/queries/admin-bookings";
 import { getAdminCheckinByBookingId } from "@/lib/supabase/queries/checkins";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
 import { generateQrDataUrl, toAbsoluteCheckinUrl } from "@/lib/qr";
@@ -56,6 +58,9 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const { accessToken } = await requireAdmin(`/admin/bookings/${params.id}`);
   const { booking, error } = await getAdminBookingById(accessToken, params.id);
   const { renters, error: rentersError } = await getActiveAdminRenters(accessToken);
+  const renterCompatibility = booking
+    ? await getAdminBookingRenterCompatibility(accessToken, booking)
+    : { suggestedRenter: null, compatibleRenters: [], incompatibleRenters: [], error: null };
   const { voucher, error: voucherLoadError } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null, error: null };
   const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
   const statusMessage  = searchParams?.statusUpdate;
@@ -67,6 +72,10 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const voucherPath = voucher ? `/checkin/${voucher.voucher_code}` : "";
   const voucherUrl = voucher ? toAbsoluteCheckinUrl(voucherPath) : "";
   const voucherQrDataUrl = voucher ? await generateQrDataUrl(voucher.qr_payload || voucherPath) : "";
+  const currentRenterCompatibility = booking?.renter_id
+    ? [...renterCompatibility.compatibleRenters, ...renterCompatibility.incompatibleRenters].find((renter) => renter.id === booking.renter_id) || null
+    : null;
+  const compatibleRenterIds = new Set(renterCompatibility.compatibleRenters.map((renter) => renter.id));
 
   if (!booking && !error) {
     notFound();
@@ -136,6 +145,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
               <div className="mt-4 grid gap-4 md:grid-cols-3">
                 <DetailRow label="Modalità" value={bookingDeliveryMethod(booking)} />
                 <DetailRow label="Luogo" value={bookingDeliveryLocation(booking)} />
+                {bookingPickupMunicipality(booking) && (
+                  <DetailRow label="Comune IschiaMotion Point" value={bookingPickupMunicipality(booking)} />
+                )}
+                {bookingPort(booking) && (
+                  <DetailRow label="Porto scelto" value={bookingPort(booking)} />
+                )}
                 {bookingHotelMunicipality(booking) && (
                   <DetailRow label="Comune hotel" value={bookingHotelMunicipality(booking)} />
                 )}
@@ -192,12 +207,55 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {renterCompatibility.error ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Compatibilità renter non calcolata: {renterCompatibility.error}
+                </div>
+              ) : null}
+
+              {currentRenterCompatibility && !currentRenterCompatibility.isCompatible ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Questo renter potrebbe non coprire la zona richiesta.
+                  <div className="mt-2 text-xs font-normal leading-5">
+                    {currentRenterCompatibility.reasons.join(" ")}
+                  </div>
+                </div>
+              ) : null}
+
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <DetailRow
                   label="Noleggiatore attuale"
                   value={booking.renters?.business_name_internal || (booking.renter_id ? "Renter collegato" : "Non assegnato")}
                 />
-                <DetailRow label="ID booking" value={booking.id} />
+                <DetailRow
+                  label="Renter suggerito dal veicolo"
+                  value={renterCompatibility.suggestedRenter?.business_name_internal || "Non disponibile"}
+                />
+              </div>
+
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
+                <div className="rounded-3xl border border-sea/10 bg-sea/5 p-5">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Compatibili</div>
+                  <div className="mt-3 space-y-2 text-sm font-semibold text-ink/75">
+                    {renterCompatibility.compatibleRenters.length > 0 ? renterCompatibility.compatibleRenters.map((renter) => (
+                      <div key={renter.id} className="flex flex-wrap items-center gap-2">
+                        <span>{renter.business_name_internal}</span>
+                        {renter.isSuggested ? <span className="rounded-full bg-sea/15 px-2 py-1 text-[10px] font-black uppercase text-green-deep">Suggerito</span> : null}
+                      </div>
+                    )) : <span>Nessun renter compatibile calcolato.</span>}
+                  </div>
+                </div>
+                <div className="rounded-3xl border border-amber-200 bg-amber-50 p-5">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-amber-800/70">Attenzione</div>
+                  <div className="mt-3 space-y-2 text-sm font-semibold text-amber-900/80">
+                    {renterCompatibility.incompatibleRenters.length > 0 ? renterCompatibility.incompatibleRenters.slice(0, 6).map((renter) => (
+                      <div key={renter.id}>
+                        <div>{renter.business_name_internal}{renter.isSuggested ? " (suggerito)" : ""}</div>
+                        <div className="text-xs font-normal leading-5">{renter.reasons.join(" ")}</div>
+                      </div>
+                    )) : <span>Nessun warning sui renter attivi.</span>}
+                  </div>
+                </div>
               </div>
 
               <form action={assignBookingRenterAction} className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
@@ -211,11 +269,29 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     required
                   >
                     <option value="">Seleziona noleggiatore</option>
-                    {renters.map((renter) => (
+                    {renterCompatibility.compatibleRenters.length > 0 ? (
+                      <optgroup label="Compatibili">
+                        {renterCompatibility.compatibleRenters.map((renter) => (
+                          <option key={renter.id} value={renter.id}>
+                            {renter.business_name_internal}{renter.isSuggested ? " - suggerito" : ""}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ) : null}
+                    {renterCompatibility.incompatibleRenters.length > 0 ? (
+                      <optgroup label="Da verificare">
+                        {renterCompatibility.incompatibleRenters.map((renter) => (
+                          <option key={renter.id} value={renter.id}>
+                            {renter.business_name_internal} - attenzione zona
+                          </option>
+                        ))}
+                      </optgroup>
+                    ) : null}
+                    {renterCompatibility.compatibleRenters.length === 0 && renterCompatibility.incompatibleRenters.length === 0 ? renters.map((renter) => (
                       <option key={renter.id} value={renter.id}>
-                        {renter.business_name_internal}
+                        {renter.business_name_internal}{compatibleRenterIds.has(renter.id) ? " - compatibile" : ""}
                       </option>
-                    ))}
+                    )) : null}
                   </select>
                 </label>
                 <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit" disabled={renters.length === 0}>
@@ -425,6 +501,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                       <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
                       <DetailRow label="Modalità servizio" value={bookingDeliveryMethod(booking)} />
                       <DetailRow label="Luogo" value={bookingDeliveryLocation(booking)} />
+                      {bookingPickupMunicipality(booking) && (
+                        <DetailRow label="Comune IschiaMotion Point" value={bookingPickupMunicipality(booking)} />
+                      )}
+                      {bookingPort(booking) && (
+                        <DetailRow label="Porto scelto" value={bookingPort(booking)} />
+                      )}
                       {bookingHotelMunicipality(booking) && (
                         <DetailRow label="Comune hotel" value={bookingHotelMunicipality(booking)} />
                       )}

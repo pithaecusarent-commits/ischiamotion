@@ -86,6 +86,9 @@ export async function VehicleResultsPage({
           startDate={startDate}
           endDate={endDate}
           deliveryMethod={deliveryMethod}
+          pickupMunicipality={pickupMunicipality}
+          portSlug={portSlug}
+          hotelMunicipality={hotelMunicipality}
           isFallback={result.isFallback}
           hasZoneFilter={hasZoneFilter}
         />

@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
-import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, municipalityLabels, portLabels } from "@/lib/delivery-zones";
+import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidDeliveryPort, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
@@ -20,6 +20,9 @@ type Props = {
   startDate: string;
   endDate: string;
   initialDeliveryMethod?: BookingDeliveryMethod | null;
+  initialPickupMunicipality?: string;
+  initialPortSlug?: string;
+  initialHotelMunicipality?: string;
   onClose: () => void;
 };
 
@@ -88,7 +91,18 @@ function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   return label.replace(" - ", " — ");
 }
 
-export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, endDate, initialDeliveryMethod, onClose }: Props) {
+export function BookingRequestModal({
+  locale,
+  vehicle,
+  pickupPoints,
+  startDate,
+  endDate,
+  initialDeliveryMethod,
+  initialPickupMunicipality = "",
+  initialPortSlug = "",
+  initialHotelMunicipality = "",
+  onClose
+}: Props) {
   const text = copy[locale];
   const isNautical = isNauticalCategory(vehicle?.category);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -129,12 +143,17 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
     const selectedDeliveryMethod: BookingDeliveryMethod = isNautical
       ? "pickup_point"
       : (String(formData.get("deliveryMethod") || "pickup_point") as BookingDeliveryMethod);
+    const selectedPortSlug = selectedDeliveryMethod === "port_delivery"
+      ? String(formData.get("portSlug") || initialPortSlug || DELIVERY_PORTS[0])
+      : "";
+    const selectedHotelMunicipality = selectedDeliveryMethod === "hotel_delivery"
+      ? String(formData.get("hotelMunicipality") || initialHotelMunicipality || "")
+      : "";
     const deliveryLocation = selectedDeliveryMethod === "pickup_point"
       ? formatPickupLabel(pickupPoint, locale)
+      : selectedDeliveryMethod === "port_delivery"
+        ? (isValidDeliveryPort(selectedPortSlug) ? portLabels[locale][selectedPortSlug] : "")
       : String(formData.get("deliveryLocation") || "");
-    const hotelMunicipality = selectedDeliveryMethod === "hotel_delivery"
-      ? String(formData.get("hotelMunicipality") || "")
-      : "";
 
     setStatus("submitting");
 
@@ -160,7 +179,9 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
           pickupTime: String(formData.get("pickupTime") || ""),
           deliveryMethod: selectedDeliveryMethod,
           deliveryLocation,
-          hotelMunicipality,
+          pickupMunicipality: selectedDeliveryMethod === "pickup_point" ? initialPickupMunicipality : "",
+          portSlug: selectedPortSlug,
+          hotelMunicipality: selectedHotelMunicipality,
           deliveryNotes: String(formData.get("deliveryNotes") || ""),
           paymentType: "pay_on_pickup" as BookingPaymentType,
           paymentMethod: "unknown" as BookingPaymentMethod,
@@ -245,9 +266,9 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
             {deliveryMethod === "port_delivery" ? (
               <label>
                 <span>{text.port}</span>
-                <select name="deliveryLocation" required>
+                <select name="portSlug" defaultValue={initialPortSlug || DELIVERY_PORTS[0]} required>
                   {DELIVERY_PORTS.map((port) => (
-                    <option key={port} value={portLabels[locale][port]}>{portLabels[locale][port]}</option>
+                    <option key={port} value={port}>{portLabels[locale][port]}</option>
                   ))}
                 </select>
               </label>
@@ -256,7 +277,7 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
               <>
                 <label>
                   <span>{text.hotelMunicipality}</span>
-                  <select name="hotelMunicipality" required>
+                  <select name="hotelMunicipality" defaultValue={initialHotelMunicipality || HOTEL_MUNICIPALITIES[0]} required>
                     {HOTEL_MUNICIPALITIES.map((m) => (
                       <option key={m} value={m}>{municipalityLabels[locale][m]}</option>
                     ))}

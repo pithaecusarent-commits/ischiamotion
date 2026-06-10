@@ -18,6 +18,8 @@ export type AdminBookingItem = {
   delivery_method: BookingDeliveryMethod;
   delivery_location: string | null;
   hotel_municipality: string | null;
+  pickup_municipality: string | null;
+  port_slug: string | null;
   delivery_notes: string | null;
   payment_type: BookingPaymentType;
   payment_method: BookingPaymentMethod;
@@ -33,6 +35,9 @@ export type AdminBookingItem = {
     status: string;
   } | null;
   vehicles: {
+    id: string;
+    renter_id: string | null;
+    category_id: string | null;
     title_it: string;
     title_en: string;
     vehicle_categories: {
@@ -47,6 +52,13 @@ export type AdminRenterOption = {
   id: string;
   business_name_internal: string;
   status: string;
+  ischiamotion_point_municipality?: string | null;
+};
+
+export type AdminBookingRenterCompatibility = AdminRenterOption & {
+  isCompatible: boolean;
+  isSuggested: boolean;
+  reasons: string[];
 };
 
 export type AdminBookingFilters = {
@@ -68,14 +80,19 @@ type AdminBookingRow = Omit<AdminBookingItem, "renters"> & {
     | {
       business_name_internal: string;
       status: string;
+      ischiamotion_point_municipality?: string | null;
     }
     | {
       business_name_internal: string;
       status: string;
+      ischiamotion_point_municipality?: string | null;
     }[]
     | null;
   vehicles:
     | {
+      id: string;
+      renter_id: string | null;
+      category_id: string | null;
       title_it: string;
       title_en: string;
       vehicle_categories:
@@ -92,6 +109,9 @@ type AdminBookingRow = Omit<AdminBookingItem, "renters"> & {
         | null;
     }
     | {
+      id: string;
+      renter_id: string | null;
+      category_id: string | null;
       title_it: string;
       title_en: string;
       vehicle_categories:
@@ -122,7 +142,7 @@ export const adminBookingStatuses = [
 
 export type AdminBookingStatus = (typeof adminBookingStatuses)[number];
 
-const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, hotel_municipality, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(title_it, title_en, vehicle_categories(slug, name_it, name_en))";
+const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, hotel_municipality, pickup_municipality, port_slug, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(id, renter_id, category_id, title_it, title_en, vehicle_categories(slug, name_it, name_en))";
 
 function normalizeAdminBooking(row: AdminBookingRow): AdminBookingItem {
   const vehicle = Array.isArray(row.vehicles) ? row.vehicles[0] || null : row.vehicles;
@@ -247,7 +267,7 @@ export async function getActiveAdminRenters(accessToken: string): Promise<{ rent
     const supabase = createSupabaseUserClient(accessToken);
     const { data, error } = await supabase
       .from("renters")
-      .select("id, business_name_internal, status")
+      .select("id, business_name_internal, status, ischiamotion_point_municipality")
       .eq("status", "active")
       .order("business_name_internal", { ascending: true });
 
@@ -255,6 +275,133 @@ export async function getActiveAdminRenters(accessToken: string): Promise<{ rent
     return { renters: (data || []) as AdminRenterOption[], error: null };
   } catch (error) {
     return { renters: [], error: error instanceof Error ? error.message : "Unable to load renters." };
+  }
+}
+
+export async function getAdminBookingRenterCompatibility(
+  accessToken: string,
+  booking: AdminBookingItem
+): Promise<{
+  suggestedRenter: AdminRenterOption | null;
+  compatibleRenters: AdminBookingRenterCompatibility[];
+  incompatibleRenters: AdminBookingRenterCompatibility[];
+  error: string | null;
+}> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const categoryId = booking.vehicles?.category_id || null;
+    const suggestedRenterId = booking.vehicles?.renter_id || null;
+
+    const { data: rentersData, error: rentersError } = await supabase
+      .from("renters")
+      .select("id, business_name_internal, status, ischiamotion_point_municipality")
+      .eq("status", "active")
+      .order("business_name_internal", { ascending: true });
+
+    if (rentersError) {
+      return { suggestedRenter: null, compatibleRenters: [], incompatibleRenters: [], error: rentersError.message };
+    }
+
+    const renters = (rentersData || []) as AdminRenterOption[];
+    const renterIds = renters.map((renter) => renter.id);
+    let categoryRenterIds = new Set<string>();
+
+    if (categoryId && renterIds.length > 0) {
+      const { data: vehicleRows, error: vehicleError } = await supabase
+        .from("vehicles")
+        .select("renter_id")
+        .eq("category_id", categoryId)
+        .eq("is_active", true)
+        .in("renter_id", renterIds);
+
+      if (vehicleError) {
+        return { suggestedRenter: null, compatibleRenters: [], incompatibleRenters: [], error: vehicleError.message };
+      }
+
+      categoryRenterIds = new Set((vehicleRows || []).map((row) => row.renter_id as string).filter(Boolean));
+    }
+
+    let capabilityRenterIds = new Set<string>();
+    const zone = booking.delivery_method === "port_delivery"
+      ? booking.port_slug
+      : booking.delivery_method === "hotel_delivery"
+        ? booking.hotel_municipality
+        : null;
+
+    if (categoryId && zone && (booking.delivery_method === "port_delivery" || booking.delivery_method === "hotel_delivery") && renterIds.length > 0) {
+      const { data: capabilities, error: capabilityError } = await supabase
+        .from("renter_category_delivery_capabilities")
+        .select("renter_id, zones")
+        .eq("category_id", categoryId)
+        .eq("delivery_method", booking.delivery_method)
+        .eq("is_enabled", true)
+        .in("renter_id", renterIds);
+
+      if (capabilityError) {
+        return { suggestedRenter: null, compatibleRenters: [], incompatibleRenters: [], error: capabilityError.message };
+      }
+
+      capabilityRenterIds = new Set(
+        ((capabilities || []) as Array<{ renter_id: string; zones: string[] | null }>)
+          .filter((capability) => (capability.zones || []).includes(zone))
+          .map((capability) => capability.renter_id)
+      );
+    }
+
+    const matches = renters.map<AdminBookingRenterCompatibility>((renter) => {
+      const reasons: string[] = [];
+
+      if (!categoryId) {
+        reasons.push("Categoria veicolo non disponibile sulla booking.");
+      } else if (!categoryRenterIds.has(renter.id)) {
+        reasons.push("Nessun veicolo attivo del renter per la categoria richiesta.");
+      }
+
+      if (booking.delivery_method === "pickup_point") {
+        if (!booking.pickup_municipality) {
+          reasons.push("Comune IschiaMotion Point non registrato sulla booking.");
+        } else if (renter.ischiamotion_point_municipality !== booking.pickup_municipality) {
+          reasons.push("Comune IschiaMotion Point non coperto dal renter.");
+        }
+      }
+
+      if (booking.delivery_method === "port_delivery") {
+        if (!booking.port_slug) {
+          reasons.push("Porto non registrato sulla booking.");
+        } else if (!capabilityRenterIds.has(renter.id)) {
+          reasons.push("Porto non coperto nelle zone di consegna per categoria.");
+        }
+      }
+
+      if (booking.delivery_method === "hotel_delivery") {
+        if (!booking.hotel_municipality) {
+          reasons.push("Comune hotel non registrato sulla booking.");
+        } else if (!capabilityRenterIds.has(renter.id)) {
+          reasons.push("Comune hotel non coperto nelle zone di consegna per categoria.");
+        }
+      }
+
+      return {
+        ...renter,
+        isSuggested: renter.id === suggestedRenterId,
+        isCompatible: reasons.length === 0,
+        reasons
+      };
+    });
+
+    return {
+      suggestedRenter: renters.find((renter) => renter.id === suggestedRenterId) || null,
+      compatibleRenters: matches.filter((renter) => renter.isCompatible),
+      incompatibleRenters: matches.filter((renter) => !renter.isCompatible),
+      error: null
+    };
+  } catch (error) {
+    return {
+      suggestedRenter: null,
+      compatibleRenters: [],
+      incompatibleRenters: [],
+      error: error instanceof Error ? error.message : "Unable to calculate renter compatibility."
+    };
   }
 }
 
