@@ -54,7 +54,7 @@ export function PaymentForm({
     <div className="mt-4 rounded-[28px] border border-amber-200/60 bg-amber-50/40 p-6">
       <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Gestione pagamento</div>
       <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Aggiorna pagamento</h2>
-      <p className="mt-1 text-sm text-ink/60">Gestione manuale importi e stato pagamento. Non integra Stripe.</p>
+      <p className="mt-1 text-sm text-ink/60">Gestione manuale importi e stato pagamento. Se richiedi un acconto, le note pagamento vengono usate anche nell&apos;email cliente.</p>
 
       {successMessage ? (
         <div className="mt-4 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
@@ -164,7 +164,7 @@ export function PaymentForm({
             name="payment_notes"
             rows={3}
             defaultValue={initialNotes || ""}
-            placeholder="Note operative interne (non visibili al cliente)"
+            placeholder="Coordinate bonifico, istruzioni pagamento o note operative"
           />
         </label>
 

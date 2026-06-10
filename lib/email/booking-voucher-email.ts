@@ -1,5 +1,6 @@
 import { sendEmail } from "@/lib/email/resend";
 import { deliveryMethodLabels, formatMoney, paymentStatusLabels, paymentTypeLabels } from "@/lib/booking-labels";
+import { escapeEmailHtml, formatBookingEmailDate, renderIschiaMotionEmail } from "@/lib/email/booking-email-theme";
 import { generateQrDataUrl, toAbsoluteCheckinUrl } from "@/lib/qr";
 import { generateVoucherCode } from "@/lib/public-codes";
 import { createSupabaseServiceRoleClient } from "@/lib/supabase/admin-auth";
@@ -41,23 +42,6 @@ type VoucherBooking = {
   balance_due: number | null;
   notes: string | null;
 };
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-function formatDate(value: string, locale: Locale) {
-  return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "it-IT", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  }).format(new Date(`${value}T00:00:00`));
-}
 
 function qrBase64(dataUrl: string) {
   const match = dataUrl.match(/^data:image\/png;base64,(.+)$/);
@@ -107,7 +91,7 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
   const name = `${booking.customer_first_name} ${booking.customer_last_name}`.trim();
   const vehicle = getBookingNoteValue(booking.notes, "Vehicle") || "-";
   const pickupPoint = booking.delivery_location || getBookingNoteValue(booking.notes, "Pickup point") || "-";
-  const dates = `${formatDate(booking.start_date, locale)} - ${formatDate(booking.end_date, locale)}${booking.pickup_time ? `, ${booking.pickup_time}` : ""}`;
+  const dates = `${formatBookingEmailDate(booking.start_date, locale)} - ${formatBookingEmailDate(booking.end_date, locale)}${booking.pickup_time ? `, ${booking.pickup_time}` : ""}`;
   const amounts = [
     booking.total_amount !== null ? `${locale === "en" ? "Total" : "Totale"} ${formatMoney(booking.total_amount)}` : "",
     booking.deposit_amount !== null ? `${locale === "en" ? "Deposit" : "Acconto"} ${formatMoney(booking.deposit_amount)}` : "",
@@ -144,7 +128,7 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
       fallback: "Se il QR Code non è visibile, usa questo link:"
     };
 
-  const details = [
+  const details: Array<[string, string]> = [
     [labels.booking, booking.booking_code],
     [labels.voucher, voucher.voucher_code],
     [labels.vehicle, vehicle],
@@ -158,22 +142,37 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
     ...details.map(([label, value]) => `${label}: ${value}`),
     "", `${labels.fallback} ${voucherUrl}`
   ].join("\n");
-  const rows = details.map(([label, value]) => `
-    <tr><td style="padding:8px 12px;color:#557065;font-weight:bold">${escapeHtml(label)}</td><td style="padding:8px 12px">${escapeHtml(value)}</td></tr>`).join("");
-  const html = `
-    <div style="font-family:Arial,sans-serif;line-height:1.6;color:#151512;max-width:640px;margin:auto">
-      <h1 style="color:#174b3b">IschiaMotion</h1>
-      <p>${escapeHtml(labels.greeting)}</p><p>${escapeHtml(labels.intro)}</p>
-      <div style="text-align:center;margin:28px 0"><img src="${escapeHtml(qrImageSource)}" width="260" height="260" alt="QR voucher ${escapeHtml(voucher.voucher_code)}" style="display:inline-block;max-width:100%;height:auto"></div>
-      <table style="width:100%;border-collapse:collapse;background:#f7f3e8">${rows}</table>
-      <p style="margin-top:24px"><a href="${escapeHtml(voucherUrl)}" style="display:inline-block;background:#174b3b;color:#fff;padding:12px 18px;border-radius:24px;text-decoration:none;font-weight:bold">${escapeHtml(labels.link)}</a></p>
-      <p style="font-size:13px;color:#557065">${escapeHtml(labels.fallback)}<br><a href="${escapeHtml(voucherUrl)}">${escapeHtml(voucherUrl)}</a></p>
-    </div>`;
+  const html = renderIschiaMotionEmail({
+    eyebrow: locale === "en" ? "Voucher ready" : "Voucher pronto",
+    title: locale === "en" ? "Your booking is confirmed" : "La tua prenotazione e confermata",
+    greeting: labels.greeting,
+    intro: [labels.intro],
+    bannerHtml: `
+      <div style="margin:24px 0;text-align:center">
+        <img src="${escapeEmailHtml(qrImageSource)}" width="260" height="260" alt="QR voucher ${escapeEmailHtml(voucher.voucher_code)}" style="display:inline-block;max-width:100%;height:auto;border-radius:24px;background:#ffffff;padding:14px;border:1px solid #dbe7ef" />
+      </div>
+    `,
+    detailsTitle: locale === "en" ? "Booking details" : "Dettagli prenotazione",
+    details,
+    ctaLabel: labels.link,
+    ctaUrl: voucherUrl,
+    calloutHtml: `
+      <div style="margin-top:20px;color:#64748b;font-size:13px;line-height:1.7">
+        ${escapeEmailHtml(labels.fallback)}<br />
+        <a href="${escapeEmailHtml(voucherUrl)}" style="color:#0097ab;text-decoration:underline">${escapeEmailHtml(voucherUrl)}</a>
+      </div>
+    `,
+    footer: [
+      locale === "en" ? "Best regards," : "A presto,",
+      "IschiaMotion",
+      "info@ischiamotion.com"
+    ]
+  });
 
   return { subject: labels.subject, text, html };
 }
 
-export async function sendBookingVoucherEmail(bookingId: string): Promise<{ ok: boolean; error: string | null; voucherCode?: string }> {
+export async function sendBookingVoucherEmail(bookingId: string): Promise<{ ok: boolean; error: string | null; voucherCode?: string; warning?: string | null }> {
   try {
     const supabase = createSupabaseServiceRoleClient();
     const bookingResult = await supabase
@@ -212,13 +211,31 @@ export async function sendBookingVoucherEmail(bookingId: string): Promise<{ ok: 
     if (!sent.ok) return { ok: false, error: sent.error || "Unable to send voucher email.", voucherCode: voucherResult.voucher.voucher_code };
 
     const sentAt = new Date().toISOString();
+    const warnings: string[] = [];
     const voucherUpdate = await supabase.from("booking_vouchers").update({ sent_at: sentAt }).eq("id", voucherResult.voucher.id);
-    if (voucherUpdate.error) return { ok: false, error: voucherUpdate.error.message, voucherCode: voucherResult.voucher.voucher_code };
+    if (voucherUpdate.error) {
+      warnings.push(`booking_vouchers.sent_at not updated: ${voucherUpdate.error.message}`);
+    }
 
     const bookingUpdate = await supabase.from("bookings").update({ status: "voucher_sent", updated_at: sentAt }).eq("id", bookingId);
-    if (bookingUpdate.error) return { ok: false, error: bookingUpdate.error.message, voucherCode: voucherResult.voucher.voucher_code };
+    if (bookingUpdate.error) {
+      warnings.push(`bookings.status not updated: ${bookingUpdate.error.message}`);
+    }
 
-    return { ok: true, error: null, voucherCode: voucherResult.voucher.voucher_code };
+    if (warnings.length > 0) {
+      console.error("[booking-voucher-email] email sent with post-send warnings", {
+        bookingId,
+        voucherCode: voucherResult.voucher.voucher_code,
+        warnings
+      });
+    }
+
+    return {
+      ok: true,
+      error: null,
+      voucherCode: voucherResult.voucher.voucher_code,
+      warning: warnings.length > 0 ? warnings.join(" | ") : null
+    };
   } catch (error) {
     return { ok: false, error: error instanceof Error ? error.message : "Unable to send voucher email." };
   }

@@ -216,21 +216,29 @@ export function BookingRequestModal({
           <div className="booking-message success">{text.success}</div>
         ) : (
           <form className="booking-form" onSubmit={handleSubmit}>
-            <label>
-              <span>{text.vehicle}</span>
-              <input value={vehicleLabel} readOnly />
-            </label>
             {pickupPoints.length === 0 ? (
-              <div className="booking-message error">{text.noPickupPoints}</div>
+              <>
+                <label>
+                  <span>{text.vehicle}</span>
+                  <input value={vehicleLabel} readOnly />
+                </label>
+                <div className="booking-message error">{text.noPickupPoints}</div>
+              </>
             ) : (
-              <label>
-                <span>{text.pickupPoint}</span>
-                <select value={selectedPickupPointId} onChange={(event) => setSelectedPickupPointId(event.target.value)} required>
-                  {pickupPoints.map((point) => (
-                    <option key={point.id} value={point.id}>{formatPickupLabel(point, locale)}</option>
-                  ))}
-                </select>
-              </label>
+              <div className="booking-row">
+                <label>
+                  <span>{text.vehicle}</span>
+                  <input value={vehicleLabel} readOnly />
+                </label>
+                <label>
+                  <span>{text.pickupPoint}</span>
+                  <select value={selectedPickupPointId} onChange={(event) => setSelectedPickupPointId(event.target.value)} required>
+                    {pickupPoints.map((point) => (
+                      <option key={point.id} value={point.id}>{formatPickupLabel(point, locale)}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
             )}
             {isNautical ? (
               <label>
@@ -275,59 +283,69 @@ export function BookingRequestModal({
             ) : null}
             {deliveryMethod === "hotel_delivery" ? (
               <>
-                <label>
-                  <span>{text.hotelMunicipality}</span>
-                  <select name="hotelMunicipality" defaultValue={initialHotelMunicipality || HOTEL_MUNICIPALITIES[0]} required>
-                    {HOTEL_MUNICIPALITIES.map((m) => (
-                      <option key={m} value={m}>{municipalityLabels[locale][m]}</option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  <span>{text.hotelName}</span>
-                  <input name="deliveryLocation" required />
-                </label>
+                <div className="booking-row">
+                  <label>
+                    <span>{text.hotelMunicipality}</span>
+                    <select name="hotelMunicipality" defaultValue={initialHotelMunicipality || HOTEL_MUNICIPALITIES[0]} required>
+                      {HOTEL_MUNICIPALITIES.map((m) => (
+                        <option key={m} value={m}>{municipalityLabels[locale][m]}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    <span>{text.hotelName}</span>
+                    <input name="deliveryLocation" required />
+                  </label>
+                </div>
                 <label>
                   <span>{text.deliveryNotes}</span>
                   <input name="deliveryNotes" />
                 </label>
               </>
             ) : null}
-            <label>
-              <span>{text.firstName}</span>
-              <input name="firstName" autoComplete="given-name" required />
-            </label>
-            <label>
-              <span>{text.lastName}</span>
-              <input name="lastName" autoComplete="family-name" required />
-            </label>
-            <label>
-              <span>{text.email}</span>
-              <input name="email" type="email" autoComplete="email" required />
-            </label>
-            <label>
-              <span>{text.phone}</span>
-              <input name="phone" type="tel" autoComplete="tel" required />
-            </label>
-            <label>
-              <span>{text.startDate}</span>
-              <input name="startDate" type="date" defaultValue={startDate} required />
-            </label>
-            <label>
-              <span>{text.endDate}</span>
-              <input name="endDate" type="date" defaultValue={endDate} required />
-            </label>
-            <label>
-              <span>{text.pickupTime}</span>
-              <input name="pickupTime" type="time" />
-            </label>
-            <label>
-              <span>{text.language}</span>
-              <select name="language" defaultValue={locale}>
-                <option value="it">Italiano</option>
-                <option value="en">English</option>
-              </select>
-            </label>
+            <div className="booking-row">
+              <label>
+                <span>{text.firstName}</span>
+                <input name="firstName" autoComplete="given-name" required />
+              </label>
+              <label>
+                <span>{text.lastName}</span>
+                <input name="lastName" autoComplete="family-name" required />
+              </label>
+            </div>
+            <div className="booking-row">
+              <label>
+                <span>{text.email}</span>
+                <input name="email" type="email" autoComplete="email" required />
+              </label>
+              <label>
+                <span>{text.phone}</span>
+                <input name="phone" type="tel" autoComplete="tel" required />
+              </label>
+            </div>
+            <div className="booking-row">
+              <label>
+                <span>{text.startDate}</span>
+                <input name="startDate" type="date" defaultValue={startDate} required />
+              </label>
+              <label>
+                <span>{text.endDate}</span>
+                <input name="endDate" type="date" defaultValue={endDate} required />
+              </label>
+            </div>
+            <div className="booking-row">
+              <label>
+                <span>{text.pickupTime}</span>
+                <input name="pickupTime" type="time" />
+              </label>
+              <label>
+                <span>{text.language}</span>
+                <select name="language" defaultValue={locale}>
+                  <option value="it">Italiano</option>
+                  <option value="en">English</option>
+                </select>
+              </label>
+            </div>
             <div className="booking-message">{text.paymentNotice}</div>
             <label className="booking-notes">
               <span>{text.notes}</span>

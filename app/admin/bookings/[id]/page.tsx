@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { assignBookingRenterAction, updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
 import { markBookingCheckedInAction } from "@/app/admin/bookings/[id]/checkin-actions";
 import { PaymentForm } from "@/app/admin/bookings/[id]/PaymentForm";
-import { generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
+import { confirmDepositAndSendVoucherAction, generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
 import { VoucherPrintButton } from "@/app/admin/bookings/[id]/VoucherPrintButton";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { BookingIntelligencePanel } from "@/components/admin/BookingIntelligencePanel";
@@ -72,6 +72,8 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
   const voucherPath = voucher ? `/checkin/${voucher.voucher_code}` : "";
   const voucherUrl = voucher ? toAbsoluteCheckinUrl(voucherPath) : "";
   const voucherQrDataUrl = voucher ? await generateQrDataUrl(voucher.qr_payload || voucherPath) : "";
+  const depositRequired = booking?.payment_type === "deposit_required";
+  const depositReceived = booking?.payment_status === "deposit_paid" || booking?.payment_status === "paid";
   const currentRenterCompatibility = booking?.renter_id
     ? [...renterCompatibility.compatibleRenters, ...renterCompatibility.incompatibleRenters].find((renter) => renter.id === booking.renter_id) || null
     : null;
@@ -324,6 +326,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {statusMessage === "depositInstructionsSent" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Prenotazione confermata. Email con istruzioni per l&apos;acconto inviata al cliente.
+                </div>
+              ) : null}
+
               {statusMessage === "voucherEmailError" ? (
                 <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
                   Prenotazione confermata, ma invio voucher QR fallito.
@@ -393,6 +401,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {voucherMessage === "depositVoucherSent" ? (
+                <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
+                  Acconto registrato e voucher QR inviato al cliente.
+                </div>
+              ) : null}
+
               {voucherMessage === "error" && !voucher ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
                   Impossibile generare il voucher. Verifica che la prenotazione sia confermata e che la migration 0006 sia applicata su Supabase.
@@ -420,17 +434,38 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                 </div>
               ) : null}
 
+              {depositRequired && !depositReceived && ["confirmed", "voucher_sent"].includes(booking.status) ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5">
+                  <div className="text-sm font-semibold text-amber-900">
+                    Acconto richiesto: il voucher QR viene inviato solo dopo la registrazione dell&apos;acconto ricevuto.
+                  </div>
+                  <div className="mt-2 text-sm leading-6 text-amber-900/80">
+                    Controlla gli importi e inserisci nelle note pagamento le coordinate o le istruzioni da includere nella mail cliente.
+                  </div>
+                  <form action={confirmDepositAndSendVoucherAction} className="mt-4">
+                    <input type="hidden" name="bookingId" value={booking.id} />
+                    <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                      Segna acconto ricevuto e invia voucher QR
+                    </button>
+                  </form>
+                </div>
+              ) : null}
+
               {booking.status === "confirmed" && !voucher ? (
                 <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-5">
                   <div className="text-sm font-semibold text-green-deep">
-                    Prenotazione confermata: puoi generare il voucher cliente.
+                    {depositRequired && !depositReceived
+                      ? "Prenotazione confermata: il voucher restera in attesa finche l'acconto non risulta ricevuto."
+                      : "Prenotazione confermata: puoi generare il voucher cliente."}
                   </div>
-                  <form action={generateVoucherAction} className="mt-4">
-                    <input type="hidden" name="bookingId" value={booking.id} />
-                    <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
-                      Genera e invia voucher QR
-                    </button>
-                  </form>
+                  {depositRequired && !depositReceived ? null : (
+                    <form action={generateVoucherAction} className="mt-4">
+                      <input type="hidden" name="bookingId" value={booking.id} />
+                      <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                        Genera e invia voucher QR
+                      </button>
+                    </form>
+                  )}
                 </div>
               ) : null}
 
@@ -450,8 +485,8 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   </div>
 
                   <div className="mb-5 flex flex-wrap gap-3 print-hidden">
-                    <VoucherPrintButton />
-                    {["confirmed", "voucher_sent"].includes(booking.status) ? (
+                  <VoucherPrintButton />
+                    {["confirmed", "voucher_sent"].includes(booking.status) && (!depositRequired || depositReceived) ? (
                       <form action={generateVoucherAction}>
                         <input type="hidden" name="bookingId" value={booking.id} />
                         <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">

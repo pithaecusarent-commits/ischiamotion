@@ -987,6 +987,14 @@ h1 em {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 15px;
   margin-top: 28px;
+  min-width: 0;
+}
+.booking-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  min-width: 0;
 }
 .booking-form label {
   display: grid;
@@ -1004,6 +1012,7 @@ h1 em {
   background: rgba(255,255,255,.74);
   color: var(--ink);
   padding: 13px 14px;
+  min-height: 50px;
   outline: none;
   transition: border-color .2s ease, box-shadow .2s ease;
 }
@@ -1920,6 +1929,7 @@ footer {
   .booking-modal-backdrop { padding: 12px; }
   .booking-modal { border-radius: 28px; max-height: 92vh; }
   .booking-form { grid-template-columns: 1fr; }
+  .booking-row { grid-template-columns: 1fr; }
   .section, .how-section { padding: 78px 16px; }
   .pickup-section { padding: 0 16px 78px; }
   .faq-section,

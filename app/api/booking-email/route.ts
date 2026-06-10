@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { deliveryMethodLabels, paymentMethodLabels, paymentTypeLabels } from "@/lib/booking-labels";
+import { bookingEmailSiteUrl, formatBookingEmailDate, renderIschiaMotionEmail } from "@/lib/email/booking-email-theme";
 import { verifyInternalSignature } from "@/lib/internal-signature";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import type { BookingDeliveryMethod, BookingPaymentMethod, BookingPaymentType, Locale } from "@/lib/types";
@@ -29,8 +30,6 @@ type BookingEmailPayload = {
 const resendEndpoint = "https://api.resend.com/emails";
 const defaultAdminEmail = "info@ischiamotion.com";
 const defaultFromEmail = "IschiaMotion <noreply@mail.ischiamotion.com>";
-const defaultSiteUrl = "https://www.ischiamotion.com";
-
 class Resend {
   constructor(private readonly apiKey: string) {}
 
@@ -157,19 +156,77 @@ function customerEmailText(payload: BookingEmailPayload) {
   ].join("\n");
 }
 
+function customerEmailHtml(payload: BookingEmailPayload) {
+  const isIt = payload.language === "it";
+  const name = payload.firstName.trim() || (isIt ? "ciao" : "there");
+  const summary = deliverySummary(payload, payload.language);
+  const dates = `${formatBookingEmailDate(payload.startDate, payload.language)} -> ${formatBookingEmailDate(payload.endDate, payload.language)}${payload.pickupTime ? `, ${payload.pickupTime}` : ""}`;
+
+  if (isIt) {
+    return renderIschiaMotionEmail({
+      eyebrow: "Richiesta ricevuta",
+      title: "Stiamo verificando la tua disponibilita",
+      greeting: `Ciao ${name},`,
+      intro: [
+        "Grazie per aver scelto IschiaMotion.",
+        "Abbiamo ricevuto la tua richiesta per un noleggio a Ischia e la stiamo verificando con operatori locali selezionati.",
+        "La disponibilita non e ancora confermata: riceverai un aggiornamento entro pochi minuti con conferma, eventuali alternative o dettagli utili per completare la richiesta."
+      ],
+      detailsTitle: "Dettagli richiesta",
+      details: [
+        ["Codice richiesta", payload.bookingCode],
+        ["Mezzo", payload.vehicleLabel],
+        ["Date", dates],
+        ["Ritiro/consegna", summary],
+        ["Pagamento preferito", `${paymentTypeLabels.it[payload.paymentType]} - ${paymentMethodLabels.it[payload.paymentMethod]}`]
+      ],
+      footer: [
+        "A presto,",
+        "IschiaMotion",
+        "info@ischiamotion.com"
+      ]
+    });
+  }
+
+  return renderIschiaMotionEmail({
+    eyebrow: "Request received",
+    title: "We are checking availability",
+    greeting: `Hello ${name},`,
+    intro: [
+      "Thank you for choosing IschiaMotion.",
+      "We have received your rental request in Ischia and are reviewing it with selected local operators.",
+      "Availability is not confirmed yet: you will receive an update shortly with confirmation, possible alternatives or useful details to complete the request."
+    ],
+    detailsTitle: "Request details",
+    details: [
+      ["Request code", payload.bookingCode],
+      ["Vehicle", payload.vehicleLabel],
+      ["Dates", dates],
+      ["Pickup/delivery", summary],
+      ["Preferred payment", `${paymentTypeLabels.en[payload.paymentType]} - ${paymentMethodLabels.en[payload.paymentMethod]}`]
+    ],
+    footer: [
+      "Best regards,",
+      "IschiaMotion",
+      "info@ischiamotion.com"
+    ]
+  });
+}
+
 async function sendResendEmail(input: {
   resend: Resend;
   from: string;
   to: string;
   subject: string;
   text: string;
+  html?: string;
 }) {
   return input.resend.emails.send({
     from: input.from,
     to: input.to,
     subject: input.subject,
     text: input.text,
-    html: toHtml(input.text)
+    html: input.html || toHtml(input.text)
   });
 }
 
@@ -222,7 +279,7 @@ export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   const adminEmail = process.env.BOOKING_ADMIN_EMAIL || defaultAdminEmail;
   const fromEmail = process.env.BOOKING_FROM_EMAIL || defaultFromEmail;
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl).replace(/\/$/, "");
+  const siteUrl = bookingEmailSiteUrl();
   const adminUrl = payload.bookingId ? `${siteUrl}/admin/bookings/${encodeURIComponent(payload.bookingId)}` : `${siteUrl}/admin/bookings`;
 
   console.info("[booking-email] route called", {
@@ -264,7 +321,8 @@ export async function POST(request: Request) {
     from: fromEmail,
     to: payload.email,
     subject: payload.language === "it" ? "Richiesta ricevuta — IschiaMotion" : "Request received — IschiaMotion",
-    text: customerEmailText(payload)
+    text: customerEmailText(payload),
+    html: customerEmailHtml(payload)
   }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Customer email failed." } }));
   const customerEmailSent = !customerResult.error;
 
