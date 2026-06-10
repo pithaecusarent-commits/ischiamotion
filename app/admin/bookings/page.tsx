@@ -65,9 +65,9 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
-      <section className="mx-auto max-w-7xl rounded-[30px] bg-cream p-8 shadow-soft">
+      <section className="mx-auto max-w-7xl rounded-[30px] bg-cream p-4 shadow-soft sm:p-8">
         <p className="section-kicker">Admin</p>
-        <h1 className="mt-3 font-serif text-4xl font-bold">Prenotazioni</h1>
+        <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Prenotazioni</h1>
         <p className="mt-4 text-ink/65">Richieste ricevute dal sito IschiaMotion.</p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin">
@@ -136,7 +136,8 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
 
         {bookings.length > 0 ? (
           <div className="mt-8 overflow-hidden rounded-[28px] border border-ink/10 bg-white/75 shadow-card">
-            <table className="w-full table-fixed border-collapse text-left text-xs xl:text-sm">
+            <div className="overflow-x-auto">
+            <table className="min-w-[700px] w-full table-fixed border-collapse text-left text-xs xl:text-sm">
               <colgroup>
                 <col className="w-[15%]" />
                 <col className="w-[12%]" />
@@ -202,6 +203,7 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         ) : null}
       </section>

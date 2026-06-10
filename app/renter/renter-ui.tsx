@@ -17,7 +17,7 @@ export function RenterShell({
         <div className="flex flex-col gap-4 rounded-[30px] bg-cream p-6 shadow-soft md:flex-row md:items-center md:justify-between">
           <div>
             <p className="section-kicker">{eyebrow || "Noleggiatore"}</p>
-            <h1 className="mt-3 font-serif text-4xl font-bold">{title}</h1>
+            <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">{title}</h1>
           </div>
           <div className="flex flex-wrap gap-2">
             <NavLink href="/renter">Area</NavLink>
@@ -50,9 +50,9 @@ export function AccessDenied({ accountStatus }: { accountStatus?: "pending" | "a
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
-      <section className="mx-auto max-w-xl rounded-[30px] bg-cream p-8 shadow-soft">
+      <section className="mx-auto max-w-xl rounded-[30px] bg-cream p-4 shadow-soft sm:p-8">
         <p className="section-kicker">Accesso negato</p>
-        <h1 className="mt-3 font-serif text-4xl font-bold">Area noleggiatore non disponibile</h1>
+        <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Area noleggiatore non disponibile</h1>
         <p className="mt-4 text-ink/65">
           {message}
         </p>

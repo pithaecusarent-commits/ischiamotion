@@ -15,9 +15,9 @@ export default async function NewAdminVehiclePage({ searchParams }: Props) {
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
-      <section className="mx-auto max-w-5xl rounded-[30px] bg-cream p-8 shadow-soft">
+      <section className="mx-auto max-w-5xl rounded-[30px] bg-cream p-4 shadow-soft sm:p-8">
         <p className="section-kicker">Admin</p>
-        <h1 className="mt-3 font-serif text-4xl font-bold">Nuovo veicolo</h1>
+        <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Nuovo veicolo</h1>
         <p className="mt-4 text-ink/65">Crea un mezzo reale collegato a categoria, noleggiatore e pickup point.</p>
 
         {searchParams?.error || error ? (

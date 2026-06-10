@@ -80,11 +80,11 @@ export default async function AdminRentersPage({ searchParams }: Props) {
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
-      <section className="mx-auto max-w-7xl rounded-[30px] bg-cream p-8 shadow-soft">
+      <section className="mx-auto max-w-7xl rounded-[30px] bg-cream p-4 shadow-soft sm:p-8">
         <p className="section-kicker">Admin</p>
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="font-serif text-4xl font-bold">Noleggiatori</h1>
+            <h1 className="font-serif text-3xl font-bold sm:text-4xl">Noleggiatori</h1>
             <p className="mt-4 text-ink/65">Autorizza le nuove registrazioni dei renter IschiaMotion.</p>
             <p className="mt-2 max-w-2xl text-sm text-ink/55">
               La disattivazione blocca accesso e nuove richieste senza eliminare storico, booking, veicoli o utente Auth.
