@@ -5,6 +5,7 @@ export type AdminVehicle = {
   category_id: string;
   renter_id: string;
   pickup_point_id: string;
+  vehicle_model_id: string | null;
   internal_name: string | null;
   title_it: string;
   title_en: string;
@@ -20,12 +21,14 @@ export type AdminVehicle = {
   category_name: string;
   pickup_point_label: string;
   renter_name: string;
+  vehicle_model_name: string | null;
 };
 
 export type AdminVehicleFormData = {
   category_id: string;
   renter_id: string;
   pickup_point_id: string;
+  vehicle_model_id: string | null;
   internal_name: string;
   title_it: string;
   title_en: string;
@@ -48,16 +51,20 @@ export type AdminVehicleOptions = {
   categories: AdminVehicleOption[];
   renters: AdminVehicleOption[];
   pickupPoints: AdminVehicleOption[];
+  vehicleModels: AdminVehicleOption[];
 };
 
-type VehicleRow = Omit<AdminVehicle, "category_name" | "pickup_point_label" | "renter_name">;
+type VehicleRow = Omit<AdminVehicle, "category_name" | "pickup_point_label" | "renter_name" | "vehicle_model_name">;
 
-const vehicleSelect = "id, category_id, renter_id, pickup_point_id, internal_name, title_it, title_en, description_it, description_en, price_from, image_url, features_it, features_en, is_active, created_at, updated_at";
+const vehicleSelect = "id, category_id, renter_id, pickup_point_id, vehicle_model_id, internal_name, title_it, title_en, description_it, description_en, price_from, image_url, features_it, features_en, is_active, created_at, updated_at";
 
 function normalizeVehicle(row: VehicleRow, options: AdminVehicleOptions): AdminVehicle {
   const category = options.categories.find((item) => item.id === row.category_id);
   const pickupPoint = options.pickupPoints.find((item) => item.id === row.pickup_point_id);
   const renter = options.renters.find((item) => item.id === row.renter_id);
+  const vehicleModel = row.vehicle_model_id
+    ? options.vehicleModels.find((item) => item.id === row.vehicle_model_id)
+    : null;
 
   return {
     ...row,
@@ -65,7 +72,8 @@ function normalizeVehicle(row: VehicleRow, options: AdminVehicleOptions): AdminV
     features_en: row.features_en || [],
     category_name: category?.label || "-",
     pickup_point_label: pickupPoint?.label || "-",
-    renter_name: renter?.label || "-"
+    renter_name: renter?.label || "-",
+    vehicle_model_name: vehicleModel?.label || null
   };
 }
 
@@ -73,12 +81,13 @@ export async function getAdminVehicleOptions(accessToken: string): Promise<{ opt
   const empty: AdminVehicleOptions = {
     categories: [],
     renters: [],
-    pickupPoints: []
+    pickupPoints: [],
+    vehicleModels: []
   };
 
   try {
     const supabase = createSupabaseUserClient(accessToken);
-    const [categoriesResult, rentersResult, pickupPointsResult] = await Promise.all([
+    const [categoriesResult, rentersResult, pickupPointsResult, vehicleModelsResult] = await Promise.all([
       supabase
         .from("vehicle_categories")
         .select("id, name_it, slug")
@@ -90,10 +99,20 @@ export async function getAdminVehicleOptions(accessToken: string): Promise<{ opt
       supabase
         .from("pickup_points")
         .select("id, public_label_it, zone")
-        .order("zone", { ascending: true })
+        .order("zone", { ascending: true }),
+      supabase
+        .from("vehicle_models")
+        .select("id, title_it, category_id")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true })
+        .order("title_it", { ascending: true })
     ]);
 
-    const error = categoriesResult.error || rentersResult.error || pickupPointsResult.error;
+    const error =
+      categoriesResult.error ||
+      rentersResult.error ||
+      pickupPointsResult.error ||
+      vehicleModelsResult.error;
     if (error) {
       return { options: empty, error: error.message };
     }
@@ -114,6 +133,11 @@ export async function getAdminVehicleOptions(accessToken: string): Promise<{ opt
           id: row.id as string,
           label: row.public_label_it as string,
           meta: row.zone as string
+        })),
+        vehicleModels: (vehicleModelsResult.data || []).map((row) => ({
+          id: row.id as string,
+          label: row.title_it as string,
+          meta: row.category_id as string
         }))
       },
       error: null
@@ -392,6 +416,7 @@ function toVehiclePayload(data: AdminVehicleFormData) {
     category_id: data.category_id,
     renter_id: data.renter_id,
     pickup_point_id: data.pickup_point_id,
+    vehicle_model_id: data.vehicle_model_id || null,
     internal_name: data.internal_name || null,
     title_it: data.title_it,
     title_en: data.title_en,

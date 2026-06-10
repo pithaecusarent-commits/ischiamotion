@@ -86,6 +86,27 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
         </label>
       </div>
 
+      {options.vehicleModels.length > 0 ? (
+        <div className="rounded-[28px] border border-sea/10 bg-white/65 p-5">
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Modello base
+            <select
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="vehicle_model_id"
+              defaultValue={vehicle?.vehicle_model_id || ""}
+            >
+              <option value="">Nessun modello base</option>
+              {options.vehicleModels.map((item) => (
+                <option key={item.id} value={item.id}>{item.label}</option>
+              ))}
+            </select>
+            <span className="text-xs font-semibold leading-5 text-ink/50">
+              Opzionale. Collega questa offerta a un modello veicolo condiviso.
+            </span>
+          </label>
+        </div>
+      ) : null}
+
       <div className="rounded-[28px] border border-sea/10 bg-white/65 p-5">
         <label className="grid gap-2 text-sm font-bold text-ink/70">
           Nome interno veicolo

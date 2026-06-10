@@ -112,6 +112,11 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                       </td>
                       <td className="px-4 py-4">
                         <div className="font-bold">{vehicle.title_it}</div>
+                        {vehicle.vehicle_model_name ? (
+                          <div className="mt-0.5 text-xs font-semibold text-green-deep/70">
+                            Modello: {vehicle.vehicle_model_name}
+                          </div>
+                        ) : null}
                         {vehicle.internal_name ? (
                           <div className="mt-1 text-xs font-semibold text-ink/50">{vehicle.internal_name}</div>
                         ) : null}

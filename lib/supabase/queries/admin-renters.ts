@@ -36,7 +36,9 @@ export type AdminRenterVehicle = {
   title_it: string;
   is_active: boolean;
   price_from: number | null;
+  vehicle_model_id: string | null;
   vehicle_categories: { name_it: string } | null;
+  vehicle_models: { title_it: string } | null;
 };
 
 export type AdminRenterDetail = {
@@ -84,7 +86,7 @@ async function buildAdminRenterDetailFromRenterId(
       .maybeSingle(),
     supabase
       .from("vehicles")
-      .select("id, title_it, is_active, price_from, vehicle_categories(name_it)")
+      .select("id, title_it, is_active, price_from, vehicle_model_id, vehicle_categories(name_it), vehicle_models(title_it)")
       .eq("renter_id", renterId)
       .order("is_active", { ascending: false }),
     supabase
@@ -128,14 +130,19 @@ async function buildAdminRenterDetailFromRenterId(
     title_it: string;
     is_active: boolean;
     price_from: number | null;
+    vehicle_model_id: string | null;
     vehicle_categories: { name_it: string } | { name_it: string }[] | null;
+    vehicle_models: { title_it: string } | { title_it: string }[] | null;
   }>;
 
   const vehicles = rawVehicles.map((vehicle) => ({
     ...vehicle,
     vehicle_categories: Array.isArray(vehicle.vehicle_categories)
       ? vehicle.vehicle_categories[0] || null
-      : vehicle.vehicle_categories
+      : vehicle.vehicle_categories,
+    vehicle_models: Array.isArray(vehicle.vehicle_models)
+      ? vehicle.vehicle_models[0] || null
+      : vehicle.vehicle_models
   }));
 
   const bookingStats = { total: 0, pending: 0, confirmed: 0, completed: 0, cancelled: 0 };
@@ -278,7 +285,7 @@ export async function getRenterDetailByProfileId(
           .single(),
         supabase
           .from("vehicles")
-          .select("id, title_it, is_active, price_from, vehicle_categories(name_it)")
+          .select("id, title_it, is_active, price_from, vehicle_model_id, vehicle_categories(name_it), vehicle_models(title_it)")
           .eq("renter_id", renterId)
           .order("is_active", { ascending: false }),
         supabase
@@ -294,13 +301,18 @@ export async function getRenterDetailByProfileId(
         title_it: string;
         is_active: boolean;
         price_from: number | null;
+        vehicle_model_id: string | null;
         vehicle_categories: { name_it: string } | { name_it: string }[] | null;
+        vehicle_models: { title_it: string } | { title_it: string }[] | null;
       }>;
       vehicles = rawVehicles.map((v) => ({
         ...v,
         vehicle_categories: Array.isArray(v.vehicle_categories)
           ? v.vehicle_categories[0] || null
-          : v.vehicle_categories
+          : v.vehicle_categories,
+        vehicle_models: Array.isArray(v.vehicle_models)
+          ? v.vehicle_models[0] || null
+          : v.vehicle_models
       }));
 
       for (const b of bookingsResult.data || []) {

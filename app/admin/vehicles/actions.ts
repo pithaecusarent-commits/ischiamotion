@@ -31,6 +31,7 @@ async function parseVehicleFormData(
   const categoryId = String(formData.get("category_id") || "").trim();
   const renterId = String(formData.get("renter_id") || "").trim();
   const pickupPointId = String(formData.get("pickup_point_id") || "").trim();
+  const vehicleModelId = String(formData.get("vehicle_model_id") || "").trim() || null;
   const internalName = String(formData.get("internal_name") || "").trim();
   const priceRaw = String(formData.get("price_from") || "").trim();
   const priceFrom = priceRaw ? Number(priceRaw) : null;
@@ -66,6 +67,7 @@ async function parseVehicleFormData(
       category_id: categoryId,
       renter_id: renterId,
       pickup_point_id: pickupPointId,
+      vehicle_model_id: vehicleModelId,
       internal_name: internalName,
       title_it: titleIt,
       title_en: titleEn,

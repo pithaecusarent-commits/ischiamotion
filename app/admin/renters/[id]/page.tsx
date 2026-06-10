@@ -277,6 +277,11 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                           <span className="ml-2">· da €{vehicle.price_from}/g</span>
                         )}
                       </p>
+                      {vehicle.vehicle_models?.title_it ? (
+                        <p className="mt-0.5 text-xs font-semibold text-green-deep/60">
+                          Modello: {vehicle.vehicle_models.title_it}
+                        </p>
+                      ) : null}
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
                       <span
