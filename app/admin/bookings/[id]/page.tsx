@@ -162,6 +162,14 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
             <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
               <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Pagamento operativo</div>
+              <div className="mt-3">
+                <a
+                  className="inline-flex rounded-full border border-ink/10 bg-white/80 px-4 py-2 text-xs font-bold text-ink/65 transition hover:border-sea/30 hover:text-sea"
+                  href="/admin/settings/payments"
+                >
+                  Impostazioni pagamento
+                </a>
+              </div>
               <div className="mt-4 grid gap-4 md:grid-cols-3">
                 <DetailRow label="Tipo pagamento" value={bookingPaymentType(booking)} />
                 <DetailRow label="Metodo preferito" value={bookingPaymentMethod(booking)} />

@@ -55,6 +55,14 @@ export function PaymentForm({
       <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Gestione pagamento</div>
       <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Aggiorna pagamento</h2>
       <p className="mt-1 text-sm text-ink/60">Gestione manuale importi e stato pagamento. Se richiedi un acconto, le note pagamento vengono usate anche nell&apos;email cliente.</p>
+      <div className="mt-3">
+        <a
+          className="inline-flex rounded-full border border-ink/10 bg-white/80 px-4 py-2 text-xs font-bold text-ink/65 transition hover:border-sea/30 hover:text-sea"
+          href="/admin/settings/payments"
+        >
+          Impostazioni pagamento
+        </a>
+      </div>
 
       {successMessage ? (
         <div className="mt-4 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
@@ -159,6 +167,9 @@ export function PaymentForm({
 
         <label className="grid gap-2 text-sm font-bold text-ink/70">
           Note pagamento
+          <span className="text-xs font-semibold leading-5 text-ink/50">
+            Le coordinate standard dell&apos;acconto vengono prese da Impostazioni pagamento. Usa questo campo solo per istruzioni specifiche di questa prenotazione.
+          </span>
           <textarea
             className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal outline-none focus:border-sea/50"
             name="payment_notes"

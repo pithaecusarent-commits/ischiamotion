@@ -171,6 +171,12 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               </a>
               <a
                 className="min-h-[44px] rounded-full border border-ink/10 bg-white/75 px-5 py-2.5 text-sm font-bold text-ink/65 shadow-sm transition hover:border-sea/30 hover:text-sea"
+                href="/admin/settings/payments"
+              >
+                Impostazioni pagamento
+              </a>
+              <a
+                className="min-h-[44px] rounded-full border border-ink/10 bg-white/75 px-5 py-2.5 text-sm font-bold text-ink/65 shadow-sm transition hover:border-sea/30 hover:text-sea"
                 href="https://www.ischiamotion.com"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -406,6 +412,13 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               href="/admin/account"
               icon="A"
               title="Account e password"
+            />
+            <AdminQuickAction
+              accent="bg-sea/10 text-sea"
+              description="Configura le coordinate usate nelle email di richiesta acconto."
+              href="/admin/settings/payments"
+              icon="$"
+              title="Impostazioni pagamento"
             />
             <AdminQuickAction
               accent="bg-mint/20 text-green-deep"

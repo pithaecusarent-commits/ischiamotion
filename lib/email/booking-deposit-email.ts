@@ -1,6 +1,7 @@
 import { deliveryMethodLabels, formatMoney, paymentMethodLabels } from "@/lib/booking-labels";
 import { escapeEmailHtml, renderIschiaMotionEmail, formatBookingEmailDate } from "@/lib/email/booking-email-theme";
 import { sendEmail } from "@/lib/email/resend";
+import { getActivePaymentSettingsForEmail } from "@/lib/supabase/queries/admin-payment-settings";
 import { getBookingNoteValue } from "@/lib/supabase/queries/bookings";
 import type { BookingDeliveryMethod, BookingPaymentMethod, Locale } from "@/lib/types";
 
@@ -26,18 +27,48 @@ type DepositEmailInput = {
   notes: string | null;
 };
 
-function buildDepositEmail(input: DepositEmailInput) {
+function replaceReasonTemplate(template: string | null | undefined, bookingCode: string) {
+  return (template || "Acconto richiesta {bookingCode} - IschiaMotion").replaceAll("{bookingCode}", bookingCode);
+}
+
+function buildSettingsInstructionBlock(input: DepositEmailInput, locale: Locale, settings: Awaited<ReturnType<typeof getActivePaymentSettingsForEmail>>["settings"]) {
+  if (!settings) return null;
+
+  const baseInstructions = locale === "en"
+    ? settings.deposit_instructions_en?.trim() || settings.deposit_instructions_it?.trim() || ""
+    : settings.deposit_instructions_it?.trim() || settings.deposit_instructions_en?.trim() || "";
+  const lines = [
+    baseInstructions,
+    settings.bank_account_holder ? `${locale === "en" ? "Account holder" : "Intestatario"}: ${settings.bank_account_holder}` : "",
+    settings.iban ? `IBAN: ${settings.iban}` : "",
+    settings.bank_name ? `${locale === "en" ? "Bank" : "Banca"}: ${settings.bank_name}` : "",
+    settings.bic_swift ? `BIC/SWIFT: ${settings.bic_swift}` : "",
+    `${locale === "en" ? "Reason" : "Causale"}: ${replaceReasonTemplate(settings.payment_reason_template, input.bookingCode)}`,
+    settings.receipt_email ? `${locale === "en" ? "Receipt email" : "Email ricevuta"}: ${settings.receipt_email}` : "",
+    settings.receipt_whatsapp ? `${locale === "en" ? "Receipt WhatsApp" : "WhatsApp ricevuta"}: ${settings.receipt_whatsapp}` : ""
+  ].filter(Boolean);
+
+  return lines.join("\n");
+}
+
+function buildSpecificBookingNote(input: DepositEmailInput, locale: Locale) {
+  if (!input.paymentNotes?.trim()) return null;
+  return locale === "en"
+    ? `Booking-specific note: ${input.paymentNotes.trim()}`
+    : `Nota specifica prenotazione: ${input.paymentNotes.trim()}`;
+}
+
+function buildDepositEmail(
+  input: DepositEmailInput,
+  paymentInstructions: string,
+  bookingSpecificNote: string | null
+) {
   const locale = input.customerLanguage === "en" ? "en" : "it";
   const customerName = `${input.customerFirstName} ${input.customerLastName}`.trim();
   const firstName = input.customerFirstName.trim() || customerName;
   const vehicleTitle = getBookingNoteValue(input.notes, "Vehicle") || "-";
   const deliverySummary = `${deliveryMethodLabels[locale][input.deliveryMethod]}: ${input.deliveryLocation || getBookingNoteValue(input.notes, "Pickup point") || "-"}`;
   const dates = `${formatBookingEmailDate(input.startDate, locale)} -> ${formatBookingEmailDate(input.endDate, locale)}${input.pickupTime ? `, ${input.pickupTime}` : ""}`;
-  const paymentInstructions = input.paymentNotes?.trim() || (
-    locale === "en"
-      ? "We will contact you shortly with the payment details needed to secure the booking."
-      : "Ti contatteremo a breve con le coordinate di pagamento necessarie per bloccare la prenotazione."
-  );
   const amounts = [
     input.totalAmount !== null ? `${locale === "en" ? "Total" : "Totale"} ${formatMoney(input.totalAmount)}` : "",
     input.depositAmount !== null ? `${locale === "en" ? "Deposit" : "Acconto"} ${formatMoney(input.depositAmount)}` : "",
@@ -62,6 +93,7 @@ function buildDepositEmail(input: DepositEmailInput) {
       "",
       "Payment instructions:",
       paymentInstructions,
+      bookingSpecificNote || "",
       "",
       "Once the deposit has been received, we will send you the voucher with the QR code to show at pickup/delivery.",
       "",
@@ -90,6 +122,7 @@ function buildDepositEmail(input: DepositEmailInput) {
           <div style="margin:0 0 10px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">Payment instructions</div>
           <div style="color:#334155;font-size:14px;line-height:1.75;white-space:pre-wrap">${escapeEmailHtml(paymentInstructions)}</div>
         </div>
+        ${bookingSpecificNote ? `<div style="margin-top:16px;color:#334155;font-size:14px;line-height:1.75">${escapeEmailHtml(bookingSpecificNote)}</div>` : ""}
         <div style="margin-top:20px;color:#334155;font-size:14px;line-height:1.75">
           Once the deposit has been received, we will send you the voucher with the QR code to show at pickup/delivery.
         </div>
@@ -120,6 +153,7 @@ function buildDepositEmail(input: DepositEmailInput) {
     "",
     "Istruzioni pagamento:",
     paymentInstructions,
+    bookingSpecificNote || "",
     "",
     "Una volta ricevuto l'acconto, ti invieremo il voucher con QR code da presentare al momento del ritiro/consegna.",
     "",
@@ -148,6 +182,7 @@ function buildDepositEmail(input: DepositEmailInput) {
         <div style="margin:0 0 10px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">Istruzioni pagamento</div>
         <div style="color:#334155;font-size:14px;line-height:1.75;white-space:pre-wrap">${escapeEmailHtml(paymentInstructions)}</div>
       </div>
+      ${bookingSpecificNote ? `<div style="margin-top:16px;color:#334155;font-size:14px;line-height:1.75">${escapeEmailHtml(bookingSpecificNote)}</div>` : ""}
       <div style="margin-top:20px;color:#334155;font-size:14px;line-height:1.75">
         Una volta ricevuto l'acconto, ti invieremo il voucher con QR code da presentare al momento del ritiro/consegna.
       </div>
@@ -162,7 +197,27 @@ function buildDepositEmail(input: DepositEmailInput) {
 }
 
 export async function sendBookingDepositInstructionsEmail(input: DepositEmailInput) {
-  const email = buildDepositEmail(input);
+  const locale = input.customerLanguage === "en" ? "en" : "it";
+  const { settings, error } = await getActivePaymentSettingsForEmail();
+  if (error) {
+    console.warn("[booking-deposit-email] unable to load payment settings", { bookingCode: input.bookingCode, error });
+  }
+
+  const settingsInstructions = buildSettingsInstructionBlock(input, locale, settings);
+  const bookingSpecificNote = settingsInstructions ? buildSpecificBookingNote(input, locale) : null;
+  const paymentInstructions = settingsInstructions || input.paymentNotes?.trim() || (
+    locale === "en"
+      ? "We will contact you shortly with the payment details needed to secure the booking."
+      : "Ti contatteremo a breve con le coordinate di pagamento necessarie per bloccare la prenotazione."
+  );
+
+  if (!settingsInstructions) {
+    console.warn("[booking-deposit-email] active payment settings missing, falling back to booking payment notes", {
+      bookingCode: input.bookingCode
+    });
+  }
+
+  const email = buildDepositEmail(input, paymentInstructions, bookingSpecificNote);
   return sendEmail({
     to: input.customerEmail,
     from: depositFromEmail,
