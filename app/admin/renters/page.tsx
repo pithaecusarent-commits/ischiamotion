@@ -324,12 +324,12 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                         <div className="mt-2 text-xs font-bold text-ink/45">Onboarding: {renter.onboarding_status || "-"}</div>
                       </td>
                       <td className="px-4 py-4">
-                        <div className="grid min-w-40 gap-2">
-                          <span className="inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
+                        <div className="grid w-28 gap-1.5">
+                          <span className="inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-800">
                             Gestito da admin
                           </span>
                           <a
-                            className="rounded-full border border-ink/10 px-4 py-2 text-center text-xs font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep"
+                            className="rounded-full border border-ink/10 px-3 py-1.5 text-center text-[11px] font-bold text-ink/70 transition hover:border-sea/30 hover:text-green-deep"
                             href={`/admin/renters/${renter.id}`}
                           >
                             Gestisci
@@ -337,12 +337,12 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                           {renter.email ? (
                             <form action={activateAdminManagedRenterAccessAction}>
                               <input type="hidden" name="renter_id" value={renter.id} />
-                              <button className="rounded-full bg-ink px-4 py-2 text-xs font-bold text-white" type="submit">
+                              <button className="w-full rounded-full bg-ink px-3 py-1.5 text-[11px] font-bold text-white" type="submit">
                                 Crea accesso
                               </button>
                             </form>
                           ) : (
-                            <span className="text-xs font-bold text-ink/45">Email mancante</span>
+                            <span className="text-[11px] font-bold text-ink/45">Email mancante</span>
                           )}
                         </div>
                       </td>

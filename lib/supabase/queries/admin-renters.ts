@@ -40,7 +40,7 @@ export type AdminRenterVehicle = {
 };
 
 export type AdminRenterDetail = {
-  profile: AdminRenterApplication;
+  profile: AdminRenterApplication | null;
   renter: {
     id: string;
     business_name_internal: string | null;
@@ -59,6 +59,8 @@ export type AdminRenterDetail = {
     seasonality_periods: unknown[];
     admin_notes: string | null;
     onboarding_status: string;
+    created_at?: string | null;
+    updated_at?: string | null;
   } | null;
   vehicles: AdminRenterVehicle[];
   bookingStats: {
@@ -69,6 +71,92 @@ export type AdminRenterDetail = {
     cancelled: number;
   };
 };
+
+async function buildAdminRenterDetailFromRenterId(
+  supabase: ReturnType<typeof createSupabaseUserClient>,
+  renterId: string
+): Promise<{ detail: AdminRenterDetail | null; error: string | null }> {
+  const [renterResult, vehiclesResult, bookingsResult, renterLinkResult] = await Promise.all([
+    supabase
+      .from("renters")
+      .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, ischiamotion_point_municipality, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status")
+      .eq("id", renterId)
+      .maybeSingle(),
+    supabase
+      .from("vehicles")
+      .select("id, title_it, is_active, slug, vehicle_categories(name_it)")
+      .eq("renter_id", renterId)
+      .order("is_active", { ascending: false }),
+    supabase
+      .from("bookings")
+      .select("status")
+      .eq("renter_id", renterId),
+    supabase
+      .from("renter_users")
+      .select("profile_id")
+      .eq("renter_id", renterId)
+      .maybeSingle()
+  ]);
+
+  if (renterResult.error) {
+    return { detail: null, error: renterResult.error.message };
+  }
+
+  if (!renterResult.data) {
+    return { detail: null, error: null };
+  }
+
+  let profile: AdminRenterApplication | null = null;
+  const linkedProfileId = renterLinkResult.data?.profile_id || null;
+
+  if (linkedProfileId) {
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select(profileSelect)
+      .eq("id", linkedProfileId)
+      .maybeSingle();
+
+    if (profileError) {
+      return { detail: null, error: profileError.message };
+    }
+
+    profile = (profileData || null) as unknown as AdminRenterApplication | null;
+  }
+
+  const rawVehicles = (vehiclesResult.data || []) as Array<{
+    id: string;
+    title_it: string;
+    is_active: boolean;
+    slug: string | null;
+    vehicle_categories: { name_it: string } | { name_it: string }[] | null;
+  }>;
+
+  const vehicles = rawVehicles.map((vehicle) => ({
+    ...vehicle,
+    vehicle_categories: Array.isArray(vehicle.vehicle_categories)
+      ? vehicle.vehicle_categories[0] || null
+      : vehicle.vehicle_categories
+  }));
+
+  const bookingStats = { total: 0, pending: 0, confirmed: 0, completed: 0, cancelled: 0 };
+  for (const booking of bookingsResult.data || []) {
+    bookingStats.total++;
+    if (booking.status === "pending") bookingStats.pending++;
+    else if (["confirmed", "voucher_sent", "checked_in"].includes(booking.status)) bookingStats.confirmed++;
+    else if (booking.status === "completed") bookingStats.completed++;
+    else if (booking.status === "cancelled" || booking.status === "no_show") bookingStats.cancelled++;
+  }
+
+  return {
+    detail: {
+      profile,
+      renter: renterResult.data as AdminRenterDetail["renter"],
+      vehicles,
+      bookingStats
+    },
+    error: null
+  };
+}
 
 export type AdminStandaloneRenter = {
   id: string;
@@ -241,6 +329,27 @@ export async function getRenterDetailByProfileId(
   }
 }
 
+export async function getAdminRenterDetailByRouteId(
+  accessToken: string,
+  routeId: string
+): Promise<{ detail: AdminRenterDetail | null; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const renterFirst = await buildAdminRenterDetailFromRenterId(supabase, routeId);
+
+    if (renterFirst.error || renterFirst.detail) {
+      return renterFirst;
+    }
+
+    return await getRenterDetailByProfileId(accessToken, routeId);
+  } catch (error) {
+    return {
+      detail: null,
+      error: error instanceof Error ? error.message : "Unable to load renter detail."
+    };
+  }
+}
+
 export async function getAdminRenterApplications(
   accessToken: string,
   filters: AdminRenterFilters = {}
@@ -318,6 +427,8 @@ export async function getStandaloneAdminRenters(
       } else {
         renters = [];
       }
+    } else {
+      renters = renters.filter((renter) => renter.status !== "disabled");
     }
 
     const term = filters.q?.trim().toLowerCase();

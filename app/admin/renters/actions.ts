@@ -34,9 +34,9 @@ export async function approveRenterAction(formData: FormData) {
   }
 
   await sendRenterApprovedEmail({
-    businessName: before.detail?.profile.business_name || "Noleggiatore",
-    contactName: before.detail?.profile.contact_name,
-    email: before.detail?.profile.email
+    businessName: before.detail?.profile?.business_name || "Noleggiatore",
+    contactName: before.detail?.profile?.contact_name,
+    email: before.detail?.profile?.email
   }).catch(() => null);
 
   await logAdminAuditEvent({
@@ -68,9 +68,9 @@ export async function rejectRenterAction(formData: FormData) {
   }
 
   await sendRenterRejectedEmail({
-    businessName: before.detail?.profile.business_name || "Noleggiatore",
-    contactName: before.detail?.profile.contact_name,
-    email: before.detail?.profile.email,
+    businessName: before.detail?.profile?.business_name || "Noleggiatore",
+    contactName: before.detail?.profile?.contact_name,
+    email: before.detail?.profile?.email,
     reason
   }).catch(() => null);
 
@@ -215,7 +215,7 @@ export async function saveAdminRenterDeliveryCapabilityAction(formData: FormData
   const renterId = String(formData.get("renterId") || "");
   const categoryId = String(formData.get("categoryId") || "");
   const categorySlug = String(formData.get("categorySlug") || "");
-  const returnPath = `/admin/renters/${String(formData.get("profileId") || "")}`;
+  const returnPath = `/admin/renters/${String(formData.get("routeId") || "")}`;
   const notes = String(formData.get("notes") || "");
 
   if (!renterId || !categoryId || !categorySlug) {

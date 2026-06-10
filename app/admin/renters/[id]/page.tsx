@@ -2,7 +2,7 @@ import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAd
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { getAdminRenterCategoryDeliveryCapabilities, getRenterDetailByProfileId, type AdminRenterDeliveryGroup, type AdminRenterDetail } from "@/lib/supabase/queries/admin-renters";
+import { getAdminRenterCategoryDeliveryCapabilities, getAdminRenterDetailByRouteId, type AdminRenterApplication, type AdminRenterDeliveryGroup } from "@/lib/supabase/queries/admin-renters";
 import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidHotelMunicipality, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
@@ -18,14 +18,14 @@ function formatDate(value: string | null) {
   return new Intl.DateTimeFormat("it-IT", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
 }
 
-function statusLabel(status: AdminRenterDetail["profile"]["account_status"]) {
+function statusLabel(status: AdminRenterApplication["account_status"]) {
   if (status === "approved") return "Approvato";
   if (status === "rejected") return "Rifiutato";
   if (status === "disabled") return "Disattivato";
   return "In attesa";
 }
 
-function statusClass(status: AdminRenterDetail["profile"]["account_status"]) {
+function statusClass(status: AdminRenterApplication["account_status"]) {
   if (status === "approved") return "border-sea/20 bg-sea/10 text-green-deep";
   if (status === "rejected") return "border-red-200 bg-red-50 text-red-700";
   if (status === "disabled") return "border-ink/10 bg-ink/5 text-ink/55";
@@ -34,7 +34,7 @@ function statusClass(status: AdminRenterDetail["profile"]["account_status"]) {
 
 export default async function AdminRenterDetailPage({ params, searchParams }: Props) {
   const { accessToken } = await requireAdmin(`/admin/renters/${params.id}`);
-  const { detail, error } = await getRenterDetailByProfileId(accessToken, params.id);
+  const { detail, error } = await getAdminRenterDetailByRouteId(accessToken, params.id);
 
   if (!detail) {
     notFound();
@@ -44,7 +44,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
   const { groups: deliveryGroups } = renter
     ? await getAdminRenterCategoryDeliveryCapabilities(accessToken, renter.id)
     : { groups: [] };
-  const displayName = renter?.business_name_internal || profile.business_name || "Noleggiatore";
+  const displayName = renter?.business_name_internal || profile?.business_name || "Noleggiatore";
   const initial = displayName.slice(0, 1).toUpperCase();
 
   return (
@@ -111,50 +111,61 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <h1 className="font-serif text-3xl font-bold text-ink">{displayName}</h1>
-                <span className={`rounded-full border px-3 py-1 text-xs font-black ${statusClass(profile.account_status)}`}>
-                  {statusLabel(profile.account_status)}
-                </span>
+                {profile ? (
+                  <span className={`rounded-full border px-3 py-1 text-xs font-black ${statusClass(profile.account_status)}`}>
+                    {statusLabel(profile.account_status)}
+                  </span>
+                ) : (
+                  <span className="rounded-full border border-sea/20 bg-sea/10 px-3 py-1 text-xs font-black text-green-deep">
+                    Scheda operativa
+                  </span>
+                )}
               </div>
-              {renter && renter.business_name_internal !== profile.business_name && (
+              {profile ? null : (
+                <p className="mt-1 text-sm font-semibold text-ink/50">
+                  Scheda operativa renter gestita solo da admin
+                </p>
+              )}
+              {profile && renter && renter.business_name_internal !== profile.business_name && (
                 <p className="mt-1 text-sm font-semibold text-ink/50">
                   Profilo: {profile.business_name || "-"}
                 </p>
               )}
               <div className="mt-3 grid gap-1 text-sm sm:grid-cols-2">
                 <p className="text-ink/60">
-                  <span className="font-black">Email:</span> {profile.email || "-"}
+                  <span className="font-black">Email:</span> {profile?.email || renter?.email || "-"}
                 </p>
                 <p className="text-ink/60">
-                  <span className="font-black">Referente:</span> {profile.contact_name || "-"}
+                  <span className="font-black">Referente:</span> {profile?.contact_name || renter?.contact_name || "-"}
                 </p>
                 <p className="text-ink/60">
-                  <span className="font-black">Telefono:</span> {profile.phone || "-"}
+                  <span className="font-black">Telefono:</span> {profile?.phone || renter?.phone || "-"}
                 </p>
                 <p className="text-ink/60">
-                  <span className="font-black">Registrato:</span> {formatDate(profile.created_at)}
+                  <span className="font-black">Registrato:</span> {formatDate(profile?.created_at || renter?.created_at || null)}
                 </p>
-                {profile.approved_at && (
+                {profile?.approved_at && (
                   <p className="text-ink/60">
                     <span className="font-black">Approvato:</span> {formatDate(profile.approved_at)}
                   </p>
                 )}
-                {profile.rejected_at && (
+                {profile?.rejected_at && (
                   <p className="text-ink/60">
                     <span className="font-black">Rifiutato:</span> {formatDate(profile.rejected_at)}
                   </p>
                 )}
-                {profile.rejection_reason && (
+                {profile?.rejection_reason && (
                   <p className="col-span-2 text-ink/60">
                     <span className="font-black">Motivo:</span> {profile.rejection_reason}
                   </p>
                 )}
                 <p className="text-ink/60">
-                  <span className="font-black">Privacy:</span> {formatDate(profile.privacy_accepted_at)}
+                  <span className="font-black">Privacy:</span> {formatDate(profile?.privacy_accepted_at || null)}
                 </p>
                 <p className="text-ink/60">
-                  <span className="font-black">Origine:</span> {profile.created_by_admin ? "Admin" : "Registrazione pubblica"}
+                  <span className="font-black">Origine:</span> {profile ? (profile.created_by_admin ? "Admin" : "Registrazione pubblica") : "Admin"}
                 </p>
-                {profile.force_password_change && (
+                {profile?.force_password_change && (
                   <p className="col-span-2 text-amber-700">
                     <span className="font-black">Primo accesso:</span> cambio password richiesto
                   </p>
@@ -164,6 +175,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
           </div>
 
           {/* Actions */}
+          {profile ? (
           <div className="mt-6 border-t border-ink/10 pt-5">
             {profile.account_status === "pending" ? (
               <div className="flex flex-wrap gap-3">
@@ -208,6 +220,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
               </div>
             )}
           </div>
+          ) : null}
         </div>
 
         <div className="mt-5 grid gap-5 md:grid-cols-[1fr_280px]">
@@ -441,7 +454,7 @@ function AdminDeliveryGroupForm({ group, profileId }: { group: AdminRenterDelive
       <input type="hidden" name="renterId" value={group.renter_id} />
       <input type="hidden" name="categoryId" value={group.category_id} />
       <input type="hidden" name="categorySlug" value={group.category_slug} />
-      <input type="hidden" name="profileId" value={profileId} />
+      <input type="hidden" name="routeId" value={profileId} />
       <input type="hidden" name="enabled_pickup_point" value="true" />
 
       <p className="text-sm font-bold text-ink">{group.category_name_it}</p>
