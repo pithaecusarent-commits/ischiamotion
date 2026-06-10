@@ -113,7 +113,7 @@ export function HeroSearch({
               onChange={(event) => onCategoryChange(event.target.value as VehicleFilter)}
             >
               <option value="all">{locale === "it" ? "Tutti i veicoli" : "All vehicles"}</option>
-              <option value="scooter">{locale === "it" ? "Scooter 125" : "125cc Scooter"}</option>
+              <option value="scooter">Scooter</option>
               <option value="auto">{locale === "it" ? "Auto" : "Car"}</option>
               <option value="bici">E-bike</option>
               <option value="gommone">{locale === "it" ? "Gommone" : "Rubber dinghy"}</option>
