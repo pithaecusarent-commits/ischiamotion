@@ -656,6 +656,28 @@ export async function activateAdminManagedRenterAccess(
   }
 }
 
+export async function updateAdminRenterIschiaMotionPoint(input: {
+  accessToken: string;
+  renterId: string;
+  municipality: string;
+}): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+    const { error } = await supabase
+      .from("renters")
+      .update({
+        ischiamotion_point_municipality: clean(input.municipality),
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", input.renterId);
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update IschiaMotion Point municipality." };
+  }
+}
+
 export async function createAdminRenterRecord(
   accessToken: string,
   input: CreateAdminRenterInput

@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
@@ -11,6 +12,7 @@ import {
   deactivateRenterApplication,
   getRenterDetailByProfileId,
   rejectRenterApplication,
+  updateAdminRenterIschiaMotionPoint,
   upsertAdminRenterCategoryDeliveryCapability
 } from "@/lib/supabase/queries/admin-renters";
 import type { BookingDeliveryMethod } from "@/lib/types";
@@ -249,4 +251,40 @@ export async function saveAdminRenterDeliveryCapabilityAction(formData: FormData
   }
 
   redirect(`${returnPath}?deliverySaved=1`);
+}
+
+export async function saveAdminRenterIschiaMotionPointAction(formData: FormData) {
+  const { accessToken, profile } = await requireAdmin("/admin/renters");
+  const renterId = String(formData.get("renterId") || "");
+  const routeId = String(formData.get("routeId") || "");
+  const municipality = String(formData.get("ischiamotion_point_municipality") || "").trim();
+  const returnPath = `/admin/renters/${routeId}`;
+
+  if (!renterId || !routeId || !municipality) {
+    redirect(`${returnPath}?error=${encodeURIComponent("Comune IschiaMotion Point non valido.")}`);
+  }
+
+  const { error } = await updateAdminRenterIschiaMotionPoint({
+    accessToken,
+    renterId,
+    municipality
+  });
+
+  if (error) {
+    redirect(`${returnPath}?error=${encodeURIComponent(error)}`);
+  }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: profile.id,
+    actorEmail: profile.email,
+    action: "renter.ischiamotion_point_update",
+    targetTable: "renters",
+    targetId: renterId,
+    metadata: { ischiamotion_point_municipality: municipality }
+  });
+
+  revalidatePath("/admin/renters");
+  revalidatePath(returnPath);
+  redirect(`${returnPath}?pointSaved=1`);
 }

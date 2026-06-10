@@ -1,4 +1,4 @@
-import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction } from "@/app/admin/renters/actions";
+import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction, saveAdminRenterIschiaMotionPointAction } from "@/app/admin/renters/actions";
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: string };
-  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string };
+  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string; pointSaved?: string };
 };
 
 function formatDate(value: string | null) {
@@ -99,6 +99,11 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
         {searchParams?.deliverySaved && (
           <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
             Impostazioni consegna aggiornate.
+          </div>
+        )}
+        {searchParams?.pointSaved && (
+          <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Comune IschiaMotion Point aggiornato.
           </div>
         )}
 
@@ -404,6 +409,34 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 </p>
               ) : null}
             </div>
+
+            <form action={saveAdminRenterIschiaMotionPointAction} className="mt-5 rounded-2xl border border-ink/10 bg-white/80 p-4">
+              <input type="hidden" name="renterId" value={renter.id} />
+              <input type="hidden" name="routeId" value={params.id} />
+              <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Comune IschiaMotion Point
+                  <select
+                    className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50"
+                    name="ischiamotion_point_municipality"
+                    defaultValue={renter.ischiamotion_point_municipality || HOTEL_MUNICIPALITIES[0]}
+                    required
+                  >
+                    {HOTEL_MUNICIPALITIES.map((municipality) => (
+                      <option key={municipality} value={municipality}>
+                        {municipalityLabels.it[municipality]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  className="rounded-full bg-green-deep px-4 py-3 text-xs font-bold text-white transition hover:bg-sea"
+                  type="submit"
+                >
+                  Salva IschiaMotion Point
+                </button>
+              </div>
+            </form>
           </section>
         )}
 
