@@ -70,23 +70,22 @@ export async function saveCategoryDeliveryCapabilityAction(formData: FormData) {
   const renterId = String(formData.get("renterId") || "");
   const categoryId = String(formData.get("categoryId") || "");
   const categorySlug = String(formData.get("categorySlug") || "");
-  const zones = String(formData.get("zones") || "")
-    .split(",")
-    .map((z) => z.trim())
-    .filter(Boolean);
   const notes = String(formData.get("notes") || "");
 
   if (!renterId || !categoryId || !categorySlug) {
     redirect("/renter/availability?error=Configurazione%20non%20valida");
   }
 
-  const methods: Array<{ method: BookingDeliveryMethod; field: string }> = [
-    { method: "pickup_point", field: "enabled_pickup_point" },
-    { method: "port_delivery", field: "enabled_port_delivery" },
-    { method: "hotel_delivery", field: "enabled_hotel_delivery" }
+  const portZones = formData.getAll("port_zones").map((z) => String(z).trim()).filter(Boolean);
+  const hotelZones = formData.getAll("hotel_zones").map((z) => String(z).trim()).filter(Boolean);
+
+  const methods: Array<{ method: BookingDeliveryMethod; field: string; zones: string[] }> = [
+    { method: "pickup_point", field: "enabled_pickup_point", zones: [] },
+    { method: "port_delivery", field: "enabled_port_delivery", zones: portZones },
+    { method: "hotel_delivery", field: "enabled_hotel_delivery", zones: hotelZones }
   ];
 
-  for (const { method, field } of methods) {
+  for (const { method, field, zones } of methods) {
     const isEnabled = String(formData.get(field) || "false") === "true";
     const { error } = await upsertRenterCategoryDeliveryCapability({
       accessToken: session.accessToken,

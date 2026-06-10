@@ -1,13 +1,16 @@
-import { approveRenterAction, deactivateRenterAction, rejectRenterAction } from "@/app/admin/renters/actions";
+import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction } from "@/app/admin/renters/actions";
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
-import { getRenterDetailByProfileId, type AdminRenterDetail } from "@/lib/supabase/queries/admin-renters";
+import { getAdminRenterCategoryDeliveryCapabilities, getRenterDetailByProfileId, type AdminRenterDeliveryGroup, type AdminRenterDetail } from "@/lib/supabase/queries/admin-renters";
+import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, municipalityLabels, portLabels } from "@/lib/delivery-zones";
+import { deliveryMethodLabels } from "@/lib/booking-labels";
+import { isNauticalCategory } from "@/lib/vehicle-categories";
 import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: string };
-  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string };
+  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string };
 };
 
 function formatDate(value: string | null) {
@@ -38,6 +41,9 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
   }
 
   const { profile, renter, vehicles, bookingStats } = detail;
+  const { groups: deliveryGroups } = renter
+    ? await getAdminRenterCategoryDeliveryCapabilities(accessToken, renter.id)
+    : { groups: [] };
   const displayName = renter?.business_name_internal || profile.business_name || "Noleggiatore";
   const initial = displayName.slice(0, 1).toUpperCase();
 
@@ -88,6 +94,11 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
         {(searchParams?.error || error) && (
           <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-ink/70">
             {searchParams?.error || error}
+          </div>
+        )}
+        {searchParams?.deliverySaved && (
+          <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Impostazioni consegna aggiornate.
           </div>
         )}
 
@@ -375,7 +386,134 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
           </section>
         )}
 
+        {/* Delivery settings */}
+        {renter && deliveryGroups.length > 0 && (
+          <section className="mt-5 rounded-2xl border border-ink/10 bg-white p-5 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-sea/70">Operatività</p>
+            <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Consegna per categoria</h2>
+            <p className="mt-1 text-xs font-semibold leading-5 text-ink/50">
+              Configura porti e comuni coperti per ogni categoria. Le imbarcazioni supportano solo IschiaMotion Point.
+            </p>
+            <div className="mt-4 grid gap-4">
+              {deliveryGroups.map((group) => (
+                <AdminDeliveryGroupForm
+                  key={group.category_id}
+                  group={group}
+                  profileId={params.id}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
       </section>
     </main>
+  );
+}
+
+function AdminDeliveryGroupForm({ group, profileId }: { group: AdminRenterDeliveryGroup; profileId: string }) {
+  const isNautical = isNauticalCategory(group.category_slug);
+  const portCap = group.capabilities.find((c) => c.delivery_method === "port_delivery");
+  const hotelCap = group.capabilities.find((c) => c.delivery_method === "hotel_delivery");
+
+  if (isNautical) {
+    return (
+      <div className="rounded-2xl border border-ink/5 bg-sand/30 p-4">
+        <p className="text-sm font-bold text-ink">{group.category_name_it}</p>
+        <p className="mt-1 text-xs text-ink/50">Solo ritiro IschiaMotion Point.</p>
+        <span className="mt-2 inline-block rounded-full bg-green-deep/10 px-3 py-1 text-xs font-bold text-green-deep">
+          {deliveryMethodLabels.it.pickup_point}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <form action={saveAdminRenterDeliveryCapabilityAction} className="rounded-2xl border border-ink/10 bg-sand/20 p-4">
+      <input type="hidden" name="renterId" value={group.renter_id} />
+      <input type="hidden" name="categoryId" value={group.category_id} />
+      <input type="hidden" name="categorySlug" value={group.category_slug} />
+      <input type="hidden" name="profileId" value={profileId} />
+      <input type="hidden" name="enabled_pickup_point" value="true" />
+
+      <p className="text-sm font-bold text-ink">{group.category_name_it}</p>
+
+      {/* Port delivery */}
+      <div className="mt-3">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-semibold text-ink/70">{deliveryMethodLabels.it.port_delivery}</span>
+          <div className="flex rounded-full border border-ink/10 bg-white p-0.5">
+            <label className="cursor-pointer rounded-full px-3 py-1 text-xs font-bold has-[:checked]:bg-green-deep has-[:checked]:text-white">
+              <input className="sr-only" type="radio" name="enabled_port_delivery" value="true" defaultChecked={portCap?.is_enabled ?? false} />
+              Sì
+            </label>
+            <label className="cursor-pointer rounded-full px-3 py-1 text-xs font-bold has-[:checked]:bg-ink has-[:checked]:text-white">
+              <input className="sr-only" type="radio" name="enabled_port_delivery" value="false" defaultChecked={!(portCap?.is_enabled ?? false)} />
+              No
+            </label>
+          </div>
+        </div>
+        <div className="mt-2 grid grid-cols-3 gap-1.5">
+          {DELIVERY_PORTS.map((port) => (
+            <label
+              key={port}
+              className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-ink/10 bg-white px-2.5 py-1.5 text-xs has-[:checked]:border-sea/30 has-[:checked]:bg-sea/5"
+            >
+              <input
+                className="accent-sea"
+                type="checkbox"
+                name="port_zones"
+                value={port}
+                defaultChecked={(portCap?.zones ?? []).includes(port)}
+              />
+              {portLabels.it[port]}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Hotel delivery */}
+      <div className="mt-3">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-semibold text-ink/70">{deliveryMethodLabels.it.hotel_delivery}</span>
+          <div className="flex rounded-full border border-ink/10 bg-white p-0.5">
+            <label className="cursor-pointer rounded-full px-3 py-1 text-xs font-bold has-[:checked]:bg-green-deep has-[:checked]:text-white">
+              <input className="sr-only" type="radio" name="enabled_hotel_delivery" value="true" defaultChecked={hotelCap?.is_enabled ?? false} />
+              Sì
+            </label>
+            <label className="cursor-pointer rounded-full px-3 py-1 text-xs font-bold has-[:checked]:bg-ink has-[:checked]:text-white">
+              <input className="sr-only" type="radio" name="enabled_hotel_delivery" value="false" defaultChecked={!(hotelCap?.is_enabled ?? false)} />
+              No
+            </label>
+          </div>
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-1.5">
+          {HOTEL_MUNICIPALITIES.map((m) => (
+            <label
+              key={m}
+              className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-ink/10 bg-white px-2.5 py-1.5 text-xs has-[:checked]:border-sea/30 has-[:checked]:bg-sea/5"
+            >
+              <input
+                className="accent-sea"
+                type="checkbox"
+                name="hotel_zones"
+                value={m}
+                defaultChecked={(hotelCap?.zones ?? []).includes(m)}
+              />
+              {municipalityLabels.it[m]}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-3 flex justify-end">
+        <button
+          className="rounded-full bg-green-deep px-4 py-2 text-xs font-bold text-white transition hover:bg-sea"
+          type="submit"
+        >
+          Salva consegna
+        </button>
+      </div>
+    </form>
   );
 }

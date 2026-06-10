@@ -17,6 +17,7 @@ export type AdminBookingItem = {
   status: string;
   delivery_method: BookingDeliveryMethod;
   delivery_location: string | null;
+  hotel_municipality: string | null;
   delivery_notes: string | null;
   payment_type: BookingPaymentType;
   payment_method: BookingPaymentMethod;
@@ -121,7 +122,7 @@ export const adminBookingStatuses = [
 
 export type AdminBookingStatus = (typeof adminBookingStatuses)[number];
 
-const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(title_it, title_en, vehicle_categories(slug, name_it, name_en))";
+const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, hotel_municipality, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(title_it, title_en, vehicle_categories(slug, name_it, name_en))";
 
 function normalizeAdminBooking(row: AdminBookingRow): AdminBookingItem {
   const vehicle = Array.isArray(row.vehicles) ? row.vehicles[0] || null : row.vehicles;

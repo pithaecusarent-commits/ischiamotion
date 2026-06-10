@@ -5,6 +5,9 @@ import type {
   BookingPaymentType,
   Locale
 } from "@/lib/types";
+import { municipalityLabels, portLabels } from "@/lib/delivery-zones";
+
+export { portLabels, municipalityLabels };
 
 export const deliveryMethodLabels: Record<Locale, Record<BookingDeliveryMethod, string>> = {
   it: {

@@ -10,8 +10,10 @@ import {
   createAdminRenterRecord,
   deactivateRenterApplication,
   getRenterDetailByProfileId,
-  rejectRenterApplication
+  rejectRenterApplication,
+  upsertAdminRenterCategoryDeliveryCapability
 } from "@/lib/supabase/queries/admin-renters";
+import type { BookingDeliveryMethod } from "@/lib/types";
 
 function rentersRedirect(params: string): never {
   redirect(`/admin/renters?${params}`);
@@ -204,4 +206,46 @@ export async function createRenterFromAdminAction(formData: FormData) {
       : "";
 
   redirect(`/admin/renters?created=1${createdTarget}`);
+}
+
+export async function saveAdminRenterDeliveryCapabilityAction(formData: FormData) {
+  const { accessToken } = await requireAdmin("/admin/renters");
+
+  const renterId = String(formData.get("renterId") || "");
+  const categoryId = String(formData.get("categoryId") || "");
+  const categorySlug = String(formData.get("categorySlug") || "");
+  const returnPath = `/admin/renters/${String(formData.get("profileId") || "")}`;
+  const notes = String(formData.get("notes") || "");
+
+  if (!renterId || !categoryId || !categorySlug) {
+    redirect(`${returnPath}?error=${encodeURIComponent("Configurazione non valida.")}`);
+  }
+
+  const portZones = formData.getAll("port_zones").map((z) => String(z).trim()).filter(Boolean);
+  const hotelZones = formData.getAll("hotel_zones").map((z) => String(z).trim()).filter(Boolean);
+
+  const methods: Array<{ method: BookingDeliveryMethod; field: string; zones: string[] }> = [
+    { method: "pickup_point", field: "enabled_pickup_point", zones: [] },
+    { method: "port_delivery", field: "enabled_port_delivery", zones: portZones },
+    { method: "hotel_delivery", field: "enabled_hotel_delivery", zones: hotelZones }
+  ];
+
+  for (const { method, field, zones } of methods) {
+    const isEnabled = String(formData.get(field) || "false") === "true";
+    const { error } = await upsertAdminRenterCategoryDeliveryCapability({
+      accessToken,
+      renterId,
+      categoryId,
+      categorySlug,
+      deliveryMethod: method,
+      isEnabled,
+      zones,
+      notes
+    });
+    if (error) {
+      redirect(`${returnPath}?error=${encodeURIComponent(error)}`);
+    }
+  }
+
+  redirect(`${returnPath}?deliverySaved=1`);
 }

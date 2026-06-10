@@ -12,6 +12,7 @@ import {
   bookingCustomerNotes,
   bookingDeliveryLocation,
   bookingDeliveryMethod,
+  bookingHotelMunicipality,
   bookingPaymentMethod,
   bookingPaymentStatus,
   bookingPaymentType,
@@ -135,6 +136,9 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
               <div className="mt-4 grid gap-4 md:grid-cols-3">
                 <DetailRow label="Modalità" value={bookingDeliveryMethod(booking)} />
                 <DetailRow label="Luogo" value={bookingDeliveryLocation(booking)} />
+                {bookingHotelMunicipality(booking) && (
+                  <DetailRow label="Comune hotel" value={bookingHotelMunicipality(booking)} />
+                )}
                 <DetailRow label="Note consegna" value={booking.delivery_notes || "-"} />
               </div>
             </div>
@@ -421,6 +425,9 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                       <DetailRow label="Pickup point" value={bookingPickupPoint(booking)} />
                       <DetailRow label="Modalità servizio" value={bookingDeliveryMethod(booking)} />
                       <DetailRow label="Luogo" value={bookingDeliveryLocation(booking)} />
+                      {bookingHotelMunicipality(booking) && (
+                        <DetailRow label="Comune hotel" value={bookingHotelMunicipality(booking)} />
+                      )}
                       <DetailRow label="Note consegna" value={booking.delivery_notes || "-"} />
                       <DetailRow label="Pagamento" value={bookingPaymentType(booking)} />
                       <DetailRow label="Stato pagamento" value={bookingPaymentStatus(booking)} />

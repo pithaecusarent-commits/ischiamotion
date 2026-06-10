@@ -4,6 +4,8 @@ export type VehicleCategorySlug = "scooter" | "auto" | "barca" | "gommone" | "bi
 
 export type BookingDeliveryMethod = "pickup_point" | "port_delivery" | "hotel_delivery";
 
+export type { DeliveryPort, HotelMunicipality } from "@/lib/delivery-zones";
+
 export type BookingPaymentType = "pay_on_pickup" | "deposit_required" | "prepaid_full";
 
 export type BookingPaymentMethod = "unknown" | "cash" | "card" | "bank_transfer" | "future_online_card";
@@ -118,6 +120,7 @@ export type Booking = {
   status: "pending" | "confirmed" | "voucher_sent" | "checked_in" | "cancelled" | "completed" | "no_show";
   delivery_method: BookingDeliveryMethod;
   delivery_location: string | null;
+  hotel_municipality: string | null;
   delivery_notes: string | null;
   payment_type: BookingPaymentType;
   payment_method: BookingPaymentMethod;

@@ -1,6 +1,8 @@
 import { randomBytes } from "crypto";
 import { createSupabaseServiceRoleClient, createSupabaseUserClient } from "@/lib/supabase/admin-auth";
 import { sendRenterSetupEmail } from "@/lib/email/renter-emails";
+import type { BookingDeliveryMethod } from "@/lib/types";
+import { isNauticalCategory } from "@/lib/vehicle-categories";
 
 export type RenterAccountStatus = "pending" | "approved" | "rejected" | "disabled";
 
@@ -666,5 +668,139 @@ export async function createAdminRenterRecord(
       setupUrl: null,
       error: error instanceof Error ? error.message : "Unable to create renter."
     };
+  }
+}
+
+// ─── Admin Renter Delivery Capabilities ──────────────────────────────────────
+
+export type AdminRenterDeliveryCapabilityItem = {
+  id: string | null;
+  renter_id: string;
+  category_id: string;
+  category_slug: string;
+  category_name_it: string;
+  delivery_method: BookingDeliveryMethod;
+  is_enabled: boolean;
+  zones: string[];
+  notes: string | null;
+};
+
+export type AdminRenterDeliveryGroup = {
+  category_id: string;
+  category_slug: string;
+  category_name_it: string;
+  renter_id: string;
+  capabilities: AdminRenterDeliveryCapabilityItem[];
+};
+
+const deliveryMethodOrder: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
+
+export async function getAdminRenterCategoryDeliveryCapabilities(
+  accessToken: string,
+  renterId: string
+): Promise<{ groups: AdminRenterDeliveryGroup[]; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+
+    const [vehiclesResult, capabilitiesResult] = await Promise.all([
+      supabase
+        .from("vehicles")
+        .select("category_id, vehicle_categories(id, slug, name_it)")
+        .eq("renter_id", renterId)
+        .eq("is_active", true),
+      supabase
+        .from("renter_category_delivery_capabilities")
+        .select("id, renter_id, category_id, delivery_method, is_enabled, zones, notes")
+        .eq("renter_id", renterId)
+    ]);
+
+    if (vehiclesResult.error) return { groups: [], error: vehiclesResult.error.message };
+    if (capabilitiesResult.error) return { groups: [], error: capabilitiesResult.error.message };
+
+    const seenIds = new Set<string>();
+    const categories: Array<{ id: string; slug: string; name_it: string }> = [];
+    for (const v of (vehiclesResult.data || []) as unknown as Array<{
+      category_id: string | null;
+      vehicle_categories: { id: string; slug: string; name_it: string } | { id: string; slug: string; name_it: string }[] | null;
+    }>) {
+      if (!v.category_id || seenIds.has(v.category_id)) continue;
+      seenIds.add(v.category_id);
+      const cat = Array.isArray(v.vehicle_categories) ? v.vehicle_categories[0] : v.vehicle_categories;
+      if (cat) categories.push({ id: v.category_id, slug: cat.slug, name_it: cat.name_it });
+    }
+
+    const capMap = new Map<string, { id: string; is_enabled: boolean; zones: string[] | null; notes: string | null }>();
+    for (const cap of (capabilitiesResult.data || []) as unknown as Array<{
+      id: string; category_id: string; delivery_method: string; is_enabled: boolean; zones: string[] | null; notes: string | null;
+    }>) {
+      capMap.set(`${cap.category_id}:${cap.delivery_method}`, {
+        id: cap.id,
+        is_enabled: cap.is_enabled,
+        zones: cap.zones,
+        notes: cap.notes
+      });
+    }
+
+    const groups: AdminRenterDeliveryGroup[] = categories.map((cat) => ({
+      category_id: cat.id,
+      category_slug: cat.slug,
+      category_name_it: cat.name_it,
+      renter_id: renterId,
+      capabilities: deliveryMethodOrder.map((method) => {
+        const existing = capMap.get(`${cat.id}:${method}`);
+        return {
+          id: existing?.id || null,
+          renter_id: renterId,
+          category_id: cat.id,
+          category_slug: cat.slug,
+          category_name_it: cat.name_it,
+          delivery_method: method,
+          is_enabled: existing ? existing.is_enabled : method === "pickup_point",
+          zones: existing?.zones || [],
+          notes: existing?.notes || null
+        };
+      })
+    }));
+
+    return { groups, error: null };
+  } catch (err) {
+    return { groups: [], error: err instanceof Error ? err.message : "Unable to load delivery capabilities." };
+  }
+}
+
+export async function upsertAdminRenterCategoryDeliveryCapability(input: {
+  accessToken: string;
+  renterId: string;
+  categoryId: string;
+  categorySlug: string;
+  deliveryMethod: BookingDeliveryMethod;
+  isEnabled: boolean;
+  zones: string[];
+  notes: string;
+}): Promise<{ error: string | null }> {
+  if (isNauticalCategory(input.categorySlug) && input.deliveryMethod !== "pickup_point" && input.isEnabled) {
+    return { error: "Per barche e gommoni è disponibile solo il ritiro presso IschiaMotion Point." };
+  }
+
+  try {
+    const supabase = createSupabaseUserClient(input.accessToken);
+    const payload = {
+      renter_id: input.renterId,
+      category_id: input.categoryId,
+      delivery_method: input.deliveryMethod,
+      is_enabled: input.isEnabled,
+      zones: input.zones.length > 0 ? input.zones : null,
+      notes: input.notes.trim() || null,
+      updated_at: new Date().toISOString()
+    };
+
+    const { error } = await supabase
+      .from("renter_category_delivery_capabilities")
+      .upsert(payload, { onConflict: "renter_id,category_id,delivery_method" });
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update delivery capability." };
   }
 }

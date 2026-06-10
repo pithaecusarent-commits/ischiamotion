@@ -15,6 +15,7 @@ export type BookingRequestInput = {
   pickupTime: string;
   deliveryMethod: BookingDeliveryMethod;
   deliveryLocation: string;
+  hotelMunicipality: string;
   deliveryNotes: string;
   paymentType: BookingPaymentType;
   paymentMethod: BookingPaymentMethod;

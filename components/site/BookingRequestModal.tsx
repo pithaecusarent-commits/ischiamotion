@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
+import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
@@ -35,6 +36,7 @@ const copy = {
     pickupTime: "Orario ritiro preferito",
     deliveryTitle: "Modalità di ritiro o consegna",
     port: "Porto",
+    hotelMunicipality: "Comune",
     hotelName: "Nome hotel / struttura",
     deliveryNotes: "Note consegna opzionali",
     paymentNotice: "Eventuali acconti, saldi o pagamenti anticipati vengono definiti solo dopo la verifica della disponibilità con il partner locale.",
@@ -62,6 +64,7 @@ const copy = {
     pickupTime: "Preferred pickup time",
     deliveryTitle: "Pickup or delivery option",
     port: "Port",
+    hotelMunicipality: "Municipality",
     hotelName: "Hotel / property name",
     deliveryNotes: "Optional delivery notes",
     paymentNotice: "Deposits, balances or prepayments are defined only after availability is reviewed with the local partner.",
@@ -79,7 +82,6 @@ const copy = {
   }
 } satisfies Record<Locale, Record<string, string>>;
 
-const portOptions = ["Porto d'Ischia", "Casamicciola", "Forio"];
 const deliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
 function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   const label = locale === "it" ? point.public_label_it : point.public_label_en;
@@ -130,6 +132,9 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
     const deliveryLocation = selectedDeliveryMethod === "pickup_point"
       ? formatPickupLabel(pickupPoint, locale)
       : String(formData.get("deliveryLocation") || "");
+    const hotelMunicipality = selectedDeliveryMethod === "hotel_delivery"
+      ? String(formData.get("hotelMunicipality") || "")
+      : "";
 
     setStatus("submitting");
 
@@ -155,6 +160,7 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
           pickupTime: String(formData.get("pickupTime") || ""),
           deliveryMethod: selectedDeliveryMethod,
           deliveryLocation,
+          hotelMunicipality,
           deliveryNotes: String(formData.get("deliveryNotes") || ""),
           paymentType: "pay_on_pickup" as BookingPaymentType,
           paymentMethod: "unknown" as BookingPaymentMethod,
@@ -240,14 +246,22 @@ export function BookingRequestModal({ locale, vehicle, pickupPoints, startDate, 
               <label>
                 <span>{text.port}</span>
                 <select name="deliveryLocation" required>
-                  {portOptions.map((port) => (
-                    <option key={port} value={port}>{port}</option>
+                  {DELIVERY_PORTS.map((port) => (
+                    <option key={port} value={portLabels[locale][port]}>{portLabels[locale][port]}</option>
                   ))}
                 </select>
               </label>
             ) : null}
             {deliveryMethod === "hotel_delivery" ? (
               <>
+                <label>
+                  <span>{text.hotelMunicipality}</span>
+                  <select name="hotelMunicipality" required>
+                    {HOTEL_MUNICIPALITIES.map((m) => (
+                      <option key={m} value={m}>{municipalityLabels[locale][m]}</option>
+                    ))}
+                  </select>
+                </label>
                 <label>
                   <span>{text.hotelName}</span>
                   <input name="deliveryLocation" required />
