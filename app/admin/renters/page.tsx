@@ -328,6 +328,12 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                           <span className="inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
                             Gestito da admin
                           </span>
+                          <a
+                            className="rounded-full border border-ink/10 px-4 py-2 text-center text-xs font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep"
+                            href={`/admin/renters/${renter.id}`}
+                          >
+                            Gestisci
+                          </a>
                           {renter.email ? (
                             <form action={activateAdminManagedRenterAccessAction}>
                               <input type="hidden" name="renter_id" value={renter.id} />
