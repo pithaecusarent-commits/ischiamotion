@@ -26,6 +26,8 @@ export function VehicleGrid({
       .filter((vehicle) => vehicle.is_available)
       .map((vehicle) => ({
         ...vehicle,
+        title_it: vehicle.id === "veh-scooter-125" ? "Scooter" : vehicle.title_it,
+        title_en: vehicle.id === "veh-scooter-125" ? "Scooter" : vehicle.title_en,
         price_from: categoryMinPrices[vehicle.category] ?? 0
       })),
     [categoryMinPrices]
