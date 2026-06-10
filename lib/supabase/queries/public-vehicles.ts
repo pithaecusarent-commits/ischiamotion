@@ -26,6 +26,9 @@ export type PublicVehicleQueryParams = {
   start_date?: string;
   end_date?: string;
   delivery_method?: string;
+  pickup_municipality?: string;
+  port_slug?: string;
+  hotel_municipality?: string;
 };
 
 export type PublicVehicleSearchResult = {
@@ -114,7 +117,10 @@ export async function searchPublicVehicles(params: PublicVehicleQueryParams): Pr
       p_category_slug: toDatabaseCategorySlug(params.category_slug),
       p_start_date: params.start_date || null,
       p_end_date: params.end_date || null,
-      p_delivery_method: (params.delivery_method && params.delivery_method !== "pickup_point") ? params.delivery_method : null
+      p_delivery_method: params.delivery_method || null,
+      p_pickup_municipality: params.pickup_municipality || null,
+      p_port_slug: params.port_slug || null,
+      p_hotel_municipality: params.hotel_municipality || null
     });
 
     if (error) {

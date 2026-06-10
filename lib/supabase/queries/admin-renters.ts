@@ -52,6 +52,7 @@ export type AdminRenterDetail = {
     fiscal_code: string | null;
     business_address: string | null;
     business_city: string | null;
+    ischiamotion_point_municipality: string | null;
     operating_zones: string[];
     service_categories: string[];
     seasonality_notes: string | null;
@@ -80,6 +81,7 @@ export type AdminStandaloneRenter = {
   fiscal_code: string | null;
   business_address: string | null;
   business_city: string | null;
+  ischiamotion_point_municipality: string | null;
   operating_zones: string[];
   service_categories: string[];
   seasonality_notes: string | null;
@@ -104,6 +106,7 @@ export type CreateAdminRenterInput = {
   fiscalCode: string;
   businessAddress: string;
   businessCity: string;
+  ischiamotionPointMunicipality: string;
   operatingZones: string[];
   serviceCategories: string[];
   seasonalityNotes: string;
@@ -182,7 +185,7 @@ export async function getRenterDetailByProfileId(
       const [renterResult, vehiclesResult, bookingsResult] = await Promise.all([
         supabase
           .from("renters")
-          .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status")
+          .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, ischiamotion_point_municipality, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status")
           .eq("id", renterId)
           .single(),
         supabase
@@ -286,7 +289,7 @@ export async function getStandaloneAdminRenters(
     const [rentersResult, linksResult] = await Promise.all([
       supabase
         .from("renters")
-        .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status, created_at, updated_at")
+        .select("id, business_name_internal, contact_name, email, phone, status, vat_number, fiscal_code, business_address, business_city, ischiamotion_point_municipality, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes, onboarding_status, created_at, updated_at")
         .order("created_at", { ascending: false }),
       supabase
         .from("renter_users")
@@ -417,7 +420,7 @@ export async function activateAdminManagedRenterAccess(
     const service = createSupabaseServiceRoleClient();
     const { data: renter, error: renterError } = await service
       .from("renters")
-      .select("id, business_name_internal, contact_name, email, phone, vat_number, fiscal_code, business_address, business_city, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes")
+      .select("id, business_name_internal, contact_name, email, phone, vat_number, fiscal_code, business_address, business_city, ischiamotion_point_municipality, operating_zones, service_categories, seasonality_notes, seasonality_periods, admin_notes")
       .eq("id", renterId)
       .single();
 
@@ -558,6 +561,7 @@ export async function createAdminRenterRecord(
       fiscal_code: clean(input.fiscalCode),
       business_address: clean(input.businessAddress),
       business_city: clean(input.businessCity),
+      ischiamotion_point_municipality: clean(input.ischiamotionPointMunicipality) || null,
       operating_zones: input.operatingZones,
       service_categories: input.serviceCategories,
       seasonality_notes: clean(input.seasonalityNotes),

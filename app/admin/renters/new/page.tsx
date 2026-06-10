@@ -1,5 +1,6 @@
 import { createRenterFromAdminAction } from "@/app/admin/renters/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { HOTEL_MUNICIPALITIES, municipalityLabels } from "@/lib/delivery-zones";
 
 type Props = {
   searchParams?: {
@@ -74,7 +75,17 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
           </label>
 
           <label className="grid gap-2 text-sm font-bold text-ink/70">
-            Comune / zona principale
+            Comune IschiaMotion Point
+            <select className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50" name="ischiamotion_point_municipality">
+              <option value="">-- Seleziona comune --</option>
+              {HOTEL_MUNICIPALITIES.map((m) => (
+                <option key={m} value={m}>{municipalityLabels.it[m]}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Comune / zona (testo libero)
             <input className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50" name="business_city" />
           </label>
 

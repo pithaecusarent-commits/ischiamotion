@@ -12,6 +12,9 @@ type SearchParams = {
   start?: string;
   end?: string;
   delivery_method?: string;
+  pickup_municipality?: string;
+  port_slug?: string;
+  hotel_municipality?: string;
 };
 
 const locales: Locale[] = ["it", "en"];
@@ -52,6 +55,10 @@ export async function VehicleResultsPage({
     : null;
   const startDate = searchParams?.start || "";
   const endDate = searchParams?.end || "";
+  const pickupMunicipality = searchParams?.pickup_municipality || "";
+  const portSlug = searchParams?.port_slug || "";
+  const hotelMunicipality = searchParams?.hotel_municipality || "";
+  const hasZoneFilter = Boolean(pickupMunicipality || portSlug || hotelMunicipality);
 
   const [pickupPoints, result] = await Promise.all([
     getActivePickupPoints(),
@@ -60,7 +67,10 @@ export async function VehicleResultsPage({
       category_slug: category,
       start_date: startDate,
       end_date: endDate,
-      delivery_method: deliveryMethod || undefined
+      delivery_method: deliveryMethod || undefined,
+      pickup_municipality: pickupMunicipality || undefined,
+      port_slug: portSlug || undefined,
+      hotel_municipality: hotelMunicipality || undefined
     })
   ]);
 
@@ -77,6 +87,7 @@ export async function VehicleResultsPage({
           endDate={endDate}
           deliveryMethod={deliveryMethod}
           isFallback={result.isFallback}
+          hasZoneFilter={hasZoneFilter}
         />
       </main>
       <WhatsAppCTA locale={locale} />

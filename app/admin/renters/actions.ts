@@ -170,6 +170,7 @@ export async function createRenterFromAdminAction(formData: FormData) {
     fiscalCode: String(formData.get("fiscal_code") || "").trim(),
     businessAddress: String(formData.get("business_address") || "").trim(),
     businessCity: String(formData.get("business_city") || "").trim(),
+    ischiamotionPointMunicipality: String(formData.get("ischiamotion_point_municipality") || "").trim(),
     operatingZones: splitList(formData.get("operating_zones")),
     serviceCategories: formData.getAll("service_categories").map((item) => String(item).trim()).filter(Boolean),
     seasonalityNotes: String(formData.get("seasonality_notes") || "").trim(),

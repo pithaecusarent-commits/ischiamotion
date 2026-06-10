@@ -3,7 +3,7 @@ import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { getAdminRenterCategoryDeliveryCapabilities, getRenterDetailByProfileId, type AdminRenterDeliveryGroup, type AdminRenterDetail } from "@/lib/supabase/queries/admin-renters";
-import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, municipalityLabels, portLabels } from "@/lib/delivery-zones";
+import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidHotelMunicipality, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import { notFound } from "next/navigation";
@@ -364,6 +364,14 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
               </p>
               <p className="text-ink/60">
                 <span className="font-black">Indirizzo:</span> {renter.business_address || "-"}
+              </p>
+              <p className="text-ink/60">
+                <span className="font-black">IschiaMotion Point:</span>{" "}
+                {renter.ischiamotion_point_municipality
+                  ? (isValidHotelMunicipality(renter.ischiamotion_point_municipality)
+                    ? municipalityLabels.it[renter.ischiamotion_point_municipality]
+                    : renter.ischiamotion_point_municipality)
+                  : "-"}
               </p>
               <p className="text-ink/60">
                 <span className="font-black">Comune/zona:</span> {renter.business_city || "-"}

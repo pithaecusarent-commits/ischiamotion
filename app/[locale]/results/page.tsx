@@ -8,6 +8,9 @@ type Props = {
     start?: string;
     end?: string;
     delivery_method?: string;
+    pickup_municipality?: string;
+    port_slug?: string;
+    hotel_municipality?: string;
   };
 };
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BookingDeliveryMethod, Locale, VehicleFilter } from "@/lib/types";
+import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 
 const deliveryLabels: Record<Locale, Record<BookingDeliveryMethod, string>> = {
   it: {
@@ -15,6 +16,11 @@ const deliveryLabels: Record<Locale, Record<BookingDeliveryMethod, string>> = {
     port_delivery: "Port delivery",
     hotel_delivery: "Hotel delivery"
   }
+};
+
+const zoneLabels: Record<Locale, { pickup: string; port: string; hotel: string; placeholder: string }> = {
+  it: { pickup: "Comune IschiaMotion Point", port: "Porto", hotel: "Comune hotel", placeholder: "-- Seleziona zona --" },
+  en: { pickup: "IschiaMotion Point municipality", port: "Port", hotel: "Hotel municipality", placeholder: "-- Select zone --" }
 };
 
 export function HeroSearch({
@@ -40,12 +46,22 @@ export function HeroSearch({
 }) {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [pickupMunicipality, setPickupMunicipality] = useState("");
+  const [portSlug, setPortSlug] = useState("");
+  const [hotelMunicipality, setHotelMunicipality] = useState("");
   const now = new Date();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
   function handleStartDateChange(value: string) {
     onStartDateChange(value);
     if (endDate && endDate < value) onEndDateChange(value);
+  }
+
+  function handleDeliveryMethodChange(value: BookingDeliveryMethod) {
+    onDeliveryMethodChange(value);
+    setPickupMunicipality("");
+    setPortSlug("");
+    setHotelMunicipality("");
   }
 
   function handleSearch() {
@@ -65,8 +81,21 @@ export function HeroSearch({
       end: endDate,
       delivery_method: deliveryMethod
     });
+
+    if (deliveryMethod === "pickup_point" && pickupMunicipality) {
+      params.set("pickup_municipality", pickupMunicipality);
+    }
+    if (deliveryMethod === "port_delivery" && portSlug) {
+      params.set("port_slug", portSlug);
+    }
+    if (deliveryMethod === "hotel_delivery" && hotelMunicipality) {
+      params.set("hotel_municipality", hotelMunicipality);
+    }
+
     router.push(`${locale === "it" ? "/it/risultati" : "/en/results"}?${params.toString()}`);
   }
+
+  const zl = zoneLabels[locale];
 
   return (
     <div className="search-card" id="prenota">
@@ -97,13 +126,62 @@ export function HeroSearch({
             <select
               aria-label={locale === "it" ? "Modalità ritiro o consegna" : "Pickup or delivery"}
               value={deliveryMethod}
-              onChange={(event) => onDeliveryMethodChange(event.target.value as BookingDeliveryMethod)}
+              onChange={(event) => handleDeliveryMethodChange(event.target.value as BookingDeliveryMethod)}
             >
               {(["pickup_point", "port_delivery", "hotel_delivery"] as BookingDeliveryMethod[]).map((opt) => (
                 <option key={opt} value={opt}>{deliveryLabels[locale][opt]}</option>
               ))}
             </select>
           </div>
+
+          {deliveryMethod === "pickup_point" && (
+            <div className="s-field" style={{ gridColumn: "1 / -1" }}>
+              <div className="search-label">{zl.pickup}</div>
+              <select
+                aria-label={zl.pickup}
+                value={pickupMunicipality}
+                onChange={(event) => setPickupMunicipality(event.target.value)}
+              >
+                <option value="">{zl.placeholder}</option>
+                {HOTEL_MUNICIPALITIES.map((m) => (
+                  <option key={m} value={m}>{municipalityLabels[locale][m]}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {deliveryMethod === "port_delivery" && (
+            <div className="s-field" style={{ gridColumn: "1 / -1" }}>
+              <div className="search-label">{zl.port}</div>
+              <select
+                aria-label={zl.port}
+                value={portSlug}
+                onChange={(event) => setPortSlug(event.target.value)}
+              >
+                <option value="">{zl.placeholder}</option>
+                {DELIVERY_PORTS.map((p) => (
+                  <option key={p} value={p}>{portLabels[locale][p]}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {deliveryMethod === "hotel_delivery" && (
+            <div className="s-field" style={{ gridColumn: "1 / -1" }}>
+              <div className="search-label">{zl.hotel}</div>
+              <select
+                aria-label={zl.hotel}
+                value={hotelMunicipality}
+                onChange={(event) => setHotelMunicipality(event.target.value)}
+              >
+                <option value="">{zl.placeholder}</option>
+                {HOTEL_MUNICIPALITIES.map((m) => (
+                  <option key={m} value={m}>{municipalityLabels[locale][m]}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
           <div className="s-field">
             <div className="search-label">{locale === "it" ? "Data inizio" : "Start date"}</div>
             <input type="date" value={startDate} min={todayStr} onChange={(event) => handleStartDateChange(event.target.value)} aria-label={locale === "it" ? "Data inizio" : "Start date"} />

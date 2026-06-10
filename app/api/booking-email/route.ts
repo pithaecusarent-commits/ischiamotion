@@ -130,7 +130,7 @@ function customerEmailText(payload: BookingEmailPayload) {
       `- Ritiro/consegna: ${summary}`,
       "",
       "Importante:",
-      "La disponibilità non è ancora confermata. Ti ricontatteremo appena avremo verificato opzioni, condizioni e punto di ritiro.",
+      "La disponibilità non è ancora confermata. Stiamo verificando la tua scelta con i partner locali e riceverai un aggiornamento entro pochi minuti con conferma, eventuali alternative o dettagli utili per completare la richiesta.",
       "",
       "A presto,",
       "IschiaMotion"
@@ -150,7 +150,7 @@ function customerEmailText(payload: BookingEmailPayload) {
     `- Pickup/delivery: ${summary}`,
     "",
     "Important:",
-    "Availability is not confirmed yet. We will contact you once options, conditions and pickup details have been reviewed.",
+    "Availability is not confirmed yet. We are checking your selected option with our local partners, and you will receive an update within a few minutes with confirmation, available alternatives or useful details to complete your request.",
     "",
     "See you soon,",
     "IschiaMotion"

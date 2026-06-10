@@ -37,6 +37,7 @@ type Props = {
   endDate: string;
   deliveryMethod: BookingDeliveryMethod | null;
   isFallback: boolean;
+  hasZoneFilter?: boolean;
 };
 
 export function SearchResults({
@@ -47,7 +48,8 @@ export function SearchResults({
   startDate,
   endDate,
   deliveryMethod,
-  isFallback
+  isFallback,
+  hasZoneFilter = false
 }: Props) {
   const [selectedVehicle, setSelectedVehicle] = useState<PublicVehicle | null>(null);
   const selectVehicle = (vehicle: PublicVehicle) => setSelectedVehicle(vehicle);
@@ -60,9 +62,13 @@ export function SearchResults({
       openLanding(vehicle);
     }
   };
-  const emptyText = locale === "it"
-    ? "Al momento non ci sono mezzi disponibili per questa ricerca. Prova a cambiare date o categoria."
-    : "No vehicles are currently available for this search. Try changing dates or category.";
+  const emptyText = hasZoneFilter
+    ? (locale === "it"
+      ? "Nessuna soluzione immediatamente disponibile per questa zona. Inviaci comunque la richiesta: verificheremo eventuali alternative con i nostri partner locali."
+      : "No solution immediately available for this zone. Send us your request anyway: we will check possible alternatives with our local partners.")
+    : (locale === "it"
+      ? "Al momento non ci sono mezzi disponibili per questa ricerca. Prova a cambiare date o categoria."
+      : "No vehicles are currently available for this search. Try changing dates or category.");
 
   return (
     <>
