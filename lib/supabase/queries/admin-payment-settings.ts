@@ -11,6 +11,9 @@ export type AdminPaymentSettings = {
   deposit_instructions_en: string | null;
   receipt_email: string | null;
   receipt_whatsapp: string | null;
+  bank_transfer_enabled: boolean;
+  stripe_enabled: boolean;
+  paypal_enabled: boolean;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -26,6 +29,9 @@ export type AdminPaymentSettingsInput = {
   deposit_instructions_en: string | null;
   receipt_email: string | null;
   receipt_whatsapp: string | null;
+  bank_transfer_enabled: boolean;
+  stripe_enabled: boolean;
+  paypal_enabled: boolean;
   is_active: boolean;
 };
 

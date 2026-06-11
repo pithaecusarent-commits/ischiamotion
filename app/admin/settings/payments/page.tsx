@@ -53,6 +53,59 @@ export default async function AdminPaymentSettingsPage({ searchParams }: Props) 
         ) : null}
 
         <form action={savePaymentSettingsAction} className="mt-6 grid gap-5">
+          <section className="grid gap-4 rounded-3xl border border-ink/10 bg-white/70 p-5">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-ink">Metodi di pagamento disponibili</h2>
+              <p className="mt-2 text-sm leading-6 text-ink/65">
+                Stripe e PayPal sono predisposti ma non ancora integrati. Attivarli ora serve solo a prepararne la configurazione futura.
+              </p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              <label className="flex min-h-24 items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink/70">
+                <input
+                  className="mt-1 h-4 w-4"
+                  name="bank_transfer_enabled"
+                  type="checkbox"
+                  defaultChecked={settings?.bank_transfer_enabled ?? true}
+                />
+                <span>
+                  <span className="block font-bold text-ink">Bonifico bancario</span>
+                  <span className="mt-1 block leading-5">Usato per le email acconto.</span>
+                </span>
+              </label>
+              <label className="flex min-h-24 items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink/70">
+                <input
+                  className="mt-1 h-4 w-4"
+                  name="stripe_enabled"
+                  type="checkbox"
+                  defaultChecked={settings?.stripe_enabled ?? false}
+                />
+                <span>
+                  <span className="flex flex-wrap items-center gap-2 font-bold text-ink">
+                    Stripe
+                    <span className="rounded-full bg-amber-100 px-2 py-1 text-[11px] font-bold text-amber-800">Non ancora collegato al checkout</span>
+                  </span>
+                  <span className="mt-1 block leading-5">Predisposto, non ancora attivo nel checkout.</span>
+                </span>
+              </label>
+              <label className="flex min-h-24 items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink/70">
+                <input
+                  className="mt-1 h-4 w-4"
+                  name="paypal_enabled"
+                  type="checkbox"
+                  defaultChecked={settings?.paypal_enabled ?? false}
+                />
+                <span>
+                  <span className="flex flex-wrap items-center gap-2 font-bold text-ink">
+                    PayPal
+                    <span className="rounded-full bg-amber-100 px-2 py-1 text-[11px] font-bold text-amber-800">Non ancora collegato al checkout</span>
+                  </span>
+                  <span className="mt-1 block leading-5">Predisposto, non ancora attivo nel checkout.</span>
+                </span>
+              </label>
+            </div>
+          </section>
+
           <div className="grid gap-5 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-bold text-ink/70">
               Intestatario conto

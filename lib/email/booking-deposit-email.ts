@@ -34,6 +34,19 @@ function replaceReasonTemplate(template: string | null | undefined, bookingCode:
 function buildSettingsInstructionBlock(input: DepositEmailInput, locale: Locale, settings: Awaited<ReturnType<typeof getActivePaymentSettingsForEmail>>["settings"]) {
   if (!settings) return null;
 
+  const hasBankTransfer = settings.bank_transfer_enabled ?? true;
+  const hasFutureMethods = Boolean(settings.stripe_enabled || settings.paypal_enabled);
+  const futureMethodsMessage = hasFutureMethods
+    ? locale === "en"
+      ? "Additional payment methods will be available after confirmation from the IschiaMotion staff."
+      : "Ulteriori metodi di pagamento saranno disponibili su conferma dello staff IschiaMotion."
+    : "";
+
+  if (!hasBankTransfer) {
+    const lines = [futureMethodsMessage].filter(Boolean);
+    return lines.length > 0 ? lines.join("\n") : null;
+  }
+
   const baseInstructions = locale === "en"
     ? settings.deposit_instructions_en?.trim() || settings.deposit_instructions_it?.trim() || ""
     : settings.deposit_instructions_it?.trim() || settings.deposit_instructions_en?.trim() || "";
@@ -45,7 +58,8 @@ function buildSettingsInstructionBlock(input: DepositEmailInput, locale: Locale,
     settings.bic_swift ? `BIC/SWIFT: ${settings.bic_swift}` : "",
     `${locale === "en" ? "Reason" : "Causale"}: ${replaceReasonTemplate(settings.payment_reason_template, input.bookingCode)}`,
     settings.receipt_email ? `${locale === "en" ? "Receipt email" : "Email ricevuta"}: ${settings.receipt_email}` : "",
-    settings.receipt_whatsapp ? `${locale === "en" ? "Receipt WhatsApp" : "WhatsApp ricevuta"}: ${settings.receipt_whatsapp}` : ""
+    settings.receipt_whatsapp ? `${locale === "en" ? "Receipt WhatsApp" : "WhatsApp ricevuta"}: ${settings.receipt_whatsapp}` : "",
+    futureMethodsMessage
   ].filter(Boolean);
 
   return lines.join("\n");

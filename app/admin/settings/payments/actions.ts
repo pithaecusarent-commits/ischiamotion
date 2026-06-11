@@ -32,6 +32,9 @@ export async function savePaymentSettingsAction(formData: FormData) {
     deposit_instructions_en: clean(formData.get("deposit_instructions_en")),
     receipt_email: clean(formData.get("receipt_email")),
     receipt_whatsapp: clean(formData.get("receipt_whatsapp")),
+    bank_transfer_enabled: formData.get("bank_transfer_enabled") === "on",
+    stripe_enabled: formData.get("stripe_enabled") === "on",
+    paypal_enabled: formData.get("paypal_enabled") === "on",
     is_active: formData.get("is_active") === "on"
   });
 
