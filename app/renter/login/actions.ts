@@ -8,6 +8,7 @@ import {
   signInRenterWithPassword
 } from "@/lib/supabase/renter-auth";
 import { createSupabaseAnonClient, createSupabaseServiceRoleClient } from "@/lib/supabase/admin-auth";
+import { isRenterPortalEnabled, renterPortalDisabledMessage, renterRegistrationDisabledMessage } from "@/lib/renter-portal";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendNewRenterRequestEmail } from "@/lib/email/renter-emails";
 
@@ -74,6 +75,10 @@ async function syncRenterProfileAfterSignup(input: {
 }
 
 export async function signInRenter(formData: FormData) {
+  if (!isRenterPortalEnabled()) {
+    loginRedirect(renterPortalDisabledMessage);
+  }
+
   const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
   const nextPath = String(formData.get("next") || "/renter");
@@ -101,6 +106,10 @@ export async function signOutRenter() {
 }
 
 export async function registerRenter(formData: FormData) {
+  if (!isRenterPortalEnabled()) {
+    redirect(`/renter/register?error=${encodeURIComponent(renterRegistrationDisabledMessage)}`);
+  }
+
   const requestHeaders = headers();
   const clientIp = getClientIp(requestHeaders);
   const ipLimit = checkRateLimit({

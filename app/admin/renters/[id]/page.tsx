@@ -44,7 +44,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
   const { groups: deliveryGroups } = renter
     ? await getAdminRenterCategoryDeliveryCapabilities(accessToken, renter.id)
     : { groups: [] };
-  const displayName = renter?.business_name_internal || profile?.business_name || "Noleggiatore";
+  const displayName = renter?.business_name_internal || profile?.business_name || "Partner";
   const initial = displayName.slice(0, 1).toUpperCase();
 
   return (
@@ -78,7 +78,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
         {/* Flash messages */}
         {searchParams?.approved && (
           <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Noleggiatore approvato e collegato correttamente.
+            Partner approvato e collegato correttamente.
           </div>
         )}
         {searchParams?.rejected && (
@@ -88,7 +88,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
         )}
         {searchParams?.disabled && (
           <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-700">
-            Noleggiatore disattivato. Lo storico resta disponibile.
+            Partner disattivato. Lo storico resta disponibile.
           </div>
         )}
         {(searchParams?.error || error) && (
@@ -128,7 +128,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
               </div>
               {profile ? null : (
                 <p className="mt-1 text-sm font-semibold text-ink/50">
-                  Scheda operativa renter gestita solo da admin
+                  Scheda operativa partner gestita solo da admin
                 </p>
               )}
               {profile && renter && renter.business_name_internal !== profile.business_name && (
@@ -168,7 +168,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                   <span className="font-black">Privacy:</span> {formatDate(profile?.privacy_accepted_at || null)}
                 </p>
                 <p className="text-ink/60">
-                  <span className="font-black">Origine:</span> {profile ? (profile.created_by_admin ? "Admin" : "Registrazione pubblica") : "Admin"}
+                  <span className="font-black">Origine:</span> {profile ? (profile.created_by_admin ? "Admin" : "Richiesta partner") : "Admin"}
                 </p>
                 {profile?.force_password_change && (
                   <p className="col-span-2 text-amber-700">
@@ -190,7 +190,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                     className="rounded-full bg-green-deep px-5 py-2.5 text-sm font-bold text-white transition hover:bg-sea"
                     type="submit"
                   >
-                    Approva noleggiatore
+                    Approva partner
                   </button>
                 </form>
                 <form action={rejectRenterAction} className="flex flex-wrap gap-2">
@@ -251,7 +251,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
 
             {vehicles.length === 0 ? (
               <div className="mt-4 rounded-xl border border-ink/10 bg-sand/40 p-4 text-xs font-semibold text-ink/50">
-                Nessun mezzo associato. Aggiungi un veicolo assegnandolo a questo noleggiatore.
+                Nessun mezzo associato. Aggiungi un veicolo assegnandolo a questo partner.
               </div>
             ) : (
               <div className="mt-4 grid gap-2">
@@ -322,7 +322,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
 
             {bookingStats.total === 0 ? (
               <div className="mt-4 rounded-xl border border-ink/10 bg-sand/40 p-4 text-xs font-semibold text-ink/50">
-                Nessun booking ancora assegnato a questo noleggiatore.
+                Nessun booking ancora assegnato a questo partner.
               </div>
             ) : (
               <div className="mt-4 grid gap-2.5">
@@ -357,11 +357,11 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
           </section>
         </div>
 
-        {/* Internal renter record (if linked) */}
+        {/* Internal partner record (if linked) */}
         {renter && (
           <section className="mt-5 rounded-2xl border border-ink/10 bg-gradient-to-br from-mint/10 via-white to-cream p-5 shadow-sm">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-sea/70">Record interno</p>
-            <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Dati renter</h2>
+            <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Dati partner</h2>
             <div className="mt-3 grid gap-1.5 text-sm sm:grid-cols-2">
               <p className="text-ink/60">
                 <span className="font-black">Nome interno:</span> {renter.business_name_internal || "-"}
@@ -373,7 +373,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 <span className="font-black">Telefono record:</span> {renter.phone || "-"}
               </p>
               <p className="text-ink/60">
-                <span className="font-black">Stato renter:</span>{" "}
+                <span className="font-black">Stato partner:</span>{" "}
                 <span className="capitalize">{renter.status}</span>
               </p>
               <p className="text-ink/60">

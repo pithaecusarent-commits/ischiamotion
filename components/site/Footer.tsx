@@ -1,6 +1,8 @@
 import type { Locale } from "@/lib/types";
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
 
 export function Footer({ locale }: { locale: Locale }) {
+  const renterPortalEnabled = isRenterPortalEnabled();
   const links = locale === "it"
     ? {
       privacy: "/it/privacy",
@@ -28,7 +30,9 @@ export function Footer({ locale }: { locale: Locale }) {
           <li><a href={links.privacy}>{locale === "it" ? "Privacy" : "Privacy"}</a></li>
           <li><a href={links.terms}>{locale === "it" ? "Termini" : "Terms"}</a></li>
           <li><a href={links.contact}>{locale === "it" ? "Contatti" : "Contact"}</a></li>
-          <li><a href="/renter">{locale === "it" ? "Sei un noleggiatore?" : "Are you a renter?"}</a></li>
+          {renterPortalEnabled ? (
+            <li><a href="/renter">{locale === "it" ? "Area partner" : "Partner area"}</a></li>
+          ) : null}
         </ul>
         <div className="footer-copy">© 2026 IschiaMotion.com</div>
       </div>

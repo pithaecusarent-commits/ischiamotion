@@ -1,5 +1,6 @@
 import { createRenterFromAdminAction } from "@/app/admin/renters/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
 import { HOTEL_MUNICIPALITIES, municipalityLabels } from "@/lib/delivery-zones";
 
 type Props = {
@@ -12,6 +13,7 @@ const categories = ["Scooter", "Auto", "Barche", "Gommoni", "E-bike", "Quad", "B
 
 export default async function NewAdminRenterPage({ searchParams }: Props) {
   await requireAdmin("/admin/renters/new");
+  const renterPortalEnabled = isRenterPortalEnabled();
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
@@ -19,13 +21,13 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="section-kicker">Admin</p>
-            <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Nuovo renter</h1>
+            <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Nuovo partner</h1>
             <p className="mt-4 text-ink/65">
-              Crea l&apos;anagrafica partner gestita dallo staff e invia una conferma al renter.
+              Crea l&apos;anagrafica partner gestita dallo staff. L&apos;accesso al gestionale puo restare disattivato.
             </p>
           </div>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/renters">
-            Noleggiatori
+            Partner
           </a>
         </div>
 
@@ -120,13 +122,19 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
             <textarea className="min-h-28 rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50" name="admin_notes" />
           </label>
 
-          <label className="flex items-start gap-3 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold leading-6 text-green-deep">
-            <input className="mt-1 h-4 w-4 shrink-0 accent-green-deep" name="create_auth_user" type="checkbox" value="1" />
-            <span>Crea anche l&apos;accesso Auth solo se il renter deve entrare nella mini-area e impostare la password.</span>
-          </label>
+          {renterPortalEnabled ? (
+            <label className="flex items-start gap-3 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold leading-6 text-green-deep">
+              <input className="mt-1 h-4 w-4 shrink-0 accent-green-deep" name="create_auth_user" type="checkbox" value="1" />
+              <span>Crea anche l&apos;accesso Auth solo se il partner deve entrare nella mini-area e impostare la password.</span>
+            </label>
+          ) : (
+            <div className="rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold leading-6 text-amber-900">
+              Accesso partner disattivato: verra creata solo l&apos;anagrafica interna gestita dall&apos;admin.
+            </div>
+          )}
 
           <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
-            Crea renter
+            Crea partner
           </button>
         </form>
       </section>

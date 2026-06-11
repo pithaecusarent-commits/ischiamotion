@@ -1,4 +1,5 @@
 import { requestPasswordReset } from "@/app/auth/forgot-password/actions";
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
 
 type Props = {
   searchParams?: {
@@ -7,6 +8,8 @@ type Props = {
 };
 
 export default function ForgotPasswordPage({ searchParams }: Props) {
+  const renterPortalEnabled = isRenterPortalEnabled();
+
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
       <section className="mx-auto max-w-md rounded-[30px] bg-cream p-8 shadow-soft">
@@ -40,9 +43,11 @@ export default function ForgotPasswordPage({ searchParams }: Props) {
           <a className="font-bold text-green-deep hover:text-ink" href="/admin/login">
             Login admin
           </a>
-          <a className="font-bold text-green-deep hover:text-ink" href="/renter/login">
-            Login noleggiatore
-          </a>
+          {renterPortalEnabled ? (
+            <a className="font-bold text-green-deep hover:text-ink" href="/renter/login">
+              Login partner
+            </a>
+          ) : null}
         </div>
       </section>
     </main>

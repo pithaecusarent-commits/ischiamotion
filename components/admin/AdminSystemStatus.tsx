@@ -1,12 +1,19 @@
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
+
 const statuses = [
   { label: "Dominio", value: "Configurato" },
   { label: "Email", value: "Configurate" },
   { label: "QR voucher", value: "Interno" },
-  { label: "Area renter", value: "Attiva" },
   { label: "Booking Intelligence", value: "Attiva" }
 ];
 
 export function AdminSystemStatus() {
+  const renterPortalEnabled = isRenterPortalEnabled();
+  const visibleStatuses = [
+    ...statuses,
+    { label: "Area partner", value: renterPortalEnabled ? "Attiva" : "Interna" }
+  ];
+
   return (
     <section className="rounded-2xl border border-ink/10 bg-gradient-to-br from-mint/10 via-white to-cream p-5 shadow-sm">
       <div className="flex items-start justify-between gap-3">
@@ -22,7 +29,7 @@ export function AdminSystemStatus() {
         </span>
       </div>
       <div className="mt-4 grid gap-2">
-        {statuses.map((status) => (
+        {visibleStatuses.map((status) => (
           <div
             className="flex items-center justify-between gap-3 rounded-xl border border-ink/10 bg-white/80 px-3.5 py-2.5 shadow-sm"
             key={status.label}

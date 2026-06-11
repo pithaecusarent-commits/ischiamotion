@@ -90,7 +90,7 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                     <th className="px-4 py-4">Categoria</th>
                     <th className="px-4 py-4">Prezzo da</th>
                     <th className="px-4 py-4">Pickup point</th>
-                    <th className="px-4 py-4">Noleggiatore interno</th>
+                    <th className="px-4 py-4">Partner interno</th>
                     <th className="px-4 py-4">Stato</th>
                     <th className="px-4 py-4">Azioni</th>
                   </tr>

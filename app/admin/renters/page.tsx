@@ -2,6 +2,7 @@ import { activateAdminManagedRenterAccessAction, approveRenterAction, deactivate
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
 import {
   getAdminRenterApplications,
   getStandaloneAdminRenters,
@@ -62,6 +63,7 @@ function standaloneStatusClass(status: AdminStandaloneRenter["status"]) {
 
 export default async function AdminRentersPage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/renters");
+  const renterPortalEnabled = isRenterPortalEnabled();
   const filters = {
     status: ["pending", "approved", "rejected", "disabled"].includes(searchParams?.status || "")
       ? searchParams?.status as AdminRenterApplication["account_status"]
@@ -84,11 +86,16 @@ export default async function AdminRentersPage({ searchParams }: Props) {
         <p className="section-kicker">Admin</p>
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl font-bold sm:text-4xl">Noleggiatori</h1>
-            <p className="mt-4 text-ink/65">Autorizza le nuove registrazioni dei renter IschiaMotion.</p>
+            <h1 className="font-serif text-3xl font-bold sm:text-4xl">Partner / fornitori</h1>
+            <p className="mt-4 text-ink/65">Gestisci partner interni, fornitori e richieste partner IschiaMotion.</p>
             <p className="mt-2 max-w-2xl text-sm text-ink/55">
               La disattivazione blocca accesso e nuove richieste senza eliminare storico, booking, veicoli o utente Auth.
             </p>
+            {!renterPortalEnabled ? (
+              <p className="mt-3 max-w-2xl rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
+                L&apos;accesso partner e disattivato. I partner sono gestiti internamente dall&apos;admin.
+              </p>
+            ) : null}
           </div>
           <div className="rounded-[24px] border border-ink/10 bg-white/70 px-5 py-4 text-right">
             <p className="section-kicker">In attesa</p>
@@ -108,7 +115,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
             Veicoli
           </a>
           <a className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/renters/new">
-            Nuovo renter
+            Nuovo partner
           </a>
           <form action={signOutAdmin}>
             <button className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" type="submit">
@@ -142,7 +149,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
 
         {searchParams?.created ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Renter creato correttamente.
+            Partner creato correttamente.
             {searchParams.profile ? (
               <a className="ml-2 underline" href={`/admin/renters/${searchParams.profile}`}>
                 Apri profilo
@@ -164,7 +171,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
 
         {searchParams?.access ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Accesso renter creato e email per impostare la password inviata.
+            Accesso partner creato e email per impostare la password inviata.
             {searchParams.profile ? (
               <a className="ml-2 underline" href={`/admin/renters/${searchParams.profile}`}>
                 Apri profilo
@@ -193,8 +200,8 @@ export default async function AdminRentersPage({ searchParams }: Props) {
 
         {!pageError && applications.length === 0 && standaloneRenters.length === 0 ? (
           <div className="mt-8 rounded-3xl border border-sea/10 bg-white/60 p-8 text-center">
-            <h2 className="font-serif text-3xl font-bold">Nessuna registrazione</h2>
-            <p className="mt-3 text-ink/60">Le richieste dei noleggiatori compariranno qui.</p>
+            <h2 className="font-serif text-3xl font-bold">Nessun partner</h2>
+            <p className="mt-3 text-ink/60">Le anagrafiche partner e fornitori compariranno qui.</p>
           </div>
         ) : null}
 
@@ -220,7 +227,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                           className="font-bold text-ink transition hover:text-sea hover:underline"
                           href={`/admin/renters/${application.id}`}
                         >
-                          {application.business_name || "Noleggiatore"}
+                          {application.business_name || "Partner"}
                         </a>
                         <div className="mt-1 text-xs font-semibold text-ink/50">{application.email || "-"}</div>
                       </td>
@@ -290,7 +297,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
         {standaloneRenters.length > 0 ? (
           <div id="admin-managed-renters" className="mt-8 overflow-hidden rounded-[28px] border border-ink/10 bg-white/75 shadow-card">
             <div className="border-b border-ink/10 px-5 py-4">
-              <h2 className="font-serif text-2xl font-bold">Renter gestiti da admin</h2>
+              <h2 className="font-serif text-2xl font-bold">Partner gestiti da admin</h2>
               <p className="mt-1 text-sm text-ink/55">
                 Anagrafiche operative create dallo staff: listini, disponibilità e prenotazioni restano in gestione admin.
               </p>
@@ -311,7 +318,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                   {standaloneRenters.map((renter) => (
                     <tr className="align-top transition-colors hover:bg-sea/5" key={renter.id}>
                       <td className="px-4 py-4">
-                        <div className="font-bold text-ink">{renter.business_name_internal || "Noleggiatore"}</div>
+                        <div className="font-bold text-ink">{renter.business_name_internal || "Partner"}</div>
                         <div className="mt-1 text-xs font-semibold text-ink/50">{renter.email || "-"}</div>
                       </td>
                       <td className="px-4 py-4 text-ink/70">{renter.contact_name || "-"}</td>
@@ -334,13 +341,15 @@ export default async function AdminRentersPage({ searchParams }: Props) {
                           >
                             Gestisci
                           </a>
-                          {renter.email ? (
+                          {renterPortalEnabled && renter.email ? (
                             <form action={activateAdminManagedRenterAccessAction}>
                               <input type="hidden" name="renter_id" value={renter.id} />
                               <button className="w-full rounded-full bg-ink px-3 py-1.5 text-[11px] font-bold text-white" type="submit">
                                 Crea accesso
                               </button>
                             </form>
+                          ) : !renterPortalEnabled ? (
+                            <span className="text-[11px] font-bold text-ink/45">Accesso partner disattivato</span>
                           ) : (
                             <span className="text-[11px] font-bold text-ink/45">Email mancante</span>
                           )}

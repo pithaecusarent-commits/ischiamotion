@@ -197,35 +197,35 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
             <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Assegna noleggiatore</div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Assegna partner</div>
                   <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Gestione partner interno</h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
-                    Il nome del noleggiatore resta visibile solo in admin. Dopo l&apos;assegnazione, la richiesta appare nell&apos;area renter collegata.
+                    Il nome del partner resta visibile solo in admin. L&apos;assegnazione serve per organizzazione interna, mezzi e disponibilita.
                   </p>
                 </div>
               </div>
 
               {renterAssignMessage === "success" ? (
                 <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
-                  Noleggiatore assegnato correttamente.
+                  Partner assegnato correttamente.
                 </div>
               ) : null}
 
               {renterAssignMessage === "error" || rentersError ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
-                  Impossibile assegnare il noleggiatore. Verifica che esistano renter attivi e che le policy admin siano applicate.
+                  Impossibile assegnare il partner. Verifica che esistano partner attivi e che le policy admin siano applicate.
                 </div>
               ) : null}
 
               {renterCompatibility.error ? (
                 <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
-                  Compatibilità renter non calcolata: {renterCompatibility.error}
+                  Compatibilita partner non calcolata: {renterCompatibility.error}
                 </div>
               ) : null}
 
               {currentRenterCompatibility && !currentRenterCompatibility.isCompatible ? (
                 <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
-                  Questo renter potrebbe non coprire la zona richiesta.
+                  Questo partner potrebbe non coprire la zona richiesta.
                   <div className="mt-2 text-xs font-normal leading-5">
                     {currentRenterCompatibility.reasons.join(" ")}
                   </div>
@@ -234,11 +234,11 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <DetailRow
-                  label="Noleggiatore attuale"
-                  value={booking.renters?.business_name_internal || (booking.renter_id ? "Renter collegato" : "Non assegnato")}
+                  label="Partner attuale"
+                  value={booking.renters?.business_name_internal || (booking.renter_id ? "Partner collegato" : "Non assegnato")}
                 />
                 <DetailRow
-                  label="Renter suggerito dal veicolo"
+                  label="Partner suggerito dal veicolo"
                   value={renterCompatibility.suggestedRenter?.business_name_internal || "Non disponibile"}
                 />
               </div>
@@ -252,7 +252,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                         <span>{renter.business_name_internal}</span>
                         {renter.isSuggested ? <span className="rounded-full bg-sea/15 px-2 py-1 text-[10px] font-black uppercase text-green-deep">Suggerito</span> : null}
                       </div>
-                    )) : <span>Nessun renter compatibile calcolato.</span>}
+                    )) : <span>Nessun partner compatibile calcolato.</span>}
                   </div>
                 </div>
                 <div className="rounded-3xl border border-amber-200 bg-amber-50 p-5">
@@ -263,7 +263,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                         <div>{renter.business_name_internal}{renter.isSuggested ? " (suggerito)" : ""}</div>
                         <div className="text-xs font-normal leading-5">{renter.reasons.join(" ")}</div>
                       </div>
-                    )) : <span>Nessun warning sui renter attivi.</span>}
+                    )) : <span>Nessun warning sui partner attivi.</span>}
                   </div>
                 </div>
               </div>
@@ -271,14 +271,14 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
               <form action={assignBookingRenterAction} className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
                 <input type="hidden" name="bookingId" value={booking.id} />
                 <label className="grid gap-2 text-sm font-bold text-ink/70">
-                  Noleggiatore attivo
+                  Partner attivo
                   <select
                     className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
                     name="renterId"
                     defaultValue={booking.renter_id || ""}
                     required
                   >
-                    <option value="">Seleziona noleggiatore</option>
+                    <option value="">Seleziona partner</option>
                     {renterCompatibility.compatibleRenters.length > 0 ? (
                       <optgroup label="Compatibili">
                         {renterCompatibility.compatibleRenters.map((renter) => (

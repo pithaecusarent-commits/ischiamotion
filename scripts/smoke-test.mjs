@@ -9,6 +9,7 @@ const routes = [
   "/it",
   "/en",
   "/admin/login",
+  "/renter",
   "/renter/login",
   "/renter/register",
   "/auth/callback",

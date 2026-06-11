@@ -56,7 +56,7 @@ function RenterProductivityBar({ stats }: { stats: RenterProductivityStat[] }) {
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-xs font-black uppercase tracking-[0.18em] text-sea/70">Performance</p>
-          <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Top noleggiatori</h2>
+          <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Top partner</h2>
           <p className="mt-1 text-xs font-semibold leading-5 text-ink/50">
             Partner attivi ordinati per booking confermati.
           </p>
@@ -158,7 +158,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
                 Dashboard IschiaMotion
               </h1>
               <p className="mt-3 max-w-xl text-sm font-semibold leading-7 text-ink/60 sm:text-base">
-                La control room per richieste, mezzi, noleggiatori e operatività giornaliera.
+                La control room per richieste, mezzi, partner e operativita giornaliera.
               </p>
             </div>
 
@@ -260,8 +260,8 @@ export function AdminDashboard({ data, adminEmail }: Props) {
                         <p className="text-sm font-black text-ink">
                           {metrics.pendingRenters.value}{" "}
                           {metrics.pendingRenters.value === 1
-                            ? "noleggiatore da approvare"
-                            : "noleggiatori da approvare"}
+                            ? "partner da valutare"
+                            : "partner da valutare"}
                         </p>
                         <span className="mt-2 inline-flex rounded-full bg-green-deep px-3 py-1 text-xs font-bold text-white">
                           Vai alle richieste →
@@ -303,7 +303,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               detail="Partner da valutare"
               href="/admin/renters"
               icon="P"
-              label="Renter pending"
+              label="Partner pending"
               tone={hasPendingRenters ? "attention" : "default"}
               value={metrics.pendingRenters.value}
             />
@@ -321,7 +321,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               detail="Partner operativi collegati"
               href="/admin/renters"
               icon="N"
-              label="Noleggiatori attivi"
+              label="Partner attivi"
               tone="success"
               value={metrics.activeRenters.value}
             />
@@ -342,7 +342,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
             />
             <AdminKpiCard
               available={metrics.completedCheckins.available}
-              detail="Ritiri registrati dai renter"
+              detail="Ritiri registrati internamente"
               icon="Q"
               label="Check-in effettuati"
               value={metrics.completedCheckins.value}
@@ -374,7 +374,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             <AdminQuickAction
               accent="bg-green-deep text-white"
-              description="Apri la coda booking, assegna renter e aggiorna stati operativi."
+              description="Apri la coda booking, assegna partner e aggiorna stati operativi."
               href="/admin/bookings"
               icon="R"
               pendingCount={
@@ -398,13 +398,13 @@ export function AdminDashboard({ data, adminEmail }: Props) {
             />
             <AdminQuickAction
               accent="bg-amber-50 text-amber-800"
-              description="Valuta registrazioni, approva partner e disattiva accessi quando serve."
+              description="Gestisci anagrafiche partner, fornitori e accessi quando il portale e attivo."
               href="/admin/renters"
               icon="P"
               pendingCount={
                 metrics.pendingRenters.available ? metrics.pendingRenters.value : undefined
               }
-              title="Gestisci noleggiatori"
+              title="Gestisci partner"
             />
             <AdminQuickAction
               accent="bg-white text-ink"
@@ -461,7 +461,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
                       Nuovi partner
                     </h2>
                     <p className="mt-1 text-xs font-semibold leading-5 text-ink/50">
-                      Registrazioni renter da valutare con calma operativa.
+                      Richieste partner da valutare con calma operativa.
                     </p>
                   </div>
                   <a
@@ -474,14 +474,14 @@ export function AdminDashboard({ data, adminEmail }: Props) {
 
                 {data.pendingRenterApplicationsError ? (
                   <div className="mt-4 rounded-xl border border-gold/20 bg-amber-50 p-3.5 text-xs font-semibold text-ink/65">
-                    Impossibile caricare le richieste renter.
+                    Impossibile caricare le richieste partner.
                   </div>
                 ) : null}
 
                 {!data.pendingRenterApplicationsError &&
                 data.pendingRenterApplications.length === 0 ? (
                   <div className="mt-4 rounded-xl border border-sea/15 bg-sea/5 p-4 text-xs font-semibold text-sea">
-                    Nessuna richiesta noleggiatore in attesa. Pipeline partner ordinata.
+                    Nessuna richiesta partner in attesa. Pipeline partner ordinata.
                   </div>
                 ) : null}
 
@@ -500,7 +500,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-black text-ink">
-                          {application.business_name || "Noleggiatore"}
+                          {application.business_name || "Partner"}
                         </p>
                         <p className="mt-0.5 truncate text-xs font-semibold text-ink/55">
                           {application.contact_name || "Referente non indicato"}

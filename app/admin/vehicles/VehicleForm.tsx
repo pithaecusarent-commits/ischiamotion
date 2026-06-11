@@ -35,14 +35,14 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
         </label>
 
         <label className="grid gap-2 text-sm font-bold text-ink/70">
-          Noleggiatore interno
+          Partner interno
           <select
             className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
             name="renter_id"
             defaultValue={vehicle?.renter_id || ""}
             required
           >
-            <option value="">Seleziona noleggiatore</option>
+            <option value="">Seleziona partner</option>
             {options.renters.map((item) => (
               <option key={item.id} value={item.id}>{item.label}{item.meta ? ` (${item.meta})` : ""}</option>
             ))}
@@ -117,7 +117,7 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
             placeholder="Es. Vespa Primavera 125 - mezzo 01"
           />
           <span className="text-xs font-semibold leading-5 text-ink/50">
-            Visibile solo ad admin e noleggiatore. Il cliente vedra solo il titolo pubblico, ad esempio Scooter 125.
+            Visibile solo ad admin e partner interno. Il cliente vedra solo il titolo pubblico, ad esempio Scooter 125.
           </span>
         </label>
         <div className="mt-4 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold leading-6 text-ink/70">

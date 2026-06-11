@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { sendAdminManagedRenterCreatedEmail, sendRenterApprovedEmail, sendRenterRejectedEmail } from "@/lib/email/renter-emails";
 import {
@@ -35,11 +36,13 @@ export async function approveRenterAction(formData: FormData) {
     rentersRedirect(`error=${encodeURIComponent(result.error)}`);
   }
 
-  await sendRenterApprovedEmail({
-    businessName: before.detail?.profile?.business_name || "Noleggiatore",
-    contactName: before.detail?.profile?.contact_name,
-    email: before.detail?.profile?.email
-  }).catch(() => null);
+  if (isRenterPortalEnabled()) {
+    await sendRenterApprovedEmail({
+      businessName: before.detail?.profile?.business_name || "Partner",
+      contactName: before.detail?.profile?.contact_name,
+      email: before.detail?.profile?.email
+    }).catch(() => null);
+  }
 
   await logAdminAuditEvent({
     accessToken,
@@ -122,6 +125,10 @@ export async function activateAdminManagedRenterAccessAction(formData: FormData)
     rentersRedirect(`error=${encodeURIComponent("Renter non valido.")}`);
   }
 
+  if (!isRenterPortalEnabled()) {
+    rentersRedirect(`error=${encodeURIComponent("Accesso partner disattivato. I partner sono gestiti internamente dall'admin.")}`);
+  }
+
   const result = await activateAdminManagedRenterAccess(renterId);
   if (result.error) {
     rentersRedirect(`error=${encodeURIComponent(result.error)}`);
@@ -154,12 +161,13 @@ export async function createRenterFromAdminAction(formData: FormData) {
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const phone = String(formData.get("phone") || "").trim();
   const createAuthUser = String(formData.get("create_auth_user") || "") === "1";
+  const shouldCreateAuthUser = isRenterPortalEnabled() && createAuthUser;
 
   if (!businessName) {
     redirect(`/admin/renters/new?error=${encodeURIComponent("Nome attivita obbligatorio.")}`);
   }
 
-  if (createAuthUser && !email) {
+  if (shouldCreateAuthUser && !email) {
     redirect(`/admin/renters/new?error=${encodeURIComponent("Email obbligatoria per creare l'accesso Auth.")}`);
   }
 
@@ -177,14 +185,14 @@ export async function createRenterFromAdminAction(formData: FormData) {
     serviceCategories: formData.getAll("service_categories").map((item) => String(item).trim()).filter(Boolean),
     seasonalityNotes: String(formData.get("seasonality_notes") || "").trim(),
     adminNotes: String(formData.get("admin_notes") || "").trim(),
-    createAuthUser
+    createAuthUser: shouldCreateAuthUser
   });
 
   if (result.error) {
     redirect(`/admin/renters/new?error=${encodeURIComponent(result.error)}`);
   }
 
-  if (!createAuthUser) {
+  if (!shouldCreateAuthUser) {
     await sendAdminManagedRenterCreatedEmail({
       businessName,
       contactName,
@@ -196,10 +204,10 @@ export async function createRenterFromAdminAction(formData: FormData) {
     accessToken,
     actorProfileId: profile.id,
     actorEmail: profile.email,
-    action: createAuthUser ? "renter.created_with_auth" : "renter.created",
+    action: shouldCreateAuthUser ? "renter.created_with_auth" : "renter.created",
     targetTable: result.profileId ? "profiles" : "renters",
     targetId: result.profileId || result.renterId || undefined,
-    metadata: { renterId: result.renterId, setupUrlGenerated: Boolean(result.setupUrl), managedByAdmin: !createAuthUser }
+    metadata: { renterId: result.renterId, setupUrlGenerated: Boolean(result.setupUrl), managedByAdmin: !shouldCreateAuthUser }
   });
 
   const createdTarget = result.profileId

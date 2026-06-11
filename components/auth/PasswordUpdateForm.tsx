@@ -174,9 +174,6 @@ export function PasswordUpdateForm() {
           <a className="font-bold text-green-deep hover:text-ink" href="/admin/login">
             Vai al login admin
           </a>
-          <a className="font-bold text-green-deep hover:text-ink" href="/renter/login">
-            Vai al login noleggiatore
-          </a>
         </div>
       ) : null}
 

@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { isRenterPortalEnabled } from "@/lib/renter-portal";
 import { createSupabaseAnonClient, createSupabaseUserClient } from "@/lib/supabase/admin-auth";
 
 export const renterAccessTokenCookie = "im_renter_access_token";
@@ -70,6 +71,10 @@ export async function getRenterSession() {
 }
 
 export async function requireRenter(nextPath = "/renter") {
+  if (!isRenterPortalEnabled()) {
+    redirect("/renter/login?disabled=1");
+  }
+
   const session = await getRenterSession();
 
   if (!session.accessToken || !session.user) {
@@ -119,6 +124,14 @@ export async function signInRenterWithPassword(input: {
   email: string;
   password: string;
 }) {
+  if (!isRenterPortalEnabled()) {
+    return {
+      session: null,
+      user: null,
+      error: "Area partner non attiva."
+    };
+  }
+
   const supabase = createSupabaseAnonClient();
   const { data, error } = await supabase.auth.signInWithPassword(input);
 
