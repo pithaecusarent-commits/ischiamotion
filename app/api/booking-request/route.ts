@@ -147,6 +147,8 @@ export async function POST(request: Request) {
     p_customer_email: input.email,
     p_customer_phone: input.phone || null,
     p_customer_language: input.language,
+    // renter_id is derived by the RPC from vehicle.renter_id — it is the suggested/pre-selected
+    // partner, not a final assignment. Admin can reassign the booking to a different renter.
     p_vehicle_id: input.vehicleId,
     p_pickup_point_id: input.pickupPointId,
     p_start_date: input.startDate,
