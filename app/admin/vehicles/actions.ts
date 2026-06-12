@@ -10,6 +10,7 @@ import {
   toggleAdminVehicleActive,
   updateAdminVehicle,
   updateAdminVehiclePriceRule,
+  validateAdminVehicleModelAssignment,
   type AdminPriceRuleInput,
   type AdminVehicleFormData
 } from "@/lib/supabase/queries/admin-vehicles";
@@ -87,6 +88,17 @@ async function parseVehicleFormData(
 
 export async function createAdminVehicleAction(formData: FormData) {
   const { accessToken } = await requireAdmin("/admin/vehicles/new");
+  const modelValidation = await validateAdminVehicleModelAssignment(
+    accessToken,
+    String(formData.get("category_id") || "").trim(),
+    String(formData.get("vehicle_model_id") || "").trim() || null,
+    true
+  );
+
+  if (modelValidation.error) {
+    redirect(`/admin/vehicles/new?error=${encodeURIComponent(modelValidation.error)}`);
+  }
+
   const parsed = await parseVehicleFormData(formData, accessToken);
 
   if (!parsed.data) {
@@ -106,11 +118,23 @@ export async function createAdminVehicleAction(formData: FormData) {
 export async function updateAdminVehicleAction(formData: FormData) {
   const vehicleId = String(formData.get("vehicle_id") || "");
   const { accessToken } = await requireAdmin(`/admin/vehicles/${vehicleId}`);
-  const parsed = await parseVehicleFormData(formData, accessToken);
 
   if (!vehicleId) {
     redirect("/admin/vehicles?error=Veicolo%20non%20valido");
   }
+
+  const modelValidation = await validateAdminVehicleModelAssignment(
+    accessToken,
+    String(formData.get("category_id") || "").trim(),
+    String(formData.get("vehicle_model_id") || "").trim() || null,
+    false
+  );
+
+  if (modelValidation.error) {
+    redirect(`/admin/vehicles/${vehicleId}?error=${encodeURIComponent(modelValidation.error)}`);
+  }
+
+  const parsed = await parseVehicleFormData(formData, accessToken);
 
   if (!parsed.data) {
     redirect(`/admin/vehicles/${vehicleId}?error=${encodeURIComponent(parsed.error || "Dati non validi.")}`);

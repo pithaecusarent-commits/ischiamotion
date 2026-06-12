@@ -32,17 +32,17 @@ export default async function EditAdminVehiclePage({ params, searchParams }: Pro
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="section-kicker">Admin</p>
-            <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Modifica veicolo</h1>
-            <p className="mt-4 text-ink/65">Aggiorna i dati interni del mezzo.</p>
+            <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Modifica offerta partner</h1>
+            <p className="mt-4 text-ink/65">Aggiorna partner, prezzo, pickup point e collegamento al modello pubblico.</p>
           </div>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
-            Torna ai veicoli
+            Torna alle offerte partner
           </a>
         </div>
 
         {searchParams?.saved ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Veicolo salvato correttamente.
+            Offerta partner salvata correttamente.
           </div>
         ) : null}
 

@@ -38,6 +38,7 @@ export type AdminBookingItem = {
     id: string;
     renter_id: string | null;
     category_id: string | null;
+    vehicle_model_id: string | null;
     title_it: string;
     title_en: string;
     vehicle_categories: {
@@ -93,6 +94,7 @@ type AdminBookingRow = Omit<AdminBookingItem, "renters"> & {
       id: string;
       renter_id: string | null;
       category_id: string | null;
+      vehicle_model_id: string | null;
       title_it: string;
       title_en: string;
       vehicle_categories:
@@ -112,6 +114,7 @@ type AdminBookingRow = Omit<AdminBookingItem, "renters"> & {
       id: string;
       renter_id: string | null;
       category_id: string | null;
+      vehicle_model_id: string | null;
       title_it: string;
       title_en: string;
       vehicle_categories:
@@ -142,7 +145,7 @@ export const adminBookingStatuses = [
 
 export type AdminBookingStatus = (typeof adminBookingStatuses)[number];
 
-const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, hotel_municipality, pickup_municipality, port_slug, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(id, renter_id, category_id, title_it, title_en, vehicle_categories(slug, name_it, name_en))";
+const bookingSelect = "id, booking_code, renter_id, customer_first_name, customer_last_name, customer_email, customer_phone, customer_language, vehicle_id, start_date, end_date, pickup_time, status, delivery_method, delivery_location, hotel_municipality, pickup_municipality, port_slug, delivery_notes, payment_type, payment_method, payment_status, total_amount, deposit_amount, balance_due, payment_notes, notes, created_at, renters(business_name_internal, status), vehicles(id, renter_id, category_id, vehicle_model_id, title_it, title_en, vehicle_categories(slug, name_it, name_en))";
 
 function normalizeAdminBooking(row: AdminBookingRow): AdminBookingItem {
   const vehicle = Array.isArray(row.vehicles) ? row.vehicles[0] || null : row.vehicles;
@@ -290,6 +293,7 @@ export async function getAdminBookingRenterCompatibility(
   try {
     const supabase = createSupabaseUserClient(accessToken);
     const categoryId = booking.vehicles?.category_id || null;
+    const vehicleModelId = booking.vehicles?.vehicle_model_id || null;
     const suggestedRenterId = booking.vehicles?.renter_id || null;
 
     const { data: rentersData, error: rentersError } = await supabase
@@ -307,12 +311,17 @@ export async function getAdminBookingRenterCompatibility(
     let categoryRenterIds = new Set<string>();
 
     if (categoryId && renterIds.length > 0) {
-      const { data: vehicleRows, error: vehicleError } = await supabase
+      let vehicleQuery = supabase
         .from("vehicles")
         .select("renter_id")
-        .eq("category_id", categoryId)
         .eq("is_active", true)
         .in("renter_id", renterIds);
+
+      vehicleQuery = vehicleModelId
+        ? vehicleQuery.eq("vehicle_model_id", vehicleModelId)
+        : vehicleQuery.eq("category_id", categoryId);
+
+      const { data: vehicleRows, error: vehicleError } = await vehicleQuery;
 
       if (vehicleError) {
         return { suggestedRenter: null, compatibleRenters: [], incompatibleRenters: [], error: vehicleError.message };
@@ -354,7 +363,9 @@ export async function getAdminBookingRenterCompatibility(
       if (!categoryId) {
         reasons.push("Categoria veicolo non disponibile sulla booking.");
       } else if (!categoryRenterIds.has(renter.id)) {
-        reasons.push("Nessun veicolo attivo del renter per la categoria richiesta.");
+        reasons.push(vehicleModelId
+          ? "Nessuna offerta attiva del renter per il modello richiesto."
+          : "Nessun veicolo attivo del renter per la categoria richiesta.");
       }
 
       if (booking.delivery_method === "pickup_point") {
@@ -438,10 +449,61 @@ export async function assignAdminBookingRenter(
     if (renterError) return { error: renterError.message };
     if (!renter) return { error: "Noleggiatore non valido o non attivo." };
 
+    const { data: booking, error: bookingError } = await supabase
+      .from("bookings")
+      .select("id, vehicle_id")
+      .eq("id", bookingId)
+      .maybeSingle<{ id: string; vehicle_id: string | null }>();
+
+    if (bookingError) return { error: bookingError.message };
+    if (!booking?.vehicle_id) {
+      return { error: "La prenotazione non ha un'offerta di partenza valida." };
+    }
+
+    const { data: currentOffer, error: currentOfferError } = await supabase
+      .from("vehicles")
+      .select("id, category_id, vehicle_model_id")
+      .eq("id", booking.vehicle_id)
+      .maybeSingle<{ id: string; category_id: string | null; vehicle_model_id: string | null }>();
+
+    if (currentOfferError) return { error: currentOfferError.message };
+    if (!currentOffer?.category_id) {
+      return { error: "L'offerta collegata alla prenotazione non è valida." };
+    }
+
+    let offerQuery = supabase
+      .from("vehicles")
+      .select("id, renter_id, category_id, vehicle_model_id")
+      .eq("renter_id", renterId)
+      .eq("is_active", true)
+      .order("price_from", { ascending: true, nullsFirst: false })
+      .limit(1);
+
+    offerQuery = currentOffer.vehicle_model_id
+      ? offerQuery.eq("vehicle_model_id", currentOffer.vehicle_model_id)
+      : offerQuery.eq("category_id", currentOffer.category_id);
+
+    const { data: targetOffer, error: offerError } = await offerQuery.maybeSingle<{
+      id: string;
+      renter_id: string;
+      category_id: string;
+      vehicle_model_id: string | null;
+    }>();
+
+    if (offerError) return { error: offerError.message };
+    if (!targetOffer) {
+      return {
+        error: currentOffer.vehicle_model_id
+          ? "Il partner selezionato non ha un'offerta attiva per lo stesso modello richiesto."
+          : "Il partner selezionato non ha un'offerta attiva per la categoria richiesta."
+      };
+    }
+
     const { error } = await supabase
       .from("bookings")
       .update({
         renter_id: renterId,
+        vehicle_id: targetOffer.id,
         updated_at: new Date().toISOString()
       })
       .eq("id", bookingId);

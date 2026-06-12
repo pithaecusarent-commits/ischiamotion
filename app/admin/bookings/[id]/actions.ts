@@ -203,7 +203,7 @@ export async function assignBookingRenterAction(formData: FormData) {
   const { error } = await assignAdminBookingRenter(accessToken, bookingId, renterId);
 
   if (error) {
-    redirectWithMessage(bookingId, "renterError");
+    redirect(`/admin/bookings/${bookingId}?renterAssign=error&renterError=${encodeURIComponent(error)}`);
   }
 
   await logAdminAuditEvent({

@@ -101,7 +101,7 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
               ))}
             </select>
             <span className="text-xs font-semibold leading-5 text-ink/50">
-              Opzionale. Collega questa offerta a un modello veicolo condiviso.
+              Collega questa offerta al modello pubblico condiviso. Obbligatorio per nuove offerte auto e scooter; le offerte legacy restano modificabili.
             </span>
           </label>
         </div>
@@ -188,7 +188,7 @@ export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
           type="checkbox"
           defaultChecked={vehicle?.is_active ?? true}
         />
-        Veicolo attivo
+        Offerta partner attiva
       </label>
 
       <div className="flex flex-wrap gap-3">

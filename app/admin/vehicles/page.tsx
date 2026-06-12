@@ -29,11 +29,11 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
         <p className="section-kicker">Admin</p>
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl font-bold sm:text-4xl">Veicoli</h1>
-            <p className="mt-4 text-ink/65">Gestione interna dei mezzi reali disponibili su IschiaMotion.</p>
+            <h1 className="font-serif text-3xl font-bold sm:text-4xl">Offerte partner</h1>
+            <p className="mt-4 text-ink/65">Ogni riga rappresenta l&apos;offerta operativa di un partner: modello, prezzo, pickup point e disponibilità.</p>
           </div>
           <a className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/vehicles/new">
-            Nuovo veicolo
+            Nuova offerta partner
           </a>
         </div>
 
@@ -71,10 +71,10 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
 
         {!error && vehicles.length === 0 ? (
           <div className="mt-8 rounded-3xl border border-sea/10 bg-white/60 p-8 text-center">
-            <h2 className="font-serif text-3xl font-bold">Nessun veicolo</h2>
-            <p className="mt-3 text-ink/60">Crea il primo veicolo reale da gestire in admin.</p>
+            <h2 className="font-serif text-3xl font-bold">Nessuna offerta partner</h2>
+            <p className="mt-3 text-ink/60">Crea la prima offerta e collegala al relativo modello pubblico quando disponibile.</p>
             <a className="mt-5 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/vehicles/new">
-              Nuovo veicolo
+              Nuova offerta partner
             </a>
           </div>
         ) : null}

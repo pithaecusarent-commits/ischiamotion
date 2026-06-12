@@ -42,6 +42,7 @@ type Props = {
     checkin?: string;
     payment?: string;
     renterAssign?: string;
+    renterError?: string;
   };
 };
 
@@ -213,7 +214,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
               {renterAssignMessage === "error" || rentersError ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
-                  Impossibile assegnare il partner. Verifica che esistano partner attivi e che le policy admin siano applicate.
+                  {searchParams?.renterError || "Impossibile assegnare il partner. Verifica che esistano partner attivi e che le policy admin siano applicate."}
                 </div>
               ) : null}
 

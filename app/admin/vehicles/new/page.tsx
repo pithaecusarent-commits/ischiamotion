@@ -17,8 +17,8 @@ export default async function NewAdminVehiclePage({ searchParams }: Props) {
     <main className="min-h-screen bg-sand p-6 text-ink">
       <section className="mx-auto max-w-5xl rounded-[30px] bg-cream p-4 shadow-soft sm:p-8">
         <p className="section-kicker">Admin</p>
-        <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Nuovo veicolo</h1>
-        <p className="mt-4 text-ink/65">Crea un mezzo reale collegato a categoria, noleggiatore e pickup point.</p>
+        <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Nuova offerta partner</h1>
+        <p className="mt-4 text-ink/65">Crea un&apos;offerta collegata a partner, pickup point e modello pubblico. Per nuove auto e scooter il modello è obbligatorio.</p>
 
         {searchParams?.error || error ? (
           <div className="mt-6 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-ink/70">
@@ -26,7 +26,7 @@ export default async function NewAdminVehiclePage({ searchParams }: Props) {
           </div>
         ) : null}
 
-        <VehicleForm action={createAdminVehicleAction} options={options} submitLabel="Crea veicolo" />
+        <VehicleForm action={createAdminVehicleAction} options={options} submitLabel="Crea offerta" />
       </section>
     </main>
   );

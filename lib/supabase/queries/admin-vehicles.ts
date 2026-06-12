@@ -54,6 +54,48 @@ export type AdminVehicleOptions = {
   vehicleModels: AdminVehicleOption[];
 };
 
+export async function validateAdminVehicleModelAssignment(
+  accessToken: string,
+  categoryId: string,
+  vehicleModelId: string | null,
+  requireModelForMarketplaceCategory: boolean
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { data: category, error: categoryError } = await supabase
+      .from("vehicle_categories")
+      .select("id, slug")
+      .eq("id", categoryId)
+      .maybeSingle<{ id: string; slug: string }>();
+
+    if (categoryError) return { error: categoryError.message };
+    if (!category) return { error: "Categoria non valida." };
+
+    if (!vehicleModelId) {
+      if (requireModelForMarketplaceCategory && ["auto", "scooter"].includes(category.slug)) {
+        return { error: "Per una nuova offerta auto o scooter devi selezionare un modello pubblico." };
+      }
+      return { error: null };
+    }
+
+    const { data: model, error: modelError } = await supabase
+      .from("vehicle_models")
+      .select("id, category_id, is_active")
+      .eq("id", vehicleModelId)
+      .maybeSingle<{ id: string; category_id: string; is_active: boolean }>();
+
+    if (modelError) return { error: modelError.message };
+    if (!model || !model.is_active) return { error: "Modello pubblico non valido o non attivo." };
+    if (model.category_id !== categoryId) {
+      return { error: "La categoria dell'offerta deve coincidere con quella del modello pubblico." };
+    }
+
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Impossibile validare il modello pubblico." };
+  }
+}
+
 type VehicleRow = Omit<AdminVehicle, "category_name" | "pickup_point_label" | "renter_name" | "vehicle_model_name">;
 
 const vehicleSelect = "id, category_id, renter_id, pickup_point_id, vehicle_model_id, internal_name, title_it, title_en, description_it, description_en, price_from, image_url, features_it, features_en, is_active, created_at, updated_at";

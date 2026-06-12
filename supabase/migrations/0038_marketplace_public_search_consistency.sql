@@ -1,3 +1,8 @@
+-- MARKETPLACE CONSISTENCY FOLLOW-UP
+--
+-- Replaces search_public_vehicles for environments where migration 0037 was
+-- already applied. No data is deleted and no tables or constraints are added.
+--
 -- MARKETPLACE STEP 1: Aggregate public vehicle search by vehicle_model_id.
 --
 -- When multiple partner vehicles (vehicles) share the same vehicle_model_id,
