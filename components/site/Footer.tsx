@@ -33,6 +33,16 @@ export function Footer({ locale }: { locale: Locale }) {
           <li><a href={links.privacy}>{locale === "it" ? "Privacy" : "Privacy"}</a></li>
           <li><a href={links.terms}>{locale === "it" ? "Termini" : "Terms"}</a></li>
           <li><a href={links.contact}>{locale === "it" ? "Contatti" : "Contact"}</a></li>
+          <li>
+            <a
+              aria-label={locale === "it" ? "Vai alla pagina Trustpilot ufficiale di IschiaMotion" : "Visit the official IschiaMotion Trustpilot page"}
+              href="https://it.trustpilot.com/review/ischiamotion.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Trustpilot
+            </a>
+          </li>
           {renterPortalEnabled ? (
             <li><a href="/renter">{locale === "it" ? "Area partner" : "Partner area"}</a></li>
           ) : null}

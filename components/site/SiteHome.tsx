@@ -11,6 +11,7 @@ import { PickupPointsSection } from "@/components/site/PickupPointsSection";
 import { ExperienceSection } from "@/components/site/ExperienceSection";
 import { SeoExperiences } from "@/components/site/SeoExperiences";
 import { HowItWorks } from "@/components/site/HowItWorks";
+import { TrustpilotReviewBox } from "@/components/site/TrustpilotReviewBox";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
@@ -66,6 +67,7 @@ export function SiteHome({
         <SeoExperiences locale={locale} />
         <HowItWorks locale={locale} />
         <TrustBar locale={locale} />
+        <TrustpilotReviewBox locale={locale} />
         <FinalCTA locale={locale} />
       </main>
       <WhatsAppCTA locale={locale} />

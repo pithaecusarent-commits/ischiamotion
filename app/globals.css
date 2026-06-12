@@ -1592,6 +1592,10 @@ h1 em {
   margin-top: 5px;
 }
 
+.trustpilot-review-section {
+  padding: 12px 5vw 22px;
+}
+
 /* CTA */
 .final-cta {
   padding: 70px 5vw 100px;

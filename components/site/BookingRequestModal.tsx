@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
+import { TrustpilotReviewBox } from "@/components/site/TrustpilotReviewBox";
 import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidDeliveryPort, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
@@ -213,7 +214,10 @@ export function BookingRequestModal({
         <p className="booking-intro">{text.subtitle}</p>
 
         {status === "success" ? (
-          <div className="booking-message success">{text.success}</div>
+          <>
+            <div className="booking-message success">{text.success}</div>
+            <TrustpilotReviewBox locale={locale} compact />
+          </>
         ) : (
           <form className="booking-form" onSubmit={handleSubmit}>
             {pickupPoints.length === 0 ? (
