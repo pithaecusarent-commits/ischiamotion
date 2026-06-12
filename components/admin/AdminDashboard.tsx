@@ -170,6 +170,18 @@ export function AdminDashboard({ data, adminEmail }: Props) {
                 Gestisci richieste
               </a>
               <a
+                className="min-h-[44px] rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-green-deep"
+                href="/admin/vehicle-models/new"
+              >
+                Nuovo modello veicolo
+              </a>
+              <a
+                className="min-h-[44px] rounded-full border border-sea/25 bg-white/80 px-5 py-2.5 text-sm font-bold text-sea shadow-sm transition hover:border-sea/40 hover:bg-sea/10"
+                href="/admin/vehicles/new"
+              >
+                Nuova offerta partner
+              </a>
+              <a
                 className="min-h-[44px] rounded-full border border-ink/10 bg-white/75 px-5 py-2.5 text-sm font-bold text-ink/65 shadow-sm transition hover:border-sea/30 hover:text-sea"
                 href="/admin/settings/payments"
               >
@@ -386,11 +398,18 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               title="Gestisci richieste"
             />
             <AdminQuickAction
+              accent="bg-ink text-white"
+              description="Crea una scheda pubblica per auto, scooter, barche o gommoni."
+              href="/admin/vehicle-models/new"
+              icon="+"
+              title="Nuovo modello veicolo"
+            />
+            <AdminQuickAction
               accent="bg-sea/10 text-sea"
-              description="Inserisci una nuova offerta partner nel catalogo interno."
+              description="Collega un partner a un modello esistente con prezzo e pickup point."
               href="/admin/vehicles/new"
               icon="+"
-              title="Aggiungi offerta"
+              title="Nuova offerta partner"
             />
             <AdminQuickAction
               accent="bg-sand text-ink"
