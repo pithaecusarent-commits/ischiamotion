@@ -61,8 +61,9 @@ export function Hero({
           src="/images/hero-ischiamotion-castello-clean.png"
           alt={locale === "it" ? "Scooter IschiaMotion davanti al Castello Aragonese" : "IschiaMotion scooter in front of Castello Aragonese"}
           fill
-          sizes="(max-width: 1080px) 520px, 46vw"
-          priority
+          sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1080px) 520px, min(46vw, 662px)"
+          quality={82}
+          priority={true}
         />
         <div className="scooter-scene">
           <div className="hero-night" aria-hidden="true" />

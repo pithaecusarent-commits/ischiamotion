@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Locale } from "@/lib/types";
 import { isRenterPortalEnabled } from "@/lib/renter-portal";
 
@@ -19,10 +20,12 @@ export function Footer({ locale }: { locale: Locale }) {
     <footer>
       <div className="footer-wrap">
         <div className="footer-logo">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/ischiamotion-logo.png"
+          <Image
+            src="/images/ischiamotion-logo.webp"
             alt="IschiaMotion"
+            width={384}
+            height={148}
+            loading="lazy"
             className="logo-img footer-logo-img"
           />
         </div>

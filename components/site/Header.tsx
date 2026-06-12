@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "@/lib/types";
 import { t } from "@/lib/i18n";
@@ -24,10 +25,12 @@ export function Header({ locale, alternateHref }: { locale: Locale; alternateHre
   return (
     <nav>
       <Link href={`/${locale}`} className="logo" aria-label="IschiaMotion home">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/ischiamotion-logo.png"
+        <Image
+          src="/images/ischiamotion-logo.webp"
           alt="IschiaMotion"
+          width={384}
+          height={148}
+          loading="eager"
           className="logo-img"
         />
       </Link>

@@ -55,7 +55,7 @@ export function VehicleCard({
       <div className="vcard-img">
         {vehicle.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={vehicle.image_url} alt={title} />
+          <img src={vehicle.image_url} alt={title} loading="lazy" decoding="async" />
         ) : (
           <span>{vehicle.emoji}</span>
         )}
