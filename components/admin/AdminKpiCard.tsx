@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Props = {
   label: string;
   value: number;
@@ -50,7 +52,7 @@ export function AdminKpiCard({
 }: Props) {
   const cfg = toneConfig[tone as ToneKey] ?? toneConfig.default;
 
-  const baseClass = `group flex flex-col gap-3 rounded-xl border p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${cfg.card} ${href ? "cursor-pointer" : ""}`;
+  const baseClass = `group flex flex-col gap-3 rounded-xl border p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${cfg.card} ${href ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-sea/70 focus-visible:ring-offset-2 focus-visible:ring-offset-sand" : ""}`;
 
   const inner = (
     <>
@@ -83,7 +85,7 @@ export function AdminKpiCard({
   );
 
   if (href) {
-    return <a className={baseClass} href={href}>{inner}</a>;
+    return <Link className={baseClass} href={href}>{inner}</Link>;
   }
   return <div className={baseClass}>{inner}</div>;
 }

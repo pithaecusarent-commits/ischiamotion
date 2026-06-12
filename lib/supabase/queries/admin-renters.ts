@@ -188,7 +188,7 @@ export type AdminStandaloneRenter = {
 };
 
 export type AdminRenterFilters = {
-  status?: RenterAccountStatus | "all";
+  status?: RenterAccountStatus | "active" | "all";
   q?: string;
 };
 
@@ -375,7 +375,7 @@ export async function getAdminRenterApplications(
       .order("created_at", { ascending: false });
 
     if (filters.status && filters.status !== "all") {
-      query = query.eq("account_status", filters.status);
+      query = query.eq("account_status", filters.status === "active" ? "approved" : filters.status);
     }
 
     const term = filters.q?.trim();
@@ -430,7 +430,7 @@ export async function getStandaloneAdminRenters(
       .filter((renter) => !linkedRenterIds.has(renter.id));
 
     if (filters.status && filters.status !== "all") {
-      if (filters.status === "approved") {
+      if (filters.status === "approved" || filters.status === "active") {
         renters = renters.filter((renter) => renter.status === "active");
       } else if (filters.status === "disabled") {
         renters = renters.filter((renter) => renter.status === "disabled");

@@ -63,6 +63,10 @@ export type AdminVehicleOptions = {
   vehicleModels: AdminVehicleOption[];
 };
 
+export type AdminVehicleFilters = {
+  status?: "active" | "inactive" | "all";
+};
+
 type VehicleOptionsConfig = {
   activeOnly?: boolean;
 };
@@ -215,7 +219,10 @@ export async function getAdminVehicleOptions(
   }
 }
 
-export async function getAdminVehicles(accessToken: string): Promise<{ vehicles: AdminVehicle[]; error: string | null }> {
+export async function getAdminVehicles(
+  accessToken: string,
+  filters: AdminVehicleFilters = {}
+): Promise<{ vehicles: AdminVehicle[]; error: string | null }> {
   try {
     const supabase = createSupabaseUserClient(accessToken);
     const optionsResult = await getAdminVehicleOptions(accessToken);
@@ -224,11 +231,19 @@ export async function getAdminVehicles(accessToken: string): Promise<{ vehicles:
       return { vehicles: [], error: optionsResult.error };
     }
 
-    const { data, error } = await supabase
+    let query = supabase
       .from("vehicles")
       .select(vehicleSelect)
       .order("category_id", { ascending: true })
       .order("price_from", { ascending: true, nullsFirst: false });
+
+    if (filters.status === "active") {
+      query = query.eq("is_active", true);
+    } else if (filters.status === "inactive") {
+      query = query.eq("is_active", false);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       return { vehicles: [], error: error.message };

@@ -8,6 +8,7 @@ type Props = {
     created?: string;
     updated?: string;
     error?: string;
+    status?: string;
   };
 };
 
@@ -21,7 +22,10 @@ function formatPrice(value: number | null) {
 
 export default async function AdminVehiclesPage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/vehicles");
-  const { vehicles, error } = await getAdminVehicles(accessToken);
+  const status: "active" | "inactive" | "all" = searchParams?.status === "active" || searchParams?.status === "inactive"
+    ? searchParams.status
+    : "all";
+  const { vehicles, error } = await getAdminVehicles(accessToken, { status });
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
@@ -50,6 +54,21 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
             </button>
           </form>
         </div>
+
+        <form className="mt-6 grid gap-3 rounded-[24px] border border-ink/10 bg-white/65 p-4 sm:max-w-md sm:grid-cols-[1fr_auto]" action="/admin/vehicles">
+          <select
+            className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-bold text-ink/70 outline-none focus:border-sea/50"
+            defaultValue={status}
+            name="status"
+          >
+            <option value="all">Tutte le offerte</option>
+            <option value="active">Attive</option>
+            <option value="inactive">Inattive</option>
+          </select>
+          <button className="rounded-full bg-green-deep px-5 py-3 text-sm font-bold text-white" type="submit">
+            Filtra
+          </button>
+        </form>
 
         {searchParams?.created ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">

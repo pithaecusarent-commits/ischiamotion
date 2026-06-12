@@ -64,9 +64,10 @@ function standaloneStatusClass(status: AdminStandaloneRenter["status"]) {
 export default async function AdminRentersPage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/renters");
   const renterPortalEnabled = isRenterPortalEnabled();
+  const requestedStatus = searchParams?.status || "";
   const filters = {
-    status: ["pending", "approved", "rejected", "disabled"].includes(searchParams?.status || "")
-      ? searchParams?.status as AdminRenterApplication["account_status"]
+    status: ["pending", "approved", "active", "rejected", "disabled"].includes(requestedStatus)
+      ? requestedStatus as AdminRenterApplication["account_status"] | "active"
       : "all" as const,
     q: searchParams?.q || ""
   };
@@ -138,6 +139,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
           >
             <option value="all">Tutti gli stati</option>
             <option value="pending">In attesa</option>
+            <option value="active">Attivi operativi</option>
             <option value="approved">Approvati</option>
             <option value="rejected">Rifiutati</option>
             <option value="disabled">Disattivati</option>
