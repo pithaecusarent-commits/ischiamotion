@@ -5,6 +5,8 @@ type Props = {
   action: (formData: FormData) => void;
   options: AdminVehicleOptions;
   vehicle?: AdminVehicle | null;
+  mode?: "partner-offer" | "full";
+  defaultVehicleModelId?: string;
   submitLabel: string;
 };
 
@@ -12,7 +14,102 @@ function featuresValue(value?: string[]) {
   return (value || []).join("\n");
 }
 
-export function VehicleForm({ action, options, vehicle, submitLabel }: Props) {
+export function VehicleForm({
+  action,
+  options,
+  vehicle,
+  mode = "full",
+  defaultVehicleModelId = "",
+  submitLabel
+}: Props) {
+  if (mode === "partner-offer") {
+    return (
+      <form action={action} className="mt-6 grid gap-5">
+        <div className="grid gap-4 md:grid-cols-3">
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Modello veicolo
+            <select
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="vehicle_model_id"
+              defaultValue={defaultVehicleModelId}
+              required
+            >
+              <option value="">Seleziona modello</option>
+              {options.vehicleModels.map((item) => (
+                <option key={item.id} value={item.id}>{item.label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Partner
+            <select
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="renter_id"
+              required
+            >
+              <option value="">Seleziona partner</option>
+              {options.renters.map((item) => (
+                <option key={item.id} value={item.id}>{item.label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Pickup point
+            <select
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="pickup_point_id"
+              required
+            >
+              <option value="">Seleziona pickup point</option>
+              {options.pickupPoints.map((item) => (
+                <option key={item.id} value={item.id}>{item.label}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-[180px_minmax(0,1fr)]">
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Prezzo da
+            <input
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="price_from"
+              type="number"
+              min="0"
+              step="0.01"
+              required
+            />
+          </label>
+
+          <label className="grid gap-2 text-sm font-bold text-ink/70">
+            Nome interno
+            <input
+              className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
+              name="internal_name"
+              placeholder="Autogenerato: modello - partner"
+            />
+          </label>
+        </div>
+
+        <label className="inline-flex items-center gap-3 text-sm font-bold text-ink/70">
+          <input className="h-5 w-5 rounded border-ink/20" name="is_active" type="checkbox" />
+          Offerta partner attiva
+        </label>
+
+        <div className="flex flex-wrap gap-3">
+          <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+            {submitLabel}
+          </button>
+          <a className="rounded-full border border-ink/10 px-6 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
+            Annulla
+          </a>
+        </div>
+      </form>
+    );
+  }
+
   return (
     <form action={action} className="mt-6 grid gap-5" encType="multipart/form-data">
       {vehicle ? <input type="hidden" name="vehicle_id" value={vehicle.id} /> : null}

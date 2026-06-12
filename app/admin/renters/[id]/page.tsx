@@ -234,10 +234,10 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-sea/70">Catalogo</p>
-                <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Mezzi assegnati</h2>
+                <h2 className="mt-1.5 font-serif text-xl font-bold text-green-deep">Offerte partner</h2>
                 <p className="mt-1 text-xs font-semibold leading-5 text-ink/50">
                   {vehicles.length === 0
-                    ? "Nessun mezzo ancora associato a questo partner."
+                    ? "Nessuna offerta ancora associata a questo partner."
                     : `${vehicles.filter((v) => v.is_active).length} attivi su ${vehicles.length} totali`}
                 </p>
               </div>
@@ -245,13 +245,13 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 className="shrink-0 rounded-full border border-ink/10 bg-white/80 px-3.5 py-1.5 text-xs font-bold text-ink/55 transition hover:border-sea/30 hover:text-sea"
                 href="/admin/vehicles"
               >
-                Tutti i mezzi
+                Tutte le offerte
               </a>
             </div>
 
             {vehicles.length === 0 ? (
               <div className="mt-4 rounded-xl border border-ink/10 bg-sand/40 p-4 text-xs font-semibold text-ink/50">
-                Nessun mezzo associato. Aggiungi un veicolo assegnandolo a questo partner.
+                Nessuna offerta associata. Aggiungi un&apos;offerta assegnandola a questo partner.
               </div>
             ) : (
               <div className="mt-4 grid gap-2">
@@ -307,7 +307,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 className="rounded-full bg-green-deep px-4 py-2 text-xs font-bold text-white transition hover:bg-sea"
                 href="/admin/vehicles/new"
               >
-                + Aggiungi mezzo
+                + Aggiungi offerta
               </a>
             </div>
           </section>

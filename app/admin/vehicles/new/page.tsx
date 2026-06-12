@@ -6,12 +6,13 @@ import { getAdminVehicleOptions } from "@/lib/supabase/queries/admin-vehicles";
 type Props = {
   searchParams?: {
     error?: string;
+    model_id?: string;
   };
 };
 
 export default async function NewAdminVehiclePage({ searchParams }: Props) {
   const { accessToken } = await requireAdmin("/admin/vehicles/new");
-  const { options, error } = await getAdminVehicleOptions(accessToken);
+  const { options, error } = await getAdminVehicleOptions(accessToken, { activeOnly: true });
 
   return (
     <main className="min-h-screen bg-sand p-6 text-ink">
@@ -26,7 +27,13 @@ export default async function NewAdminVehiclePage({ searchParams }: Props) {
           </div>
         ) : null}
 
-        <VehicleForm action={createAdminVehicleAction} options={options} submitLabel="Crea offerta" />
+        <VehicleForm
+          action={createAdminVehicleAction}
+          defaultVehicleModelId={searchParams?.model_id || ""}
+          mode="partner-offer"
+          options={options}
+          submitLabel="Crea offerta"
+        />
       </section>
     </main>
   );

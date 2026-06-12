@@ -312,7 +312,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               detail="Visibili nel marketplace"
               href="/admin/vehicles"
               icon="M"
-              label="Mezzi attivi"
+              label="Offerte attive"
               tone="success"
               value={metrics.activeVehicles.value}
             />
@@ -384,17 +384,17 @@ export function AdminDashboard({ data, adminEmail }: Props) {
             />
             <AdminQuickAction
               accent="bg-sea/10 text-sea"
-              description="Inserisci un nuovo veicolo o una nuova opzione partner nel catalogo interno."
+              description="Inserisci una nuova offerta partner nel catalogo interno."
               href="/admin/vehicles/new"
               icon="+"
-              title="Aggiungi mezzo"
+              title="Aggiungi offerta"
             />
             <AdminQuickAction
               accent="bg-sand text-ink"
               description="Modifica disponibilità, prezzi, categorie e dettagli dei mezzi attivi."
               href="/admin/vehicles"
               icon="M"
-              title="Gestisci mezzi"
+              title="Gestisci offerte"
             />
             <AdminQuickAction
               accent="bg-amber-50 text-amber-800"

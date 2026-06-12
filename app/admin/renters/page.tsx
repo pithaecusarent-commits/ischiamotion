@@ -112,7 +112,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
             Prenotazioni
           </a>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
-            Veicoli
+            Offerte partner
           </a>
           <a className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" href="/admin/renters/new">
             Nuovo partner

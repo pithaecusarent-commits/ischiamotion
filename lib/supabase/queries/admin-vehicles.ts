@@ -41,6 +41,15 @@ export type AdminVehicleFormData = {
   is_active: boolean;
 };
 
+export type AdminPartnerOfferFormData = {
+  vehicle_model_id: string;
+  renter_id: string;
+  pickup_point_id: string;
+  price_from: number;
+  internal_name: string;
+  is_active: boolean;
+};
+
 export type AdminVehicleOption = {
   id: string;
   label: string;
@@ -52,6 +61,10 @@ export type AdminVehicleOptions = {
   renters: AdminVehicleOption[];
   pickupPoints: AdminVehicleOption[];
   vehicleModels: AdminVehicleOption[];
+};
+
+type VehicleOptionsConfig = {
+  activeOnly?: boolean;
 };
 
 export async function validateAdminVehicleModelAssignment(
@@ -119,7 +132,10 @@ function normalizeVehicle(row: VehicleRow, options: AdminVehicleOptions): AdminV
   };
 }
 
-export async function getAdminVehicleOptions(accessToken: string): Promise<{ options: AdminVehicleOptions; error: string | null }> {
+export async function getAdminVehicleOptions(
+  accessToken: string,
+  config: VehicleOptionsConfig = {}
+): Promise<{ options: AdminVehicleOptions; error: string | null }> {
   const empty: AdminVehicleOptions = {
     categories: [],
     renters: [],
@@ -129,19 +145,29 @@ export async function getAdminVehicleOptions(accessToken: string): Promise<{ opt
 
   try {
     const supabase = createSupabaseUserClient(accessToken);
+    let categoriesQuery = supabase
+      .from("vehicle_categories")
+      .select("id, name_it, slug")
+      .order("name_it", { ascending: true });
+    let rentersQuery = supabase
+      .from("renters")
+      .select("id, business_name_internal, status")
+      .order("business_name_internal", { ascending: true });
+    let pickupPointsQuery = supabase
+      .from("pickup_points")
+      .select("id, public_label_it, zone, is_active")
+      .order("zone", { ascending: true });
+
+    if (config.activeOnly) {
+      categoriesQuery = categoriesQuery.eq("is_active", true);
+      rentersQuery = rentersQuery.eq("status", "active");
+      pickupPointsQuery = pickupPointsQuery.eq("is_active", true);
+    }
+
     const [categoriesResult, rentersResult, pickupPointsResult, vehicleModelsResult] = await Promise.all([
-      supabase
-        .from("vehicle_categories")
-        .select("id, name_it, slug")
-        .order("name_it", { ascending: true }),
-      supabase
-        .from("renters")
-        .select("id, business_name_internal, status")
-        .order("business_name_internal", { ascending: true }),
-      supabase
-        .from("pickup_points")
-        .select("id, public_label_it, zone")
-        .order("zone", { ascending: true }),
+      categoriesQuery,
+      rentersQuery,
+      pickupPointsQuery,
       supabase
         .from("vehicle_models")
         .select("id, title_it, category_id")
@@ -278,6 +304,94 @@ export async function createAdminVehicle(accessToken: string, data: AdminVehicle
     };
   } catch (error) {
     return { vehicle: null, error: error instanceof Error ? error.message : "Unable to create vehicle." };
+  }
+}
+
+export async function createAdminPartnerOfferFromModel(
+  accessToken: string,
+  input: AdminPartnerOfferFormData
+): Promise<{ vehicle: AdminVehicle | null; error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const [modelResult, renterResult, pickupPointResult, duplicateResult] = await Promise.all([
+      supabase
+        .from("vehicle_models")
+        .select("id, category_id, title_it, title_en, description_it, description_en, image_url, features_it, features_en, is_active")
+        .eq("id", input.vehicle_model_id)
+        .maybeSingle<{
+          id: string;
+          category_id: string;
+          title_it: string;
+          title_en: string;
+          description_it: string | null;
+          description_en: string | null;
+          image_url: string | null;
+          features_it: string[] | null;
+          features_en: string[] | null;
+          is_active: boolean;
+        }>(),
+      supabase
+        .from("renters")
+        .select("id, business_name_internal, status")
+        .eq("id", input.renter_id)
+        .maybeSingle<{ id: string; business_name_internal: string; status: string }>(),
+      supabase
+        .from("pickup_points")
+        .select("id, is_active")
+        .eq("id", input.pickup_point_id)
+        .maybeSingle<{ id: string; is_active: boolean }>(),
+      supabase
+        .from("vehicles")
+        .select("id", { count: "exact", head: true })
+        .eq("vehicle_model_id", input.vehicle_model_id)
+        .eq("renter_id", input.renter_id)
+    ]);
+
+    const err = modelResult.error || renterResult.error || pickupPointResult.error || duplicateResult.error;
+    if (err) return { vehicle: null, error: err.message };
+
+    const model = modelResult.data;
+    const renter = renterResult.data;
+    const pickupPoint = pickupPointResult.data;
+
+    if (!model || !model.is_active) return { vehicle: null, error: "Modello veicolo non valido o non attivo." };
+    if (!renter || renter.status !== "active") return { vehicle: null, error: "Il partner selezionato non e attivo." };
+    if (!pickupPoint || !pickupPoint.is_active) return { vehicle: null, error: "Il pickup point selezionato non e attivo." };
+    if ((duplicateResult.count || 0) > 0) {
+      return { vehicle: null, error: "Questo partner ha già un'offerta per questo modello" };
+    }
+
+    const internalName = input.internal_name.trim() || `${model.title_it} - ${renter.business_name_internal}`;
+    const { data: row, error } = await supabase
+      .from("vehicles")
+      .insert({
+        category_id: model.category_id,
+        renter_id: input.renter_id,
+        pickup_point_id: input.pickup_point_id,
+        vehicle_model_id: model.id,
+        internal_name: internalName,
+        title_it: model.title_it,
+        title_en: model.title_en,
+        description_it: model.description_it,
+        description_en: model.description_en,
+        price_from: input.price_from,
+        image_url: model.image_url,
+        features_it: model.features_it || [],
+        features_en: model.features_en || [],
+        is_active: input.is_active
+      })
+      .select(vehicleSelect)
+      .single();
+
+    if (error) return { vehicle: null, error: error.message };
+
+    const optionsResult = await getAdminVehicleOptions(accessToken);
+    return {
+      vehicle: row ? normalizeVehicle(row as unknown as VehicleRow, optionsResult.options) : null,
+      error: optionsResult.error
+    };
+  } catch (error) {
+    return { vehicle: null, error: error instanceof Error ? error.message : "Impossibile creare l'offerta partner." };
   }
 }
 

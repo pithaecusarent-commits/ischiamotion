@@ -35,7 +35,7 @@ export default async function AdminVehicleModelsPage({ searchParams }: Props) {
             Area admin
           </a>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/vehicles">
-            Offerte / mezzi
+            Offerte partner
           </a>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/bookings">
             Prenotazioni
@@ -138,6 +138,12 @@ export default async function AdminVehicleModelsPage({ searchParams }: Props) {
                             href={`/admin/vehicle-models/${model.id}`}
                           >
                             Modifica
+                          </a>
+                          <a
+                            className="rounded-full border border-ink/10 px-3 py-1.5 text-xs font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep"
+                            href={`/admin/vehicles/new?model_id=${model.id}`}
+                          >
+                            Aggiungi offerta partner
                           </a>
                           <form action={toggleVehicleModelStatusAction}>
                             <input type="hidden" name="model_id" value={model.id} />

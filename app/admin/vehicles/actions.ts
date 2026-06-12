@@ -4,13 +4,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import {
-  createAdminVehicle,
+  createAdminPartnerOfferFromModel,
   createAdminVehiclePriceRule,
   deleteAdminVehiclePriceRule,
   toggleAdminVehicleActive,
   updateAdminVehicle,
   updateAdminVehiclePriceRule,
   validateAdminVehicleModelAssignment,
+  type AdminPartnerOfferFormData,
   type AdminPriceRuleInput,
   type AdminVehicleFormData
 } from "@/lib/supabase/queries/admin-vehicles";
@@ -86,26 +87,44 @@ async function parseVehicleFormData(
   };
 }
 
-export async function createAdminVehicleAction(formData: FormData) {
-  const { accessToken } = await requireAdmin("/admin/vehicles/new");
-  const modelValidation = await validateAdminVehicleModelAssignment(
-    accessToken,
-    String(formData.get("category_id") || "").trim(),
-    String(formData.get("vehicle_model_id") || "").trim() || null,
-    true
-  );
+function parsePartnerOfferFormData(formData: FormData): { data: AdminPartnerOfferFormData | null; error: string | null } {
+  const vehicleModelId = String(formData.get("vehicle_model_id") || "").trim();
+  const renterId = String(formData.get("renter_id") || "").trim();
+  const pickupPointId = String(formData.get("pickup_point_id") || "").trim();
+  const internalName = String(formData.get("internal_name") || "").trim();
+  const priceRaw = String(formData.get("price_from") || "").trim();
+  const priceFrom = Number(priceRaw);
 
-  if (modelValidation.error) {
-    redirect(`/admin/vehicles/new?error=${encodeURIComponent(modelValidation.error)}`);
+  if (!vehicleModelId) return { data: null, error: "Modello veicolo obbligatorio." };
+  if (!renterId) return { data: null, error: "Partner obbligatorio." };
+  if (!pickupPointId) return { data: null, error: "Pickup point obbligatorio." };
+  if (!priceRaw) return { data: null, error: "Prezzo da obbligatorio." };
+  if (!Number.isFinite(priceFrom) || priceFrom < 0) {
+    return { data: null, error: "Prezzo da deve essere un numero valido." };
   }
 
-  const parsed = await parseVehicleFormData(formData, accessToken);
+  return {
+    data: {
+      vehicle_model_id: vehicleModelId,
+      renter_id: renterId,
+      pickup_point_id: pickupPointId,
+      price_from: priceFrom,
+      internal_name: internalName,
+      is_active: formData.get("is_active") === "on"
+    },
+    error: null
+  };
+}
+
+export async function createAdminVehicleAction(formData: FormData) {
+  const { accessToken } = await requireAdmin("/admin/vehicles/new");
+  const parsed = parsePartnerOfferFormData(formData);
 
   if (!parsed.data) {
     redirect(`/admin/vehicles/new?error=${encodeURIComponent(parsed.error || "Dati non validi.")}`);
   }
 
-  const { error } = await createAdminVehicle(accessToken, parsed.data);
+  const { error } = await createAdminPartnerOfferFromModel(accessToken, parsed.data);
   revalidatePath("/admin/vehicles");
 
   if (error) {
@@ -127,7 +146,7 @@ export async function updateAdminVehicleAction(formData: FormData) {
     accessToken,
     String(formData.get("category_id") || "").trim(),
     String(formData.get("vehicle_model_id") || "").trim() || null,
-    false
+    true
   );
 
   if (modelValidation.error) {

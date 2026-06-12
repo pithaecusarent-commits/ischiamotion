@@ -53,13 +53,13 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
 
         {searchParams?.created ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Veicolo creato correttamente.
+            Offerta partner creata correttamente.
           </div>
         ) : null}
 
         {searchParams?.updated ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Veicolo aggiornato correttamente.
+            Offerta partner aggiornata correttamente.
           </div>
         ) : null}
 
@@ -86,12 +86,12 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                 <thead className="bg-sea/10 text-[11px] uppercase tracking-[0.14em] text-green-deep">
                   <tr>
                     <th className="px-4 py-4">Foto</th>
-                    <th className="px-4 py-4">Titolo pubblico</th>
-                    <th className="px-4 py-4">Categoria</th>
+                    <th className="px-4 py-4">Titolo</th>
+                    <th className="px-4 py-4">Modello collegato</th>
                     <th className="px-4 py-4">Prezzo da</th>
-                    <th className="px-4 py-4">Pickup point</th>
-                    <th className="px-4 py-4">Partner interno</th>
                     <th className="px-4 py-4">Stato</th>
+                    <th className="px-4 py-4">Pickup point</th>
+                    <th className="px-4 py-4">Partner</th>
                     <th className="px-4 py-4">Azioni</th>
                   </tr>
                 </thead>
@@ -112,24 +112,24 @@ export default async function AdminVehiclesPage({ searchParams }: Props) {
                       </td>
                       <td className="px-4 py-4">
                         <div className="font-bold">{vehicle.title_it}</div>
-                        {vehicle.vehicle_model_name ? (
-                          <div className="mt-0.5 text-xs font-semibold text-green-deep/70">
-                            Modello: {vehicle.vehicle_model_name}
-                          </div>
-                        ) : null}
                         {vehicle.internal_name ? (
                           <div className="mt-1 text-xs font-semibold text-ink/50">{vehicle.internal_name}</div>
                         ) : null}
                       </td>
-                      <td className="px-4 py-4 text-ink/70">{vehicle.category_name}</td>
+                      <td className="px-4 py-4 text-ink/70">
+                        {vehicle.vehicle_model_name || (
+                          <span className="text-ink/40">Nessun modello</span>
+                        )}
+                        <span className="mt-1 block text-xs font-semibold text-ink/45">{vehicle.category_name}</span>
+                      </td>
                       <td className="px-4 py-4 text-ink/70">{formatPrice(vehicle.price_from)}</td>
-                      <td className="px-4 py-4 text-ink/70">{vehicle.pickup_point_label}</td>
-                      <td className="px-4 py-4 text-ink/70">{vehicle.renter_name}</td>
                       <td className="px-4 py-4">
                         <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${vehicle.is_active ? "border-sea/20 bg-sea/10 text-green-deep" : "border-stone-200 bg-stone-100 text-stone-700"}`}>
-                          {vehicle.is_active ? "Attivo" : "Non attivo"}
+                          {vehicle.is_active ? "Attiva" : "Inattiva"}
                         </span>
                       </td>
+                      <td className="px-4 py-4 text-ink/70">{vehicle.pickup_point_label}</td>
+                      <td className="px-4 py-4 text-ink/70">{vehicle.renter_name}</td>
                       <td className="px-4 py-4">
                         <div className="flex flex-wrap gap-2">
                           <a className="rounded-full border border-ink/10 px-3 py-1.5 text-xs font-bold text-ink/70 hover:border-sea/30 hover:text-green-deep" href={`/admin/vehicles/${vehicle.id}`}>
