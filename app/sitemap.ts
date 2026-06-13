@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/en/boat-rental-ischia",
     "/it/beach-club-ischia",
     "/en/ischia-beach-club",
+    "/it/dove-dormire-a-ischia",
+    "/en/where-to-stay-in-ischia",
     "/it/privacy",
     "/en/privacy",
     "/it/termini",

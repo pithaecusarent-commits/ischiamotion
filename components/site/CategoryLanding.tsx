@@ -30,6 +30,7 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
       ["Gommoni", "/it/noleggio-gommoni-ischia"],
       ["Barche", "/it/noleggio-barche-ischia"],
       ["Beach Club", "/it/beach-club-ischia"],
+      ["Dove dormire a Ischia", "/it/dove-dormire-a-ischia"],
       ["Contatti", "/it/contatti"]
     ];
   }
@@ -43,6 +44,7 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
     ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
     ["Boats", "/en/boat-rental-ischia"],
     ["Beach Club", "/en/ischia-beach-club"],
+    ["Where to stay in Ischia", "/en/where-to-stay-in-ischia"],
     ["Contact", "/en/contact"]
   ];
 }

@@ -22,6 +22,8 @@ const routes = [
   "/it/beach-club-ischia",
   "/en/ischia-beach-club",
   "/it/barca-con-skipper-ischia",
+  "/it/dove-dormire-a-ischia",
+  "/en/where-to-stay-in-ischia",
 ];
 
 const validStatuses = new Set([200, 301, 302, 303, 307, 308]);

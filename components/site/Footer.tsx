@@ -30,6 +30,11 @@ export function Footer({ locale }: { locale: Locale }) {
           />
         </div>
         <ul className="footer-links">
+          <li>
+            <a href={locale === "it" ? "/it/dove-dormire-a-ischia" : "/en/where-to-stay-in-ischia"}>
+              {locale === "it" ? "Dove dormire a Ischia" : "Where to stay in Ischia"}
+            </a>
+          </li>
           <li><a href={links.privacy}>{locale === "it" ? "Privacy" : "Privacy"}</a></li>
           <li><a href={links.terms}>{locale === "it" ? "Termini" : "Terms"}</a></li>
           <li><a href={links.contact}>{locale === "it" ? "Contatti" : "Contact"}</a></li>
