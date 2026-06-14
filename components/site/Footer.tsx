@@ -36,6 +36,9 @@ export function Footer({ locale }: { locale: Locale }) {
             </a>
           </li>
           <li><a href={links.privacy}>{locale === "it" ? "Privacy" : "Privacy"}</a></li>
+          <li>
+            <a href={locale === "it" ? "/it/cookie-policy" : "/en/cookie-policy"}>Cookie Policy</a>
+          </li>
           <li><a href={links.terms}>{locale === "it" ? "Termini" : "Terms"}</a></li>
           <li><a href={links.contact}>{locale === "it" ? "Contatti" : "Contact"}</a></li>
           <li>

@@ -11,7 +11,7 @@ type InfoPageContent = {
   cardText: string;
   sections: Array<{
     title: string;
-    body: string;
+    body: React.ReactNode;
   }>;
 };
 
