@@ -219,7 +219,7 @@ export function BookingRequestModal({
             <TrustpilotReviewBox locale={locale} compact />
           </>
         ) : (
-          <form className="booking-form" onSubmit={handleSubmit}>
+          <form className="booking-form" onSubmit={handleSubmit} data-ga-submit="submit_booking_request">
             {pickupPoints.length === 0 ? (
               <>
                 <label>

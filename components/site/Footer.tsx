@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Locale } from "@/lib/types";
 import { isRenterPortalEnabled } from "@/lib/renter-portal";
+import { ManageCookiesButton } from "@/components/site/ManageCookiesButton";
 
 export function Footer({ locale }: { locale: Locale }) {
   const renterPortalEnabled = isRenterPortalEnabled();
@@ -39,6 +40,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <li>
             <a href={locale === "it" ? "/it/cookie-policy" : "/en/cookie-policy"}>Cookie Policy</a>
           </li>
+          <li><ManageCookiesButton locale={locale} /></li>
           <li><a href={links.terms}>{locale === "it" ? "Termini" : "Terms"}</a></li>
           <li><a href={links.contact}>{locale === "it" ? "Contatti" : "Contact"}</a></li>
           <li>

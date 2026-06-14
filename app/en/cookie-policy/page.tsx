@@ -3,7 +3,7 @@ import { InfoPage } from "@/components/site/InfoPage";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | IschiaMotion",
-  description: "Cookie Policy for IschiaMotion: information about the technical cookies used on this site. No tracking or profiling cookies are used.",
+  description: "Cookie Policy for IschiaMotion: information about technical and analytics cookies (Google Analytics 4, on consent). No profiling or advertising cookies.",
   alternates: {
     canonical: "/en/cookie-policy",
     languages: { it: "/it/cookie-policy", en: "/en/cookie-policy", "x-default": "/it/cookie-policy" }
@@ -18,9 +18,9 @@ export default function CookiePolicyEnPage() {
       content={{
         eyebrow: "Cookie Policy",
         title: "Cookie Policy",
-        intro: "This page explains how IschiaMotion uses cookies on its website. In line with applicable regulations (GDPR and ePrivacy Directive), IschiaMotion uses only technical cookies that are strictly necessary for the service to function. No consent is required.",
-        cardTitle: "Technical cookies only",
-        cardText: "No profiling, advertising or analytics cookies. No consent banner required.",
+        intro: "This page explains how IschiaMotion uses cookies on its website. In line with applicable regulations (GDPR and ePrivacy Directive), IschiaMotion uses technical cookies strictly necessary for the service, and analytics cookies via Google Analytics 4 only with your explicit consent.",
+        cardTitle: "Technical + analytics cookies (on consent)",
+        cardText: "Session technical cookies are always active. Google Analytics 4 cookies are loaded only after you give explicit consent.",
         sections: [
           {
             title: "What are cookies",
@@ -32,7 +32,7 @@ export default function CookiePolicyEnPage() {
           },
           {
             title: "Analytics cookies",
-            body: "IschiaMotion does not use Google Analytics, Matomo, Hotjar, Microsoft Clarity or any other web traffic analysis tool. No statistical data is collected via cookies."
+            body: "IschiaMotion uses Google Analytics 4 to collect anonymous data on site usage (pages visited, session duration, device type). This cookie is activated only after your explicit consent. You can withdraw consent at any time via the \"Manage cookies\" link in the footer. No data is shared with third parties for advertising purposes."
           },
           {
             title: "Third-party cookies",
