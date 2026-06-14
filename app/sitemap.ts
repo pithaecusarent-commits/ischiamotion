@@ -1,37 +1,31 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/seo";
 
+const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
+  { path: "/it", priority: 1.0, freq: "weekly" },
+  { path: "/en", priority: 1.0, freq: "weekly" },
+  { path: "/it/noleggio-scooter-ischia", priority: 0.9, freq: "monthly" },
+  { path: "/en/scooter-rental-ischia", priority: 0.9, freq: "monthly" },
+  { path: "/it/noleggio-auto-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/en/car-rental-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/it/noleggio-bici-elettriche-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/en/e-bike-rental-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/it/noleggio-gommoni-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/en/rubber-dinghy-rental-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/it/noleggio-barche-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/en/boat-rental-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/it/beach-club-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/en/ischia-beach-club", priority: 0.85, freq: "monthly" },
+  { path: "/it/dove-dormire-a-ischia", priority: 0.8, freq: "monthly" },
+  { path: "/en/where-to-stay-in-ischia", priority: 0.8, freq: "monthly" }
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = [
-    "/it",
-    "/en",
-    "/it/noleggio-scooter-ischia",
-    "/en/scooter-rental-ischia",
-    "/it/noleggio-auto-ischia",
-    "/en/car-rental-ischia",
-    "/it/noleggio-bici-elettriche-ischia",
-    "/en/e-bike-rental-ischia",
-    "/it/noleggio-gommoni-ischia",
-    "/en/rubber-dinghy-rental-ischia",
-    "/it/noleggio-barche-ischia",
-    "/en/boat-rental-ischia",
-    "/it/beach-club-ischia",
-    "/en/ischia-beach-club",
-    "/it/dove-dormire-a-ischia",
-    "/en/where-to-stay-in-ischia",
-    "/it/privacy",
-    "/en/privacy",
-    "/it/termini",
-    "/en/terms",
-    "/it/contatti",
-    "/en/contact"
-  ];
-
-  return routes.map((route) => ({
-    url: `${siteUrl}${route}`,
+  return seoRoutes.map(({ path, priority, freq }) => ({
+    url: `${siteUrl}${path}`,
     lastModified: now,
-    changeFrequency: route === "/it" || route === "/en" ? "weekly" : "monthly",
-    priority: route === "/it" || route === "/en" ? 1 : route.includes("privacy") || route.includes("termini") || route.includes("terms") || route.includes("contatti") || route.includes("contact") ? 0.35 : 0.85
+    changeFrequency: freq,
+    priority
   }));
 }

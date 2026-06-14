@@ -21,7 +21,12 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "IschiaMotion",
   description: "Piattaforma locale per richieste di noleggio scooter, auto, e-bike, gommoni e barche a Ischia tramite partner selezionati.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com")
+  metadataBase: new URL("https://www.ischiamotion.com"),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true }
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
