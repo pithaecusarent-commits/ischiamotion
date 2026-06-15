@@ -14,6 +14,7 @@ import {
 export function CookieConsent() {
   const [consent, setConsent] = useState<ConsentValue>(null);
   const [bannerVisible, setBannerVisible] = useState(false);
+  const bannerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const prevPathRef = useRef<string | null>(null);
   const locale = pathname?.startsWith("/en") ? "en" : "it";
@@ -35,6 +36,29 @@ export function CookieConsent() {
     window.addEventListener("im_manage_cookies", handler);
     return () => window.removeEventListener("im_manage_cookies", handler);
   }, []);
+
+  useEffect(() => {
+    const banner = bannerRef.current;
+    if (!bannerVisible || !banner) return;
+
+    function updateBannerHeight() {
+      const height = bannerRef.current?.offsetHeight;
+      if (height) {
+        document.documentElement.style.setProperty("--cookie-banner-height", `${height}px`);
+      }
+    }
+
+    document.body.classList.add("cookie-banner-visible");
+    updateBannerHeight();
+    const observer = new ResizeObserver(updateBannerHeight);
+    observer.observe(banner);
+
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove("cookie-banner-visible");
+      document.documentElement.style.removeProperty("--cookie-banner-height");
+    };
+  }, [bannerVisible]);
 
   // SPA pageview tracking — skip the very first render (GA config already fires it)
   useEffect(() => {
@@ -121,44 +145,29 @@ export function CookieConsent() {
 
   return (
     <div
+      ref={bannerRef}
       role="dialog"
       aria-label={locale === "en" ? "Cookie consent" : "Consenso cookie"}
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 9999,
-        background: "#fff",
-        borderTop: "1px solid #e5e7eb",
-        padding: "16px 24px",
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        gap: "12px",
-        boxShadow: "0 -2px 12px rgba(0,0,0,0.08)",
-      }}
+      className="cookie-consent"
     >
-      <p style={{ margin: 0, flex: "1 1 260px", fontSize: "0.875rem", lineHeight: 1.5, color: "#374151" }}>
+      <p className="cookie-consent-text">
         {text}{" "}
         <a href={cookiePolicyHref} style={{ color: "inherit" }}>Cookie Policy</a>
         {" · "}
         <a href={privacyHref} style={{ color: "inherit" }}>Privacy</a>
       </p>
-      <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
+      <div className="cookie-consent-actions">
         <button
           type="button"
-          className="ghost-btn"
+          className="ghost-btn cookie-consent-button"
           onClick={handleReject}
-          style={{ fontSize: "0.875rem", padding: "8px 16px" }}
         >
           {rejectLabel}
         </button>
         <button
           type="button"
-          className="primary-btn"
+          className="primary-btn cookie-consent-button"
           onClick={handleAccept}
-          style={{ fontSize: "0.875rem", padding: "8px 16px" }}
         >
           {acceptLabel}
         </button>
