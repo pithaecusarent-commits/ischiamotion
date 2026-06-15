@@ -17,7 +17,9 @@ const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sit
   { path: "/it/beach-club-ischia", priority: 0.85, freq: "monthly" },
   { path: "/en/ischia-beach-club", priority: 0.85, freq: "monthly" },
   { path: "/it/dove-dormire-a-ischia", priority: 0.8, freq: "monthly" },
-  { path: "/en/where-to-stay-in-ischia", priority: 0.8, freq: "monthly" }
+  { path: "/en/where-to-stay-in-ischia", priority: 0.8, freq: "monthly" },
+  { path: "/it/come-muoversi-a-ischia", priority: 0.8, freq: "monthly" },
+  { path: "/en/how-to-get-around-ischia", priority: 0.8, freq: "monthly" }
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
