@@ -23,7 +23,7 @@ export default function ContactItPage() {
         sections: [
           {
             title: "WhatsApp",
-            body: "Per una richiesta veloce puoi usare la CTA WhatsApp presente sul sito o scrivere a +39 328 535 3722. La disponibilità resta soggetta a verifica."
+            body: "Per una richiesta veloce puoi usare la CTA WhatsApp presente sul sito o scrivere a +39 329 685 6370. La disponibilità resta soggetta a verifica."
           },
           {
             title: "Email",

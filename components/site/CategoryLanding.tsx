@@ -16,7 +16,7 @@ function getWhatsAppUrl(locale: CategoryLandingContent["locale"]) {
     ? "Ciao IschiaMotion, vorrei verificare la disponibilità per un noleggio a Ischia."
     : "Hello IschiaMotion, I would like to check availability for a rental in Ischia.";
 
-  return `https://wa.me/393285353722?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/393296856370?text=${encodeURIComponent(message)}`;
 }
 
 function getInternalLinks(locale: CategoryLandingContent["locale"]) {

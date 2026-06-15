@@ -23,7 +23,7 @@ export default function ContactEnPage() {
         sections: [
           {
             title: "WhatsApp",
-            body: "For a quick request you can use the WhatsApp CTA on the website or message +39 328 535 3722. Availability is still subject to review."
+            body: "For a quick request you can use the WhatsApp CTA on the website or message +39 329 685 6370. Availability is still subject to review."
           },
           {
             title: "Email",

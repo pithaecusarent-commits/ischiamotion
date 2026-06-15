@@ -6,7 +6,7 @@ const messages: Record<Locale, string> = {
 };
 
 export function WhatsAppCTA({ locale }: { locale: Locale }) {
-  const href = `https://wa.me/393285353722?text=${encodeURIComponent(messages[locale])}`;
+  const href = `https://wa.me/393296856370?text=${encodeURIComponent(messages[locale])}`;
   const label = locale === "it" ? "Scrivici su WhatsApp" : "Message us on WhatsApp";
 
   return (

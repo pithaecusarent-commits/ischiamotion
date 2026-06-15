@@ -216,7 +216,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
   const path = locale === "it" ? "/it/dove-dormire-a-ischia" : "/en/where-to-stay-in-ischia";
   const alternatePath = locale === "it" ? "/en/where-to-stay-in-ischia" : "/it/dove-dormire-a-ischia";
   const searchPath = locale === "it" ? "/it/risultati" : "/en/results";
-  const whatsappUrl = `https://wa.me/393285353722?text=${encodeURIComponent(c.whatsappMsg)}`;
+  const whatsappUrl = `https://wa.me/393296856370?text=${encodeURIComponent(c.whatsappMsg)}`;
 
   const webpageJsonLd = {
     "@context": "https://schema.org",

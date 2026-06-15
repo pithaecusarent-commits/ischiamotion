@@ -35,7 +35,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const alternatePath = isIt ? "/en/scooter-rental-ischia" : "/it/noleggio-scooter-ischia";
   const homePath = isIt ? "/it" : "/en";
   const searchPath = isIt ? "/it/risultati?category=scooter" : "/en/results?category=scooter";
-  const whatsappUrl = `https://wa.me/393285353722?text=${encodeURIComponent(isIt
+  const whatsappUrl = `https://wa.me/393296856370?text=${encodeURIComponent(isIt
     ? "Ciao IschiaMotion, vorrei verificare la disponibilità per uno scooter a Ischia."
     : "Hello IschiaMotion, I would like to check scooter availability in Ischia."
   )}`;
