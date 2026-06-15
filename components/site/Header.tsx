@@ -44,6 +44,8 @@ export function Header({ locale, alternateHref }: { locale: Locale; alternateHre
       { href: "/it/noleggio-gommoni-ischia", label: "Gommoni" },
       { href: categoryLinks.boats, label: "Barche" },
       { href: "/it/beach-club-ischia", label: "Beach Club" },
+      { href: "/it/dove-dormire-a-ischia", label: "Dove soggiornare a Ischia" },
+      { href: "/it/come-muoversi-a-ischia", label: "Come muoversi a Ischia" },
       { href: "/it/contatti", label: "Contatti" },
       { href: "/it/privacy", label: "Privacy" },
       { href: "/it/cookie-policy", label: "Cookie Policy" },
@@ -56,6 +58,8 @@ export function Header({ locale, alternateHref }: { locale: Locale; alternateHre
       { href: "/en/rubber-dinghy-rental-ischia", label: "Rubber dinghies" },
       { href: categoryLinks.boats, label: "Boats" },
       { href: "/en/ischia-beach-club", label: "Beach Club" },
+      { href: "/en/where-to-stay-in-ischia", label: "Where to stay in Ischia" },
+      { href: "/en/how-to-get-around-ischia", label: "How to get around Ischia" },
       { href: "/en/contact", label: "Contact" },
       { href: "/en/privacy", label: "Privacy" },
       { href: "/en/cookie-policy", label: "Cookie Policy" },
@@ -190,6 +194,23 @@ export function Header({ locale, alternateHref }: { locale: Locale; alternateHre
           <li><Link href={categoryLinks.cars}>{copy.nav.cars}</Link></li>
           <li><Link href={categoryLinks.boats}>{copy.nav.boats}</Link></li>
           <li><Link href={categoryLinks.ebikes}>{copy.nav.ebikes}</Link></li>
+          <li className="nav-guides">
+            <details>
+              <summary>{locale === "it" ? "Guide" : "Guides"}</summary>
+              <ul className="nav-guides-menu">
+                <li>
+                  <Link href={locale === "it" ? "/it/dove-dormire-a-ischia" : "/en/where-to-stay-in-ischia"}>
+                    {locale === "it" ? "Dove soggiornare a Ischia" : "Where to stay in Ischia"}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={locale === "it" ? "/it/come-muoversi-a-ischia" : "/en/how-to-get-around-ischia"}>
+                    {locale === "it" ? "Come muoversi a Ischia" : "How to get around Ischia"}
+                  </Link>
+                </li>
+              </ul>
+            </details>
+          </li>
           <li><Link className="lang-link" href={alternateHref || `/${otherLocale}`} data-ga-event="change_language">{otherLocale.toUpperCase()}</Link></li>
           <li><Link href={categoryLinks.request} className="nav-cta">{copy.nav.book}</Link></li>
         </ul>
