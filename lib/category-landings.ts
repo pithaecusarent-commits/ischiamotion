@@ -117,7 +117,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaTitle: "Noleggio bici elettriche Ischia: e-bike e percorsi",
       metaDescription: "Richiedi disponibilità per noleggio bici elettriche ed e-bike a Ischia tramite partner selezionati. Borghi, lungomare, pendenze e conferma dopo verifica.",
       eyebrow: "E-bike a Ischia",
-      description: "Il noleggio bici elettriche a Ischia è ideale per spostamenti leggeri tra borghi, lungomare e percorsi panoramici. Con IschiaMotion invii una richiesta e la disponibilità viene verificata tramite partner locali selezionati.",
+      description: "Il noleggio bici elettriche a Ischia è ideale per spostamenti leggeri tra borghi, lungomare e percorsi panoramici. Per chi cerca noleggio bici a Ischia, le e-bike possono essere una soluzione comoda per affrontare salite, strade panoramiche e spostamenti tra le diverse zone dell'isola. Con IschiaMotion invii una richiesta e la disponibilità viene verificata tramite partner locali selezionati.",
       cardTitle: "Muoversi leggeri",
       cardText: "Ideale per lungomare, borghi e percorsi panoramici, valutando sempre pendenze, distanza e condizioni del tragitto.",
       categoryParam: "bici",
@@ -182,7 +182,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Posso ricevere il gommone in hotel?", answer: "No. Per categorie nautiche il ritiro è presso punto definito o IschiaMotion Point, secondo indicazioni del partner." },
         { question: "La disponibilità dipende dal meteo?", answer: "Sì. Mare, vento e condizioni operative possono incidere sulla conferma finale." },
         { question: "Serve patente nautica?", answer: "Dipende dal mezzo e dalle condizioni del partner. Requisiti e documenti vengono verificati prima della conferma." },
-        { question: "Quanto costa noleggiare un gommone a Ischia?", answer: "Il prezzo dipende da periodo, durata, categoria e disponibilità. La richiesta permette di verificare le opzioni reali." },
+        { question: "Noleggio gommone Ischia prezzi: da cosa dipendono?", answer: "I prezzi per il noleggio di un gommone a Ischia possono variare in base a periodo, durata, modello, porto di partenza, presenza di skipper e disponibilità del partner. Con IschiaMotion puoi inviare una richiesta e ricevere una proposta aggiornata dopo verifica." },
         { question: "Da dove si ritira un gommone a Ischia?", answer: "Il punto viene indicato dopo verifica con il partner: può essere un punto nautico definito o IschiaMotion Point, non una consegna in hotel." },
         { question: "Posso indicare una zona di partenza preferita?", answer: "Sì. Puoi indicare Ischia Porto, Forio, Lacco Ameno, Sant'Angelo o un'altra zona utile; la fattibilità dipende dal partner." },
         { question: "Cosa succede se il mare non è adatto?", answer: "La sicurezza e le condizioni operative prevalgono. Il partner può modificare o non confermare l'uscita in base al meteo-mare." }
@@ -209,7 +209,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Condizioni chiare", "Requisiti, documenti, meteo e condizioni finali vengono comunicati prima della conferma."],
         ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."]
       ],
-      zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto e Casamicciola sono riferimenti comodi per arrivi e partenze; Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Citara e Maronti possono orientare l'idea di itinerario, mentre la partenza resta soggetta al punto indicato dal partner.",
+      zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto è uno dei punti più richiesti per organizzare il noleggio di barche e uscite in mare, ma disponibilità, punto di imbarco e condizioni vengono sempre confermati dopo verifica con il partner. Casamicciola, Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Per chi cerca affitto barca a Ischia, la partenza resta comunque soggetta al punto indicato dal partner.",
       whenTitle: "Quando conviene la barca",
       whenItems: [
         ["Autonomia in mare", "Adatta quando il partner prevede noleggio in autonomia e i requisiti sono rispettati."],
@@ -224,7 +224,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Il meteo può bloccare l'uscita?", answer: "Sì. Condizioni meteo-marine e operative sono parte della verifica." },
         { question: "Quanto costa noleggiare una barca a Ischia?", answer: "Il prezzo varia per date, durata, modello, disponibilità e condizioni partner." },
         { question: "Che differenza c'è tra barca e gommone?", answer: "La barca può offrire più comfort e spazio; il gommone è spesso più agile ed essenziale. La scelta dipende da gruppo, rotta e disponibilità." },
-        { question: "Posso scegliere la zona di partenza?", answer: "Puoi indicare preferenze come Ischia Porto, Forio o Sant'Angelo. Il punto finale dipende dal partner e viene confermato dopo verifica." },
+        { question: "Posso richiedere il noleggio barche a Ischia Porto?", answer: "Ischia Porto è uno dei punti più richiesti per organizzare uscite in barca, ma disponibilità, punto di imbarco e condizioni vengono sempre confermati dopo verifica con il partner. Puoi indicarlo come preferenza nella richiesta." },
         { question: "IschiaMotion conferma subito la barca?", answer: "No. IschiaMotion raccoglie la richiesta e verifica disponibilità, requisiti e condizioni con partner selezionati." }
       ],
       finalTitle: "Cerchi una barca a Ischia?",
