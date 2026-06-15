@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import { VehicleResultsPage } from "@/app/[locale]/vehicle-results-page";
 import type { Locale } from "@/lib/types";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: true
+  }
+};
 
 type Props = {
   params: { locale: Locale };

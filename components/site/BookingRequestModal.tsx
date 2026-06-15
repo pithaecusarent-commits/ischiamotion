@@ -44,6 +44,8 @@ const copy = {
     hotelName: "Nome hotel / struttura",
     deliveryNotes: "Note consegna opzionali",
     paymentNotice: "Eventuali acconti, saldi o pagamenti anticipati vengono definiti solo dopo la verifica della disponibilità con il partner locale.",
+    afterSubmit: "Dopo l’invio verifichiamo la disponibilità con i partner locali e ti ricontattiamo con la soluzione più adatta.",
+    privacyPrefix: "Inviando la richiesta dichiari di aver letto la",
     notes: "Note",
     language: "Lingua di contatto",
     vehicle: "Opzione selezionata",
@@ -72,6 +74,8 @@ const copy = {
     hotelName: "Hotel / property name",
     deliveryNotes: "Optional delivery notes",
     paymentNotice: "Deposits, balances or prepayments are defined only after availability is reviewed with the local partner.",
+    afterSubmit: "After submission, we check availability with local partners and contact you with the most suitable option.",
+    privacyPrefix: "By submitting the request, you confirm that you have read the",
     notes: "Notes",
     language: "Contact language",
     vehicle: "Selected option",
@@ -362,6 +366,13 @@ export function BookingRequestModal({
               </div>
             ) : null}
 
+            <p className="booking-notes text-sm leading-6 text-ink/60">
+              {text.afterSubmit}{" "}
+              {text.privacyPrefix}{" "}
+              <a className="font-bold text-green-deep hover:text-ink" href={locale === "it" ? "/it/privacy" : "/en/privacy"} target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </a>.
+            </p>
             <button className="booking-submit" type="submit" disabled={status === "submitting" || pickupPoints.length === 0}>
               {status === "submitting" ? text.sending : text.submit}
             </button>

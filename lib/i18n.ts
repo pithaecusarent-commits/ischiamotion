@@ -11,16 +11,16 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Scopri Ischia<br>al tuo <em>ritmo.</em>",
-      subtitle: "Con IschiaMotion scopri noleggi e servizi turistici a Ischia pensati per vivere l’isola con più libertà. Ti mettiamo in contatto con partner locali selezionati per scooter, auto, e-bike, gommoni e Beach Club.",
+      title: "Noleggi ed esperienze<br><em>a Ischia.</em>",
+      subtitle: "Scopri l’isola al tuo ritmo: richiedi disponibilità per scooter, auto, e-bike, barche e beach club con partner locali selezionati.",
       cta: "Richiedi disponibilità →",
       secondary: "Come funziona"
     },
     trust: [
-      ["200+", "Mezzi selezionati"],
-      ["15+", "Punti di ritiro sull'isola"],
+      ["✓", "Soluzioni per diverse esigenze"],
+      ["✓", "Punti di ritiro sull'isola"],
       ["✓", "Partner selezionati"],
-      ["100%", "Richiesta guidata"]
+      ["✓", "Richiesta guidata"]
     ],
     common: {
       from: "A partire da",
@@ -40,16 +40,16 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Discover Ischia<br>at your own <em>pace.</em>",
-      subtitle: "With IschiaMotion, you can discover rentals and travel services in Ischia designed to help you enjoy the island with more freedom. We connect you with selected local partners for scooters, cars, e-bikes, rubber dinghies and Beach Clubs.",
+      title: "Rentals and experiences<br><em>in Ischia.</em>",
+      subtitle: "Discover the island at your own pace: request availability for scooters, cars, e-bikes, boats and beach clubs with selected local partners.",
       cta: "Request availability →",
       secondary: "How it works"
     },
     trust: [
-      ["200+", "Selected vehicles"],
-      ["15+", "Pickup points on the island"],
+      ["✓", "Options for different needs"],
+      ["✓", "Pickup points on the island"],
       ["✓", "Selected partners"],
-      ["100%", "Guided request"]
+      ["✓", "Guided request"]
     ],
     common: {
       from: "From",

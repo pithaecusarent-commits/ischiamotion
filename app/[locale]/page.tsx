@@ -20,11 +20,11 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!locales.includes(params.locale)) notFound();
   const isIt = params.locale === "it";
   const title = isIt
-    ? "Noleggio Scooter, Auto e Barche a Ischia | IschiaMotion"
-    : "Scooter, Car & Boat Rental in Ischia | IschiaMotion";
+    ? "Noleggio Scooter, Auto, E-bike e Barche a Ischia | IschiaMotion"
+    : "Scooter, Car, E-bike & Boat Rental in Ischia | IschiaMotion";
   const description = isIt
-    ? "Noleggia scooter, auto, e-bike e barche a Ischia online. Prenota in pochi minuti, ritiro sull'isola. Da €22/giorno."
-    : "Rent scooters, cars, e-bikes and boats in Ischia online. Book in minutes, pickup on the island. From €22/day.";
+    ? "Richiedi disponibilità per scooter, auto, e-bike e barche a Ischia tramite partner locali. Ricevi conferma rapida quando disponibile."
+    : "Request availability for scooters, cars, e-bikes and boats in Ischia through local partners. Receive quick confirmation when available.";
 
   return {
     title,

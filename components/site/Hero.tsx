@@ -102,16 +102,16 @@ export function Hero({
 
         <div className="hero-stat-row">
           <div className="hero-stat">
-            <span className="hero-stat-val">200+</span>
-            <div className="hero-stat-label">{locale === "it" ? "Mezzi selezionati" : "Selected vehicles"}</div>
+            <span className="hero-stat-val">✓</span>
+            <div className="hero-stat-label">{locale === "it" ? "Soluzioni di noleggio" : "Rental options"}</div>
           </div>
           <div className="hero-stat">
             <span className="hero-stat-val">✓</span>
             <div className="hero-stat-label">{locale === "it" ? "Partner selezionati" : "Selected partners"}</div>
           </div>
           <div className="hero-stat">
-            <span className="hero-stat-val">20+</span>
-            <div className="hero-stat-label">{locale === "it" ? "Punti di ritiro" : "Pickup points"}</div>
+            <span className="hero-stat-val">✓</span>
+            <div className="hero-stat-label">{locale === "it" ? "Conferma rapida" : "Quick confirmation"}</div>
           </div>
         </div>
       </div>

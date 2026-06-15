@@ -9,6 +9,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/it/results",
+        destination: "/it/risultati",
+        permanent: true,
+      },
+      {
+        source: "/en/risultati",
+        destination: "/en/results",
+        permanent: true,
+      },
+      {
         source: "/it/barca-con-skipper-ischia",
         destination: "/it/beach-club-ischia",
         permanent: true,
