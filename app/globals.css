@@ -287,6 +287,17 @@ h1 em {
   color: var(--ink);
 }
 .ghost-btn:hover { transform: translateY(-2px); border-color: rgba(0,151,171,.3); }
+.ghost-btn.whatsapp-btn {
+  border-color: transparent;
+  background: #25D366;
+  color: white;
+  box-shadow: 0 18px 44px rgba(37,211,102,.28);
+}
+.ghost-btn.whatsapp-btn:hover {
+  border-color: transparent;
+  background: #128C7E;
+  color: white;
+}
 
 /* SEARCH BOX */
 .search-card {

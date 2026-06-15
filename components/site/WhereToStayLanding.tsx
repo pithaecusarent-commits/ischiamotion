@@ -252,7 +252,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
             <p>{c.intro}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{c.primaryCta}</a>
-              <a href={whatsappUrl} className="ghost-btn" target="_blank" rel="noopener noreferrer">
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
                 {c.secondaryCta}
               </a>
             </div>
@@ -360,7 +360,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
             <p>{c.finalText}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{c.primaryCta}</a>
-              <a href={whatsappUrl} className="ghost-btn" target="_blank" rel="noopener noreferrer">
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
                 {c.secondaryCta}
               </a>
             </div>

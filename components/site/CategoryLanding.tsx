@@ -244,7 +244,7 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
             <p>{content.description}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn" data-ga-event="click_request_availability" data-ga-category={content.key}>{content.primaryCta}</a>
-              <a href={whatsappUrl} className="ghost-btn" target="_blank" rel="noopener noreferrer">
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
                 {content.secondaryCta}
               </a>
             </div>
@@ -376,7 +376,7 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
             <p>{content.finalText}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn" data-ga-event="click_request_availability" data-ga-category={content.key}>{content.primaryCta}</a>
-              <a href={whatsappUrl} className="ghost-btn" target="_blank" rel="noopener noreferrer">
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
                 {content.secondaryCta}
               </a>
             </div>
