@@ -2080,7 +2080,7 @@ footer {
   .light-dot-b { right: 12%; top: 38%; }
   .light-dot-c { left: 58%; bottom: 25%; }
   .scooter-scene { inset: 0; width: auto; aspect-ratio: auto; }
-  h1 { letter-spacing: -2.5px; }
+  h1 { line-height: .94; letter-spacing: -2.5px; }
   .search-grid { grid-template-columns: 1fr; }
   .search-grid-2col { grid-template-columns: 1fr; }
   .search-topline { align-items: flex-start; flex-direction: column; gap: 3px; }
