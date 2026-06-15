@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { WhereToStayLanding } from "@/components/site/WhereToStayLanding";
 
 export const metadata: Metadata = {
-  title: "Dove dormire a Ischia e come muoversi sull'isola | IschiaMotion",
-  description: "Scopri come organizzare il soggiorno a Ischia: scelta della zona, hotel, spostamenti e servizi utili. Con IschiaMotion e IschiaStars pianifichi meglio la vacanza.",
+  title: "Dove dormire a Ischia: zone migliori e come muoversi | IschiaMotion",
+  description: "Guida alle zone migliori dove dormire a Ischia: Ischia Porto, Forio, Sant'Angelo, Lacco Ameno, Maronti e consigli su scooter, auto ed e-bike.",
   alternates: {
     canonical: "/it/dove-dormire-a-ischia",
     languages: {
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: "Dove dormire a Ischia e come muoversi sull'isola | IschiaMotion",
-    description: "Scopri come organizzare il soggiorno a Ischia: scelta della zona, hotel, spostamenti e servizi utili. Con IschiaMotion e IschiaStars pianifichi meglio la vacanza.",
+    title: "Dove dormire a Ischia: zone migliori e come muoversi | IschiaMotion",
+    description: "Guida alle zone migliori dove dormire a Ischia: Ischia Porto, Forio, Sant'Angelo, Lacco Ameno, Maronti e consigli su scooter, auto ed e-bike.",
     url: "/it/dove-dormire-a-ischia",
     siteName: "IschiaMotion",
     type: "website",
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dove dormire a Ischia e come muoversi sull'isola | IschiaMotion",
-    description: "Scopri come organizzare il soggiorno a Ischia: scelta della zona, hotel, spostamenti e servizi utili. Con IschiaMotion e IschiaStars pianifichi meglio la vacanza.",
+    title: "Dove dormire a Ischia: zone migliori e come muoversi | IschiaMotion",
+    description: "Guida alle zone migliori dove dormire a Ischia: Ischia Porto, Forio, Sant'Angelo, Lacco Ameno, Maronti e consigli su scooter, auto ed e-bike.",
     images: ["/images/ischiamotion-logo.png"]
   }
 };

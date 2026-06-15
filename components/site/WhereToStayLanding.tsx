@@ -19,6 +19,10 @@ type PageContent = {
   zonesEyebrow: string;
   zonesTitle: string;
   zones: Array<[string, string]>;
+  zonesTableEyebrow?: string;
+  zonesTableTitle?: string;
+  zonesTableHeaders?: [string, string, string, string];
+  zonesTable?: Array<[string, string, string, string]>;
   mobilityEyebrow: string;
   mobilityTitle: string;
   mobilityItems: Array<[string, string]>;
@@ -29,7 +33,7 @@ type PageContent = {
   ischiastarsLinkLabel: string;
   afterStayEyebrow: string;
   afterStayTitle: string;
-  afterStayItems: Array<[string, string]>;
+  afterStayItems: Array<[string, string, string?]>;
   linksTitle: string;
   categoryLinks: Array<[string, string]>;
   faqs: Array<{ question: string; answer: string }>;
@@ -40,8 +44,8 @@ type PageContent = {
 const content: Record<Locale, PageContent> = {
   it: {
     eyebrow: "Guida alla vacanza",
-    h1: "Dove dormire a Ischia e come organizzare gli spostamenti",
-    intro: "Organizzare una vacanza a Ischia significa scegliere bene dove dormire e capire come muoversi sull'isola. La zona dell'alloggio influenza i tempi di spostamento, l'accesso alle spiagge e il tipo di esperienza. Ogni comune ha caratteristiche diverse e la posizione dell'hotel o della struttura cambia il modo di vivere l'isola.",
+    h1: "Dove dormire a Ischia: zone migliori e come muoversi sull'isola",
+    intro: "Scegliere dove dormire a Ischia non riguarda solo l'alloggio: ogni zona dell'isola ha una distanza diversa dal porto, un accesso diverso alle spiagge e un bisogno diverso di muoversi. Chi soggiorna a Ischia Porto può cavarsela a piedi; chi sceglie Forio, Sant'Angelo o Barano ha quasi sempre bisogno di uno scooter, un'auto o un'e-bike per spostarsi in modo autonomo. Valutare insieme soggiorno e spostamenti aiuta a organizzare una vacanza più fluida, senza imprevisti.",
     cardTitle: "Soggiorno e mobilità insieme",
     cardText: "Scegliere la zona giusta e il mezzo adatto aiuta a organizzare una vacanza più fluida, senza imprevisti dell'ultimo momento.",
     primaryCta: "Verifica disponibilità veicoli",
@@ -52,12 +56,24 @@ const content: Record<Locale, PageContent> = {
     zonesTitle: "Scegliere la zona giusta a Ischia",
     zones: [
       ["Ischia Porto", "Porto naturale e principale punto di arrivo per aliscafi e traghetti da Napoli e Pozzuoli. Comoda per servizi, vita serale e spostamenti verso il resto dell'isola. Ideale per chi vuole tutto a portata di mano senza dipendere da un mezzo."],
-      ["Forio", "Sul versante ovest, Forio è nota per i tramonti sul mare, la spiaggia di Citara e una buona offerta ricettiva. Più distante dal porto principale, richiede quasi sempre uno scooter, un'auto o un'e-bike per i trasferimenti."],
+      ["Forio", "Sul versante ovest, Forio è nota per i tramonti sul mare, le spiagge di Citara e Cava dell'Isola e una buona offerta ricettiva. Più distante dal porto principale, richiede quasi sempre uno scooter, un'auto o un'e-bike per i trasferimenti."],
       ["Lacco Ameno", "Elegante e centrale nel nord-ovest dell'isola, offre spiagge tranquille, terme e strutture curate. Buona base per chi vuole calma con accesso comodo sia verso Forio che verso Ischia Porto."],
       ["Casamicciola Terme", "Comune con porto proprio, utile per chi arriva da Napoli con Caremar. Posizione pratica tra Ischia Porto e Lacco Ameno, con accesso a terme e spiagge nella zona nord."],
       ["Sant'Angelo", "Piccolo borgo pedonale nel sud-ovest dell'isola, romantico e tranquillo. Ideale per coppie che cercano quiete e spiagge meno affollate. La posizione isolata richiede pianificazione per spostarsi verso altri comuni."],
       ["Barano e Maronti", "Barano d'Ischia ospita la spiaggia dei Maronti, tra le più lunghe dell'isola, raggiungibile anche in barca o taxi marino. Zona naturalistica lontana dal centro: chi soggiorna qui ha quasi sempre bisogno di un mezzo."],
       ["Zone collinari e interne", "Alcune strutture sorgono in posizioni panoramiche su colline o in zone interne dell'isola. Ottime per relax, silenzio e vedute sul golfo. Quasi sempre necessario un mezzo privato per raggiungere spiagge, borghi e servizi."]
+    ],
+    zonesTableEyebrow: "Riepilogo zone",
+    zonesTableTitle: "Zone di Ischia a confronto: mezzo necessario e tipo consigliato",
+    zonesTableHeaders: ["Zona", "Ideale per", "Serve un mezzo?", "Mezzo consigliato"],
+    zonesTable: [
+      ["Ischia Porto", "Arrivi, servizi, vita serale", "No (centro ben servito)", "Scooter o e-bike per escursioni"],
+      ["Forio", "Tramonti, spiagge, coppie", "Sì", "Scooter, auto o e-bike"],
+      ["Lacco Ameno", "Terme, calma, famiglie", "Consigliato", "Scooter o auto"],
+      ["Casamicciola Terme", "Arrivi Caremar, terme, zona nord", "Consigliato", "Scooter o e-bike"],
+      ["Sant'Angelo", "Coppie, quiete, spiagge isolate", "Sì (zona isolata)", "Auto o scooter"],
+      ["Barano e Maronti", "Natura, spiaggia lunga, mare tranquillo", "Sì", "Auto o scooter"],
+      ["Zone collinari/interne", "Panorama, relax, vedute sul golfo", "Indispensabile", "Auto"]
     ],
     mobilityEyebrow: "Spostamenti a Ischia",
     mobilityTitle: "Dormire e muoversi devono andare insieme",
@@ -68,19 +84,19 @@ const content: Record<Locale, PageContent> = {
       ["Pianificare prima", "Richiedere un mezzo in anticipo, soprattutto in alta stagione, aiuta ad avere più scelta e a partire senza imprevisti il giorno dell'arrivo."]
     ],
     ischiastarsEyebrow: "Risorsa consigliata",
-    ischiastarsTitle: "IschiaStars: per scegliere il soggiorno a Ischia",
-    ischiastarsCardTitle: "Strutture, hotel e proposte personalizzate",
-    ischiastarsText: "Per chi sta ancora scegliendo hotel o soluzione di soggiorno, IschiaStars.it è una risorsa utile per valutare strutture, periodi e proposte personalizzate per una vacanza a Ischia. Il progetto è orientato all'organizzazione del soggiorno: hotel, preventivi su misura e supporto per chi vuole pianificare con più cura la propria vacanza sull'isola.",
+    ischiastarsTitle: "IschiaStars e IschiaMotion: due risorse complementari",
+    ischiastarsCardTitle: "Soggiorno e spostamenti: un piano unico",
+    ischiastarsText: "IschiaStars.it è una risorsa dedicata alla scelta del soggiorno a Ischia: hotel, strutture e preventivi personalizzati per chi vuole pianificare con cura la propria vacanza. IschiaMotion è il complemento naturale: serve a organizzare gli spostamenti una volta scelto dove dormire. Scooter, auto, e-bike, gommoni e beach club tramite partner locali selezionati. Le due risorse coprono aspetti diversi della stessa vacanza e si usano meglio insieme.",
     ischiastarsLinkLabel: "Organizzare il soggiorno a Ischia con IschiaStars",
     afterStayEyebrow: "Mobilità sull'isola",
     afterStayTitle: "Dopo aver scelto dove dormire",
     afterStayItems: [
-      ["Scooter a Ischia", "Ideale per coppie e viaggiatori leggeri, pratico per parcheggio e spostamenti rapidi tra porto, spiagge e borghi."],
-      ["Auto a Ischia", "Utile per famiglie, bagagli e strutture lontane dal porto. Più comfort per più persone su tratte lunghe."],
-      ["E-bike a Ischia", "Perfetta per percorsi panoramici, borghi e lungomare. Attenzione alle pendenze e all'autonomia della batteria."],
-      ["Gommone a Ischia", "Per vivere la costa dal mare, raggiungere calette e organizzare una giornata in mare. Ritiro presso punto nautico."],
-      ["Barca a Ischia", "Per chi vuole più comfort in mare. Disponibilità soggetta a requisiti, meteo e condizioni del partner."],
-      ["Beach Club a Ischia", "Lettini, ombrelloni e servizi mare presso strutture locali selezionate. Ideale per una giornata organizzata in spiaggia."]
+      ["Scooter a Ischia", "Ideale per coppie e viaggiatori leggeri, pratico per parcheggio e spostamenti rapidi tra porto, spiagge e borghi.", "/it/noleggio-scooter-ischia"],
+      ["Auto a Ischia", "Utile per famiglie, bagagli e strutture lontane dal porto. Più comfort per più persone su tratte lunghe.", "/it/noleggio-auto-ischia"],
+      ["E-bike a Ischia", "Perfetta per percorsi panoramici, borghi e lungomare. Adatta per chi preferisce pedalare con assistenza elettrica sull'isola.", "/it/noleggio-bici-elettriche-ischia"],
+      ["Gommone a Ischia", "Per vivere la costa dal mare, raggiungere calette inaccessibili via terra e organizzare una giornata fuori porta.", "/it/noleggio-gommoni-ischia"],
+      ["Barca a Ischia", "Per chi vuole più comfort in mare. Disponibilità soggetta a requisiti, meteo e condizioni del partner.", "/it/noleggio-barche-ischia"],
+      ["Beach Club a Ischia", "Lettini, ombrelloni e servizi mare presso strutture locali selezionate. Ideale per una giornata organizzata in spiaggia.", "/it/beach-club-ischia"]
     ],
     linksTitle: "Esplora i servizi di IschiaMotion",
     categoryLinks: [
@@ -95,6 +111,18 @@ const content: Record<Locale, PageContent> = {
       ["Contatti", "/it/contatti"]
     ],
     faqs: [
+      {
+        question: "Dove conviene dormire a Ischia senza auto?",
+        answer: "Ischia Porto è la zona più comoda per chi non vuole noleggiare un mezzo: servizi, porto e alcune spiagge sono raggiungibili a piedi. Lacco Ameno e Casamicciola Terme sono abbastanza centrali e collegate dal trasporto pubblico. Chi soggiorna a Forio, Sant'Angelo o Barano senza mezzo si trova spesso con meno flessibilità negli spostamenti."
+      },
+      {
+        question: "Quale zona scegliere se voglio noleggiare uno scooter a Ischia?",
+        answer: "Con uno scooter qualsiasi zona diventa comoda, ma le zone più distanti dal porto — Forio, Sant'Angelo, Barano — danno i vantaggi più concreti: parcheggio facile, strade panoramiche e accesso a spiagge meno affollate. Puoi indicare su IschiaMotion il punto ritiro più comodo rispetto al tuo alloggio."
+      },
+      {
+        question: "Dove dormire a Ischia per visitare più spiagge?",
+        answer: "Una posizione centrale come Lacco Ameno o Casamicciola, combinata con uno scooter o un'auto, permette di raggiungere facilmente sia le spiagge nord che quelle ovest. Con un gommone si può esplorare la costa anche via mare, raggiungendo calette non accessibili via terra. Forio dà accesso diretto alle spiagge di Citara e Cava dell'Isola."
+      },
       {
         question: "Qual è la zona migliore dove dormire a Ischia?",
         answer: "Dipende dallo stile di vacanza: Ischia Porto è comoda per arrivi e servizi; Forio per tramonti e spiagge; Lacco Ameno per eleganza e calma; Sant'Angelo per tranquillità e romantismo; Barano e Maronti per la natura. Ogni zona ha caratteristiche diverse."
@@ -160,12 +188,12 @@ const content: Record<Locale, PageContent> = {
     afterStayEyebrow: "Island mobility",
     afterStayTitle: "Once you've chosen where to stay",
     afterStayItems: [
-      ["Scooter in Ischia", "Ideal for couples and light travellers, practical for parking and quick movement between port, beaches and villages."],
-      ["Car in Ischia", "Useful for families, luggage and accommodation far from the port. More comfort for more people on longer routes."],
-      ["E-bike in Ischia", "Great for scenic routes, villages and seafronts. Mind the hills and check battery range with the partner."],
-      ["Rubber dinghy in Ischia", "To enjoy the coast from the sea, reach coves and organise a day on the water. Pickup at a defined nautical point."],
-      ["Boat in Ischia", "For more comfort at sea. Availability subject to requirements, weather and partner conditions."],
-      ["Beach Club in Ischia", "Sunbeds, umbrellas and seaside services through selected local venues. Ideal for an organised day by the sea."]
+      ["Scooter in Ischia", "Ideal for couples and light travellers, practical for parking and quick movement between port, beaches and villages.", "/en/scooter-rental-ischia"],
+      ["Car in Ischia", "Useful for families, luggage and accommodation far from the port. More comfort for more people on longer routes.", "/en/car-rental-ischia"],
+      ["E-bike in Ischia", "Great for scenic routes, villages and seafronts. Mind the hills and check battery range with the partner.", "/en/e-bike-rental-ischia"],
+      ["Rubber dinghy in Ischia", "To enjoy the coast from the sea, reach coves and organise a day on the water. Pickup at a defined nautical point.", "/en/rubber-dinghy-rental-ischia"],
+      ["Boat in Ischia", "For more comfort at sea. Availability subject to requirements, weather and partner conditions.", "/en/boat-rental-ischia"],
+      ["Beach Club in Ischia", "Sunbeds, umbrellas and seaside services through selected local venues. Ideal for an organised day by the sea.", "/en/ischia-beach-club"]
     ],
     linksTitle: "Explore IschiaMotion services",
     categoryLinks: [
@@ -223,7 +251,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
     "@type": "WebPage",
     name: c.h1,
     description: locale === "it"
-      ? "Scopri come organizzare il soggiorno a Ischia: scelta della zona, hotel, spostamenti e servizi utili. Con IschiaMotion e IschiaStars pianifichi meglio la vacanza."
+      ? "Guida alle zone migliori dove dormire a Ischia: Ischia Porto, Forio, Sant'Angelo, Lacco Ameno, Maronti e consigli su scooter, auto ed e-bike."
       : "Plan your stay in Ischia: where to stay, how to move around the island and useful local services. IschiaMotion and IschiaStars help you organize your trip.",
     url: `${siteUrl}${path}`,
     inLanguage: locale,
@@ -281,6 +309,38 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
           </div>
         </section>
 
+        {c.zonesTable && c.zonesTableHeaders && (
+          <section className="seo-landing-section">
+            <div className="section-header">
+              <div>
+                <div className="section-eyebrow">{c.zonesTableEyebrow}</div>
+                <h2 className="section-title">{c.zonesTableTitle}</h2>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr>
+                    {c.zonesTableHeaders.map((header) => (
+                      <th key={header} className="text-left p-3 border-b-2 font-semibold whitespace-nowrap">{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.zonesTable.map(([zona, idealePer, serveMezzo, mezzo]) => (
+                    <tr key={zona} className="border-b last:border-b-0">
+                      <td className="p-3 font-medium whitespace-nowrap">{zona}</td>
+                      <td className="p-3">{idealePer}</td>
+                      <td className="p-3 whitespace-nowrap">{serveMezzo}</td>
+                      <td className="p-3">{mezzo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
         <section className="seo-landing-section">
           <div className="section-header">
             <div>
@@ -329,9 +389,9 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
             </div>
           </div>
           <div className="seo-landing-grid">
-            {c.afterStayItems.map(([title, text]) => (
+            {c.afterStayItems.map(([title, text, href]) => (
               <article className="seo-card" key={title}>
-                <h3>{title}</h3>
+                <h3>{href ? <a href={href}>{title}</a> : title}</h3>
                 <p>{text}</p>
               </article>
             ))}
