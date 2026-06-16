@@ -58,8 +58,8 @@ export function Hero({
       <div className="hero-right">
         <Image
           className="hero-art-image"
-          src="/images/hero-ischiamotion-castello-clean.png"
-          alt={locale === "it" ? "Scooter IschiaMotion davanti al Castello Aragonese" : "IschiaMotion scooter in front of Castello Aragonese"}
+          src="/images/ischiamotion-noleggi-esperienze-ischia.png"
+          alt="Noleggi ed esperienze a Ischia con scooter, auto, e-bike, barche e beach club"
           fill
           sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1080px) 520px, min(46vw, 662px)"
           quality={82}
