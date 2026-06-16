@@ -2,8 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { headers } from "next/headers";
+import { createSupabaseServiceRoleClient, createSupabaseUserClient, requireAdmin } from "@/lib/supabase/admin-auth";
 import { isRenterPortalEnabled } from "@/lib/renter-portal";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { logAdminAuditEvent } from "@/lib/supabase/queries/admin-audit-log";
 import { sendAdminManagedRenterCreatedEmail, sendRenterApprovedEmail, sendRenterRejectedEmail } from "@/lib/email/renter-emails";
 import {
@@ -18,8 +20,18 @@ import {
 } from "@/lib/supabase/queries/admin-renters";
 import type { BookingDeliveryMethod } from "@/lib/types";
 
+const adminPasswordResetRedirectUrl = "https://www.ischiamotion.com/auth/update-password";
+
 function rentersRedirect(params: string): never {
   redirect(`/admin/renters?${params}`);
+}
+
+function renterDetailRedirect(routeId: string, params: string): never {
+  redirect(`/admin/renters/${encodeURIComponent(routeId)}?${params}`);
+}
+
+function isValidEmail(value: string | null | undefined): value is string {
+  return Boolean(value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
 }
 
 export async function approveRenterAction(formData: FormData) {
@@ -145,6 +157,77 @@ export async function activateAdminManagedRenterAccessAction(formData: FormData)
   });
 
   rentersRedirect(`access=1${result.profileId ? `&profile=${encodeURIComponent(result.profileId)}` : ""}`);
+}
+
+export async function sendPasswordResetLinkAction(formData: FormData) {
+  const profileId = String(formData.get("profile_id") || "");
+  const routeId = String(formData.get("route_id") || profileId);
+  const { accessToken, profile: adminProfile } = await requireAdmin(`/admin/renters/${routeId || profileId}`);
+
+  if (!profileId || !routeId) {
+    rentersRedirect(`error=${encodeURIComponent("Questo partner non ha un account di accesso collegato.")}`);
+  }
+
+  const requestHeaders = headers();
+  const clientIp = getClientIp(requestHeaders);
+  const limit = checkRateLimit({
+    key: `admin-password-reset:${adminProfile.id}:${profileId}:${clientIp}`,
+    limit: 3,
+    windowMs: 60 * 60 * 1000
+  });
+
+  if (!limit.allowed) {
+    renterDetailRedirect(routeId, `error=${encodeURIComponent("Troppe richieste di reset password. Riprova piu tardi.")}`);
+  }
+
+  const userClient = createSupabaseUserClient(accessToken);
+  const { data: renterProfile, error: profileError } = await userClient
+    .from("profiles")
+    .select("id, email, role")
+    .eq("id", profileId)
+    .maybeSingle<{ id: string; email: string | null; role: "admin" | "renter" }>();
+
+  if (profileError || !renterProfile || renterProfile.role !== "renter") {
+    renterDetailRedirect(routeId, `error=${encodeURIComponent("Questo partner non ha un account di accesso collegato.")}`);
+  }
+
+  const service = createSupabaseServiceRoleClient();
+  const { data: authData, error: authError } = await service.auth.admin.getUserById(profileId);
+  const accountEmail = authData.user?.email?.trim().toLowerCase() || null;
+
+  if (authError || !authData.user) {
+    renterDetailRedirect(routeId, `error=${encodeURIComponent("Questo partner non ha un account di accesso collegato.")}`);
+  }
+
+  if (!isValidEmail(accountEmail)) {
+    renterDetailRedirect(routeId, `error=${encodeURIComponent("Questo utente non ha un'email valida.")}`);
+  }
+
+  const profileEmail = renterProfile.email?.trim().toLowerCase() || null;
+  if (profileEmail && profileEmail !== accountEmail) {
+    renterDetailRedirect(routeId, `error=${encodeURIComponent("Email profilo diversa dall'email dell'account Auth. Reset non inviato.")}`);
+  }
+
+  const { error: resetError } = await service.auth.resetPasswordForEmail(accountEmail, {
+    redirectTo: adminPasswordResetRedirectUrl
+  });
+
+  if (resetError) {
+    renterDetailRedirect(routeId, `error=${encodeURIComponent(`Impossibile inviare il reset password: ${resetError.message}`)}`);
+  }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: adminProfile.id,
+    actorEmail: adminProfile.email,
+    action: "user.password_reset_requested",
+    targetTable: "profiles",
+    targetId: profileId,
+    metadata: { redirectTo: adminPasswordResetRedirectUrl }
+  });
+
+  revalidatePath(`/admin/renters/${routeId}`);
+  renterDetailRedirect(routeId, "passwordReset=1");
 }
 
 function splitList(value: FormDataEntryValue | null) {

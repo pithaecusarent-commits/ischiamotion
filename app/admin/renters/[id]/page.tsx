@@ -1,5 +1,6 @@
-import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction, saveAdminRenterIschiaMotionPointAction } from "@/app/admin/renters/actions";
+import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction, saveAdminRenterIschiaMotionPointAction, sendPasswordResetLinkAction } from "@/app/admin/renters/actions";
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
+import { PasswordResetForm } from "@/app/admin/renters/PasswordResetForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
 import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { getAdminRenterCategoryDeliveryCapabilities, getAdminRenterDetailByRouteId, type AdminRenterApplication, type AdminRenterDeliveryGroup } from "@/lib/supabase/queries/admin-renters";
@@ -10,7 +11,7 @@ import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: string };
-  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string; pointSaved?: string };
+  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string; pointSaved?: string; passwordReset?: string };
 };
 
 function formatDate(value: string | null) {
@@ -104,6 +105,11 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
         {searchParams?.pointSaved && (
           <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
             Comune IschiaMotion Point aggiornato.
+          </div>
+        )}
+        {searchParams?.passwordReset && (
+          <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Link di reset password inviato all&apos;indirizzo email dell&apos;utente.
           </div>
         )}
 
@@ -209,6 +215,17 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                   </button>
                 </form>
                 <DeactivateRenterForm action={deactivateRenterAction} profileId={profile.id} />
+                {profile.email ? (
+                  <PasswordResetForm
+                    action={sendPasswordResetLinkAction}
+                    profileId={profile.id}
+                    routeId={params.id}
+                  />
+                ) : (
+                  <p className="text-xs font-semibold text-ink/45">
+                    Questo utente non ha un&apos;email valida.
+                  </p>
+                )}
               </div>
             ) : (
               <div className="flex flex-wrap items-center gap-3">
@@ -222,10 +239,27 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 {profile.account_status !== "disabled" && (
                   <DeactivateRenterForm action={deactivateRenterAction} profileId={profile.id} />
                 )}
+                {profile.email ? (
+                  <PasswordResetForm
+                    action={sendPasswordResetLinkAction}
+                    profileId={profile.id}
+                    routeId={params.id}
+                  />
+                ) : (
+                  <p className="text-xs font-semibold text-ink/45">
+                    Questo utente non ha un&apos;email valida.
+                  </p>
+                )}
               </div>
             )}
           </div>
-          ) : null}
+          ) : (
+            <div className="mt-6 border-t border-ink/10 pt-5">
+              <p className="text-xs font-semibold text-ink/45">
+                Questo partner non ha accesso al portale, quindi non Ã¨ disponibile il reset password.
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="mt-5 grid gap-5 md:grid-cols-[1fr_280px]">
