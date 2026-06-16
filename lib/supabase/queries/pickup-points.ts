@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
 import type { PublicPickupPoint } from "@/lib/types";
@@ -32,7 +33,7 @@ function toPublicPickupPoint(row: PickupPointRow): PublicPickupPoint {
   };
 }
 
-export async function getActivePickupPoints(): Promise<PublicPickupPoint[]> {
+async function fetchActivePickupPoints(): Promise<PublicPickupPoint[]> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -63,3 +64,9 @@ export async function getActivePickupPoints(): Promise<PublicPickupPoint[]> {
     return canUseMockFallback() ? mockPickupPoints : [];
   }
 }
+
+export const getActivePickupPoints = unstable_cache(
+  fetchActivePickupPoints,
+  ["active-pickup-points"],
+  { revalidate: 300 }
+);
