@@ -171,8 +171,8 @@ export function PasswordUpdateForm() {
 
       {status.tone === "success" ? (
         <div className="flex flex-wrap gap-3 text-sm">
-          <a className="font-bold text-green-deep hover:text-ink" href="/admin/login">
-            Vai al login admin
+          <a className="font-bold text-green-deep hover:text-ink" href="/renter/login">
+            Vai al login
           </a>
         </div>
       ) : null}
