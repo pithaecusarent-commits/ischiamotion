@@ -698,28 +698,64 @@ export async function updateAdminRenterRecord(
   input: UpdateAdminRenterInput
 ): Promise<{ error: string | null }> {
   try {
-    const supabase = createSupabaseUserClient(accessToken);
-    const { error } = await supabase
+    const service = createSupabaseServiceRoleClient();
+    const updatePayload = {
+      business_name_internal: input.businessName,
+      contact_name: clean(input.contactName),
+      email: clean(input.email),
+      phone: clean(input.phone),
+      vat_number: clean(input.vatNumber),
+      fiscal_code: clean(input.fiscalCode),
+      business_address: clean(input.businessAddress),
+      business_city: clean(input.businessCity),
+      ischiamotion_point_municipality: clean(input.ischiamotionPointMunicipality) || null,
+      operating_zones: input.operatingZones,
+      service_categories: input.serviceCategories,
+      seasonality_notes: clean(input.seasonalityNotes),
+      admin_notes: clean(input.adminNotes),
+      updated_at: new Date().toISOString()
+    };
+
+    const { data: updatedRenter, error } = await service
       .from("renters")
-      .update({
-        business_name_internal: input.businessName,
-        contact_name: clean(input.contactName),
-        email: clean(input.email),
-        phone: clean(input.phone),
-        vat_number: clean(input.vatNumber),
-        fiscal_code: clean(input.fiscalCode),
-        business_address: clean(input.businessAddress),
-        business_city: clean(input.businessCity),
-        ischiamotion_point_municipality: clean(input.ischiamotionPointMunicipality) || null,
-        operating_zones: input.operatingZones,
-        service_categories: input.serviceCategories,
-        seasonality_notes: clean(input.seasonalityNotes),
-        admin_notes: clean(input.adminNotes),
-        updated_at: new Date().toISOString()
-      })
-      .eq("id", renterId);
+      .update(updatePayload)
+      .eq("id", renterId)
+      .select("id")
+      .maybeSingle();
 
     if (error) return { error: error.message };
+    if (!updatedRenter) return { error: "Partner non trovato o non aggiornato." };
+
+    const { data: linkedProfile, error: linkError } = await service
+      .from("renter_users")
+      .select("profile_id")
+      .eq("renter_id", renterId)
+      .maybeSingle<{ profile_id: string }>();
+
+    if (linkError) return { error: linkError.message };
+
+    if (linkedProfile?.profile_id) {
+      const { error: profileError } = await service
+        .from("profiles")
+        .update({
+          business_name: input.businessName,
+          contact_name: clean(input.contactName),
+          phone: clean(input.phone),
+          vat_number: clean(input.vatNumber),
+          fiscal_code: clean(input.fiscalCode),
+          business_address: clean(input.businessAddress),
+          business_city: clean(input.businessCity),
+          operating_zones: input.operatingZones,
+          service_categories: input.serviceCategories,
+          seasonality_notes: clean(input.seasonalityNotes),
+          admin_notes: clean(input.adminNotes),
+          updated_at: updatePayload.updated_at
+        })
+        .eq("id", linkedProfile.profile_id);
+
+      if (profileError) return { error: profileError.message };
+    }
+
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to update renter record." };
