@@ -1,4 +1,4 @@
-import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction, saveAdminRenterIschiaMotionPointAction, sendPasswordResetLinkAction } from "@/app/admin/renters/actions";
+import { approveRenterAction, deactivateRenterAction, rejectRenterAction, saveAdminRenterDeliveryCapabilityAction, saveAdminRenterDetailsAction, saveAdminRenterIschiaMotionPointAction, sendPasswordResetLinkAction } from "@/app/admin/renters/actions";
 import { DeactivateRenterForm } from "@/app/admin/renters/DeactivateRenterForm";
 import { PasswordResetForm } from "@/app/admin/renters/PasswordResetForm";
 import { signOutAdmin } from "@/app/admin/login/actions";
@@ -11,8 +11,10 @@ import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: string };
-  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string; pointSaved?: string; passwordReset?: string };
+  searchParams?: { approved?: string; rejected?: string; disabled?: string; error?: string; deliverySaved?: string; pointSaved?: string; passwordReset?: string; renterSaved?: string };
 };
+
+const categories = ["Scooter", "Auto", "Barche", "Gommoni", "E-bike", "Quad", "Beach Club"];
 
 function formatDate(value: string | null) {
   if (!value) return "-";
@@ -110,6 +112,11 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
         {searchParams?.passwordReset && (
           <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
             Link di reset password inviato all&apos;indirizzo email dell&apos;utente.
+          </div>
+        )}
+        {searchParams?.renterSaved && (
+          <div className="mb-5 rounded-2xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
+            Dati partner aggiornati.
           </div>
         )}
 
@@ -449,6 +456,90 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
                 </p>
               ) : null}
             </div>
+
+            <form action={saveAdminRenterDetailsAction} className="mt-5 grid gap-4 rounded-2xl border border-ink/10 bg-white/80 p-4">
+              <input type="hidden" name="renterId" value={renter.id} />
+              <input type="hidden" name="routeId" value={params.id} />
+              <div className="grid gap-3 md:grid-cols-2">
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Nome attivita
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="business_name" defaultValue={renter.business_name_internal || ""} required />
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Referente
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="contact_name" defaultValue={renter.contact_name || ""} />
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Email
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="email" type="email" defaultValue={renter.email || ""} />
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Telefono
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="phone" type="tel" defaultValue={renter.phone || ""} />
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Partita IVA
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="vat_number" defaultValue={renter.vat_number || ""} />
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Codice fiscale
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="fiscal_code" defaultValue={renter.fiscal_code || ""} />
+                </label>
+              </div>
+
+              <label className="grid gap-2 text-sm font-bold text-ink/70">
+                Indirizzo attivita
+                <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="business_address" defaultValue={renter.business_address || ""} />
+              </label>
+
+              <div className="grid gap-3 md:grid-cols-2">
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Comune IschiaMotion Point
+                  <select className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="ischiamotion_point_municipality" defaultValue={renter.ischiamotion_point_municipality || ""}>
+                    <option value="">-- Seleziona comune --</option>
+                    {HOTEL_MUNICIPALITIES.map((m) => (
+                      <option key={m} value={m}>{municipalityLabels.it[m]}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Comune / zona
+                  <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="business_city" defaultValue={renter.business_city || ""} />
+                </label>
+              </div>
+
+              <fieldset className="grid gap-3 rounded-2xl border border-ink/10 bg-white/70 p-4">
+                <legend className="px-1 text-sm font-bold text-ink/70">Categorie offerte</legend>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {categories.map((category) => (
+                    <label className="flex items-center gap-2 text-sm font-semibold text-ink/65" key={category}>
+                      <input className="h-4 w-4 accent-green-deep" name="service_categories" type="checkbox" value={category} defaultChecked={renter.service_categories?.includes(category)} />
+                      {category}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <label className="grid gap-2 text-sm font-bold text-ink/70">
+                Zone operative
+                <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="operating_zones" defaultValue={renter.operating_zones?.join(", ") || ""} />
+              </label>
+
+              <div className="grid gap-3 md:grid-cols-2">
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Stagionalita
+                  <textarea className="min-h-24 rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="seasonality_notes" defaultValue={renter.seasonality_notes || ""} />
+                </label>
+                <label className="grid gap-2 text-sm font-bold text-ink/70">
+                  Note interne
+                  <textarea className="min-h-24 rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="admin_notes" defaultValue={renter.admin_notes || ""} />
+                </label>
+              </div>
+
+              <button className="justify-self-start rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-sea" type="submit">
+                Salva dati partner
+              </button>
+            </form>
 
             <form action={saveAdminRenterIschiaMotionPointAction} className="mt-5 rounded-2xl border border-ink/10 bg-white/80 p-4">
               <input type="hidden" name="renterId" value={renter.id} />

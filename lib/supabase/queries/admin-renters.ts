@@ -209,6 +209,8 @@ export type CreateAdminRenterInput = {
   createAuthUser: boolean;
 };
 
+export type UpdateAdminRenterInput = Omit<CreateAdminRenterInput, "createAuthUser">;
+
 const profileSelect = [
   "id",
   "email",
@@ -687,6 +689,40 @@ export async function updateAdminRenterIschiaMotionPoint(input: {
     return { error: null };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to update IschiaMotion Point municipality." };
+  }
+}
+
+export async function updateAdminRenterRecord(
+  accessToken: string,
+  renterId: string,
+  input: UpdateAdminRenterInput
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createSupabaseUserClient(accessToken);
+    const { error } = await supabase
+      .from("renters")
+      .update({
+        business_name_internal: input.businessName,
+        contact_name: clean(input.contactName),
+        email: clean(input.email),
+        phone: clean(input.phone),
+        vat_number: clean(input.vatNumber),
+        fiscal_code: clean(input.fiscalCode),
+        business_address: clean(input.businessAddress),
+        business_city: clean(input.businessCity),
+        ischiamotion_point_municipality: clean(input.ischiamotionPointMunicipality) || null,
+        operating_zones: input.operatingZones,
+        service_categories: input.serviceCategories,
+        seasonality_notes: clean(input.seasonalityNotes),
+        admin_notes: clean(input.adminNotes),
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", renterId);
+
+    if (error) return { error: error.message };
+    return { error: null };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to update renter record." };
   }
 }
 

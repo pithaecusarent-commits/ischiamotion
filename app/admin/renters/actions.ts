@@ -15,6 +15,7 @@ import {
   deactivateRenterApplication,
   getRenterDetailByProfileId,
   rejectRenterApplication,
+  updateAdminRenterRecord,
   updateAdminRenterIschiaMotionPoint,
   upsertAdminRenterCategoryDeliveryCapability
 } from "@/lib/supabase/queries/admin-renters";
@@ -300,6 +301,58 @@ export async function createRenterFromAdminAction(formData: FormData) {
       : "";
 
   redirect(`/admin/renters?created=1${createdTarget}`);
+}
+
+export async function saveAdminRenterDetailsAction(formData: FormData) {
+  const { accessToken, profile } = await requireAdmin("/admin/renters");
+  const renterId = String(formData.get("renterId") || "");
+  const routeId = String(formData.get("routeId") || "");
+  const returnPath = `/admin/renters/${routeId}`;
+  const businessName = String(formData.get("business_name") || "").trim();
+
+  if (!renterId || !routeId) {
+    redirect(`${returnPath}?error=${encodeURIComponent("Partner non valido.")}`);
+  }
+
+  if (!businessName) {
+    redirect(`${returnPath}?error=${encodeURIComponent("Nome attivita obbligatorio.")}`);
+  }
+
+  const input = {
+    businessName,
+    contactName: String(formData.get("contact_name") || "").trim(),
+    email: String(formData.get("email") || "").trim().toLowerCase(),
+    phone: String(formData.get("phone") || "").trim(),
+    vatNumber: String(formData.get("vat_number") || "").trim(),
+    fiscalCode: String(formData.get("fiscal_code") || "").trim(),
+    businessAddress: String(formData.get("business_address") || "").trim(),
+    businessCity: String(formData.get("business_city") || "").trim(),
+    ischiamotionPointMunicipality: String(formData.get("ischiamotion_point_municipality") || "").trim(),
+    operatingZones: splitList(formData.get("operating_zones")),
+    serviceCategories: formData.getAll("service_categories").map((item) => String(item).trim()).filter(Boolean),
+    seasonalityNotes: String(formData.get("seasonality_notes") || "").trim(),
+    adminNotes: String(formData.get("admin_notes") || "").trim()
+  };
+
+  const { error } = await updateAdminRenterRecord(accessToken, renterId, input);
+
+  if (error) {
+    redirect(`${returnPath}?error=${encodeURIComponent(error)}`);
+  }
+
+  await logAdminAuditEvent({
+    accessToken,
+    actorProfileId: profile.id,
+    actorEmail: profile.email,
+    action: "renter.updated",
+    targetTable: "renters",
+    targetId: renterId,
+    metadata: input
+  });
+
+  revalidatePath("/admin/renters");
+  revalidatePath(returnPath);
+  redirect(`${returnPath}?renterSaved=1`);
 }
 
 export async function saveAdminRenterDeliveryCapabilityAction(formData: FormData) {
