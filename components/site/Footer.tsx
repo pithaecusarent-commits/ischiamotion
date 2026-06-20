@@ -20,7 +20,8 @@ export function Footer({ locale }: { locale: Locale }) {
   return (
     <footer>
       <div className="footer-wrap">
-        <div className="footer-logo">
+        <div className="footer-brand">
+          <a className="footer-logo" href={locale === "it" ? "/it/ischiamotion" : "/en"}>
           <Image
             src="/images/ischiamotion-logo.webp"
             alt="IschiaMotion"
@@ -29,8 +30,23 @@ export function Footer({ locale }: { locale: Locale }) {
             loading="lazy"
             className="logo-img footer-logo-img"
           />
+          </a>
+          <div className="footer-brand-details">
+            <strong><a href={locale === "it" ? "/it/ischiamotion" : "/en"}>IschiaMotion</a></strong>
+            <span>
+              {locale === "it"
+                ? "Piattaforma locale per noleggio scooter, auto, e-bike, gommoni e servizi mare a Ischia."
+                : "Local platform for scooter, car, e-bike, rubber dinghy and seaside service requests in Ischia."}
+            </span>
+            <span>Via Fundera, 104 - Lacco Ameno, Ischia</span>
+            <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a>
+            <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+          </div>
         </div>
         <ul className="footer-links">
+          {locale === "it" ? (
+            <li><a href="/it/ischiamotion">piattaforma locale IschiaMotion</a></li>
+          ) : null}
           <li>
             <a href={locale === "it" ? "/it/come-muoversi-a-ischia" : "/en/how-to-get-around-ischia"}>
               {locale === "it" ? "Come muoversi a Ischia" : "How to get around Ischia"}

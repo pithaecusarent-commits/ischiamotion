@@ -114,11 +114,29 @@ export function websiteJsonLd(locale: Locale) {
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "LocalBusiness",
     name: "IschiaMotion",
-    url: siteUrl,
+    alternateName: "Ischia Motion",
+    url: "https://www.ischiamotion.com",
+    email: "info@ischiamotion.com",
     logo: `${siteUrl}/images/ischiamotion-logo.png`,
-    description: "Local rental marketplace and rental request platform connecting visitors with selected scooter, car, e-bike, rubber dinghy and boat rental partners in Ischia."
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Via Fundera, 104",
+      addressLocality: "Lacco Ameno",
+      addressRegion: "NA",
+      postalCode: "80076",
+      addressCountry: "IT"
+    },
+    areaServed: {
+      "@type": "Place",
+      name: "Ischia"
+    },
+    description: "IschiaMotion è una piattaforma locale a Ischia per richiedere disponibilità di scooter, auto, e-bike, gommoni e servizi mare tramite partner selezionati.",
+    sameAs: [
+      "https://www.ischiamotion.com",
+      "https://it.trustpilot.com/review/ischiamotion.com"
+    ]
   };
 }
 

@@ -62,6 +62,22 @@ export function SiteHome({
           onDeliveryMethodChange={setDeliveryMethod}
         />
         <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
+        {locale === "it" ? (
+          <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
+            <div className="section-eyebrow">Il brand locale</div>
+            <h2 id="brand-intro-title">Cos’è IschiaMotion</h2>
+            <p>
+              <a href="/it/ischiamotion">IschiaMotion</a> è una piattaforma locale di Ischia dedicata alla mobilità turistica e ai servizi mare.
+              Aiutiamo turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni e beach club tramite partner locali
+              selezionati sull’isola.
+            </p>
+            <p>
+              IschiaMotion è un servizio indipendente e non è una concessionaria. Il nostro obiettivo è semplificare la richiesta di noleggi
+              e servizi turistici a Ischia, offrendo un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
+              <a href="https://www.ischiamotion.com">ischiamotion.com</a>.
+            </p>
+          </section>
+        ) : null}
         <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />

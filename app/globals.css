@@ -1379,6 +1379,30 @@ body.cookie-banner-visible .whatsapp-cta {
   max-width: 1440px;
   margin: 0 auto;
 }
+.brand-intro {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 5vw 108px;
+}
+.brand-intro h2 {
+  font-family: var(--font-fraunces), serif;
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin: 10px 0 24px;
+}
+.brand-intro p {
+  color: var(--ink-mid);
+  font-size: 17px;
+  line-height: 1.75;
+  max-width: 920px;
+}
+.brand-intro p + p { margin-top: 14px; }
+.brand-intro a {
+  color: var(--green-dark);
+  font-weight: 700;
+}
 .faq-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1790,9 +1814,29 @@ footer {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
+}
+.footer-brand {
+  max-width: 360px;
+}
+.footer-logo {
+  display: inline-block;
+}
+.footer-brand-details {
+  display: grid;
+  gap: 4px;
+  color: rgba(21,21,18,.68);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.footer-brand-details strong {
+  font-size: 16px;
+}
+.footer-brand-details a {
+  color: inherit;
+  overflow-wrap: anywhere;
 }
 .footer-logo .logo-text { color: var(--white); }
 .footer-logo .logo-text em { color: var(--mint); }
@@ -2164,6 +2208,7 @@ footer {
   .pickup-section { padding: 0 16px 78px; }
   .faq-section,
   .seo-landing-section { padding: 0 16px 78px; }
+  .brand-intro { padding: 0 16px 78px; }
   .seo-landing { padding-top: 104px; }
   .seo-landing-hero { padding: 24px 16px 78px; }
   .seo-landing-hero h1 { letter-spacing: -2px; }
@@ -2187,6 +2232,8 @@ footer {
   .result-foot { align-items: flex-start; flex-direction: column; }
   .trust-bar { grid-template-columns: repeat(2, 1fr); padding: 30px 16px; }
   .footer-wrap { flex-direction: column; text-align: center; }
+  .footer-brand { max-width: 560px; }
+  .footer-brand-details { justify-items: center; }
   .footer-copy { min-width: auto; }
 }
 @media (max-width: 460px) {

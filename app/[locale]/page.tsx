@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/types";
 import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 import { getHomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 import { JsonLd } from "@/components/site/JsonLd";
-import { organizationJsonLd, serviceJsonLd, websiteJsonLd } from "@/lib/seo";
+import { serviceJsonLd, websiteJsonLd } from "@/lib/seo";
 
 type Props = { params: { locale: Locale } };
 const locales: Locale[] = ["it", "en"];
@@ -20,10 +20,10 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!locales.includes(params.locale)) notFound();
   const isIt = params.locale === "it";
   const title = isIt
-    ? "Noleggio Scooter, Auto, E-bike e Barche a Ischia | IschiaMotion"
+    ? "IschiaMotion | Noleggio Scooter, Auto, E-Bike, Gommoni e Beach Club a Ischia"
     : "Scooter, Car, E-bike & Boat Rental in Ischia | IschiaMotion";
   const description = isIt
-    ? "Richiedi disponibilità per scooter, auto, e-bike e barche a Ischia tramite partner locali. Ricevi conferma rapida quando disponibile."
+    ? "IschiaMotion è una piattaforma locale a Ischia per richiedere disponibilità di scooter, auto, e-bike, gommoni e servizi mare tramite partner selezionati."
     : "Request availability for scooters, cars, e-bikes and boats in Ischia through local partners. Receive quick confirmation when available.";
 
   return {
@@ -38,7 +38,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description
     },
     alternates: {
-      canonical: `/${params.locale}`,
+      canonical: isIt ? "https://www.ischiamotion.com/" : `/${params.locale}`,
       languages: { it: "/it", en: "/en", "x-default": "/it" }
     },
     keywords: isIt
@@ -58,7 +58,6 @@ export default async function LocaleHome({ params }: Props) {
   return (
     <>
       <JsonLd data={websiteJsonLd(params.locale)} />
-      <JsonLd data={organizationJsonLd()} />
       <JsonLd data={serviceJsonLd(
         params.locale,
         `/${params.locale}`,

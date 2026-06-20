@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { CookieConsent } from "@/components/site/CookieConsent";
+import { JsonLd } from "@/components/site/JsonLd";
+import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -37,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang={lang} className={`${fraunces.variable} ${dmSans.variable}`}>
       <body>
+        <JsonLd data={organizationJsonLd()} />
         {children}
         <CookieConsent />
       </body>

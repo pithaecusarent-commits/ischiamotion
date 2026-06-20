@@ -4,6 +4,7 @@ import { siteUrl } from "@/lib/seo";
 const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
   { path: "/it", priority: 1.0, freq: "weekly" },
   { path: "/en", priority: 1.0, freq: "weekly" },
+  { path: "/it/ischiamotion", priority: 0.9, freq: "monthly" },
   { path: "/it/noleggio-scooter-ischia", priority: 0.9, freq: "monthly" },
   { path: "/en/scooter-rental-ischia", priority: 0.9, freq: "monthly" },
   { path: "/it/noleggio-auto-ischia", priority: 0.85, freq: "monthly" },

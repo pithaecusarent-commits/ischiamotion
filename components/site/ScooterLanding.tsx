@@ -91,7 +91,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
     ];
   const internalLinks = isIt
     ? [
-      ["Home", "/it"],
+      ["servizi IschiaMotion a Ischia", "/it/ischiamotion"],
       ["Verifica disponibilità scooter", searchPath],
       ["Auto", "/it/noleggio-auto-ischia"],
       ["E-bike", "/it/noleggio-bici-elettriche-ischia"],

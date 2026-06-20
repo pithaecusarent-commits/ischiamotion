@@ -22,7 +22,7 @@ function getWhatsAppUrl(locale: CategoryLandingContent["locale"]) {
 function getInternalLinks(locale: CategoryLandingContent["locale"]) {
   if (locale === "it") {
     return [
-      ["Home", "/it"],
+      ["IschiaMotion", "/it/ischiamotion"],
       ["Verifica disponibilità", "/it/risultati"],
       ["Scooter", "/it/noleggio-scooter-ischia"],
       ["Auto", "/it/noleggio-auto-ischia"],
@@ -223,7 +223,15 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
   const homePath = content.locale === "it" ? "/it" : "/en";
   const searchPath = getSearchPath(content);
   const whatsappUrl = getWhatsAppUrl(content.locale);
-  const internalLinks = [...getInternalLinks(content.locale), [content.primaryCta, searchPath]];
+  const brandAnchor = content.locale === "it"
+    ? content.key === "auto" || content.key === "gommone"
+      ? "piattaforma locale IschiaMotion"
+      : "servizi IschiaMotion a Ischia"
+    : "IschiaMotion";
+  const internalLinks = [
+    ...getInternalLinks(content.locale).map(([label, href]) => href === "/it/ischiamotion" ? [brandAnchor, href] : [label, href]),
+    [content.primaryCta, searchPath]
+  ];
   const guide = landingGuides[content.locale][content.key];
 
   return (
