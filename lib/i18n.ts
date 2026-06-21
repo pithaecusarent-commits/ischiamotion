@@ -11,8 +11,8 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Noleggi ed esperienze<br><em>a Ischia.</em>",
-      subtitle: "Scopri l’isola al tuo ritmo: richiedi disponibilità per scooter, auto, e-bike, barche e beach club con partner locali selezionati.",
+      title: "Noleggio a Ischia<br><em>per vivere l’isola.</em>",
+      subtitle: "Confronta soluzioni di noleggio mezzi a Ischia: scooter, auto, e-bike, gommoni e barche tramite partner locali selezionati.",
       cta: "Richiedi disponibilità →",
       secondary: "Come funziona"
     },
@@ -40,8 +40,8 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Rentals and experiences<br><em>in Ischia.</em>",
-      subtitle: "Discover the island at your own pace: request availability for scooters, cars, e-bikes, boats and beach clubs with selected local partners.",
+      title: "Vehicle rental in Ischia<br><em>for exploring the island.</em>",
+      subtitle: "Compare rental options in Ischia for scooters, cars, e-bikes, rubber dinghies and boats through selected local partners.",
       cta: "Request availability →",
       secondary: "How it works"
     },

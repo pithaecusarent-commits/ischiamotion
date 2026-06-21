@@ -76,6 +76,12 @@ export function SiteHome({
               e servizi turistici a Ischia, offrendo un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
               <a href="https://www.ischiamotion.com">ischiamotion.com</a>.
             </p>
+            <p>
+              Esplora il <a href="/it/noleggio-scooter-ischia">noleggio scooter a Ischia</a>, il{" "}
+              <a href="/it/noleggio-auto-ischia">noleggio auto a Ischia</a>, il{" "}
+              <a href="/it/noleggio-bici-elettriche-ischia">noleggio e-bike a Ischia</a> e le opzioni per{" "}
+              <a href="/it/noleggio-gommoni-ischia">gommoni</a> o <a href="/it/noleggio-barche-ischia">barche</a>.
+            </p>
           </section>
         ) : null}
         <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />

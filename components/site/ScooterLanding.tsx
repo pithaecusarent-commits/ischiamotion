@@ -39,18 +39,18 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
     ? "Ciao IschiaMotion, vorrei verificare la disponibilità per uno scooter a Ischia."
     : "Hello IschiaMotion, I would like to check scooter availability in Ischia."
   )}`;
-  const title = isIt ? "Noleggio scooter Ischia" : "Scooter rental Ischia";
+  const title = isIt ? "Noleggio scooter a Ischia" : "Scooter rental in Ischia";
   const description = isIt
-    ? "Richiedi disponibilità per noleggio scooter a Ischia tramite partner locali selezionati. Una soluzione agile per coppie, porto, spiagge e borghi, con conferma solo dopo verifica."
-    : "Request scooter rental availability in Ischia through selected local partners. A practical choice for couples, ports, beaches and villages, with confirmation only after review.";
+    ? "Noleggia uno scooter a Ischia con ritiro disponibile a Ischia Porto e in altre zone dell’isola, in base alla disponibilità dei partner. Prezzi e condizioni vengono confermati dopo la verifica."
+    : "Rent a scooter in Ischia with pickup available at Ischia Port and other island areas, subject to partner availability. Prices and conditions are confirmed after review.";
   const advantages = isIt
     ? [
-      ["Spostamenti rapidi", "Lo scooter è pratico per muoversi tra Ischia Porto, spiagge, centri abitati e punti panoramici senza la rigidità dell'auto."],
+      ["Spostamenti rapidi", "L’affitto di uno scooter a Ischia è pratico per muoversi tra Ischia Porto, spiagge, centri abitati e punti panoramici senza la rigidità dell'auto."],
       ["Parcheggio più semplice", "Per coppie e viaggiatori leggeri può essere più comodo dell'auto, soprattutto nelle zone centrali e nei periodi affollati."],
       ["Richiesta verificata", "Indichi date, orario e punto ritiro: IschiaMotion controlla disponibilità e condizioni con partner locali selezionati."]
     ]
     : [
-      ["Quick movement", "A scooter is practical for Ischia Port, beaches, town centers and viewpoints without the limits of a car."],
+      ["Quick movement", "Scooter hire in Ischia is practical for moving between Ischia Port, beaches, town centers and viewpoints without the limits of a car."],
       ["Easier parking", "For couples and light travellers it can be easier than a car, especially in central areas and busy periods."],
       ["Reviewed request", "Choose dates, timing and pickup point: IschiaMotion checks availability and conditions with selected local partners."]
     ];
@@ -89,21 +89,38 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       ["Hotel where available", "For some areas and partners, you can indicate hotel or accommodation, always subject to review."],
       ["Documents and helmet", "License, ID, helmet, deposit and conditions depend on the scooter and are confirmed by the partner before pickup."]
     ];
+  const practicalItems = isIt
+    ? [
+      ["Prezzi e durata", "Il prezzo dipende da periodo, durata, cilindrata e disponibilità. Puoi richiedere un noleggio giornaliero o per più giorni; il totale viene confermato dal partner."],
+      ["Scooter 50cc o 125cc", "La categoria disponibile dipende dal partner e dai requisiti di guida. Indica patente ed esperienza per verificare l’opzione adatta."],
+      ["Età minima e patente", "Età minima e patente necessaria variano in base al mezzo e alle regole applicabili. I requisiti vengono controllati prima della conferma."],
+      ["Casco e passeggero", "Casco, secondo casco e dotazioni dipendono dall’opzione disponibile. Chiedi conferma se viaggi in due."],
+      ["Cauzione e assicurazione", "Cauzione, copertura assicurativa, franchigia e modalità di pagamento sono condizioni del partner e vengono comunicate prima del ritiro."],
+      ["Parcheggio e ZTL", "Nei centri di Ischia presta attenzione a segnaletica, aree pedonali, ZTL e parcheggi. Le regole locali possono cambiare per zona e periodo."]
+    ]
+    : [
+      ["Prices and rental length", "Price depends on season, rental length, scooter type and availability. You can request a daily or multi-day rental; the partner confirms the total."],
+      ["50cc or 125cc scooter", "The available category depends on the partner and driving requirements. Share your license and experience to review a suitable option."],
+      ["Minimum age and license", "Minimum age and required license vary by scooter and applicable rules. Requirements are checked before confirmation."],
+      ["Helmet and passenger", "Helmet, second helmet and equipment depend on the available option. Ask for confirmation when travelling as a pair."],
+      ["Deposit and insurance", "Deposit, insurance coverage, excess and payment method are partner conditions communicated before pickup."],
+      ["Parking and restricted areas", "Follow local signs, pedestrian areas, restricted traffic zones and parking rules, which may vary by area and season."]
+    ];
   const internalLinks = isIt
     ? [
       ["servizi IschiaMotion a Ischia", "/it/ischiamotion"],
       ["Verifica disponibilità scooter", searchPath],
-      ["Auto", "/it/noleggio-auto-ischia"],
-      ["E-bike", "/it/noleggio-bici-elettriche-ischia"],
-      ["Gommoni", "/it/noleggio-gommoni-ischia"],
-      ["Barche", "/it/noleggio-barche-ischia"],
+      ["Noleggio auto Ischia", "/it/noleggio-auto-ischia"],
+      ["Noleggio e-bike Ischia", "/it/noleggio-bici-elettriche-ischia"],
+      ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
+      ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
       ["Beach Club", "/it/beach-club-ischia"],
       ["Contatti", "/it/contatti"]
     ]
     : [
       ["Home", "/en"],
       ["Check scooter availability", searchPath],
-      ["Cars", "/en/car-rental-ischia"],
+      ["Car rental Ischia", "/en/car-rental-ischia"],
       ["E-bikes", "/en/e-bike-rental-ischia"],
       ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
       ["Boats", "/en/boat-rental-ischia"],
@@ -148,6 +165,25 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           </div>
           <div className="seo-landing-grid">
             {localItems.map(([itemTitle, text]) => (
+              <article className="seo-card" key={itemTitle}>
+                <h3>{itemTitle}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">{isIt ? "Costi e requisiti" : "Costs and requirements"}</div>
+              <h2 className="section-title">
+                {isIt ? "Prezzi e condizioni del noleggio scooter a Ischia" : "Scooter rental prices and conditions in Ischia"}
+              </h2>
+            </div>
+          </div>
+          <div className="seo-landing-grid">
+            {practicalItems.map(([itemTitle, text]) => (
               <article className="seo-card" key={itemTitle}>
                 <h3>{itemTitle}</h3>
                 <p>{text}</p>

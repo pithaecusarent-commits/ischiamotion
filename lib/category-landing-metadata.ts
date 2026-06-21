@@ -10,6 +10,7 @@ export function categoryLandingMetadata(content: CategoryLandingContent): Metada
   return {
     title: content.metaTitle,
     description: content.metaDescription,
+    keywords: content.primaryKeyword ? [content.primaryKeyword] : undefined,
     alternates: {
       canonical: content.path,
       languages: {

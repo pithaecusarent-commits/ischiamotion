@@ -24,11 +24,11 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
     return [
       ["IschiaMotion", "/it/ischiamotion"],
       ["Verifica disponibilità", "/it/risultati"],
-      ["Scooter", "/it/noleggio-scooter-ischia"],
-      ["Auto", "/it/noleggio-auto-ischia"],
-      ["E-bike", "/it/noleggio-bici-elettriche-ischia"],
-      ["Gommoni", "/it/noleggio-gommoni-ischia"],
-      ["Barche", "/it/noleggio-barche-ischia"],
+      ["Noleggio scooter Ischia", "/it/noleggio-scooter-ischia"],
+      ["Noleggio auto Ischia", "/it/noleggio-auto-ischia"],
+      ["Noleggio e-bike Ischia", "/it/noleggio-bici-elettriche-ischia"],
+      ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
+      ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
       ["Beach Club", "/it/beach-club-ischia"],
       ["Dove dormire a Ischia", "/it/dove-dormire-a-ischia"],
       ["Contatti", "/it/contatti"]
@@ -38,8 +38,8 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
   return [
     ["Home", "/en"],
     ["Check availability", "/en/results"],
-    ["Scooter", "/en/scooter-rental-ischia"],
-    ["Cars", "/en/car-rental-ischia"],
+    ["Scooter rental Ischia", "/en/scooter-rental-ischia"],
+    ["Car rental Ischia", "/en/car-rental-ischia"],
     ["E-bikes", "/en/e-bike-rental-ischia"],
     ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
     ["Boats", "/en/boat-rental-ischia"],
