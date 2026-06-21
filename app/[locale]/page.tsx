@@ -38,7 +38,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description
     },
     alternates: {
-      canonical: isIt ? "https://www.ischiamotion.com/" : `/${params.locale}`,
+      canonical: `/${params.locale}`,
       languages: { it: "/it", en: "/en", "x-default": "/it" }
     },
     keywords: isIt
