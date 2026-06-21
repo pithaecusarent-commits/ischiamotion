@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Contatta IschiaMotion per richieste di disponibilità noleggio a Ischia tramite partner locali selezionati.",
   alternates: {
     canonical: "/it/contatti",
-    languages: { it: "/it/contatti", en: "/en/contact", "x-default": "/it" }
+    languages: { it: "/it/contatti", en: "/en/contact", "x-default": "/it/contatti" }
   }
 };
 

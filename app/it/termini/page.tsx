@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Termini base di utilizzo di IschiaMotion per richieste di disponibilità tramite partner locali selezionati.",
   alternates: {
     canonical: "/it/termini",
-    languages: { it: "/it/termini", en: "/en/terms", "x-default": "/it" }
+    languages: { it: "/it/termini", en: "/en/terms", "x-default": "/it/termini" }
   }
 };
 
