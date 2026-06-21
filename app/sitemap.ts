@@ -20,7 +20,15 @@ const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sit
   { path: "/it/dove-dormire-a-ischia", priority: 0.8, freq: "monthly" },
   { path: "/en/where-to-stay-in-ischia", priority: 0.8, freq: "monthly" },
   { path: "/it/come-muoversi-a-ischia", priority: 0.8, freq: "monthly" },
-  { path: "/en/how-to-get-around-ischia", priority: 0.8, freq: "monthly" }
+  { path: "/en/how-to-get-around-ischia", priority: 0.8, freq: "monthly" },
+  { path: "/it/contatti", priority: 0.6, freq: "yearly" },
+  { path: "/en/contact", priority: 0.6, freq: "yearly" },
+  { path: "/it/privacy", priority: 0.3, freq: "yearly" },
+  { path: "/en/privacy", priority: 0.3, freq: "yearly" },
+  { path: "/it/termini", priority: 0.3, freq: "yearly" },
+  { path: "/en/terms", priority: 0.3, freq: "yearly" },
+  { path: "/it/cookie-policy", priority: 0.3, freq: "yearly" },
+  { path: "/en/cookie-policy", priority: 0.3, freq: "yearly" }
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
