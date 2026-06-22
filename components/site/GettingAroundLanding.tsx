@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale } from "@/lib/types";
-import { breadcrumbJsonLd, faqJsonLd, siteUrl } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
 
 type Content = {
   eyebrow: string;
@@ -183,21 +183,11 @@ export function GettingAroundLanding({ locale }: { locale: Locale }) {
     ? "Guida pratica su come muoversi a Ischia: quando conviene scooter, auto, e-bike, bus, taxi o barca. Consigli per zone, porti, spiagge e richiesta disponibilità."
     : "A practical guide to getting around Ischia by scooter, car, e-bike, bus, taxi or boat, with tips by area, port, beach and travel style.";
 
-  const webpageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: c.h1,
-    description,
-    url: `${siteUrl}${path}`,
-    inLanguage: locale,
-    isPartOf: { "@type": "WebSite", name: "IschiaMotion", url: siteUrl }
-  };
-
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "IschiaMotion", url: `${siteUrl}${homePath}` }, { name: c.breadcrumbLabel, url: `${siteUrl}${path}` }])} />
       <JsonLd data={faqJsonLd(c.faqs)} />
-      <JsonLd data={webpageJsonLd} />
+      <JsonLd data={webpageJsonLd(locale, path, c.h1, description)} />
       <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
         <section className="seo-landing-hero">

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
 
 export const metadata: Metadata = {
-  title: "Contatti IschiaMotion a Lacco Ameno, Ischia",
-  description: "Contatta IschiaMotion, piattaforma locale a Lacco Ameno per richieste di scooter, auto, e-bike, gommoni, barche e servizi mare tramite partner selezionati a Ischia.",
+  title: "Contatti IschiaMotion | Ischia",
+  description: "Contatta IschiaMotion per richieste di scooter, auto, e-bike, gommoni, barche e servizi mare a Ischia.",
   alternates: {
     canonical: "/it/contatti",
     languages: { it: "/it/contatti", en: "/en/contact", "x-default": "/it/contatti" }
@@ -27,7 +27,7 @@ export default function ContactItPage() {
             P.IVA 10784981218<br />
             <a href="tel:+393296856370">+39 329 685 6370</a><br />
             <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
-            <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+            <a href="/it">https://www.ischiamotion.com/it</a>
           </>
         ),
         sections: [

@@ -1,0 +1,4 @@
+@config "../tailwind.portal.config.ts";
+
+@tailwind components;
+@tailwind utilities;

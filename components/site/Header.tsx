@@ -189,9 +189,10 @@ export function Header({ locale, alternateHref }: { locale: Locale; alternateHre
             className="logo-img"
           />
         </Link>
-        <ul className="nav-links" aria-label={locale === "it" ? "Menu principale" : "Main menu"}>
+      <ul className="nav-links" aria-label={locale === "it" ? "Menu principale" : "Main menu"}>
           <li><Link href={categoryLinks.scooters}>{copy.nav.scooters}</Link></li>
           <li><Link href={categoryLinks.cars}>{copy.nav.cars}</Link></li>
+          <li><Link href={locale === "it" ? "/it/noleggio-gommoni-ischia" : "/en/rubber-dinghy-rental-ischia"}>{locale === "it" ? "Gommoni" : "RIBs"}</Link></li>
           <li><Link href={categoryLinks.boats}>{copy.nav.boats}</Link></li>
           <li><Link href={categoryLinks.ebikes}>{copy.nav.ebikes}</Link></li>
           <li className="nav-guides">

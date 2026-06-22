@@ -21,7 +21,7 @@ export function Footer({ locale }: { locale: Locale }) {
     <footer>
       <div className="footer-wrap">
         <div className="footer-brand">
-          <a className="footer-logo" href={locale === "it" ? "/it/ischiamotion" : "/en"}>
+          <a className="footer-logo" href={`/${locale}`}>
           <Image
             src="/images/ischiamotion-logo.webp"
             alt="IschiaMotion"
@@ -32,7 +32,7 @@ export function Footer({ locale }: { locale: Locale }) {
           />
           </a>
           <div className="footer-brand-details">
-            <strong><a href={locale === "it" ? "/it/ischiamotion" : "/en"}>IschiaMotion</a></strong>
+            <strong><a href={`/${locale}`}>IschiaMotion</a></strong>
             <span>
               {locale === "it"
                 ? "Piattaforma locale per richieste di mobilità e servizi mare a Ischia."
@@ -40,13 +40,17 @@ export function Footer({ locale }: { locale: Locale }) {
             </span>
             <span>
               {locale === "it"
-                ? "IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati sull’isola."
-                : "IschiaMotion collects your request and checks availability, conditions and confirmation with selected local partners on the island."}
+                ? "Verifichiamo disponibilità, condizioni e conferma con partner locali selezionati sull’isola."
+                : "We check availability, conditions and confirmation with selected local partners on the island."}
             </span>
-            <span>Via Fundera, 104, 80076 Lacco Ameno (NA), Italia</span>
+            <span>
+              {locale === "it"
+                ? "Via Fundera, 104, 80076 Lacco Ameno (NA), Italia"
+                : "Via Fundera, 104, 80076 Lacco Ameno (NA), Italy"}
+            </span>
             <a href="tel:+393296856370">+39 329 685 6370</a>
             <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a>
-            <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+            <a href={`/${locale}`}>https://www.ischiamotion.com/{locale}</a>
           </div>
         </div>
         <ul className="footer-links">
@@ -61,6 +65,11 @@ export function Footer({ locale }: { locale: Locale }) {
           <li>
             <a href={locale === "it" ? "/it/dove-dormire-a-ischia" : "/en/where-to-stay-in-ischia"}>
               {locale === "it" ? "Dove dormire a Ischia" : "Where to stay in Ischia"}
+            </a>
+          </li>
+          <li>
+            <a href={locale === "it" ? "/it/noleggio-gommoni-ischia" : "/en/rubber-dinghy-rental-ischia"}>
+              {locale === "it" ? "Noleggio gommoni a Ischia" : "Rubber dinghy rental in Ischia"}
             </a>
           </li>
           <li><a href={links.privacy}>{locale === "it" ? "Privacy" : "Privacy"}</a></li>

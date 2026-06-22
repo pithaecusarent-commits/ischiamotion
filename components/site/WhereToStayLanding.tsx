@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale } from "@/lib/types";
-import { breadcrumbJsonLd, faqJsonLd, siteUrl } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
 
 type PageContent = {
   eyebrow: string;
@@ -246,21 +246,9 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
   const searchPath = locale === "it" ? "/it/risultati" : "/en/results";
   const whatsappUrl = `https://wa.me/393296856370?text=${encodeURIComponent(c.whatsappMsg)}`;
 
-  const webpageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: c.h1,
-    description: locale === "it"
-      ? "Guida alle zone migliori dove dormire a Ischia: Ischia Porto, Forio, Sant'Angelo, Lacco Ameno, Maronti e consigli su scooter, auto ed e-bike."
-      : "Plan your stay in Ischia: where to stay, how to move around the island and useful local services. IschiaMotion and IschiaStars help you organize your trip.",
-    url: `${siteUrl}${path}`,
-    inLanguage: locale,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "IschiaMotion",
-      url: siteUrl
-    }
-  };
+  const pageDescription = locale === "it"
+    ? "Guida alle zone migliori dove dormire a Ischia: Ischia Porto, Forio, Sant'Angelo, Lacco Ameno, Maronti e consigli su scooter, auto ed e-bike."
+    : "Plan your stay in Ischia: where to stay, how to move around the island and useful local services. IschiaMotion and IschiaStars help you organize your trip.";
 
   return (
     <>
@@ -269,7 +257,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
         { name: c.breadcrumbLabel, url: `${siteUrl}${path}` }
       ])} />
       <JsonLd data={faqJsonLd(c.faqs)} />
-      <JsonLd data={webpageJsonLd} />
+      <JsonLd data={webpageJsonLd(locale, path, c.h1, pageDescription)} />
       <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
 

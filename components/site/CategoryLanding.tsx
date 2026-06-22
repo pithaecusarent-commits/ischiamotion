@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { CategoryLandingContent } from "@/lib/category-landings";
-import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, siteUrl } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
 
 function getSearchPath(content: CategoryLandingContent) {
   const basePath = content.locale === "it" ? "/it/risultati" : "/en/results";
@@ -203,22 +203,6 @@ const landingGuides = {
   practicalItems: Array<[string, string]>;
 }>>;
 
-function webpageJsonLd(content: CategoryLandingContent) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: content.title,
-    description: content.metaDescription,
-    url: `${siteUrl}${content.path}`,
-    inLanguage: content.locale,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "IschiaMotion",
-      url: siteUrl
-    }
-  };
-}
-
 export function CategoryLanding({ content }: { content: CategoryLandingContent }) {
   const homePath = content.locale === "it" ? "/it" : "/en";
   const searchPath = getSearchPath(content);
@@ -242,7 +226,7 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
       ])} />
       <JsonLd data={faqJsonLd(content.faqs)} />
       <JsonLd data={serviceJsonLd(content.locale, content.path, content.title, content.description)} />
-      <JsonLd data={webpageJsonLd(content)} />
+      <JsonLd data={webpageJsonLd(content.locale, content.path, content.title, content.metaDescription)} />
       <Header locale={content.locale} alternateHref={content.alternatePath} />
       <main className="seo-landing">
         <section className="seo-landing-hero">

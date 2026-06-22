@@ -189,7 +189,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               </a>
               <a
                 className="min-h-[44px] rounded-full border border-ink/10 bg-white/75 px-5 py-2.5 text-sm font-bold text-ink/65 shadow-sm transition hover:border-sea/30 hover:text-sea"
-                href="https://www.ischiamotion.com"
+                href="https://www.ischiamotion.com/it"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -446,7 +446,7 @@ export function AdminDashboard({ data, adminEmail }: Props) {
               accent="bg-mint/20 text-green-deep"
               description="Controlla l'esperienza cliente pubblica su ischiamotion.com."
               external
-              href="https://www.ischiamotion.com"
+              href="https://www.ischiamotion.com/it"
               icon="↗"
               title="Apri sito pubblico"
             />

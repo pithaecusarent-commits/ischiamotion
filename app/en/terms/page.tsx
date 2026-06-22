@@ -56,7 +56,7 @@ export default function TermsEnPage() {
                 VAT number: 10784981218<br />
                 Tel. <a href="tel:+393296856370">+39 329 685 6370</a><br />
                 Email: <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
-                Website: <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+                Website: <a href="/en">https://www.ischiamotion.com/en</a>
               </>
             )
           }

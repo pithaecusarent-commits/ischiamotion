@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
 
 export const metadata: Metadata = {
-  title: "Contact IschiaMotion in Lacco Ameno, Ischia",
-  description: "Contact IschiaMotion, a local Ischia platform connecting visitors with selected scooter, car, e-bike, boat and beach-service partners.",
+  title: "Contact IschiaMotion | Ischia",
+  description: "Contact IschiaMotion for scooters, cars, e-bikes, rubber dinghies, boats and seaside services in Ischia.",
   alternates: {
     canonical: "/en/contact",
     languages: { it: "/it/contatti", en: "/en/contact", "x-default": "/it/contatti" }
@@ -27,7 +27,7 @@ export default function ContactEnPage() {
             VAT number: 10784981218<br />
             <a href="tel:+393296856370">+39 329 685 6370</a><br />
             <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
-            <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+            <a href="/en">https://www.ischiamotion.com/en</a>
           </>
         ),
         sections: [

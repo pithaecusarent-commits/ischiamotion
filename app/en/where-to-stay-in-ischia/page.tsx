@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { WhereToStayLanding } from "@/components/site/WhereToStayLanding";
 
 export const metadata: Metadata = {
-  title: "Where to stay in Ischia and how to get around | IschiaMotion",
-  description: "Plan your stay in Ischia: where to stay, how to move around the island and useful local services. IschiaMotion and IschiaStars help you organize your trip.",
+  title: "Where to stay in Ischia: area guide | IschiaMotion",
+  description: "Compare Ischia Port, Forio, Lacco Ameno, Sant’Angelo and Maronti, with practical transport tips.",
   alternates: {
     canonical: "/en/where-to-stay-in-ischia",
     languages: {
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: "Where to stay in Ischia and how to get around | IschiaMotion",
-    description: "Plan your stay in Ischia: where to stay, how to move around the island and useful local services. IschiaMotion and IschiaStars help you organize your trip.",
+    title: "Where to stay in Ischia: area guide | IschiaMotion",
+    description: "Compare Ischia Port, Forio, Lacco Ameno, Sant’Angelo and Maronti, with practical transport tips.",
     url: "/en/where-to-stay-in-ischia",
     siteName: "IschiaMotion",
     type: "website",
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Where to stay in Ischia and how to get around | IschiaMotion",
-    description: "Plan your stay in Ischia: where to stay, how to move around the island and useful local services. IschiaMotion and IschiaStars help you organize your trip.",
+    title: "Where to stay in Ischia: area guide | IschiaMotion",
+    description: "Compare Ischia Port, Forio, Lacco Ameno, Sant’Angelo and Maronti, with practical transport tips.",
     images: ["/images/ischiamotion-logo.png"]
   }
 };

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { GettingAroundLanding } from "@/components/site/GettingAroundLanding";
 
-const title = "Come muoversi a Ischia: scooter, auto, e-bike, bus e barche | IschiaMotion";
-const description = "Guida pratica su come muoversi a Ischia: quando conviene scooter, auto, e-bike, bus, taxi o barca. Consigli per zone, porti, spiagge e richiesta disponibilità.";
+const title = "Come muoversi a Ischia | IschiaMotion";
+const description = "Guida a scooter, auto, e-bike, bus, taxi, barche e gommoni per muoversi a Ischia tra porti, spiagge e comuni.";
 
 export const metadata: Metadata = {
   title,

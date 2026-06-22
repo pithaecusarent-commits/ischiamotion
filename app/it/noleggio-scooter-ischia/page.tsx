@@ -5,9 +5,8 @@ import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Noleggio Scooter Ischia: Prezzi e Ritiro | IschiaMotion",
-  description: "Noleggio scooter a Ischia tramite partner locali selezionati. Verifica prezzi, disponibilità, casco e ritiro a Ischia Porto o in altre zone.",
-  keywords: ["noleggio scooter Ischia"],
+  title: "Noleggio scooter a Ischia | IschiaMotion",
+  description: "Richiedi uno scooter a Ischia. Verifica disponibilità, prezzi, casco e ritiro tramite partner locali selezionati.",
   alternates: {
     canonical: "/it/noleggio-scooter-ischia",
     languages: {
@@ -17,8 +16,8 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: "Noleggio Scooter Ischia: Prezzi e Ritiro | IschiaMotion",
-    description: "Noleggio scooter a Ischia tramite partner locali selezionati. Verifica prezzi, disponibilità, casco e ritiro a Ischia Porto o in altre zone.",
+    title: "Noleggio scooter a Ischia | IschiaMotion",
+    description: "Richiedi uno scooter a Ischia. Verifica disponibilità, prezzi, casco e ritiro tramite partner locali selezionati.",
     url: "/it/noleggio-scooter-ischia",
     siteName: "IschiaMotion",
     type: "website",
@@ -27,8 +26,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Noleggio Scooter Ischia: Prezzi e Ritiro | IschiaMotion",
-    description: "Noleggio scooter a Ischia tramite partner locali selezionati. Verifica prezzi, disponibilità, casco e ritiro a Ischia Porto o in altre zone.",
+    title: "Noleggio scooter a Ischia | IschiaMotion",
+    description: "Richiedi uno scooter a Ischia. Verifica disponibilità, prezzi, casco e ritiro tramite partner locali selezionati.",
     images: ["/images/ischiamotion-logo.png"]
   }
 };

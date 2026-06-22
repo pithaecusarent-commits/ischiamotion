@@ -7,8 +7,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/en/cookie-policy",
     languages: { it: "/it/cookie-policy", en: "/en/cookie-policy", "x-default": "/it/cookie-policy" }
-  },
-  robots: { index: true, follow: true }
+  }
 };
 
 export default function CookiePolicyEnPage() {

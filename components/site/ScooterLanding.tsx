@@ -4,29 +4,13 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale, PublicPickupPoint } from "@/lib/types";
-import { breadcrumbJsonLd, faqJsonLd, scooterFaq, serviceJsonLd, siteUrl } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, scooterFaq, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
 
 function formatPickupLabel(label: string) {
   return label
     .replace(" - ", " — ")
     .replace("Porto d'Ischia", "Porto d’Ischia")
     .replace("Sant'Angelo", "Sant’Angelo");
-}
-
-function webpageJsonLd(locale: Locale, path: string, title: string, description: string) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: title,
-    description,
-    url: `${siteUrl}${path}`,
-    inLanguage: locale,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "IschiaMotion",
-      url: siteUrl
-    }
-  };
 }
 
 export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; pickupPoints: PublicPickupPoint[] }) {

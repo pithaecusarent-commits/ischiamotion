@@ -5,9 +5,8 @@ import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Scooter Rental Ischia: Prices and Pickup | IschiaMotion",
-  description: "Scooter rental in Ischia through selected local partners. Check prices, availability, helmet and pickup at Ischia Port or other island areas.",
-  keywords: ["scooter rental Ischia"],
+  title: "Scooter rental in Ischia | IschiaMotion",
+  description: "Request a scooter in Ischia. Check availability, prices, helmets and pickup through selected local partners.",
   alternates: {
     canonical: "/en/scooter-rental-ischia",
     languages: {
@@ -17,8 +16,8 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: "Scooter Rental Ischia: Prices and Pickup | IschiaMotion",
-    description: "Scooter rental in Ischia through selected local partners. Check prices, availability, helmet and pickup at Ischia Port or other island areas.",
+    title: "Scooter rental in Ischia | IschiaMotion",
+    description: "Request a scooter in Ischia. Check availability, prices, helmets and pickup through selected local partners.",
     url: "/en/scooter-rental-ischia",
     siteName: "IschiaMotion",
     type: "website",
@@ -27,8 +26,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Scooter Rental Ischia: Prices and Pickup | IschiaMotion",
-    description: "Scooter rental in Ischia through selected local partners. Check prices, availability, helmet and pickup at Ischia Port or other island areas.",
+    title: "Scooter rental in Ischia | IschiaMotion",
+    description: "Request a scooter in Ischia. Check availability, prices, helmets and pickup through selected local partners.",
     images: ["/images/ischiamotion-logo.png"]
   }
 };

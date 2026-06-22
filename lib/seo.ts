@@ -1,7 +1,28 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com";
-export const organizationId = `${siteUrl}/#organization`;
+export const canonicalSiteUrl = "https://www.ischiamotion.com/";
+export const organizationId = "https://www.ischiamotion.com/#organization";
+export const websiteId = organizationId;
+
+export const organizationReference = {
+  "@type": ["Organization", "LocalBusiness"],
+  "@id": organizationId,
+  name: "IschiaMotion",
+  alternateName: "Ischia Motion",
+  url: canonicalSiteUrl
+};
+
+export const websiteReference = {
+  "@type": "WebSite",
+  "@id": organizationId,
+  name: "IschiaMotion",
+  alternateName: "Ischia Motion",
+  url: canonicalSiteUrl,
+  publisher: {
+    "@id": organizationId
+  }
+};
 
 export const scooterFaq = {
   it: [
@@ -108,13 +129,11 @@ export function faqJsonLd(faq: Array<{ question: string; answer: string }>) {
 export function websiteJsonLd(locale: Locale) {
   return {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "IschiaMotion",
-    url: siteUrl,
+    ...websiteReference,
     inLanguage: locale,
     potentialAction: {
       "@type": "SearchAction",
-      target: `${siteUrl}/${locale}?q={search_term_string}`,
+      target: `${canonicalSiteUrl}${locale}?q={search_term_string}`,
       "query-input": "required name=search_term_string"
     }
   };
@@ -123,14 +142,14 @@ export function websiteJsonLd(locale: Locale) {
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["Organization", "LocalBusiness"],
     "@id": organizationId,
     name: "IschiaMotion",
     alternateName: "Ischia Motion",
-    url: "https://www.ischiamotion.com",
+    url: canonicalSiteUrl,
     telephone: "+39 329 685 6370",
     email: "info@ischiamotion.com",
-    logo: `${siteUrl}/images/ischiamotion-logo.png`,
+    logo: `${canonicalSiteUrl}images/ischiamotion-logo.png`,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Via Fundera, 104",
@@ -155,10 +174,7 @@ export function serviceJsonLd(locale: Locale, path: string, name: string, descri
     name,
     description,
     provider: {
-      "@type": "Organization",
-      "@id": organizationId,
-      name: "IschiaMotion",
-      url: siteUrl
+      ...organizationReference
     },
     areaServed: {
       "@type": "Place",
@@ -166,6 +182,26 @@ export function serviceJsonLd(locale: Locale, path: string, name: string, descri
     },
     serviceType: locale === "it" ? "Piattaforma locale per richieste noleggio scooter auto e barche" : "Local scooter car and boat rental request platform",
     url: `${siteUrl}${path}`
+  };
+}
+
+export function webpageJsonLd(locale: Locale, path: string, name: string, description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url: `${siteUrl}${path}`,
+    inLanguage: locale,
+    isPartOf: {
+      ...websiteReference
+    },
+    about: {
+      "@id": organizationId
+    },
+    publisher: {
+      "@id": organizationId
+    }
   };
 }
 

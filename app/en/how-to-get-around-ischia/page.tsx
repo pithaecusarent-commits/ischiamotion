@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { GettingAroundLanding } from "@/components/site/GettingAroundLanding";
 
-const title = "How to get around Ischia: scooter, car, e-bike, bus and boat | IschiaMotion";
-const description = "A practical guide to getting around Ischia by scooter, car, e-bike, bus, taxi or boat, with tips by area, port, beach and travel style.";
+const title = "How to get around Ischia | IschiaMotion";
+const description = "A guide to scooters, cars, e-bikes, buses, taxis, boats and RIBs for getting around Ischia.";
 
 export const metadata: Metadata = {
   title,

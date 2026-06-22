@@ -75,7 +75,7 @@ export function SiteHome({
               <p>
                 IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati
                 sull’isola. Offre così un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
-                <a href="https://www.ischiamotion.com">ischiamotion.com</a>.
+                <a href="/it">ischiamotion.com/it</a>.
               </p>
               <p>
                 Esplora il <a href="/it/noleggio-scooter-ischia">noleggio scooter a Ischia</a>, il{" "}

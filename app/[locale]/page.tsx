@@ -20,11 +20,11 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!locales.includes(params.locale)) notFound();
   const isIt = params.locale === "it";
   const title = isIt
-    ? "Noleggio Ischia: Scooter, Auto, E-Bike e Barche | IschiaMotion"
-    : "Scooter, Car, E-bike & Boat Rental in Ischia | IschiaMotion";
+    ? "Noleggio a Ischia: scooter, auto e barche | IschiaMotion"
+    : "Ischia rentals: scooters, cars and boats | IschiaMotion";
   const description = isIt
-    ? "Cerchi noleggi a Ischia? Richiedi disponibilità per scooter, auto, e-bike, gommoni e barche tramite partner locali selezionati."
-    : "Request availability for scooters, cars, e-bikes and boats in Ischia through local partners. Receive quick confirmation when available.";
+    ? "Richiedi disponibilità per scooter, auto, e-bike, gommoni e barche a Ischia tramite partner locali selezionati."
+    : "Request scooters, cars, e-bikes, rubber dinghies and boats in Ischia through selected local partners.";
 
   return {
     title,
@@ -40,10 +40,7 @@ export function generateMetadata({ params }: Props): Metadata {
     alternates: {
       canonical: `/${params.locale}`,
       languages: { it: "/it", en: "/en", "x-default": "/it" }
-    },
-    keywords: isIt
-      ? ["noleggio Ischia", "noleggio veicoli Ischia", "noleggio scooter Ischia", "noleggio auto Ischia", "noleggio e-bike Ischia", "noleggio gommoni Ischia", "noleggio barche Ischia", "Beach Club Ischia"]
-      : ["vehicle rental Ischia", "scooter rental Ischia", "car rental Ischia", "e-bike rental Ischia", "rubber dinghy rental Ischia", "boat rental Ischia", "Ischia Beach Club"]
+    }
   };
 }
 

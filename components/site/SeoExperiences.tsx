@@ -78,7 +78,15 @@ export function SeoExperiences({ locale }: { locale: Locale }) {
             <div className="section-eyebrow">{item.eyebrow}</div>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
-            <a href="#prenota">{locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}</a>
+            <a href={
+              item.id === "giornate-in-mare"
+                ? locale === "it" ? "/it/noleggio-gommoni-ischia" : "/en/rubber-dinghy-rental-ischia"
+                : "#prenota"
+            }>
+              {item.id === "giornate-in-mare"
+                ? locale === "it" ? "Scopri i gommoni →" : "Explore rubber dinghies →"
+                : locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}
+            </a>
           </article>
         ))}
       </div>

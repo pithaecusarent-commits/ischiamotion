@@ -28,7 +28,7 @@ export default function PrivacyItPage() {
             P.IVA 10784981218<br />
             Tel. <a href="tel:+393296856370">+39 329 685 6370</a><br />
             Email: <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
-            Sito: <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+            Sito: <a href="/it">https://www.ischiamotion.com/it</a>
           </>
         ),
         sections: [

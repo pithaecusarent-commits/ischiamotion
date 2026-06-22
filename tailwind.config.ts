@@ -2,8 +2,11 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
+    "./app/page.tsx",
+    "./app/[locale]/**/*.{ts,tsx}",
+    "./app/en/**/*.{ts,tsx}",
+    "./app/it/**/*.{ts,tsx}",
+    "./components/site/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}"
   ],
   safelist: [

@@ -3,11 +3,11 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { JsonLd } from "@/components/site/JsonLd";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
-import { breadcrumbJsonLd, organizationId, siteUrl } from "@/lib/seo";
+import { breadcrumbJsonLd, canonicalSiteUrl, organizationId, siteUrl, websiteReference } from "@/lib/seo";
 
 const path = "/it/ischiamotion";
-const title = "IschiaMotion | Piattaforma locale per noleggi e servizi turistici a Ischia";
-const description = "Scopri IschiaMotion, piattaforma locale per richiedere scooter, auto, e-bike, gommoni e beach club a Ischia tramite partner selezionati.";
+const title = "Chi è IschiaMotion | Piattaforma locale a Ischia";
+const description = "Scopri IschiaMotion: piattaforma locale per richieste di mobilità e servizi mare tramite partner selezionati a Ischia.";
 
 export const metadata: Metadata = {
   title,
@@ -43,11 +43,18 @@ const webPageJsonLd = {
   description,
   url: `${siteUrl}${path}`,
   inLanguage: "it",
+  isPartOf: {
+    ...websiteReference
+  },
   about: {
     "@type": "LocalBusiness",
     "@id": organizationId,
     name: "IschiaMotion",
-    url: "https://www.ischiamotion.com"
+    alternateName: "Ischia Motion",
+    url: canonicalSiteUrl
+  },
+  publisher: {
+    "@id": organizationId
   }
 };
 
@@ -103,6 +110,69 @@ export default function IschiaMotionPage() {
         <section className="seo-landing-section">
           <div className="section-header">
             <div>
+              <div className="section-eyebrow">Come funziona</div>
+              <h2 className="section-title">Un unico punto per orientare la richiesta</h2>
+            </div>
+          </div>
+          <div className="seo-landing-grid">
+            <article className="seo-card">
+              <h3>1. Indichi cosa ti serve</h3>
+              <p>Comunichi categoria, date, numero di persone e zona preferita. Puoi richiedere scooter, auto, e-bike, gommoni, barche o servizi Beach Club.</p>
+            </article>
+            <article className="seo-card">
+              <h3>2. Verifichiamo le opzioni</h3>
+              <p>IschiaMotion controlla disponibilità, requisiti, ritiro, consegna dove prevista e condizioni con i partner locali compatibili.</p>
+            </article>
+            <article className="seo-card">
+              <h3>3. Ricevi una conferma chiara</h3>
+              <p>La richiesta non equivale a una prenotazione automatica. La conferma arriva dopo la verifica dell’opzione e delle condizioni applicabili.</p>
+            </article>
+          </div>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">Cosa ci distingue</div>
+              <h2 className="section-title">Una piattaforma locale, non un singolo autonoleggio</h2>
+            </div>
+          </div>
+          <article className="seo-card">
+            <p>
+              IschiaMotion non presenta come proprie tutte le disponibilità pubblicate e non è il fornitore diretto di ogni mezzo o servizio.
+              Il suo ruolo è raccogliere la richiesta, aiutare il cliente a definire zona e necessità e verificare una soluzione con operatori
+              locali selezionati. Questo permette di considerare categorie diverse e più zone dell’isola attraverso un solo punto di contatto.
+            </p>
+            <p>
+              Mezzo, contratto, requisiti, cauzione, coperture, prezzo e modalità operative dipendono dal partner che fornisce concretamente
+              il servizio e vengono comunicati prima della conferma finale.
+            </p>
+          </article>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">Identità del brand</div>
+              <h2 className="section-title">IschiaMotion non è Ischia Motor</h2>
+            </div>
+          </div>
+          <article className="seo-card">
+            <p>
+              IschiaMotion e Ischia Motor sono denominazioni distinte. IschiaMotion è il progetto descritto su questo sito,
+              identificato dal dominio ufficiale ischiamotion.com e dedicato alla gestione di richieste di mobilità e servizi mare
+              tramite una rete di partner locali.
+            </p>
+            <p>
+              “Ischia Motor” non è un nome alternativo, un’abbreviazione o una diversa grafia di IschiaMotion. Salvo indicazioni
+              esplicite, non va quindi considerato affiliato, collegato o equivalente a questo progetto.
+            </p>
+          </article>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
               <div className="section-eyebrow">I servizi IschiaMotion a Ischia</div>
               <h2 className="section-title">Scegli il servizio e richiedi disponibilità</h2>
             </div>
@@ -133,7 +203,7 @@ export default function IschiaMotionPage() {
               Ischia, Italia<br />
               <a href="tel:+393296856370">+39 329 685 6370</a><br />
               <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
-              <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+              <a href="/it">https://www.ischiamotion.com/it</a>
             </p>
           </article>
         </section>
