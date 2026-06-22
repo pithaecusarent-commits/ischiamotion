@@ -19,7 +19,18 @@ export default function PrivacyItPage() {
         title: "Informativa privacy",
         intro: "Questa informativa descrive in modo semplice come vengono trattati i dati inviati tramite IschiaMotion, piattaforma locale che facilita richieste di disponibilità per noleggi tramite partner selezionati.",
         cardTitle: "Titolare del trattamento",
-        cardText: "Luigi Schiano, Via Fundera, 104, Lacco Ameno, Ischia. P.IVA 10784981218. Email: info@ischiamotion.com.",
+        cardText: (
+          <>
+            IschiaMotion<br />
+            Titolare: Luigi Schiano<br />
+            Via Fundera, 104<br />
+            80076 Lacco Ameno (NA), Ischia, Italia<br />
+            P.IVA 10784981218<br />
+            Tel. <a href="tel:+393296856370">+39 329 685 6370</a><br />
+            Email: <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
+            Sito: <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+          </>
+        ),
         sections: [
           {
             title: "Dati raccolti",

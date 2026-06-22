@@ -80,7 +80,7 @@ const content: Record<Locale, PageContent> = {
     mobilityItems: [
       ["Zona e mezzo: un binomio importante", "Chi soggiorna lontano dal porto o dalle spiagge principali si trova spesso a dover noleggiare un mezzo. Valutare questo aspetto prima di scegliere l'alloggio aiuta a pianificare meglio la vacanza."],
       ["Scoprire calette e borghi", "Chi vuole esplorare l'isola in autonomia, raggiungere calette poco frequentate o visitare borghi lontani dall'hotel, si organizza meglio con lo scooter, l'auto o l'e-bike giusta."],
-      ["IschiaMotion per la mobilità", "IschiaMotion è una piattaforma locale per richiedere disponibilità di scooter, auto, e-bike, gommoni, barche e beach club a Ischia tramite partner selezionati. Non è un noleggiatore diretto, ma un punto unico per organizzare la mobilità sull'isola."],
+      ["IschiaMotion per la mobilità", "IschiaMotion è una piattaforma locale per richiedere disponibilità di scooter, auto, e-bike, gommoni, barche e beach club a Ischia. Raccoglie la richiesta e verifica disponibilità, condizioni e conferma con partner selezionati sull'isola."],
       ["Pianificare prima", "Richiedere un mezzo in anticipo, soprattutto in alta stagione, aiuta ad avere più scelta e a partire senza imprevisti il giorno dell'arrivo."]
     ],
     ischiastarsEyebrow: "Risorsa consigliata",

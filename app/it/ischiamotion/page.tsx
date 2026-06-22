@@ -3,7 +3,7 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { JsonLd } from "@/components/site/JsonLd";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
-import { breadcrumbJsonLd, siteUrl } from "@/lib/seo";
+import { breadcrumbJsonLd, organizationId, siteUrl } from "@/lib/seo";
 
 const path = "/it/ischiamotion";
 const title = "IschiaMotion | Piattaforma locale per noleggi e servizi turistici a Ischia";
@@ -45,6 +45,7 @@ const webPageJsonLd = {
   inLanguage: "it",
   about: {
     "@type": "LocalBusiness",
+    "@id": organizationId,
     name: "IschiaMotion",
     url: "https://www.ischiamotion.com"
   }
@@ -86,7 +87,7 @@ export default function IschiaMotionPage() {
           <div className="seo-landing-grid">
             <article className="seo-card">
               <h3>Una piattaforma indipendente</h3>
-              <p>IschiaMotion è un servizio autonomo e non è una concessionaria. Aiuta turisti e visitatori a inviare richieste chiare, senza promettere disponibilità immediata.</p>
+              <p>IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati sull’isola.</p>
             </article>
             <article className="seo-card">
               <h3>Operativa a Ischia</h3>
@@ -111,9 +112,30 @@ export default function IschiaMotionPage() {
             <a href="/it/noleggio-auto-ischia">Noleggio auto a Ischia</a>
             <a href="/it/noleggio-bici-elettriche-ischia">Noleggio e-bike a Ischia</a>
             <a href="/it/noleggio-gommoni-ischia">Noleggio gommoni a Ischia</a>
+            <a href="/it/noleggio-barche-ischia">Noleggio barche a Ischia</a>
             <a href="/it/beach-club-ischia">Beach club a Ischia</a>
             <a href="/it/contatti">Contatta IschiaMotion</a>
           </div>
+        </section>
+
+        <section className="seo-landing-section">
+          <div className="section-header">
+            <div>
+              <div className="section-eyebrow">Riferimento locale</div>
+              <h2 className="section-title">Sede e contatti</h2>
+            </div>
+          </div>
+          <article className="seo-card">
+            <p>
+              IschiaMotion<br />
+              Via Fundera, 104<br />
+              80076 Lacco Ameno (NA)<br />
+              Ischia, Italia<br />
+              <a href="tel:+393296856370">+39 329 685 6370</a><br />
+              <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
+              <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+            </p>
+          </article>
         </section>
 
         <section className="final-cta">

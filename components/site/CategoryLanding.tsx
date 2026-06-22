@@ -250,6 +250,11 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
             <div className="section-eyebrow">{content.eyebrow}</div>
             <h1>{content.title}</h1>
             <p>{content.description}</p>
+            <p>
+              {content.locale === "it"
+                ? "IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati sull’isola."
+                : "IschiaMotion collects your request and checks availability, conditions and confirmation with selected local partners on the island."}
+            </p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn" data-ga-event="click_request_availability" data-ga-category={content.key}>{content.primaryCta}</a>
               <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">

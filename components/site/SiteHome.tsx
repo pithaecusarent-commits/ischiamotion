@@ -62,28 +62,41 @@ export function SiteHome({
           onDeliveryMethodChange={setDeliveryMethod}
         />
         <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
-        {locale === "it" ? (
-          <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
-            <div className="section-eyebrow">Il brand locale</div>
-            <h2 id="brand-intro-title">Cos’è IschiaMotion</h2>
-            <p>
-              <a href="/it/ischiamotion">IschiaMotion</a> è una piattaforma locale di Ischia dedicata alla mobilità turistica e ai servizi mare.
-              Aiutiamo turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni e beach club tramite partner locali
-              selezionati sull’isola.
-            </p>
-            <p>
-              IschiaMotion è un servizio indipendente e non è una concessionaria. Il nostro obiettivo è semplificare la richiesta di noleggi
-              e servizi turistici a Ischia, offrendo un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
-              <a href="https://www.ischiamotion.com">ischiamotion.com</a>.
-            </p>
-            <p>
-              Esplora il <a href="/it/noleggio-scooter-ischia">noleggio scooter a Ischia</a>, il{" "}
-              <a href="/it/noleggio-auto-ischia">noleggio auto a Ischia</a>, il{" "}
-              <a href="/it/noleggio-bici-elettriche-ischia">noleggio e-bike a Ischia</a> e le opzioni per{" "}
-              <a href="/it/noleggio-gommoni-ischia">gommoni</a> o <a href="/it/noleggio-barche-ischia">barche</a>.
-            </p>
-          </section>
-        ) : null}
+        <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
+          <div className="section-eyebrow">{locale === "it" ? "Il brand locale" : "The local platform"}</div>
+          <h2 id="brand-intro-title">{locale === "it" ? "Cos’è IschiaMotion" : "What IschiaMotion is"}</h2>
+          {locale === "it" ? (
+            <>
+              <p>
+                <a href="/it/ischiamotion">IschiaMotion</a> è una piattaforma locale di Ischia dedicata alla mobilità turistica e ai servizi mare.
+                Aiutiamo turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni e beach club tramite partner locali
+                selezionati sull’isola.
+              </p>
+              <p>
+                IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati
+                sull’isola. Offre così un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
+                <a href="https://www.ischiamotion.com">ischiamotion.com</a>.
+              </p>
+              <p>
+                Esplora il <a href="/it/noleggio-scooter-ischia">noleggio scooter a Ischia</a>, il{" "}
+                <a href="/it/noleggio-auto-ischia">noleggio auto a Ischia</a>, il{" "}
+                <a href="/it/noleggio-bici-elettriche-ischia">noleggio e-bike a Ischia</a> e le opzioni per{" "}
+                <a href="/it/noleggio-gommoni-ischia">gommoni</a> o <a href="/it/noleggio-barche-ischia">barche</a>.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                IschiaMotion is a local marketplace for mobility and marine services across the island of Ischia. We collect availability
+                requests and connect visitors with selected local partners.
+              </p>
+              <p>
+                IschiaMotion collects your request and checks availability, conditions and confirmation with selected local partners on
+                the island. This makes local mobility and marine-service requests clearer and simpler.
+              </p>
+            </>
+          )}
+        </section>
         <PickupPointsSection locale={locale} pickupPoints={pickupPoints} />
         <ExperienceSection locale={locale} />
         <SeoExperiences locale={locale} />

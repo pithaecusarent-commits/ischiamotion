@@ -35,10 +35,15 @@ export function Footer({ locale }: { locale: Locale }) {
             <strong><a href={locale === "it" ? "/it/ischiamotion" : "/en"}>IschiaMotion</a></strong>
             <span>
               {locale === "it"
-                ? "Piattaforma locale per noleggio scooter, auto, e-bike, gommoni e servizi mare a Ischia."
-                : "Local platform for scooter, car, e-bike, rubber dinghy and seaside service requests in Ischia."}
+                ? "Piattaforma locale per richieste di mobilità e servizi mare a Ischia."
+                : "Local platform for mobility and marine-service requests in Ischia."}
             </span>
-            <span>Via Fundera, 104 - Lacco Ameno, Ischia</span>
+            <span>
+              {locale === "it"
+                ? "IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati sull’isola."
+                : "IschiaMotion collects your request and checks availability, conditions and confirmation with selected local partners on the island."}
+            </span>
+            <span>Via Fundera, 104, 80076 Lacco Ameno (NA), Italia</span>
             <a href="tel:+393296856370">+39 329 685 6370</a>
             <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a>
             <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>

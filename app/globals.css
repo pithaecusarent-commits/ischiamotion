@@ -1397,6 +1397,7 @@ body.cookie-banner-visible .whatsapp-cta {
   font-size: 17px;
   line-height: 1.75;
   max-width: 920px;
+  overflow-wrap: anywhere;
 }
 .brand-intro p + p { margin-top: 14px; }
 .brand-intro a {
@@ -1489,6 +1490,7 @@ body.cookie-banner-visible .whatsapp-cta {
 .seo-landing-card p {
   color: var(--ink-mid);
   line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 .seo-landing-grid {
   display: grid;
@@ -1622,6 +1624,7 @@ body.cookie-banner-visible .whatsapp-cta {
   line-height: 1.75;
   font-size: 15px;
   font-weight: 300;
+  overflow-wrap: anywhere;
 }
 .seo-card a {
   display: inline-flex;
@@ -1830,6 +1833,7 @@ footer {
   color: rgba(21,21,18,.68);
   font-size: 13px;
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 .footer-brand-details strong {
   font-size: 16px;

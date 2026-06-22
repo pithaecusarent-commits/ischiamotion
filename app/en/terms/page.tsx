@@ -23,7 +23,7 @@ export default function TermsEnPage() {
         sections: [
           {
             title: "Role of IschiaMotion",
-            body: "IschiaMotion is a local platform connecting customers with selected rental partners in Ischia. It does not claim to directly own the vehicles shown."
+            body: "IschiaMotion is a local platform that collects requests and checks availability and conditions through selected partners. Vehicles and services are provided by the respective local operators."
           },
           {
             title: "Availability request",
@@ -47,7 +47,18 @@ export default function TermsEnPage() {
           },
           {
             title: "Owner details",
-            body: "IschiaMotion refers to Luigi Schiano, Via Fundera, 104, Lacco Ameno, Ischia. VAT number: 10784981218. Email: info@ischiamotion.com."
+            body: (
+              <>
+                IschiaMotion<br />
+                Owner: Luigi Schiano<br />
+                Via Fundera, 104<br />
+                80076 Lacco Ameno (NA), Ischia, Italia<br />
+                VAT number: 10784981218<br />
+                Tel. <a href="tel:+393296856370">+39 329 685 6370</a><br />
+                Email: <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
+                Website: <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+              </>
+            )
           }
         ]
       }}

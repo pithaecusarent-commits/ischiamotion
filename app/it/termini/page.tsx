@@ -23,7 +23,7 @@ export default function TermsItPage() {
         sections: [
           {
             title: "Ruolo di IschiaMotion",
-            body: "IschiaMotion è una piattaforma locale che mette in contatto clienti e noleggiatori o partner selezionati a Ischia. Non dichiara di possedere direttamente i mezzi mostrati."
+            body: "IschiaMotion è una piattaforma locale che raccoglie richieste e verifica disponibilità e condizioni tramite partner selezionati. I mezzi e i servizi sono forniti dai rispettivi operatori locali."
           },
           {
             title: "Richiesta disponibilità",
@@ -47,7 +47,18 @@ export default function TermsItPage() {
           },
           {
             title: "Titolare",
-            body: "IschiaMotion fa riferimento a Luigi Schiano, Via Fundera, 104, Lacco Ameno, Ischia. P.IVA 10784981218. Email: info@ischiamotion.com."
+            body: (
+              <>
+                IschiaMotion<br />
+                Titolare: Luigi Schiano<br />
+                Via Fundera, 104<br />
+                80076 Lacco Ameno (NA), Ischia, Italia<br />
+                P.IVA 10784981218<br />
+                Tel. <a href="tel:+393296856370">+39 329 685 6370</a><br />
+                Email: <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a><br />
+                Sito: <a href="https://www.ischiamotion.com">https://www.ischiamotion.com</a>
+              </>
+            )
           }
         ]
       }}

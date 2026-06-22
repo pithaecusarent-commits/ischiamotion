@@ -1,6 +1,7 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com";
+export const organizationId = `${siteUrl}/#organization`;
 
 export const scooterFaq = {
   it: [
@@ -39,6 +40,10 @@ export const scooterFaq = {
     {
       question: "Casco, cauzione e documenti sono inclusi?",
       answer: "Casco, cauzione, documenti richiesti e condizioni dipendono dal partner e dal mezzo. IschiaMotion li verifica e li comunica prima della conferma finale."
+    },
+    {
+      question: "IschiaMotion è il noleggiatore diretto?",
+      answer: "IschiaMotion è una piattaforma locale che raccoglie richieste e verifica disponibilità e condizioni tramite partner selezionati. I mezzi e i servizi sono forniti dai rispettivi operatori locali."
     }
   ],
   en: [
@@ -77,6 +82,10 @@ export const scooterFaq = {
     {
       question: "Are helmet, deposit and documents included?",
       answer: "Helmet, deposit, required documents and conditions depend on the partner and scooter. IschiaMotion checks and communicates them before final confirmation."
+    },
+    {
+      question: "Is IschiaMotion the direct rental provider?",
+      answer: "IschiaMotion is a local platform that collects requests and checks availability and conditions through selected partners. Vehicles and services are provided by the respective local operators."
     }
   ]
 } satisfies Record<Locale, Array<{ question: string; answer: string }>>;
@@ -115,9 +124,11 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": organizationId,
     name: "IschiaMotion",
     alternateName: "Ischia Motion",
     url: "https://www.ischiamotion.com",
+    telephone: "+39 329 685 6370",
     email: "info@ischiamotion.com",
     logo: `${siteUrl}/images/ischiamotion-logo.png`,
     address: {
@@ -132,11 +143,8 @@ export function organizationJsonLd() {
       "@type": "Place",
       name: "Ischia"
     },
-    description: "IschiaMotion è una piattaforma locale a Ischia per richiedere disponibilità di scooter, auto, e-bike, gommoni e servizi mare tramite partner selezionati.",
-    sameAs: [
-      "https://www.ischiamotion.com",
-      "https://it.trustpilot.com/review/ischiamotion.com"
-    ]
+    description: "IschiaMotion è una piattaforma locale per richieste di mobilità e servizi mare a Ischia tramite partner selezionati.",
+    sameAs: ["https://it.trustpilot.com/review/ischiamotion.com"]
   };
 }
 
@@ -148,6 +156,7 @@ export function serviceJsonLd(locale: Locale, path: string, name: string, descri
     description,
     provider: {
       "@type": "Organization",
+      "@id": organizationId,
       name: "IschiaMotion",
       url: siteUrl
     },
