@@ -22,9 +22,37 @@ function createPublicSupabaseClient() {
   });
 }
 
+function createServiceRoleSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error("Missing Supabase server environment variables.");
+  }
+
+  return createClient(supabaseUrl, serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false
+    }
+  });
+}
+
 function clean(value: unknown) {
   return String(value || "").trim();
 }
+
+type PublicVehicleOfferRow = {
+  id: string;
+  pickup_point_id: string;
+  price_from: number | null;
+};
+
+type VehicleOfferIdentity = {
+  id: string;
+  vehicle_model_id: string | null;
+  vehicle_categories: { slug: string } | { slug: string }[] | null;
+};
 
 function isValidRequest(input: Partial<BookingRequestInput>) {
   return Boolean(
@@ -40,6 +68,68 @@ function isValidRequest(input: Partial<BookingRequestInput>) {
     input.vehicleLabel &&
     input.pickupPointLabel
   );
+}
+
+function relationValue<T>(value: T | T[] | null) {
+  return Array.isArray(value) ? value[0] || null : value;
+}
+
+async function resolveBestVehicleOffer(
+  input: BookingRequestInput,
+  publicSupabase: ReturnType<typeof createPublicSupabaseClient>
+) {
+  if (!input.vehicleId) return null;
+
+  const serviceSupabase = createServiceRoleSupabaseClient();
+  const { data: originalOffer, error: originalOfferError } = await serviceSupabase
+    .from("vehicles")
+    .select("id, vehicle_model_id, vehicle_categories(slug)")
+    .eq("id", input.vehicleId)
+    .maybeSingle();
+
+  if (originalOfferError || !originalOffer) return null;
+
+  const identity = originalOffer as unknown as VehicleOfferIdentity;
+  const category = relationValue(identity.vehicle_categories);
+  if (!category?.slug) return null;
+
+  const { data: matchingOffers, error: searchError } = await publicSupabase.rpc(
+    "search_public_vehicles",
+    {
+      p_category_slug: category.slug,
+      p_start_date: input.startDate,
+      p_end_date: input.endDate,
+      p_delivery_method: input.deliveryMethod,
+      p_pickup_municipality: input.pickupMunicipality || null,
+      p_port_slug: input.portSlug || null,
+      p_hotel_municipality: input.hotelMunicipality || null
+    }
+  );
+
+  if (searchError) return null;
+
+  const publicOffers = (matchingOffers || []) as PublicVehicleOfferRow[];
+  if (identity.vehicle_model_id === null) {
+    return publicOffers.find((offer) => offer.id === identity.id) || null;
+  }
+
+  const offerIds = publicOffers.map((offer) => offer.id);
+  if (offerIds.length === 0) return null;
+
+  const { data: offerIdentities, error: offerIdentitiesError } = await serviceSupabase
+    .from("vehicles")
+    .select("id, vehicle_model_id")
+    .in("id", offerIds);
+
+  if (offerIdentitiesError) return null;
+
+  const matchingIdentity = (offerIdentities || []).find(
+    (offer) => offer.vehicle_model_id === identity.vehicle_model_id
+  );
+
+  return matchingIdentity
+    ? publicOffers.find((offer) => offer.id === matchingIdentity.id) || null
+    : null;
 }
 
 async function sendBookingEmails(request: Request, bookingId: string | null, input: BookingRequestInput) {
@@ -140,6 +230,23 @@ export async function POST(request: Request) {
   }
 
   const supabase = createPublicSupabaseClient();
+
+  if (input.vehicleId) {
+    const resolvedOffer = await resolveBestVehicleOffer(input, supabase);
+    if (!resolvedOffer) {
+      return NextResponse.json(
+        { ok: false, error: "No compatible vehicle offer is currently available." },
+        { status: 400 }
+      );
+    }
+
+    input.vehicleId = resolvedOffer.id;
+    input.pickupPointId = resolvedOffer.pickup_point_id;
+    if (resolvedOffer.price_from !== null) {
+      input.paymentNotes = `Prezzo verificato per l'offerta selezionata: €${Number(resolvedOffer.price_from)}/giorno`;
+    }
+  }
+
   const { data, error } = await supabase.rpc("create_public_booking_request", {
     p_booking_code: input.bookingCode,
     p_customer_first_name: input.firstName,
