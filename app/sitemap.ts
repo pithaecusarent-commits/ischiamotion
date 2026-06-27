@@ -9,6 +9,8 @@ const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sit
   { path: "/en/scooter-rental-ischia", priority: 0.9, freq: "monthly" },
   { path: "/it/noleggio-auto-ischia", priority: 0.85, freq: "monthly" },
   { path: "/en/car-rental-ischia", priority: 0.85, freq: "monthly" },
+  { path: "/it/noleggio-auto-ischia-porto", priority: 0.8, freq: "monthly" },
+  { path: "/en/car-rental-ischia-port", priority: 0.8, freq: "monthly" },
   { path: "/it/noleggio-bici-elettriche-ischia", priority: 0.85, freq: "monthly" },
   { path: "/en/e-bike-rental-ischia", priority: 0.85, freq: "monthly" },
   { path: "/it/noleggio-gommoni-ischia", priority: 0.85, freq: "monthly" },
