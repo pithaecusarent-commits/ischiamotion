@@ -1819,7 +1819,7 @@ body.cookie-banner-visible .whatsapp-cta {
 footer {
   background: #E0F4F8;
   padding: 36px 5vw;
-  color: var(--ink);
+  color: rgba(21,21,18,.78);
 }
 .footer-wrap {
   max-width: 1280px;
@@ -1838,7 +1838,7 @@ footer {
 .footer-brand-details {
   display: grid;
   gap: 4px;
-  color: rgba(21,21,18,.68);
+  color: rgba(21,21,18,.76);
   font-size: 13px;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -1847,6 +1847,9 @@ footer {
   font-size: 16px;
 }
 .footer-brand-details a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: inherit;
   overflow-wrap: anywhere;
 }
@@ -1870,17 +1873,26 @@ footer {
   list-style: none;
   justify-content: center;
 }
-.footer-links a {
+.footer-links a,
+.footer-manage-cookies {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   font-size: 13px;
-  color: rgba(21,21,18,.68);
+  color: rgba(21,21,18,.78);
   text-decoration: none;
   transition: color .2s;
-  padding: 8px 10px;
+  padding: 10px 12px;
 }
-.footer-links a:hover { color: var(--green-dark); }
+.footer-manage-cookies {
+  min-width: 44px;
+}
+.footer-links a:hover,
+.footer-manage-cookies:hover { color: var(--green-dark); }
 .footer-copy {
   font-size: 13px;
-  color: rgba(21,21,18,.54);
+  color: rgba(21,21,18,.72);
   min-width: max-content;
 }
 
