@@ -58,7 +58,7 @@ export function Footer({ locale }: { locale: Locale }) {
         </div>
         <ul className="footer-links">
           {locale === "it" ? (
-            <li><a href="/it/ischiamotion">piattaforma locale IschiaMotion</a></li>
+            <li><a href="/it/ischiamotion">Piattaforma locale per la mobilità a Ischia</a></li>
           ) : null}
           <li>
             <a href={locale === "it" ? "/it/come-muoversi-a-ischia" : "/en/how-to-get-around-ischia"}>
