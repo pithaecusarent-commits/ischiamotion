@@ -41,16 +41,17 @@ export function CookieConsent() {
     const banner = bannerRef.current;
     if (!bannerVisible || !banner) return;
 
-    function updateBannerHeight() {
-      const height = bannerRef.current?.offsetHeight;
+    function updateBannerHeight(height: number) {
       if (height) {
         document.documentElement.style.setProperty("--cookie-banner-height", `${height}px`);
       }
     }
 
     document.body.classList.add("cookie-banner-visible");
-    updateBannerHeight();
-    const observer = new ResizeObserver(updateBannerHeight);
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) updateBannerHeight(entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height);
+    });
     observer.observe(banner);
 
     return () => {
