@@ -27,6 +27,8 @@ export type CategoryLandingContent = {
   benefits: Array<[string, string]>;
   zonesTitle: string;
   zonesText: string;
+  inspirationTitle?: string;
+  inspirationText?: string;
   howTitle: string;
   steps: Array<[string, string]>;
   whenTitle: string;
@@ -174,6 +176,8 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Partner scelti con cura", "La richiesta viene controllata con operatori locali selezionati per affidabilità e conoscenza della costa."]
       ],
       zonesText: "Per un gommone contano soprattutto punto nautico, costa da raggiungere e rientro. Ischia Porto e Casamicciola sono pratici per chi arriva sull'isola; Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a orientare calette e tratti panoramici. Citara e Maronti sono riferimenti utili per immaginare la giornata in mare, mentre la partenza resta legata ai punti definiti dai partner.",
+      inspirationTitle: "Idee per una giornata in gommone a Ischia",
+      inspirationText: "Con un gommone puoi vivere Ischia dal mare, raggiungendo baie, calette e tratti di costa suggestivi tra Lacco Ameno, Forio, Sant'Angelo, Maronti e altre zone dell'isola. L'itinerario dipende sempre da meteo, mare, disponibilità e indicazioni del partner locale.",
       whenTitle: "Quando conviene il gommone",
       whenItems: [
         ["Giornata in mare", "Adatto a chi vuole vivere costa, calette e soste panoramiche con un mezzo nautico agile."],
@@ -215,6 +219,8 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."]
       ],
       zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto è uno dei punti più richiesti per organizzare il noleggio di barche e uscite in mare, ma disponibilità, punto di imbarco e condizioni vengono sempre confermati dopo verifica con il partner. Casamicciola, Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Per chi cerca affitto barca a Ischia, la partenza resta comunque soggetta al punto indicato dal partner.",
+      inspirationTitle: "Vivere Ischia dal mare",
+      inspirationText: "Il noleggio barca permette di scoprire l'isola da una prospettiva diversa, tra baie, coste panoramiche, soste bagno e itinerari personalizzati. Le soluzioni disponibili possono variare in base al periodo, alle condizioni meteo-marine e ai partner selezionati.",
       whenTitle: "Quando conviene la barca",
       whenItems: [
         ["Autonomia in mare", "Adatta quando il partner prevede noleggio in autonomia e i requisiti sono rispettati."],
@@ -251,6 +257,12 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       primaryCta: "Richiedi disponibilità Beach Club",
       categoryParam: "beach_club",
       howTitle: "Richiesta tramite strutture locali selezionate",
+      steps: [
+        ["Scegli data e preferenze", "Indichi giorno, numero di persone, zona preferita, lettini, ombrelloni o servizi desiderati."],
+        ["Invia la richiesta", "La richiesta arriva a IschiaMotion con i dettagli utili per verificare disponibilità e condizioni della struttura."],
+        ["Verifica con i partner", "Controlliamo le opzioni con beach club, stabilimenti e partner locali selezionati."],
+        ["Ricevi conferma", "Ti ricontattiamo con disponibilità, servizi confermati e prossimi passaggi."]
+      ],
       benefits: [
         ["Lettino riservato", "Un beach club ti permette di vivere il mare senza pensieri con lettino, ombrellone e servizi in spiaggia."],
         ["Servizi curati", "Ristorazione, assistenza e ambienti organizzati rendono la giornata più semplice per coppie, famiglie e gruppi."],
@@ -382,6 +394,8 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Carefully selected partners", "We review the request with local operators selected for reliability and knowledge of the coast."]
       ],
       zonesText: "For a rubber dinghy or RIB, the nautical pickup point matters more than hotel location. Ischia Port and Casamicciola are useful for arrivals; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coves and scenic coast. Citara and Maronti can shape the idea of the day at sea, while departure remains tied to partner-defined nautical points.",
+      inspirationTitle: "Ideas for a day by rubber dinghy in Ischia",
+      inspirationText: "A rubber dinghy lets you experience Ischia from the sea, reaching bays, coves and scenic coastline around Lacco Ameno, Forio, Sant'Angelo, Maronti and other island areas. The itinerary always depends on weather, sea conditions, availability and local partner guidance.",
       whenTitle: "When a rubber dinghy makes sense",
       whenItems: [
         ["Day at sea", "Good for enjoying coast, coves and scenic stops with an agile nautical option."],
@@ -423,6 +437,8 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Defined nautical points", "Boat pickup is at an indicated point or IschiaMotion Point, not hotel delivery."]
       ],
       zonesText: "Boat rental depends on nautical points rather than hotel delivery. Ischia Port and Casamicciola are convenient for arrivals and departures; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coastal areas and coves. Citara and Maronti can shape the itinerary idea, while departure remains subject to the partner's confirmed point.",
+      inspirationTitle: "Experience Ischia from the sea",
+      inspirationText: "Boat rental lets you discover the island from a different perspective, with bays, panoramic coastline, swimming stops and personalized itinerary ideas. Available options may vary by season, marine weather and selected partners.",
       whenTitle: "When boat rental works well",
       whenItems: [
         ["Autonomy at sea", "Suitable when a partner offers independent rental and requirements are met."],
@@ -459,6 +475,12 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       primaryCta: "Request Beach Club availability",
       categoryParam: "beach_club",
       howTitle: "Request through selected local venues",
+      steps: [
+        ["Choose date and preferences", "Share the date, number of guests, preferred area, sunbeds, umbrellas or requested services."],
+        ["Send the request", "Your request reaches IschiaMotion with the details needed to review venue availability and conditions."],
+        ["Partner review", "We check options with beach clubs, seaside venues and selected local partners."],
+        ["Receive confirmation", "We contact you with availability, confirmed services and next steps."]
+      ],
       benefits: [
         ["Reserved sunbeds", "A beach club allows you to enjoy the sea without stress with sunbeds, umbrellas and beach assistance."],
         ["Curated services", "Food, drinks, organized spaces and dedicated services make the day easier for couples, families and groups."],

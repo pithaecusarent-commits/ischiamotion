@@ -5,6 +5,7 @@ import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, scooterFaq, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
+import { Fragment } from "react";
 
 function formatPickupLabel(label: string) {
   return label
@@ -256,8 +257,11 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             </div>
           </div>
           <div className="seo-landing-pickups">
-            {internalLinks.map(([label, href]) => (
-              <a key={href} href={href}>{label}</a>
+            {internalLinks.map(([label, href], index) => (
+              <Fragment key={href}>
+                {index > 0 ? <span className="seo-link-separator" aria-hidden="true">·</span> : null}
+                <a href={href}>{label}</a>
+              </Fragment>
             ))}
           </div>
         </section>

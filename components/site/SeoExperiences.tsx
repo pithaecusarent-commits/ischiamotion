@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/types";
+import { Fragment } from "react";
 
 const content = {
   it: [
@@ -92,8 +93,11 @@ export function SeoExperiences({ locale }: { locale: Locale }) {
       </div>
 
       <div className="mt-6 seo-landing-pickups" aria-label={locale === "it" ? "Categorie noleggio Ischia" : "Ischia rental categories"}>
-        {categoryLinks[locale].map(([label, href]) => (
-          <a key={href} href={href}>{label}</a>
+        {categoryLinks[locale].map(([label, href], index) => (
+          <Fragment key={href}>
+            {index > 0 ? <span className="seo-link-separator" aria-hidden="true">·</span> : null}
+            <a href={href}>{label}</a>
+          </Fragment>
         ))}
       </div>
     </section>

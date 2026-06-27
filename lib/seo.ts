@@ -1,7 +1,7 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com";
-export const canonicalSiteUrl = "https://www.ischiamotion.com/";
+export const siteUrl = "https://www.ischiamotion.com";
+export const canonicalSiteUrl = `${siteUrl}/`;
 export const organizationId = "https://www.ischiamotion.com/#organization";
 export const websiteId = organizationId;
 

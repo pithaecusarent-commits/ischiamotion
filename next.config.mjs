@@ -4,6 +4,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "ischiamotion.com",
+          },
+        ],
+        destination: "https://www.ischiamotion.com/:path*",
+        statusCode: 301,
+      },
+      {
         source: "/",
         destination: "/it",
         permanent: true,

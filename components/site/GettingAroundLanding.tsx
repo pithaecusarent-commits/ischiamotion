@@ -5,6 +5,7 @@ import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
+import { Fragment } from "react";
 
 type Content = {
   eyebrow: string;
@@ -249,7 +250,14 @@ export function GettingAroundLanding({ locale }: { locale: Locale }) {
 
         <section className="seo-landing-section">
           <div className="section-header"><div><div className="section-eyebrow">{locale === "it" ? "Link utili" : "Useful links"}</div><h2 className="section-title">{c.linksTitle}</h2></div></div>
-          <div className="seo-landing-pickups">{c.usefulLinks.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</div>
+          <div className="seo-landing-pickups">
+            {c.usefulLinks.map(([label, href], index) => (
+              <Fragment key={href}>
+                {index > 0 ? <span className="seo-link-separator" aria-hidden="true">·</span> : null}
+                <a href={href}>{label}</a>
+              </Fragment>
+            ))}
+          </div>
         </section>
 
         <SeoFaqSection locale={locale} faqs={c.faqs} />

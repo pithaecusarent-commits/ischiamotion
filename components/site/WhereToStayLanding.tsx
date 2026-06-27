@@ -5,6 +5,7 @@ import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
+import { Fragment } from "react";
 
 type PageContent = {
   eyebrow: string;
@@ -394,8 +395,11 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
             </div>
           </div>
           <div className="seo-landing-pickups">
-            {c.categoryLinks.map(([label, href]) => (
-              <a key={href} href={href}>{label}</a>
+            {c.categoryLinks.map(([label, href], index) => (
+              <Fragment key={href}>
+                {index > 0 ? <span className="seo-link-separator" aria-hidden="true">·</span> : null}
+                <a href={href}>{label}</a>
+              </Fragment>
             ))}
           </div>
         </section>

@@ -179,11 +179,17 @@ export default function IschiaMotionPage() {
           </div>
           <div className="seo-landing-pickups">
             <a href="/it/noleggio-scooter-ischia">Noleggio scooter a Ischia</a>
+            <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/noleggio-auto-ischia">Noleggio auto a Ischia</a>
+            <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/noleggio-bici-elettriche-ischia">Noleggio e-bike a Ischia</a>
+            <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/noleggio-gommoni-ischia">Noleggio gommoni a Ischia</a>
+            <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/noleggio-barche-ischia">Noleggio barche a Ischia</a>
+            <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/beach-club-ischia">Beach club a Ischia</a>
+            <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/contatti">Contatta IschiaMotion</a>
           </div>
         </section>

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/seo";
+import { canonicalSiteUrl } from "@/lib/seo";
 
 const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
   { path: "/it", priority: 1.0, freq: "weekly" },
@@ -34,7 +34,7 @@ const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sit
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return seoRoutes.map(({ path, priority, freq }) => ({
-    url: `${siteUrl}${path}`,
+    url: `${canonicalSiteUrl.replace(/\/$/, "")}${path}`,
     lastModified: now,
     changeFrequency: freq,
     priority

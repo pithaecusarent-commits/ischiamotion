@@ -3,6 +3,7 @@ import { Header } from "@/components/site/Header";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
+import { Fragment } from "react";
 import type { CategoryLandingContent } from "@/lib/category-landings";
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
 
@@ -299,6 +300,20 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
           </article>
         </section>
 
+        {content.inspirationTitle && content.inspirationText ? (
+          <section className="seo-landing-section">
+            <div className="section-header">
+              <div>
+                <div className="section-eyebrow">{content.locale === "it" ? "Ispirazione" : "Inspiration"}</div>
+                <h2 className="section-title">{content.inspirationTitle}</h2>
+              </div>
+            </div>
+            <article className="seo-card">
+              <p>{content.inspirationText}</p>
+            </article>
+          </section>
+        ) : null}
+
         <section className="seo-landing-section">
           <div className="section-header">
             <div>
@@ -359,8 +374,11 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
             </div>
           </div>
           <div className="seo-landing-pickups">
-            {internalLinks.map(([label, href]) => (
-              <a key={href} href={href}>{label}</a>
+            {internalLinks.map(([label, href], index) => (
+              <Fragment key={href}>
+                {index > 0 ? <span className="seo-link-separator" aria-hidden="true">·</span> : null}
+                <a href={href}>{label}</a>
+              </Fragment>
             ))}
           </div>
         </section>

@@ -50,7 +50,7 @@ export function Footer({ locale }: { locale: Locale }) {
             </span>
             <a href="tel:+393296856370">+39 329 685 6370</a>
             <a href="mailto:info@ischiamotion.com">info@ischiamotion.com</a>
-            <a href={`/${locale}`}>https://www.ischiamotion.com/{locale}</a>
+            <a href={`/${locale}`}>https://www.ischiamotion.com{locale === "it" ? "/it" : "/en"}</a>
           </div>
         </div>
         <ul className="footer-links">
