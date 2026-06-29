@@ -44,6 +44,10 @@ export const statusOptions = [
   { value: "no_show", label: "No-show" }
 ] as const;
 
+export const statusChangeOptions = statusOptions.filter(
+  (option) => option.value !== "checked_in" && option.value !== "voucher_sent"
+);
+
 export function formatAdminDate(value: string) {
   return new Intl.DateTimeFormat("it-IT", {
     day: "2-digit",

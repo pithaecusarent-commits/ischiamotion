@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { assignBookingRenterAction, updateBookingStatusAction } from "@/app/admin/bookings/[id]/actions";
 import { markBookingCheckedInAction } from "@/app/admin/bookings/[id]/checkin-actions";
+import { ConfirmSubmitButton } from "@/app/admin/bookings/[id]/ConfirmSubmitButton";
 import { PaymentForm } from "@/app/admin/bookings/[id]/PaymentForm";
 import { confirmDepositAndSendVoucherAction, generateVoucherAction } from "@/app/admin/bookings/[id]/voucher-actions";
 import { VoucherPrintButton } from "@/app/admin/bookings/[id]/VoucherPrintButton";
@@ -22,6 +23,7 @@ import {
   bookingVehicle,
   formatAdminDate,
   formatAdminDateTime,
+  statusChangeOptions,
   statusOptions,
   StatusBadge
 } from "@/app/admin/bookings/booking-ui";
@@ -29,6 +31,7 @@ import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { getActiveAdminRenters, getAdminBookingById, getAdminBookingRenterCompatibility } from "@/lib/supabase/queries/admin-bookings";
 import { getAdminCheckinByBookingId } from "@/lib/supabase/queries/checkins";
 import { getAdminVoucherByBookingId } from "@/lib/supabase/queries/vouchers";
+import { getAdminAuditEventsForTarget, type AdminAuditLogItem } from "@/lib/supabase/queries/admin-audit-log";
 import { generateQrDataUrl, toAbsoluteCheckinUrl } from "@/lib/qr";
 
 type Props = {
@@ -43,8 +46,21 @@ type Props = {
     payment?: string;
     renterAssign?: string;
     renterError?: string;
+    statusError?: string;
   };
 };
+
+const bookingAuditActions = [
+  "booking.status_update",
+  "booking.voucher_sent",
+  "booking.voucher_send_failed",
+  "booking.checkin_mark",
+  "booking.renter_assign",
+  "booking.payment_update",
+  "booking.deposit_paid_and_voucher_sent",
+  "booking.deposit_voucher_send_failed",
+  "booking.deposit_email_failed"
+];
 
 function DetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (
@@ -53,6 +69,43 @@ function DetailRow({ label, value }: { label: string; value: ReactNode }) {
       <div className="mt-2 text-sm font-semibold text-ink">{value || "-"}</div>
     </div>
   );
+}
+
+function auditActionLabel(action: string) {
+  const labels: Record<string, string> = {
+    "booking.status_update": "Stato aggiornato",
+    "booking.voucher_sent": "Voucher inviato",
+    "booking.voucher_send_failed": "Invio voucher fallito",
+    "booking.checkin_mark": "Check-in registrato",
+    "booking.renter_assign": "Partner assegnato",
+    "booking.payment_update": "Pagamento aggiornato",
+    "booking.deposit_paid_and_voucher_sent": "Acconto ricevuto + voucher inviato",
+    "booking.deposit_voucher_send_failed": "Invio voucher dopo acconto fallito",
+    "booking.deposit_email_failed": "Email acconto fallita"
+  };
+
+  return labels[action] || action;
+}
+
+function auditMetadataSummary(metadata: AdminAuditLogItem["metadata"]) {
+  if (!metadata || Object.keys(metadata).length === 0) return "-";
+  const preferred = [
+    "status",
+    "paymentStatus",
+    "paymentType",
+    "voucherCode",
+    "renterId",
+    "totalAmount",
+    "depositAmount",
+    "balanceDue",
+    "warning",
+    "error"
+  ];
+
+  return preferred
+    .filter((key) => metadata[key] !== undefined && metadata[key] !== null && metadata[key] !== "")
+    .map((key) => `${key}: ${String(metadata[key])}`)
+    .join(" · ") || JSON.stringify(metadata);
 }
 
 export default async function AdminBookingDetailPage({ params, searchParams }: Props) {
@@ -64,6 +117,15 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
     : { suggestedRenter: null, compatibleRenters: [], incompatibleRenters: [], error: null };
   const { voucher, error: voucherLoadError } = booking ? await getAdminVoucherByBookingId(accessToken, booking.id) : { voucher: null, error: null };
   const { checkin } = booking ? await getAdminCheckinByBookingId(accessToken, booking.id) : { checkin: null };
+  const { events: auditEvents, error: auditError } = booking
+    ? await getAdminAuditEventsForTarget({
+      accessToken,
+      targetTable: "bookings",
+      targetId: booking.id,
+      actions: bookingAuditActions,
+      limit: 12
+    })
+    : { events: [], error: null };
   const statusMessage  = searchParams?.statusUpdate;
   const voucherMessage = searchParams?.voucher;
   const voucherErrorDetail = searchParams?.voucherError;
@@ -331,7 +393,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
               {statusMessage === "voucherSent" ? (
                 <div className="mt-5 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-semibold text-green-deep">
-                  Prenotazione confermata e voucher QR inviato al cliente.
+                  Voucher QR inviato al cliente.
                 </div>
               ) : null}
 
@@ -349,7 +411,13 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
               {statusMessage === "error" ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
-                  Impossibile aggiornare lo stato. Riprova.
+                  {searchParams?.statusError || "Impossibile aggiornare lo stato. Verifica permessi Supabase/policy o riprova."}
+                </div>
+              ) : null}
+
+              {statusMessage === "operationNotAllowed" ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  {searchParams?.statusError || "Operazione non permessa da questo controllo. Usa l'azione dedicata."}
                 </div>
               ) : null}
 
@@ -368,16 +436,19 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     name="status"
                     defaultValue={booking.status}
                   >
-                    {statusOptions.map((option) => (
+                    {statusChangeOptions.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>
                     ))}
                   </select>
                 </label>
-                <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                <ConfirmSubmitButton
+                  className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white"
+                  message="Confermi l'aggiornamento dello stato? Questa azione modifica la booking."
+                >
                   Aggiorna stato
-                </button>
+                </ConfirmSubmitButton>
               </form>
 
               <div className="mt-5 flex flex-wrap gap-2">
@@ -385,9 +456,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   <form action={updateBookingStatusAction} key={status}>
                     <input type="hidden" name="bookingId" value={booking.id} />
                     <input type="hidden" name="status" value={status} />
-                    <button className="rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink/65 hover:border-sea/30 hover:text-green-deep" type="submit">
+                    <ConfirmSubmitButton
+                      className="rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink/65 hover:border-sea/30 hover:text-green-deep"
+                      message={`Confermi il cambio stato a "${statusOptions.find((option) => option.value === status)?.label}"?`}
+                    >
                       {statusOptions.find((option) => option.value === status)?.label}
-                    </button>
+                    </ConfirmSubmitButton>
                   </form>
                 ))}
               </div>
@@ -418,7 +492,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
 
               {voucherMessage === "error" && !voucher ? (
                 <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
-                  Impossibile generare il voucher. Verifica che la prenotazione sia confermata e che la migration 0006 sia applicata su Supabase.
+                  {voucherErrorDetail || "Impossibile generare il voucher. Verifica che la prenotazione sia confermata e che le policy Supabase su booking_vouchers siano applicate."}
                 </div>
               ) : null}
 
@@ -453,9 +527,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   </div>
                   <form action={confirmDepositAndSendVoucherAction} className="mt-4">
                     <input type="hidden" name="bookingId" value={booking.id} />
-                    <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                    <ConfirmSubmitButton
+                      className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white"
+                      message="Confermi acconto ricevuto e invio voucher QR al cliente?"
+                    >
                       Segna acconto ricevuto e invia voucher QR
-                    </button>
+                    </ConfirmSubmitButton>
                   </form>
                 </div>
               ) : null}
@@ -470,9 +547,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   {depositRequired && !depositReceived ? null : (
                     <form action={generateVoucherAction} className="mt-4">
                       <input type="hidden" name="bookingId" value={booking.id} />
-                      <button className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white" type="submit">
+                      <ConfirmSubmitButton
+                        className="rounded-full bg-ink px-6 py-3 text-sm font-bold text-white"
+                        message="Confermi generazione/recupero voucher e invio email QR al cliente?"
+                      >
                         Genera e invia voucher QR
-                      </button>
+                      </ConfirmSubmitButton>
                     </form>
                   )}
                 </div>
@@ -498,9 +578,12 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                     {["confirmed", "voucher_sent"].includes(booking.status) && (!depositRequired || depositReceived) ? (
                       <form action={generateVoucherAction}>
                         <input type="hidden" name="bookingId" value={booking.id} />
-                        <button className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white" type="submit">
+                        <ConfirmSubmitButton
+                          className="rounded-full bg-ink px-5 py-3 text-sm font-bold text-white"
+                          message="Confermi il reinvio del voucher QR al cliente?"
+                        >
                           Reinvia voucher QR
-                        </button>
+                        </ConfirmSubmitButton>
                       </form>
                     ) : null}
                     <a
@@ -634,6 +717,47 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
               <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-ink/70">
                 {bookingCustomerNotes(booking) || booking.notes || "Nessuna nota inserita."}
               </p>
+            </div>
+
+            <div className="mt-4 rounded-[28px] border border-sea/10 bg-white/75 p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Log eventi</div>
+                  <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Audit booking</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+                    Ultime azioni operative rilevanti eseguite dagli admin su questa prenotazione.
+                  </p>
+                </div>
+              </div>
+
+              {auditError ? (
+                <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+                  Log non disponibile: verifica policy Supabase su admin_audit_log.
+                </div>
+              ) : null}
+
+              {!auditError && auditEvents.length === 0 ? (
+                <div className="mt-5 rounded-3xl border border-ink/10 bg-white/65 p-4 text-sm font-semibold text-ink/55">
+                  Nessun evento operativo registrato per questa booking.
+                </div>
+              ) : null}
+
+              <div className="mt-5 grid gap-3">
+                {auditEvents.map((event) => (
+                  <div className="rounded-3xl border border-ink/10 bg-white/65 p-4" key={event.id}>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="text-sm font-black text-ink">{auditActionLabel(event.action)}</div>
+                      <div className="text-xs font-semibold text-ink/45">{formatAdminDateTime(event.created_at)}</div>
+                    </div>
+                    <div className="mt-2 text-xs font-semibold text-ink/55">
+                      Admin: {event.actor_email || "-"}
+                    </div>
+                    <div className="mt-2 break-words text-xs leading-5 text-ink/60">
+                      {auditMetadataSummary(event.metadata)}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         ) : null}

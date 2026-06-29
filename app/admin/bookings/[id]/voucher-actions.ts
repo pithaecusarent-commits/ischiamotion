@@ -13,6 +13,30 @@ function redirectWithVoucherMessage(id: string, type: "success" | "error" | "dep
   redirect(`/admin/bookings/${id}?${params.toString()}`);
 }
 
+function userFriendlyVoucherError(error: string | null | undefined) {
+  const message = (error || "").trim();
+  const lower = message.toLowerCase();
+
+  if (!message) return "Errore temporaneo durante l'operazione voucher.";
+  if (lower.includes("resend_api_key") || lower.includes("api key")) {
+    return "Resend non configurato: verifica RESEND_API_KEY nelle variabili ambiente.";
+  }
+  if (lower.includes("email") && (lower.includes("missing") || lower.includes("invalid") || lower.includes("not found"))) {
+    return "Email cliente mancante o non valida: aggiorna i dati cliente prima di inviare il voucher.";
+  }
+  if (lower.includes("deposit")) {
+    return "Acconto richiesto: registra l'acconto ricevuto prima di inviare il voucher.";
+  }
+  if (lower.includes("policy") || lower.includes("permission") || lower.includes("rls") || lower.includes("not authorized")) {
+    return "Operazione non permessa da Supabase/RLS: verifica ruolo admin e policy applicate.";
+  }
+  if (lower.includes("booking must be confirmed")) {
+    return "Voucher richiesto: conferma prima la disponibilità della prenotazione.";
+  }
+
+  return message;
+}
+
 export async function generateVoucherAction(formData: FormData) {
   const bookingId = String(formData.get("bookingId") || "");
 
@@ -24,16 +48,20 @@ export async function generateVoucherAction(formData: FormData) {
   const { booking, error: bookingError } = await getAdminBookingById(accessToken, bookingId);
 
   if (bookingError || !booking || !["confirmed", "voucher_sent"].includes(booking.status)) {
-    redirectWithVoucherMessage(bookingId, "error");
+    redirectWithVoucherMessage(bookingId, "error", bookingError || "Voucher richiesto: conferma prima la disponibilità della prenotazione.");
+  }
+
+  if (!booking.customer_email?.trim()) {
+    redirectWithVoucherMessage(bookingId, "error", "Email cliente mancante: aggiorna i dati cliente prima di inviare il voucher.");
   }
 
   if (booking.payment_type === "deposit_required" && !["deposit_paid", "paid"].includes(booking.payment_status)) {
-    redirectWithVoucherMessage(bookingId, "error", "Deposit payment must be registered before sending the voucher.");
+    redirectWithVoucherMessage(bookingId, "error", "Acconto richiesto: registra l'acconto ricevuto prima di inviare il voucher.");
   }
 
   const { error: confirmationError } = await updateAdminBookingStatus(accessToken, bookingId, "confirmed");
   if (confirmationError) {
-    redirectWithVoucherMessage(bookingId, "error");
+    redirectWithVoucherMessage(bookingId, "error", userFriendlyVoucherError(confirmationError));
   }
 
   const voucherEmail = await sendBookingVoucherEmail(booking.id);
@@ -48,7 +76,7 @@ export async function generateVoucherAction(formData: FormData) {
       targetId: bookingId,
       metadata: { error: voucherEmail.error, voucherCode: voucherEmail.voucherCode || null }
     });
-    redirectWithVoucherMessage(bookingId, "error", voucherEmail.error);
+    redirectWithVoucherMessage(bookingId, "error", userFriendlyVoucherError(voucherEmail.error));
   }
 
   await logAdminAuditEvent({
@@ -77,7 +105,11 @@ export async function confirmDepositAndSendVoucherAction(formData: FormData) {
   const { booking, error: bookingError } = await getAdminBookingById(accessToken, bookingId);
 
   if (bookingError || !booking || booking.payment_type !== "deposit_required" || !["confirmed", "voucher_sent"].includes(booking.status)) {
-    redirectWithVoucherMessage(bookingId, "error");
+    redirectWithVoucherMessage(bookingId, "error", bookingError || "Operazione non permessa: conferma la prenotazione e verifica che richieda acconto.");
+  }
+
+  if (!booking.customer_email?.trim()) {
+    redirectWithVoucherMessage(bookingId, "error", "Email cliente mancante: aggiorna i dati cliente prima di inviare il voucher.");
   }
 
   const paymentStatus = booking.payment_status === "paid" ? "paid" : "deposit_paid";
@@ -92,12 +124,12 @@ export async function confirmDepositAndSendVoucherAction(formData: FormData) {
   });
 
   if (paymentUpdate.error) {
-    redirectWithVoucherMessage(bookingId, "error", paymentUpdate.error);
+    redirectWithVoucherMessage(bookingId, "error", userFriendlyVoucherError(paymentUpdate.error));
   }
 
   const { error: confirmationError } = await updateAdminBookingStatus(accessToken, bookingId, "confirmed");
   if (confirmationError) {
-    redirectWithVoucherMessage(bookingId, "error", confirmationError);
+    redirectWithVoucherMessage(bookingId, "error", userFriendlyVoucherError(confirmationError));
   }
 
   const voucherEmail = await sendBookingVoucherEmail(booking.id);
@@ -112,7 +144,7 @@ export async function confirmDepositAndSendVoucherAction(formData: FormData) {
       targetId: bookingId,
       metadata: { error: voucherEmail.error, voucherCode: voucherEmail.voucherCode || null }
     });
-    redirectWithVoucherMessage(bookingId, "error", voucherEmail.error);
+    redirectWithVoucherMessage(bookingId, "error", userFriendlyVoucherError(voucherEmail.error));
   }
 
   await logAdminAuditEvent({
