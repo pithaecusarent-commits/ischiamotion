@@ -34,8 +34,10 @@ export function renderEmailParagraphs(lines: string[]) {
 export function renderEmailDetailRows(details: Array<[string, string]>) {
   return details.map(([label, value]) => `
     <tr>
-      <td style="padding:10px 0;color:#0d2b4e;font-size:14px;font-weight:700;vertical-align:top;white-space:nowrap">${escapeEmailHtml(label)}</td>
-      <td style="padding:10px 0 10px 14px;color:#334155;font-size:15px;vertical-align:top">${escapeEmailHtml(value)}</td>
+      <td style="padding:0 0 12px">
+        <div style="color:#0d2b4e;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin:0 0 2px">${escapeEmailHtml(label)}</div>
+        <div style="color:#334155;font-size:16px;line-height:1.4">${escapeEmailHtml(value)}</div>
+      </td>
     </tr>
   `).join("");
 }
@@ -56,25 +58,25 @@ export function renderIschiaMotionEmail(input: {
   const introHtml = input.intro?.length ? renderEmailParagraphs(input.intro) : "";
   const detailsHtml = input.details?.length
     ? `
-      <div style="margin-top:20px;border:1px solid #dbe7ef;border-radius:16px;background:#f8fbfc;padding:16px">
-        ${input.detailsTitle ? `<div style="margin:0 0 14px;color:#0d2b4e;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">${escapeEmailHtml(input.detailsTitle)}</div>` : ""}
+      <div style="margin-top:20px;border:1px solid #dbe7ef;border-radius:12px;background:#f8fbfc;padding:16px 16px 4px">
+        ${input.detailsTitle ? `<div style="margin:0 0 12px;color:#0d2b4e;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">${escapeEmailHtml(input.detailsTitle)}</div>` : ""}
         <table style="width:100%;border-collapse:collapse">${renderEmailDetailRows(input.details)}</table>
       </div>
     `
     : "";
   const footerHtml = input.footer?.length
-    ? `<div style="margin-top:28px;border-top:1px solid #dbe7ef;padding-top:18px">${renderEmailParagraphs(input.footer)}</div>`
+    ? `<div style="margin-top:24px;border-top:1px solid #dbe7ef;padding-top:16px">${renderEmailParagraphs(input.footer)}</div>`
     : "";
 
   return `
-    <div style="margin:0;background:#f4efe4;padding:20px 8px;font-family:Arial,sans-serif">
-      <div style="max-width:600px;margin:0 auto;border-radius:20px;overflow:hidden;background:#fffdf7;border:1px solid #e8dcc5;box-shadow:0 12px 36px rgba(13,43,78,.10)">
-        <div style="padding:24px 20px;background:linear-gradient(180deg,#f7fbfc 0%,#fffdf7 100%)">
-          <img src="${escapeEmailHtml(bookingEmailLogoUrl())}" alt="IschiaMotion" width="160" style="display:block;max-width:160px;height:auto" />
-          ${input.eyebrow ? `<div style="margin-top:18px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase">${escapeEmailHtml(input.eyebrow)}</div>` : ""}
-          <h1 style="margin:8px 0 0;color:#0d2b4e;font-size:24px;line-height:1.25;font-weight:700">${escapeEmailHtml(input.title)}</h1>
+    <div style="margin:0;background:#f4efe4;padding:16px 0;font-family:Arial,sans-serif">
+      <div style="max-width:560px;margin:0 auto;border-radius:16px;overflow:hidden;background:#fffdf7;border:1px solid #e8dcc5">
+        <div style="padding:20px 20px 16px;background:linear-gradient(180deg,#f7fbfc 0%,#fffdf7 100%)">
+          <img src="${escapeEmailHtml(bookingEmailLogoUrl())}" alt="IschiaMotion" width="140" style="display:block;max-width:140px;height:auto" />
+          ${input.eyebrow ? `<div style="margin-top:14px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">${escapeEmailHtml(input.eyebrow)}</div>` : ""}
+          <h1 style="margin:6px 0 0;color:#0d2b4e;font-size:22px;line-height:1.3;font-weight:700">${escapeEmailHtml(input.title)}</h1>
         </div>
-        <div style="padding:20px">
+        <div style="padding:16px 20px 20px">
           ${input.greeting ? `<p style="margin:0 0 14px;color:#0f172a;font-size:16px;line-height:1.6">${escapeEmailHtml(input.greeting)}</p>` : ""}
           ${introHtml}
           ${input.bannerHtml || ""}
