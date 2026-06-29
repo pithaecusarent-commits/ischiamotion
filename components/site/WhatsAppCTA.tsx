@@ -13,7 +13,7 @@ export function WhatsAppCTA({ locale }: { locale: Locale }) {
     <a
       aria-label={label}
       className="whatsapp-cta"
-      data-event="whatsapp_click"
+      data-ga-event="click_whatsapp"
       href={href}
       rel="noopener noreferrer"
       target="_blank"
