@@ -1,8 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
-import { TrustpilotReviewBox } from "@/components/site/TrustpilotReviewBox";
 import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidDeliveryPort, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { isNauticalCategory } from "@/lib/vehicle-categories";
 import type {
@@ -50,13 +50,18 @@ const copy = {
     language: "Lingua di contatto",
     vehicle: "Opzione selezionata",
     pickupPoint: "Pickup point richiesto",
+    autoAssignedPoint: "Partner/punto operativo assegnato automaticamente",
+    autoAssignedPointHelp: "Per la consegna in hotel selezioniamo automaticamente il partner compatibile migliore per date e zona.",
     submit: "Richiedi disponibilità",
     sending: "Invio in corso...",
     close: "Chiudi",
-    success: "La tua richiesta è stata ricevuta. Ti ricontatteremo dopo la verifica della disponibilità con i partner locali.",
-    error: "Non siamo riusciti a inviare la richiesta. Riprova tra poco.",
+    unavailable: "Questa offerta non è più disponibile per date e zona selezionate. Cambia ricerca oppure scrivici su WhatsApp.",
+    rateLimited: "Abbiamo ricevuto troppe richieste in poco tempo. Riprova più tardi oppure scrivici su WhatsApp.",
+    pastDates: "Le date selezionate non sono più disponibili. Scegli una data da oggi in poi.",
+    error: "Errore temporaneo: non siamo riusciti a inviare la richiesta. Riprova tra poco oppure scrivici su WhatsApp.",
     mockBlocked: "Questa opzione dimostrativa non può essere richiesta. Prova a cambiare ricerca o contattaci su WhatsApp.",
-    noPickupPoints: "Al momento i punti di ritiro non sono disponibili. Contattaci su WhatsApp per assistenza."
+    noPickupPoints: "Al momento i punti di ritiro non sono disponibili. Contattaci su WhatsApp per assistenza.",
+    whatsappFallback: "Scrivici su WhatsApp"
   },
   en: {
     title: "Availability request",
@@ -80,20 +85,37 @@ const copy = {
     language: "Contact language",
     vehicle: "Selected option",
     pickupPoint: "Requested pickup point",
+    autoAssignedPoint: "Partner / operating point assigned automatically",
+    autoAssignedPointHelp: "For hotel delivery we automatically select the best compatible partner for your dates and area.",
     submit: "Check availability",
     sending: "Sending...",
     close: "Close",
-    success: "Your request has been received. We will contact you after availability has been reviewed with local partners.",
-    error: "We could not send your request. Please try again shortly.",
+    unavailable: "This offer is no longer available for the selected dates and area. Change your search or message us on WhatsApp.",
+    rateLimited: "We received too many requests in a short time. Please try again later or message us on WhatsApp.",
+    pastDates: "The selected dates are no longer available. Choose a date from today onwards.",
+    error: "Temporary error: we could not send your request. Please try again shortly or message us on WhatsApp.",
     mockBlocked: "This demo option cannot be requested. Try changing your search or contact us on WhatsApp.",
-    noPickupPoints: "Pickup points are currently unavailable. Contact us on WhatsApp for assistance."
+    noPickupPoints: "Pickup points are currently unavailable. Contact us on WhatsApp for assistance.",
+    whatsappFallback: "Message us on WhatsApp"
   }
 } satisfies Record<Locale, Record<string, string>>;
 
 const deliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
+const whatsappMessages: Record<Locale, string> = {
+  it: "Ciao IschiaMotion, ho avuto un problema durante la richiesta online e vorrei verificare disponibilità.",
+  en: "Hello IschiaMotion, I had an issue with the online request and would like to check availability."
+};
+
 function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   const label = locale === "it" ? point.public_label_it : point.public_label_en;
   return label.replace(" - ", " — ");
+}
+
+function errorMessageFor(code: string | undefined, text: Record<string, string>) {
+  if (code === "OFFER_UNAVAILABLE") return text.unavailable;
+  if (code === "RATE_LIMITED") return text.rateLimited;
+  if (code === "PAST_DATES" || code === "INVALID_DATES") return text.pastDates;
+  return text.error;
 }
 
 export function BookingRequestModal({
@@ -109,8 +131,10 @@ export function BookingRequestModal({
   onClose
 }: Props) {
   const text = copy[locale];
+  const router = useRouter();
   const isNautical = isNauticalCategory(vehicle?.category);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedPickupPointId, setSelectedPickupPointId] = useState(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
   const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(
     isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point")
@@ -124,6 +148,7 @@ export function BookingRequestModal({
     setSelectedPickupPointId(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
     setDeliveryMethod(isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point"));
     setStatus("idle");
+    setErrorMessage("");
   }, [initialDeliveryMethod, isNautical, pickupPoints, vehicle]);
 
   if (!vehicle) return null;
@@ -134,6 +159,7 @@ export function BookingRequestModal({
 
     if (process.env.NODE_ENV === "production" && currentVehicle.source === "mock") {
       setStatus("error");
+      setErrorMessage(text.mockBlocked);
       return;
     }
 
@@ -142,6 +168,7 @@ export function BookingRequestModal({
 
     if (!pickupPoint) {
       setStatus("error");
+      setErrorMessage(text.noPickupPoints);
       return;
     }
 
@@ -200,14 +227,30 @@ export function BookingRequestModal({
       });
 
       if (!response.ok) {
-        throw new Error("Booking request failed.");
+        const errorPayload = await response.json().catch(() => null) as { code?: string } | null;
+        setErrorMessage(errorMessageFor(errorPayload?.code, text));
+        setStatus("error");
+        return;
       }
 
-      setStatus("success");
+      const result = await response.json().catch(() => null) as { bookingCode?: string } | null;
+      const confirmationParams = new URLSearchParams({
+        code: result?.bookingCode || "",
+        vehicle: vehicleLabel,
+        start: String(formData.get("startDate") || ""),
+        end: String(formData.get("endDate") || ""),
+        delivery_method: selectedDeliveryMethod,
+        delivery_location: deliveryLocation
+      });
+      router.push(`${locale === "it" ? "/it/richiesta-ricevuta" : "/en/request-received"}?${confirmationParams.toString()}`);
     } catch {
+      setErrorMessage(text.error);
       setStatus("error");
     }
   }
+
+  const whatsappHref = `https://wa.me/393296856370?text=${encodeURIComponent(whatsappMessages[locale])}`;
+  const shouldShowOperationalPoint = deliveryMethod === "hotel_delivery";
 
   return (
     <div className="booking-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
@@ -217,12 +260,6 @@ export function BookingRequestModal({
         <h2 id="booking-modal-title">{text.title}</h2>
         <p className="booking-intro">{text.subtitle}</p>
 
-        {status === "success" ? (
-          <>
-            <div className="booking-message success">{text.success}</div>
-            <TrustpilotReviewBox locale={locale} compact />
-          </>
-        ) : (
           <form className="booking-form" onSubmit={handleSubmit} data-ga-submit="submit_booking_request">
             {pickupPoints.length === 0 ? (
               <>
@@ -238,14 +275,21 @@ export function BookingRequestModal({
                   <span>{text.vehicle}</span>
                   <input value={vehicleLabel} readOnly />
                 </label>
-                <label>
-                  <span>{text.pickupPoint}</span>
-                  <select value={selectedPickupPointId} onChange={(event) => setSelectedPickupPointId(event.target.value)} required>
-                    {pickupPoints.map((point) => (
-                      <option key={point.id} value={point.id}>{formatPickupLabel(point, locale)}</option>
-                    ))}
-                  </select>
-                </label>
+                {shouldShowOperationalPoint ? (
+                  <label>
+                    <span>{text.autoAssignedPoint}</span>
+                    <input value={text.autoAssignedPointHelp} readOnly />
+                  </label>
+                ) : (
+                  <label>
+                    <span>{text.pickupPoint}</span>
+                    <select value={selectedPickupPointId} onChange={(event) => setSelectedPickupPointId(event.target.value)} required>
+                      {pickupPoints.map((point) => (
+                        <option key={point.id} value={point.id}>{formatPickupLabel(point, locale)}</option>
+                      ))}
+                    </select>
+                  </label>
+                )}
               </div>
             )}
             {isNautical ? (
@@ -362,7 +406,10 @@ export function BookingRequestModal({
 
             {status === "error" ? (
               <div className="booking-message error">
-                {process.env.NODE_ENV === "production" && currentVehicle.source === "mock" ? text.mockBlocked : text.error}
+                {errorMessage || text.error}{" "}
+                <a className="font-bold underline" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                  {text.whatsappFallback}
+                </a>
               </div>
             ) : null}
 
@@ -377,7 +424,6 @@ export function BookingRequestModal({
               {status === "submitting" ? text.sending : text.submit}
             </button>
           </form>
-        )}
       </div>
     </div>
   );

@@ -42,6 +42,21 @@ function clean(value: unknown) {
   return String(value || "").trim();
 }
 
+function todayDateString() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Rome",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
+
+function isIsoDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
 type PublicVehicleOfferRow = {
   id: string;
   pickup_point_id: string;
@@ -176,13 +191,13 @@ export async function POST(request: Request) {
   });
 
   if (!ipLimit.allowed) {
-    return NextResponse.json({ ok: false, error: "Too many requests." }, { status: 429 });
+    return NextResponse.json({ ok: false, code: "RATE_LIMITED", error: "Too many requests." }, { status: 429 });
   }
 
   const payload = await request.json().catch(() => null) as Partial<BookingRequestInput> | null;
 
   if (!payload) {
-    return NextResponse.json({ ok: false, error: "Invalid JSON." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "INVALID_PAYLOAD", error: "Invalid JSON." }, { status: 400 });
   }
 
   const input: BookingRequestInput = {
@@ -212,11 +227,19 @@ export async function POST(request: Request) {
   };
 
   if (!isValidRequest(input)) {
-    return NextResponse.json({ ok: false, error: "Invalid booking request payload." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "INVALID_PAYLOAD", error: "Invalid booking request payload." }, { status: 400 });
   }
 
-  if (input.endDate < input.startDate) {
-    return NextResponse.json({ ok: false, error: "Invalid booking dates." }, { status: 400 });
+  if (!isIsoDate(input.startDate) || !isIsoDate(input.endDate) || input.endDate < input.startDate) {
+    return NextResponse.json({ ok: false, code: "INVALID_DATES", error: "Invalid booking dates." }, { status: 400 });
+  }
+
+  const today = todayDateString();
+  if (input.startDate < today || input.endDate < today) {
+    return NextResponse.json(
+      { ok: false, code: "PAST_DATES", error: "Booking dates cannot be in the past." },
+      { status: 400 }
+    );
   }
 
   const emailLimit = checkRateLimit({
@@ -226,7 +249,7 @@ export async function POST(request: Request) {
   });
 
   if (!emailLimit.allowed) {
-    return NextResponse.json({ ok: false, error: "Too many requests." }, { status: 429 });
+    return NextResponse.json({ ok: false, code: "RATE_LIMITED", error: "Too many requests." }, { status: 429 });
   }
 
   const supabase = createPublicSupabaseClient();
@@ -235,7 +258,7 @@ export async function POST(request: Request) {
     const resolvedOffer = await resolveBestVehicleOffer(input, supabase);
     if (!resolvedOffer) {
       return NextResponse.json(
-        { ok: false, error: "No compatible vehicle offer is currently available." },
+        { ok: false, code: "OFFER_UNAVAILABLE", error: "No compatible vehicle offer is currently available." },
         { status: 400 }
       );
     }
@@ -275,7 +298,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    return NextResponse.json({ ok: false, error: "Unable to create booking request." }, { status: 400 });
+    return NextResponse.json({ ok: false, code: "TEMPORARY_ERROR", error: "Unable to create booking request." }, { status: 400 });
   }
 
   let emailSent = false;
