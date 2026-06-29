@@ -4,20 +4,32 @@ import { useEffect } from "react";
 
 export function RevealObserver() {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.12 }
-    );
+    let observer: IntersectionObserver | undefined;
 
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    function setup() {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer!.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => observer!.observe(el));
+    }
+
+    if (typeof requestIdleCallback === "function") {
+      const id = requestIdleCallback(setup);
+      return () => {
+        cancelIdleCallback(id);
+        observer?.disconnect();
+      };
+    }
+    setup();
+    return () => observer?.disconnect();
   }, []);
 
   return null;

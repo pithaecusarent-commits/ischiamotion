@@ -1,6 +1,7 @@
-import type { Locale, PublicPickupPoint } from "@/lib/types";
+import type { Locale, PublicPickupPoint, PublicVehicle } from "@/lib/types";
 import { Header } from "@/components/site/Header";
 import { HomeHero } from "@/components/site/HomeHero";
+import { HeroVisual } from "@/components/site/HeroVisual";
 import { TrustBar } from "@/components/site/TrustBar";
 import { PickupPointsSection } from "@/components/site/PickupPointsSection";
 import { ExperienceSection } from "@/components/site/ExperienceSection";
@@ -11,22 +12,23 @@ import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import { RevealObserver } from "@/components/site/RevealObserver";
-import type { HomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 
 export function SiteHome({
   locale,
   pickupPoints,
-  categoryMinPrices = {}
+  vehicles
 }: {
   locale: Locale;
   pickupPoints: PublicPickupPoint[];
-  categoryMinPrices?: HomepageCategoryMinPrices;
+  vehicles: PublicVehicle[];
 }) {
   return (
     <>
       <Header locale={locale} />
       <main>
-        <HomeHero locale={locale} pickupPoints={pickupPoints} categoryMinPrices={categoryMinPrices} />
+        <HomeHero locale={locale} pickupPoints={pickupPoints} vehicles={vehicles}>
+          <HeroVisual locale={locale} />
+        </HomeHero>
         <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
           <div className="section-eyebrow">{locale === "it" ? "Il brand locale" : "The local platform"}</div>
           <h2 id="brand-intro-title">{locale === "it" ? "Cos’è IschiaMotion" : "What IschiaMotion is"}</h2>
