@@ -28,14 +28,14 @@ export function formatBookingEmailDate(value: string, locale: Locale) {
 }
 
 export function renderEmailParagraphs(lines: string[]) {
-  return lines.map((line) => `<p style="margin:0 0 14px;color:#334155;font-size:15px;line-height:1.7">${escapeEmailHtml(line)}</p>`).join("");
+  return lines.map((line) => `<p style="margin:0 0 14px;color:#334155;font-size:16px;line-height:1.6">${escapeEmailHtml(line)}</p>`).join("");
 }
 
 export function renderEmailDetailRows(details: Array<[string, string]>) {
   return details.map(([label, value]) => `
     <tr>
-      <td style="padding:10px 0;color:#0d2b4e;font-size:13px;font-weight:700;vertical-align:top">${escapeEmailHtml(label)}</td>
-      <td style="padding:10px 0 10px 18px;color:#334155;font-size:14px;vertical-align:top">${escapeEmailHtml(value)}</td>
+      <td style="padding:10px 0;color:#0d2b4e;font-size:14px;font-weight:700;vertical-align:top;white-space:nowrap">${escapeEmailHtml(label)}</td>
+      <td style="padding:10px 0 10px 14px;color:#334155;font-size:15px;vertical-align:top">${escapeEmailHtml(value)}</td>
     </tr>
   `).join("");
 }
@@ -56,7 +56,7 @@ export function renderIschiaMotionEmail(input: {
   const introHtml = input.intro?.length ? renderEmailParagraphs(input.intro) : "";
   const detailsHtml = input.details?.length
     ? `
-      <div style="margin-top:24px;border:1px solid #dbe7ef;border-radius:20px;background:#f8fbfc;padding:22px">
+      <div style="margin-top:20px;border:1px solid #dbe7ef;border-radius:16px;background:#f8fbfc;padding:16px">
         ${input.detailsTitle ? `<div style="margin:0 0 14px;color:#0d2b4e;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">${escapeEmailHtml(input.detailsTitle)}</div>` : ""}
         <table style="width:100%;border-collapse:collapse">${renderEmailDetailRows(input.details)}</table>
       </div>
@@ -67,22 +67,22 @@ export function renderIschiaMotionEmail(input: {
     : "";
 
   return `
-    <div style="margin:0;background:#f4efe4;padding:28px 16px;font-family:Arial,sans-serif">
-      <div style="max-width:680px;margin:0 auto;border-radius:28px;overflow:hidden;background:#fffdf7;border:1px solid #e8dcc5;box-shadow:0 18px 48px rgba(13,43,78,.12)">
-        <div style="padding:28px 30px;background:linear-gradient(180deg,#f7fbfc 0%,#fffdf7 100%)">
-          <img src="${escapeEmailHtml(bookingEmailLogoUrl())}" alt="IschiaMotion" width="188" style="display:block;max-width:188px;height:auto" />
-          ${input.eyebrow ? `<div style="margin-top:22px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase">${escapeEmailHtml(input.eyebrow)}</div>` : ""}
-          <h1 style="margin:10px 0 0;color:#0d2b4e;font-size:30px;line-height:1.15;font-weight:700">${escapeEmailHtml(input.title)}</h1>
+    <div style="margin:0;background:#f4efe4;padding:20px 8px;font-family:Arial,sans-serif">
+      <div style="max-width:600px;margin:0 auto;border-radius:20px;overflow:hidden;background:#fffdf7;border:1px solid #e8dcc5;box-shadow:0 12px 36px rgba(13,43,78,.10)">
+        <div style="padding:24px 20px;background:linear-gradient(180deg,#f7fbfc 0%,#fffdf7 100%)">
+          <img src="${escapeEmailHtml(bookingEmailLogoUrl())}" alt="IschiaMotion" width="160" style="display:block;max-width:160px;height:auto" />
+          ${input.eyebrow ? `<div style="margin-top:18px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase">${escapeEmailHtml(input.eyebrow)}</div>` : ""}
+          <h1 style="margin:8px 0 0;color:#0d2b4e;font-size:24px;line-height:1.25;font-weight:700">${escapeEmailHtml(input.title)}</h1>
         </div>
-        <div style="padding:30px">
-          ${input.greeting ? `<p style="margin:0 0 14px;color:#0f172a;font-size:15px;line-height:1.7">${escapeEmailHtml(input.greeting)}</p>` : ""}
+        <div style="padding:20px">
+          ${input.greeting ? `<p style="margin:0 0 14px;color:#0f172a;font-size:16px;line-height:1.6">${escapeEmailHtml(input.greeting)}</p>` : ""}
           ${introHtml}
           ${input.bannerHtml || ""}
           ${detailsHtml}
           ${input.calloutHtml || ""}
           ${input.ctaLabel && input.ctaUrl ? `
-            <div style="margin-top:26px">
-              <a href="${escapeEmailHtml(input.ctaUrl)}" style="display:inline-block;border-radius:999px;background:#0d2b4e;padding:14px 22px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none">
+            <div style="margin-top:24px;text-align:center">
+              <a href="${escapeEmailHtml(input.ctaUrl)}" style="display:inline-block;border-radius:999px;background:#0d2b4e;padding:16px 32px;color:#ffffff;font-size:16px;font-weight:700;text-decoration:none;min-height:44px;line-height:1.2">
                 ${escapeEmailHtml(input.ctaLabel)}
               </a>
             </div>

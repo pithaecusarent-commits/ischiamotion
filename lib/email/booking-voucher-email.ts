@@ -148,8 +148,8 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
     greeting: labels.greeting,
     intro: [labels.intro],
     bannerHtml: `
-      <div style="margin:24px 0;text-align:center">
-        <img src="${escapeEmailHtml(qrImageSource)}" width="260" height="260" alt="QR voucher ${escapeEmailHtml(voucher.voucher_code)}" style="display:inline-block;max-width:100%;height:auto;border-radius:24px;background:#ffffff;padding:14px;border:1px solid #dbe7ef" />
+      <div style="margin:20px 0;text-align:center">
+        <img src="${escapeEmailHtml(qrImageSource)}" width="220" height="220" alt="QR voucher ${escapeEmailHtml(voucher.voucher_code)}" style="display:inline-block;max-width:220px;width:100%;height:auto;border-radius:16px;background:#ffffff;padding:12px;border:1px solid #dbe7ef" />
       </div>
     `,
     detailsTitle: locale === "en" ? "Booking details" : "Dettagli prenotazione",
@@ -157,9 +157,9 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
     ctaLabel: labels.link,
     ctaUrl: voucherUrl,
     calloutHtml: `
-      <div style="margin-top:20px;color:#64748b;font-size:13px;line-height:1.7">
+      <div style="margin-top:18px;color:#64748b;font-size:14px;line-height:1.6">
         ${escapeEmailHtml(labels.fallback)}<br />
-        <a href="${escapeEmailHtml(voucherUrl)}" style="color:#0097ab;text-decoration:underline">${escapeEmailHtml(voucherUrl)}</a>
+        <a href="${escapeEmailHtml(voucherUrl)}" style="color:#0097ab;text-decoration:underline;word-break:break-all;font-size:14px">${escapeEmailHtml(voucherUrl)}</a>
       </div>
     `,
     footer: [

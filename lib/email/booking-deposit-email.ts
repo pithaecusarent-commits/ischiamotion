@@ -132,12 +132,12 @@ function buildDepositEmail(
         ["Amounts", amounts]
       ],
       calloutHtml: `
-        <div style="margin-top:24px;border-radius:20px;background:#eef9fb;padding:22px">
+        <div style="margin-top:20px;border-radius:16px;background:#eef9fb;padding:16px">
           <div style="margin:0 0 10px;color:#0097ab;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">Payment instructions</div>
-          <div style="color:#334155;font-size:14px;line-height:1.75;white-space:pre-wrap">${escapeEmailHtml(paymentInstructions)}</div>
+          <div style="color:#334155;font-size:15px;line-height:1.6;white-space:pre-wrap">${escapeEmailHtml(paymentInstructions)}</div>
         </div>
-        ${bookingSpecificNote ? `<div style="margin-top:16px;color:#334155;font-size:14px;line-height:1.75">${escapeEmailHtml(bookingSpecificNote)}</div>` : ""}
-        <div style="margin-top:20px;color:#334155;font-size:14px;line-height:1.75">
+        ${bookingSpecificNote ? `<div style="margin-top:14px;color:#334155;font-size:15px;line-height:1.6">${escapeEmailHtml(bookingSpecificNote)}</div>` : ""}
+        <div style="margin-top:16px;color:#334155;font-size:15px;line-height:1.6">
           Once the deposit has been received, we will send you the voucher with the QR code to show at pickup/delivery.
         </div>
       `,
