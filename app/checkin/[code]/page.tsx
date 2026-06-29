@@ -20,7 +20,8 @@ function formatDate(value: string) {
 
 export default async function PublicCheckinPage({ params }: Props) {
   const { voucher, error } = await getPublicCheckinVoucher(params.code);
-  const qrDataUrl = voucher ? await generateQrDataUrl(`/checkin/${voucher.voucher_code}`) : "";
+  const isInvalidVoucher = voucher?.booking_status === "invalid" || voucher?.booking_status === "cancelled" || voucher?.booking_status === "no_show";
+  const qrDataUrl = voucher && !isInvalidVoucher ? await generateQrDataUrl(`/checkin/${voucher.voucher_code}`) : "";
   const locale = voucher?.customer_language === "en" ? "en" : "it";
 
   if (!voucher && !error) {
@@ -41,7 +42,13 @@ export default async function PublicCheckinPage({ params }: Props) {
           </div>
         ) : null}
 
-        {voucher ? (
+        {voucher && isInvalidVoucher ? (
+          <div className="mt-8 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-center text-sm font-semibold text-amber-900">
+            Voucher non valido o prenotazione annullata.
+          </div>
+        ) : null}
+
+        {voucher && !isInvalidVoucher ? (
           <>
             <div className="mt-8 text-center">
               <p className="section-kicker">Voucher IschiaMotion</p>
@@ -93,7 +100,7 @@ export default async function PublicCheckinPage({ params }: Props) {
               </div>
               <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Servizio</div>
-                <div className="mt-2 text-sm font-semibold">{deliveryMethodLabels[locale][voucher.delivery_method]}</div>
+                <div className="mt-2 text-sm font-semibold">{voucher.delivery_method ? deliveryMethodLabels[locale][voucher.delivery_method] : "-"}</div>
               </div>
               <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Luogo</div>
@@ -107,11 +114,11 @@ export default async function PublicCheckinPage({ params }: Props) {
               ) : null}
               <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Pagamento</div>
-                <div className="mt-2 text-sm font-semibold">{paymentTypeLabels[locale][voucher.payment_type]}</div>
+                <div className="mt-2 text-sm font-semibold">{voucher.payment_type ? paymentTypeLabels[locale][voucher.payment_type] : "-"}</div>
               </div>
               <div className="rounded-3xl border border-ink/10 bg-white/65 p-5">
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Stato pagamento</div>
-                <div className="mt-2 text-sm font-semibold">{paymentStatusLabels[locale][voucher.payment_status]}</div>
+                <div className="mt-2 text-sm font-semibold">{voucher.payment_status ? paymentStatusLabels[locale][voucher.payment_status] : "-"}</div>
               </div>
               {(voucher.total_amount !== null || voucher.deposit_amount !== null || voucher.balance_due !== null) ? (
                 <div className="rounded-3xl border border-ink/10 bg-white/65 p-5 sm:col-span-2">
@@ -128,7 +135,7 @@ export default async function PublicCheckinPage({ params }: Props) {
               <div className="rounded-3xl border border-ink/10 bg-white/65 p-5 sm:col-span-2">
                 <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Date</div>
                 <div className="mt-2 text-sm font-semibold">
-                  {formatDate(voucher.start_date)} - {formatDate(voucher.end_date)}
+                  {voucher.start_date && voucher.end_date ? `${formatDate(voucher.start_date)} - ${formatDate(voucher.end_date)}` : "-"}
                   {voucher.pickup_time ? `, ore ${voucher.pickup_time}` : ""}
                 </div>
               </div>
