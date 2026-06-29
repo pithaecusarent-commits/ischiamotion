@@ -13,6 +13,7 @@ import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendNewRenterRequestEmail } from "@/lib/email/renter-emails";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.ischiamotion.com";
+const tooManyAttemptsMessage = "Troppi tentativi. Riprova tra qualche minuto.";
 
 function loginRedirect(error: string): never {
   redirect(`/renter/login?error=${encodeURIComponent(error)}`);
@@ -79,9 +80,32 @@ export async function signInRenter(formData: FormData) {
     loginRedirect(renterPortalDisabledMessage);
   }
 
-  const email = String(formData.get("email") || "").trim();
+  const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
   const nextPath = String(formData.get("next") || "/renter");
+  const clientIp = getClientIp(headers());
+
+  const ipLimit = checkRateLimit({
+    key: `renter-login:ip:${clientIp}`,
+    limit: 5,
+    windowMs: 10 * 60 * 1000
+  });
+
+  if (!ipLimit.allowed) {
+    loginRedirect(tooManyAttemptsMessage);
+  }
+
+  if (email) {
+    const emailLimit = checkRateLimit({
+      key: `renter-login:email:${email}`,
+      limit: 5,
+      windowMs: 10 * 60 * 1000
+    });
+
+    if (!emailLimit.allowed) {
+      loginRedirect(tooManyAttemptsMessage);
+    }
+  }
 
   if (!email || !password) {
     loginRedirect("Inserisci email e password.");
@@ -90,10 +114,10 @@ export async function signInRenter(formData: FormData) {
   const result = await signInRenterWithPassword({ email, password });
 
   if (result.error || !result.session) {
-    const message = result.error?.toLowerCase().includes("invalid login credentials")
-      ? "Credenziali non valide."
-      : result.error || "Credenziali non valide.";
-    loginRedirect(message);
+    if (result.error) {
+      console.warn("[renter-login] sign-in failed", { email, error: result.error });
+    }
+    loginRedirect("Credenziali non valide o accesso non autorizzato.");
   }
 
   setRenterSessionCookies(result.session.access_token, result.session.refresh_token);
@@ -194,7 +218,8 @@ export async function registerRenter(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/renter/register?error=${encodeURIComponent(`Errore registrazione: ${error.message}`)}`);
+    console.warn("[renter-register] signup failed", { email, error: error.message });
+    redirect(`/renter/register?error=${encodeURIComponent("Registrazione non completata. Verifica i dati e riprova.")}`);
   }
 
   const profileSync = await syncRenterProfileAfterSignup({
@@ -215,7 +240,8 @@ export async function registerRenter(formData: FormData) {
   });
 
   if (profileSync.error) {
-    redirect(`/renter/register?error=${encodeURIComponent(`Registrazione creata, ma profilo partner non sincronizzato: ${profileSync.error}`)}`);
+    console.warn("[renter-register] profile sync failed", { email, error: profileSync.error });
+    redirect(`/renter/register?error=${encodeURIComponent("Registrazione ricevuta, ma non completata correttamente. Contatta IschiaMotion.")}`);
   }
 
   await sendNewRenterRequestEmail({

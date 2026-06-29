@@ -19,7 +19,7 @@ export default function ForgotPasswordPage({ searchParams }: Props) {
 
         {searchParams?.sent ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Se l&apos;email è registrata, riceverai un link per impostare una nuova password.
+            Se l&apos;email è registrata, riceverai le istruzioni per il reset.
           </div>
         ) : null}
 

@@ -1,8 +1,16 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getPublicCheckinVoucher } from "@/lib/supabase/queries/vouchers";
 import { generateQrDataUrl } from "@/lib/qr";
 import { PrintVoucherButton } from "@/app/checkin/[code]/PrintVoucherButton";
 import { deliveryMethodLabels, formatMoney, paymentStatusLabels, paymentTypeLabels } from "@/lib/booking-labels";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false
+  }
+};
 
 type Props = {
   params: {
