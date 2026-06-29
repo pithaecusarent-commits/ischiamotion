@@ -149,7 +149,7 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
     intro: [labels.intro],
     bannerHtml: `
       <div style="margin:20px 0;text-align:center">
-        <img src="${escapeEmailHtml(qrImageSource)}" width="220" height="220" alt="QR voucher ${escapeEmailHtml(voucher.voucher_code)}" style="display:inline-block;max-width:220px;width:100%;height:auto;border-radius:16px;background:#ffffff;padding:12px;border:1px solid #dbe7ef" />
+        <img src="${escapeEmailHtml(qrImageSource)}" width="200" height="200" alt="QR voucher ${escapeEmailHtml(voucher.voucher_code)}" style="display:block;margin:0 auto;max-width:200px;width:100%;height:auto;border-radius:12px;background:#ffffff;padding:10px;border:1px solid #dbe7ef" />
       </div>
     `,
     detailsTitle: locale === "en" ? "Booking details" : "Dettagli prenotazione",
