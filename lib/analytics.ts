@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-GP3T5XHSM4";
 
 export const CONSENT_KEY = "im_cookie_consent";
 export type ConsentValue = "granted" | "denied" | null;
