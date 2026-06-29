@@ -1,12 +1,7 @@
-"use client";
-
-import { useEffect } from "react";
-import { useState } from "react";
-import type { BookingDeliveryMethod, Locale, PublicPickupPoint } from "@/lib/types";
+import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { Header } from "@/components/site/Header";
-import { Hero } from "@/components/site/Hero";
+import { HomeHero } from "@/components/site/HomeHero";
 import { TrustBar } from "@/components/site/TrustBar";
-import { VehicleGrid, useVehicleFilter } from "@/components/site/VehicleGrid";
 import { PickupPointsSection } from "@/components/site/PickupPointsSection";
 import { ExperienceSection } from "@/components/site/ExperienceSection";
 import { SeoExperiences } from "@/components/site/SeoExperiences";
@@ -15,56 +10,23 @@ import { TrustpilotReviewBox } from "@/components/site/TrustpilotReviewBox";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
-import { pickupPoints as mockPickupPoints } from "@/lib/mock/pickup-points";
+import { RevealObserver } from "@/components/site/RevealObserver";
 import type { HomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 
 export function SiteHome({
   locale,
-  pickupPoints = mockPickupPoints,
+  pickupPoints,
   categoryMinPrices = {}
 }: {
   locale: Locale;
-  pickupPoints?: PublicPickupPoint[];
+  pickupPoints: PublicPickupPoint[];
   categoryMinPrices?: HomepageCategoryMinPrices;
 }) {
-  const [activeFilter, setActiveFilter] = useVehicleFilter();
-  const today = new Date();
-  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-  const [startDate, setStartDate] = useState(todayStr);
-  const [endDate, setEndDate] = useState("");
-  const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>("pickup_point");
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
       <Header locale={locale} />
       <main>
-        <Hero
-          locale={locale}
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-          pickupPoints={pickupPoints}
-          startDate={startDate}
-          endDate={endDate}
-          deliveryMethod={deliveryMethod}
-          onStartDateChange={setStartDate}
-          onEndDateChange={setEndDate}
-          onDeliveryMethodChange={setDeliveryMethod}
-        />
-        <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
+        <HomeHero locale={locale} pickupPoints={pickupPoints} categoryMinPrices={categoryMinPrices} />
         <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
           <div className="section-eyebrow">{locale === "it" ? "Il brand locale" : "The local platform"}</div>
           <h2 id="brand-intro-title">{locale === "it" ? "Cos’è IschiaMotion" : "What IschiaMotion is"}</h2>
@@ -73,11 +35,11 @@ export function SiteHome({
               <p>
                 <a href="/it/ischiamotion">IschiaMotion</a> è una piattaforma locale di Ischia dedicata alla mobilità turistica e ai servizi mare.
                 Aiutiamo turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni e beach club tramite partner locali
-                selezionati sull’isola.
+                selezionati sull&apos;isola.
               </p>
               <p>
                 IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati
-                sull’isola. Offre così un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
+                sull&apos;isola. Offre così un punto di contatto rapido, chiaro e locale attraverso il sito ufficiale{" "}
                 <a href="/it">ischiamotion.com/it</a>.
               </p>
               <p>
@@ -110,6 +72,7 @@ export function SiteHome({
       </main>
       <WhatsAppCTA locale={locale} />
       <Footer locale={locale} />
+      <RevealObserver />
     </>
   );
 }
