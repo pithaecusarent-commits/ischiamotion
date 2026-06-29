@@ -58,7 +58,7 @@ export function Hero({
       <div className="hero-right">
         <Image
           className="hero-art-image"
-          src="/images/ischiamotion-noleggi-esperienze-ischia.png"
+          src="/images/ischiamotion-noleggi-esperienze-ischia.webp"
           alt={locale === "it"
             ? "Noleggio mezzi a Ischia con scooter, auto, e-bike, gommoni e barche"
             : "Vehicle rental in Ischia with scooters, cars, e-bikes and boats"}

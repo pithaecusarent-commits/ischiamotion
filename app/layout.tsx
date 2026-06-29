@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { CookieConsent } from "@/components/site/CookieConsent";
+import { HtmlLang } from "@/components/site/HtmlLang";
 import { JsonLd } from "@/components/site/JsonLd";
 import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
@@ -28,12 +28,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = headers().get("x-pathname") || "";
-  const lang = pathname.split("/")[1] === "en" ? "en" : "it";
-
   return (
-    <html lang={lang} className={`${fraunces.variable} ${dmSans.variable}`}>
+    <html lang="it" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body>
+        <HtmlLang />
         <JsonLd data={organizationJsonLd()} />
         {children}
         <CookieConsent />
