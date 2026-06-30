@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
 import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidDeliveryPort, municipalityLabels, portLabels } from "@/lib/delivery-zones";
-import { isNauticalCategory } from "@/lib/vehicle-categories";
+import { getSearchMode, searchModeSummaryLabel } from "@/lib/vehicle-categories";
 import type {
   BookingDeliveryMethod,
   BookingPaymentMethod,
@@ -100,7 +100,7 @@ const copy = {
   }
 } satisfies Record<Locale, Record<string, string>>;
 
-const deliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "port_delivery", "hotel_delivery"];
+const standardDeliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "hotel_delivery"];
 const whatsappMessages: Record<Locale, string> = {
   it: "Ciao IschiaMotion, ho avuto un problema durante la richiesta online e vorrei verificare disponibilità.",
   en: "Hello IschiaMotion, I had an issue with the online request and would like to check availability."
@@ -132,13 +132,16 @@ export function BookingRequestModal({
 }: Props) {
   const text = copy[locale];
   const router = useRouter();
-  const isNautical = isNauticalCategory(vehicle?.category);
+  const searchMode = getSearchMode(vehicle?.category);
+  const isNautical = searchMode === "nautical";
+  const isBeachClub = searchMode === "beach_club";
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedPickupPointId, setSelectedPickupPointId] = useState(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
   const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>(
-    isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point")
+    isNautical || isBeachClub ? "pickup_point" : (initialDeliveryMethod || "pickup_point")
   );
+  const [selectedPortSlug, setSelectedPortSlug] = useState(initialPortSlug || DELIVERY_PORTS[0]);
   const vehicleLabel = useMemo(() => {
     if (!vehicle) return "";
     return locale === "it" ? vehicle.title_it : vehicle.title_en;
@@ -146,10 +149,11 @@ export function BookingRequestModal({
 
   useEffect(() => {
     setSelectedPickupPointId(vehicle?.pickup_point_id || pickupPoints[0]?.id || "");
-    setDeliveryMethod(isNautical ? "pickup_point" : (initialDeliveryMethod || "pickup_point"));
+    setDeliveryMethod(isNautical || isBeachClub ? "pickup_point" : (initialDeliveryMethod || "pickup_point"));
+    setSelectedPortSlug(initialPortSlug || DELIVERY_PORTS[0]);
     setStatus("idle");
     setErrorMessage("");
-  }, [initialDeliveryMethod, isNautical, pickupPoints, vehicle]);
+  }, [initialDeliveryMethod, initialPortSlug, isNautical, isBeachClub, pickupPoints, vehicle]);
 
   if (!vehicle) return null;
   const currentVehicle = vehicle;
@@ -172,20 +176,25 @@ export function BookingRequestModal({
       return;
     }
 
-    const selectedDeliveryMethod: BookingDeliveryMethod = isNautical
+    // Boats/dinghies and Beach Club always submit delivery_method = "pickup_point"
+    // (the only method the backend currently allows for those categories). The
+    // chosen port / fixed location is still recorded as readable text below.
+    const selectedDeliveryMethod: BookingDeliveryMethod = isNautical || isBeachClub
       ? "pickup_point"
       : (String(formData.get("deliveryMethod") || "pickup_point") as BookingDeliveryMethod);
-    const selectedPortSlug = selectedDeliveryMethod === "port_delivery"
-      ? String(formData.get("portSlug") || initialPortSlug || DELIVERY_PORTS[0])
+    const portSlugForRequest = isNautical
+      ? String(formData.get("portSlug") || selectedPortSlug || DELIVERY_PORTS[0])
       : "";
     const selectedHotelMunicipality = selectedDeliveryMethod === "hotel_delivery"
       ? String(formData.get("hotelMunicipality") || initialHotelMunicipality || "")
       : "";
-    const deliveryLocation = selectedDeliveryMethod === "pickup_point"
-      ? formatPickupLabel(pickupPoint, locale)
-      : selectedDeliveryMethod === "port_delivery"
-        ? (isValidDeliveryPort(selectedPortSlug) ? portLabels[locale][selectedPortSlug] : "")
-      : String(formData.get("deliveryLocation") || "");
+    const deliveryLocation = isNautical
+      ? (isValidDeliveryPort(portSlugForRequest) ? portLabels[locale][portSlugForRequest] : "")
+      : isBeachClub
+        ? municipalityLabels[locale].forio
+        : selectedDeliveryMethod === "pickup_point"
+          ? formatPickupLabel(pickupPoint, locale)
+          : String(formData.get("deliveryLocation") || "");
 
     setStatus("submitting");
 
@@ -211,8 +220,10 @@ export function BookingRequestModal({
           pickupTime: String(formData.get("pickupTime") || ""),
           deliveryMethod: selectedDeliveryMethod,
           deliveryLocation,
-          pickupMunicipality: selectedDeliveryMethod === "pickup_point" ? initialPickupMunicipality : "",
-          portSlug: selectedPortSlug,
+          pickupMunicipality: isBeachClub
+            ? "forio"
+            : (selectedDeliveryMethod === "pickup_point" ? initialPickupMunicipality : ""),
+          portSlug: portSlugForRequest,
           hotelMunicipality: selectedHotelMunicipality,
           deliveryNotes: String(formData.get("deliveryNotes") || ""),
           paymentType: "pay_on_pickup" as BookingPaymentType,
@@ -294,21 +305,36 @@ export function BookingRequestModal({
             )}
             {isNautical ? (
               <label>
-                <span>{text.deliveryTitle}</span>
-                <input value={deliveryMethodLabels[locale].pickup_point} readOnly />
+                <span>{searchModeSummaryLabel(searchMode, locale)}</span>
+                <select
+                  name="portSlug"
+                  value={selectedPortSlug}
+                  onChange={(event) => setSelectedPortSlug(event.target.value)}
+                  required
+                >
+                  {DELIVERY_PORTS.map((port) => (
+                    <option key={port} value={port}>{portLabels[locale][port]}</option>
+                  ))}
+                </select>
+                <input type="hidden" name="deliveryMethod" value="pickup_point" />
+              </label>
+            ) : isBeachClub ? (
+              <label>
+                <span>{searchModeSummaryLabel(searchMode, locale)}</span>
+                <input value={municipalityLabels[locale].forio} readOnly />
                 <input type="hidden" name="deliveryMethod" value="pickup_point" />
               </label>
             ) : initialDeliveryMethod ? (
               <label>
-                <span>{text.deliveryTitle}</span>
+                <span>{searchModeSummaryLabel(searchMode, locale)}</span>
                 <input value={deliveryMethodLabels[locale][initialDeliveryMethod]} readOnly />
                 <input type="hidden" name="deliveryMethod" value={initialDeliveryMethod} />
               </label>
             ) : (
               <div className="booking-notes">
-                <span>{text.deliveryTitle}</span>
+                <span>{searchModeSummaryLabel(searchMode, locale)}</span>
                 <div className="booking-option-grid">
-                  {deliveryOptions.map((option) => (
+                  {standardDeliveryOptions.map((option) => (
                     <label key={option}>
                       <input
                         type="radio"
@@ -323,16 +349,6 @@ export function BookingRequestModal({
                 </div>
               </div>
             )}
-            {deliveryMethod === "port_delivery" ? (
-              <label>
-                <span>{text.port}</span>
-                <select name="portSlug" defaultValue={initialPortSlug || DELIVERY_PORTS[0]} required>
-                  {DELIVERY_PORTS.map((port) => (
-                    <option key={port} value={port}>{portLabels[locale][port]}</option>
-                  ))}
-                </select>
-              </label>
-            ) : null}
             {deliveryMethod === "hotel_delivery" ? (
               <>
                 <div className="booking-row">
