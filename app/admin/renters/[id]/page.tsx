@@ -263,7 +263,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
           ) : (
             <div className="mt-6 border-t border-ink/10 pt-5">
               <p className="text-xs font-semibold text-ink/45">
-                Questo partner non ha accesso al portale, quindi non Ã¨ disponibile il reset password.
+                Questo partner non ha accesso al portale, quindi non è disponibile il reset password.
               </p>
             </div>
           )}
@@ -462,7 +462,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
               <input type="hidden" name="routeId" value={params.id} />
               <div className="grid gap-3 md:grid-cols-2">
                 <label className="grid gap-2 text-sm font-bold text-ink/70">
-                  Nome attivita
+                  Nome attività
                   <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="business_name" defaultValue={renter.business_name_internal || ""} required />
                 </label>
                 <label className="grid gap-2 text-sm font-bold text-ink/70">
@@ -488,7 +488,7 @@ export default async function AdminRenterDetailPage({ params, searchParams }: Pr
               </div>
 
               <label className="grid gap-2 text-sm font-bold text-ink/70">
-                Indirizzo attivita
+                Indirizzo attività
                 <input className="rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm font-normal text-ink outline-none focus:border-sea/50" name="business_address" defaultValue={renter.business_address || ""} />
               </label>
 

@@ -263,7 +263,7 @@ export default async function AdminBookingDetailPage({ params, searchParams }: P
                   <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-green-deep/70">Assegna partner</div>
                   <h2 className="mt-2 font-serif text-2xl font-bold text-ink">Gestione partner interno</h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
-                    Il nome del partner resta visibile solo in admin. L&apos;assegnazione serve per organizzazione interna, mezzi e disponibilita.
+                    Il nome del partner resta visibile solo in admin. L&apos;assegnazione serve per organizzazione interna, mezzi e disponibilità.
                   </p>
                 </div>
               </div>

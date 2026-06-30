@@ -44,8 +44,8 @@ export async function updateBookingStatusAction(formData: FormData) {
       bookingId,
       "operationNotAllowed",
       nextStatus === "checked_in"
-        ? "Usa il bottone dedicato “Segna check-in effettuato”, così viene creato anche il log check-in."
-        : "Usa l'azione dedicata “Invia voucher QR”, così voucher, email e stato restano sincronizzati."
+        ? "Usa il bottone dedicato \"Segna check-in effettuato\", così viene creato anche il log check-in."
+        : "Usa l'azione dedicata \"Invia voucher QR\", così voucher, email e stato restano sincronizzati."
     );
   }
 

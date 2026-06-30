@@ -38,7 +38,7 @@ export async function sendNewRenterRequestEmail(input: RenterEmailInput) {
     text: [
       "Nuova richiesta partner IschiaMotion",
       "",
-      line("Attivita", input.businessName),
+      line("Attività", input.businessName),
       line("Referente", input.contactName),
       line("Email", input.email),
       line("Telefono", input.phone),

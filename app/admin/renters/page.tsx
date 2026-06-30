@@ -213,7 +213,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-sea/10 text-[11px] uppercase tracking-[0.14em] text-green-deep">
                   <tr>
-                    <th className="px-4 py-4">Attivita</th>
+                    <th className="px-4 py-4">Attività</th>
                     <th className="px-4 py-4">Referente</th>
                     <th className="px-4 py-4">Contatti</th>
                     <th className="px-4 py-4">Richiesta</th>
@@ -308,7 +308,7 @@ export default async function AdminRentersPage({ searchParams }: Props) {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-ink/5 text-[11px] uppercase tracking-[0.14em] text-ink/55">
                   <tr>
-                    <th className="px-4 py-4">Attivita</th>
+                    <th className="px-4 py-4">Attività</th>
                     <th className="px-4 py-4">Referente</th>
                     <th className="px-4 py-4">Contatti</th>
                     <th className="px-4 py-4">Creazione</th>

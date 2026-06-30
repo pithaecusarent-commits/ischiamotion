@@ -23,7 +23,7 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
             <p className="section-kicker">Admin</p>
             <h1 className="mt-3 font-serif text-3xl font-bold sm:text-4xl">Nuovo partner</h1>
             <p className="mt-4 text-ink/65">
-              Crea l&apos;anagrafica partner gestita dallo staff. L&apos;accesso al gestionale puo restare disattivato.
+              Crea l&apos;anagrafica partner gestita dallo staff. L&apos;accesso al gestionale può restare disattivato.
             </p>
           </div>
           <a className="rounded-full border border-ink/10 px-5 py-3 text-sm font-bold text-ink/70" href="/admin/renters">
@@ -40,7 +40,7 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
         <form action={createRenterFromAdminAction} className="mt-8 grid gap-5">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-bold text-ink/70">
-              Nome attivita
+              Nome attività
               <input className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50" name="business_name" required />
             </label>
             <label className="grid gap-2 text-sm font-bold text-ink/70">
@@ -72,7 +72,7 @@ export default async function NewAdminRenterPage({ searchParams }: Props) {
           </div>
 
           <label className="grid gap-2 text-sm font-bold text-ink/70">
-            Indirizzo attivita
+            Indirizzo attività
             <input className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50" name="business_address" />
           </label>
 

@@ -40,7 +40,7 @@ export async function saveRenterAvailability(formData: FormData) {
   const reason = String(formData.get("reason") || "");
 
   if (!renterId || !categoryId) {
-    redirect("/renter/availability?error=Configurazione%20disponibilita%20non%20valida");
+    redirect("/renter/availability?error=Configurazione%20disponibilit%C3%A0%20non%20valida");
   }
 
   const { error } = await updateRenterAvailability({

@@ -564,7 +564,7 @@ export async function activateAdminManagedRenterAccess(
       .maybeSingle();
 
     if (existingLink.data?.profile_id) {
-      return { renterId, profileId: existingLink.data.profile_id, setupUrl: null, error: "Questo renter ha gia un accesso collegato." };
+      return { renterId, profileId: existingLink.data.profile_id, setupUrl: null, error: "Questo renter ha già un accesso collegato." };
     }
 
     const temporaryPassword = randomTemporaryPassword();

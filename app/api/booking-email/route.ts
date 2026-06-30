@@ -125,7 +125,7 @@ function customerEmailText(payload: BookingEmailPayload) {
       "Dettagli richiesta:",
       `- Codice richiesta: ${payload.bookingCode}`,
       `- Mezzo: ${payload.vehicleLabel}`,
-      `- Date: ${payload.startDate} → ${payload.endDate}`,
+      `- Date: ${payload.startDate} - ${payload.endDate}`,
       `- Ritiro/consegna: ${summary}`,
       "",
       "Importante:",
@@ -145,7 +145,7 @@ function customerEmailText(payload: BookingEmailPayload) {
     "Request details:",
     `- Request code: ${payload.bookingCode}`,
     `- Vehicle: ${payload.vehicleLabel}`,
-    `- Dates: ${payload.startDate} → ${payload.endDate}`,
+    `- Dates: ${payload.startDate} - ${payload.endDate}`,
     `- Pickup/delivery: ${summary}`,
     "",
     "Important:",
@@ -165,12 +165,12 @@ function customerEmailHtml(payload: BookingEmailPayload) {
   if (isIt) {
     return renderIschiaMotionEmail({
       eyebrow: "Richiesta ricevuta",
-      title: "Stiamo verificando la tua disponibilita",
+      title: "Stiamo verificando la tua disponibilità",
       greeting: `Ciao ${name},`,
       intro: [
         "Grazie per aver scelto IschiaMotion.",
         "Abbiamo ricevuto la tua richiesta per un noleggio a Ischia e la stiamo verificando con operatori locali selezionati.",
-        "La disponibilita non e ancora confermata: riceverai un aggiornamento entro pochi minuti con conferma, eventuali alternative o dettagli utili per completare la richiesta."
+        "La disponibilità non è ancora confermata: riceverai un aggiornamento entro pochi minuti con conferma, eventuali alternative o dettagli utili per completare la richiesta."
       ],
       detailsTitle: "Dettagli richiesta",
       details: [
@@ -305,7 +305,7 @@ export async function POST(request: Request) {
     resend,
     from: fromEmail,
     to: adminEmail,
-    subject: `Nuova richiesta IschiaMotion — ${payload.bookingCode}`,
+    subject: `Nuova richiesta IschiaMotion - ${payload.bookingCode}`,
     text: adminEmailText(payload, adminUrl)
   }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Admin email failed." } }));
   const adminEmailSent = !adminResult.error;
@@ -320,7 +320,7 @@ export async function POST(request: Request) {
     resend,
     from: fromEmail,
     to: payload.email,
-    subject: payload.language === "it" ? "Richiesta ricevuta — IschiaMotion" : "Request received — IschiaMotion",
+    subject: payload.language === "it" ? "Richiesta ricevuta - IschiaMotion" : "Request received - IschiaMotion",
     text: customerEmailText(payload),
     html: customerEmailHtml(payload)
   }).catch((error) => ({ data: null, error: { message: error instanceof Error ? error.message : "Customer email failed." } }));

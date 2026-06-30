@@ -178,7 +178,7 @@ export async function sendPasswordResetLinkAction(formData: FormData) {
   });
 
   if (!limit.allowed) {
-    renterDetailRedirect(routeId, `error=${encodeURIComponent("Troppe richieste di reset password. Riprova piu tardi.")}`);
+    renterDetailRedirect(routeId, `error=${encodeURIComponent("Troppe richieste di reset password. Riprova più tardi.")}`);
   }
 
   const userClient = createSupabaseUserClient(accessToken);
@@ -248,7 +248,7 @@ export async function createRenterFromAdminAction(formData: FormData) {
   const shouldCreateAuthUser = isRenterPortalEnabled() && createAuthUser;
 
   if (!businessName) {
-    redirect(`/admin/renters/new?error=${encodeURIComponent("Nome attivita obbligatorio.")}`);
+    redirect(`/admin/renters/new?error=${encodeURIComponent("Nome attività obbligatorio.")}`);
   }
 
   if (shouldCreateAuthUser && !email) {
@@ -315,7 +315,7 @@ export async function saveAdminRenterDetailsAction(formData: FormData) {
   }
 
   if (!businessName) {
-    redirect(`${returnPath}?error=${encodeURIComponent("Nome attivita obbligatorio.")}`);
+    redirect(`${returnPath}?error=${encodeURIComponent("Nome attività obbligatorio.")}`);
   }
 
   const input = {

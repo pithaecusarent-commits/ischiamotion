@@ -10,7 +10,7 @@ const cards = [
     href: "/renter/bookings"
   },
   {
-    title: "Disponibilita categorie",
+    title: "Disponibilità categorie",
     text: "Apri o chiudi le categorie disponibili per IschiaMotion.",
     href: "/renter/availability"
   },

@@ -54,7 +54,7 @@ export default function RenterRegisterPage({ searchParams }: Props) {
           <>
             <form action={registerRenter} className="mt-8 grid gap-5">
               <label className="grid gap-2 text-sm font-bold text-ink/70">
-                Nome attivita
+                Nome attività
                 <input
                   className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
                   name="business_name"
@@ -107,7 +107,7 @@ export default function RenterRegisterPage({ searchParams }: Props) {
               </div>
 
               <label className="grid gap-2 text-sm font-bold text-ink/70">
-                Indirizzo attivita
+                Indirizzo attività
                 <input
                   className="rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
                   name="business_address"
@@ -162,7 +162,7 @@ export default function RenterRegisterPage({ searchParams }: Props) {
                 <textarea
                   className="min-h-28 rounded-2xl border border-ink/10 bg-white/80 px-4 py-3 text-base font-normal text-ink outline-none focus:border-sea/50"
                   name="admin_notes"
-                  placeholder="Servizi, disponibilita o dettagli utili per la valutazione"
+                  placeholder="Servizi, disponibilità o dettagli utili per la valutazione"
                 />
               </label>
 
@@ -206,7 +206,7 @@ export default function RenterRegisterPage({ searchParams }: Props) {
             </form>
 
             <p className="mt-6 text-sm text-ink/60">
-              Hai gia un account?{" "}
+              Hai già un account?{" "}
               <a className="font-bold text-green-deep hover:text-ink" href="/renter/login">
                 Accedi
               </a>

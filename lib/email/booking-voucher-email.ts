@@ -96,7 +96,7 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
     booking.total_amount !== null ? `${locale === "en" ? "Total" : "Totale"} ${formatMoney(booking.total_amount)}` : "",
     booking.deposit_amount !== null ? `${locale === "en" ? "Deposit" : "Acconto"} ${formatMoney(booking.deposit_amount)}` : "",
     booking.balance_due !== null ? `${locale === "en" ? "Balance" : "Saldo"} ${formatMoney(booking.balance_due)}` : ""
-  ].filter(Boolean).join(" · ") || "-";
+  ].filter(Boolean).join(" - ") || "-";
 
   const labels = locale === "en"
     ? {
@@ -134,7 +134,7 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
     [labels.vehicle, vehicle],
     [labels.dates, dates],
     [labels.delivery, `${deliveryMethodLabels[locale][booking.delivery_method]}: ${pickupPoint}`],
-    [labels.payment, `${paymentTypeLabels[locale][booking.payment_type]} · ${paymentStatusLabels[locale][booking.payment_status]}`],
+    [labels.payment, `${paymentTypeLabels[locale][booking.payment_type]} - ${paymentStatusLabels[locale][booking.payment_status]}`],
     [labels.amounts, amounts]
   ];
   const text = [
@@ -144,7 +144,7 @@ function buildEmail(booking: VoucherBooking, voucher: Voucher, voucherUrl: strin
   ].join("\n");
   const html = renderIschiaMotionEmail({
     eyebrow: locale === "en" ? "Voucher ready" : "Voucher pronto",
-    title: locale === "en" ? "Your booking is confirmed" : "La tua prenotazione e confermata",
+    title: locale === "en" ? "Your booking is confirmed" : "La tua prenotazione è confermata",
     greeting: labels.greeting,
     intro: [labels.intro],
     bannerHtml: `

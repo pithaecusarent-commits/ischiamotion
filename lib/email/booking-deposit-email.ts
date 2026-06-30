@@ -87,7 +87,7 @@ function buildDepositEmail(
     input.totalAmount !== null ? `${locale === "en" ? "Total" : "Totale"} ${formatMoney(input.totalAmount)}` : "",
     input.depositAmount !== null ? `${locale === "en" ? "Deposit" : "Acconto"} ${formatMoney(input.depositAmount)}` : "",
     input.balanceDue !== null ? `${locale === "en" ? "Balance" : "Saldo"} ${formatMoney(input.balanceDue)}` : ""
-  ].filter(Boolean).join(" · ") || "-";
+  ].filter(Boolean).join(" - ") || "-";
 
   if (locale === "en") {
     const subject = `Availability confirmed and deposit instructions IschiaMotion - ${input.bookingCode}`;
@@ -150,12 +150,12 @@ function buildDepositEmail(
     return { subject, text, html };
   }
 
-  const subject = `Conferma disponibilita e istruzioni acconto IschiaMotion - ${input.bookingCode}`;
+  const subject = `Conferma disponibilità e istruzioni acconto IschiaMotion - ${input.bookingCode}`;
   const text = [
     `Ciao ${firstName},`,
     "",
-    "la disponibilita per la tua richiesta IschiaMotion e stata confermata.",
-    "Per bloccare definitivamente la prenotazione e richiesto il pagamento di un acconto.",
+    "la disponibilità per la tua richiesta IschiaMotion è stata confermata.",
+    "Per bloccare definitivamente la prenotazione è richiesto il pagamento di un acconto.",
     "",
     "Dettagli richiesta:",
     `- Codice: ${input.bookingCode}`,
@@ -176,11 +176,11 @@ function buildDepositEmail(
   ].join("\n");
   const html = renderIschiaMotionEmail({
     eyebrow: "Acconto richiesto",
-    title: "Disponibilita confermata",
+    title: "Disponibilità confermata",
     greeting: `Ciao ${firstName},`,
     intro: [
-      "La disponibilita per la tua richiesta IschiaMotion e stata confermata.",
-      "Per bloccare definitivamente la prenotazione e richiesto il pagamento di un acconto."
+      "La disponibilità per la tua richiesta IschiaMotion è stata confermata.",
+      "Per bloccare definitivamente la prenotazione è richiesto il pagamento di un acconto."
     ],
     detailsTitle: "Dettagli richiesta",
     details: [

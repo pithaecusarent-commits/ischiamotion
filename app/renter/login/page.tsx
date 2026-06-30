@@ -26,7 +26,7 @@ export default function RenterLoginPage({ searchParams }: Props) {
         </h1>
         <p className="mt-4 text-ink/65">
           {portalEnabled
-            ? "Entra nella mini-area IschiaMotion per disponibilita e check-in."
+            ? "Entra nella mini-area IschiaMotion per disponibilità e check-in."
             : renterPortalDisabledMessage}
         </p>
 
@@ -55,7 +55,7 @@ export default function RenterLoginPage({ searchParams }: Props) {
 
         {portalEnabled && searchParams?.confirmed ? (
           <div className="mt-6 rounded-3xl border border-sea/20 bg-sea/10 p-4 text-sm font-bold text-green-deep">
-            Email confermata. Se l&apos;account e stato approvato puoi accedere.
+            Email confermata. Se l&apos;account è stato approvato puoi accedere.
           </div>
         ) : null}
 

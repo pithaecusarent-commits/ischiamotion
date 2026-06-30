@@ -38,10 +38,10 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
   const pageError = error || categoryDeliveryError || vehiclesError || rulesError;
 
   return (
-    <RenterShell title="Disponibilita categorie">
+    <RenterShell title="Disponibilità categorie">
       {searchParams?.saved ? (
         <div className="mb-5 rounded-3xl border border-green-deep/20 bg-green-deep/10 p-4 text-sm font-bold text-green-deep">
-          Disponibilita aggiornata.
+          Disponibilità aggiornata.
         </div>
       ) : null}
 
@@ -54,7 +54,7 @@ export default async function RenterAvailabilityPage({ searchParams }: Props) {
       {!pageError && availability.length === 0 && categoryDeliveryGroups.length === 0 ? (
         <EmptyState
           title="Nessun noleggio collegato"
-          text="Collega questo utente a un renter per gestire le disponibilita."
+          text="Collega questo utente a un renter per gestire le disponibilità."
         />
       ) : null}
 

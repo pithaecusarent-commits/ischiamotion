@@ -206,7 +206,7 @@ export function BookingIntelligencePanel({ booking, voucher, checkin }: BookingI
           <TimelineItem label="Richiesta ricevuta" detail={new Intl.DateTimeFormat("it-IT", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(booking.created_at))} done />
           <TimelineItem label="Email cliente inviata" detail="Email inviate al momento della richiesta, se configurate." done />
           <TimelineItem label="Email admin inviata" detail="Email inviate al momento della richiesta, se configurate." done />
-          <TimelineItem label="Disponibilita verificata / pending" detail={booking.status === "pending" ? "Ancora in attesa di conferma." : "Stato avanzato oltre pending."} done={booking.status !== "pending"} />
+          <TimelineItem label="Disponibilità verificata / pending" detail={booking.status === "pending" ? "Ancora in attesa di conferma." : "Stato avanzato oltre pending."} done={booking.status !== "pending"} />
           <TimelineItem label="Voucher generato / non generato" detail={voucher ? `Voucher ${voucher.voucher_code}` : "Voucher non generato."} done={Boolean(voucher)} />
           <TimelineItem label="Check-in effettuato / non effettuato" detail={checkinDone ? "Check-in registrato." : "Check-in non effettuato."} done={checkinDone} />
         </ul>
