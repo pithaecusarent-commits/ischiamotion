@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { DM_Sans, Fraunces } from "next/font/google";
+import { CookieConsent } from "@/components/site/CookieConsent";
 import { HtmlLang } from "@/components/site/HtmlLang";
 import { JsonLd } from "@/components/site/JsonLd";
 import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
-
-const CookieConsent = dynamic(
-  () => import("@/components/site/CookieConsent").then((m) => ({ default: m.CookieConsent })),
-  { ssr: false }
-);
 
 const fraunces = Fraunces({
   subsets: ["latin"],
