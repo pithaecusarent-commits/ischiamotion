@@ -1,23 +1,40 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { Locale, PublicVehicle, VehicleFilter } from "@/lib/types";
+import { vehicles } from "@/lib/mock/vehicles";
 import { VehicleCard } from "@/components/site/VehicleCard";
+import type { HomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
+
+export function useVehicleFilter() {
+  return useState<VehicleFilter>("all");
+}
 
 export function VehicleGrid({
   locale,
   active,
   onCategoryChange,
-  vehicles
+  categoryMinPrices = {}
 }: {
   locale: Locale;
   active: VehicleFilter;
   onCategoryChange: (category: VehicleFilter) => void;
-  vehicles: PublicVehicle[];
+  categoryMinPrices?: HomepageCategoryMinPrices;
 }) {
+  const filtered = useMemo(
+    () => vehicles
+      .filter((vehicle) => vehicle.is_available)
+      .map((vehicle) => ({
+        ...vehicle,
+        title_it: vehicle.id === "veh-scooter-125" ? "Scooter" : vehicle.title_it,
+        title_en: vehicle.id === "veh-scooter-125" ? "Scooter" : vehicle.title_en,
+        price_from: categoryMinPrices[vehicle.category] ?? 0
+      })),
+    [categoryMinPrices]
+  );
   const visibleIds = useMemo(
-    () => new Set(vehicles.filter((v) => active === "all" || v.category === active).map((v) => v.id)),
-    [active, vehicles]
+    () => new Set(filtered.filter((vehicle) => active === "all" || vehicle.category === active).map((vehicle) => vehicle.id)),
+    [active, filtered]
   );
 
   function handleBook(vehicle: PublicVehicle) {
@@ -35,9 +52,9 @@ export function VehicleGrid({
         <a href="#prenota" className="see-all">{locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}</a>
       </div>
 
-      {vehicles.length > 0 ? (
+      {filtered.length > 0 ? (
         <div className="vehicles-grid">
-          {vehicles.map((vehicle) => (
+          {filtered.map((vehicle) => (
             <VehicleCard key={vehicle.id} vehicle={vehicle} locale={locale} visible={visibleIds.has(vehicle.id)} onBook={handleBook} />
           ))}
         </div>

@@ -1,27 +1,21 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
-import type { BookingDeliveryMethod, Locale, PublicPickupPoint, PublicVehicle, VehicleFilter } from "@/lib/types";
+import type { BookingDeliveryMethod, Locale, PublicPickupPoint, VehicleFilter } from "@/lib/types";
 import { Hero } from "@/components/site/Hero";
-
-const VehicleGrid = dynamic(
-  () => import("@/components/site/VehicleGrid").then((m) => ({ default: m.VehicleGrid })),
-  { ssr: true }
-);
+import { VehicleGrid, useVehicleFilter } from "@/components/site/VehicleGrid";
+import type { HomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 
 export function HomeHero({
   locale,
   pickupPoints,
-  vehicles,
-  children
+  categoryMinPrices
 }: {
   locale: Locale;
   pickupPoints: PublicPickupPoint[];
-  vehicles: PublicVehicle[];
-  children: React.ReactNode;
+  categoryMinPrices: HomepageCategoryMinPrices;
 }) {
-  const [activeFilter, setActiveFilter] = useState<VehicleFilter>("all");
+  const [activeFilter, setActiveFilter] = useVehicleFilter();
   const today = new Date();
   const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   const [startDate, setStartDate] = useState(todayStr);
@@ -41,10 +35,8 @@ export function HomeHero({
         onStartDateChange={setStartDate}
         onEndDateChange={setEndDate}
         onDeliveryMethodChange={setDeliveryMethod}
-      >
-        {children}
-      </Hero>
-      <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} vehicles={vehicles} />
+      />
+      <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
     </>
   );
 }
