@@ -96,7 +96,11 @@ export function Hero({
             <span />
           </div>
           <div className="hero-orbit" aria-hidden="true" />
-          <div className="hero-astro" aria-hidden="true" />
+          <div className="hero-astro" aria-hidden="true">
+            <div className="astro-layer astro-layer-sun" />
+            <div className="astro-layer astro-layer-mid" />
+            <div className="astro-layer astro-layer-moon" />
+          </div>
           <span className="light-dot light-dot-a" />
           <span className="light-dot light-dot-b" />
           <span className="light-dot light-dot-c" />
