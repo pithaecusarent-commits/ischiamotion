@@ -183,8 +183,8 @@ export function Header({ locale, alternateHref }: { locale: Locale; alternateHre
           <Image
             src="/images/ischiamotion-logo.webp"
             alt="IschiaMotion"
-            width={384}
-            height={148}
+            width={202}
+            height={78}
             loading="eager"
             className="logo-img"
           />

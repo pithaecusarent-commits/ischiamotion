@@ -25,8 +25,8 @@ export function Footer({ locale }: { locale: Locale }) {
           <Image
             src="/images/ischiamotion-logo.webp"
             alt="IschiaMotion"
-            width={384}
-            height={148}
+            width={213}
+            height={82}
             loading="lazy"
             className="logo-img footer-logo-img"
           />
