@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { BookingDeliveryMethod, Locale, PublicPickupPoint } from "@/lib/types";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
+import { SocialProofSection } from "@/components/site/SocialProofSection";
 import { TrustBar } from "@/components/site/TrustBar";
 import { VehicleGrid, useVehicleFilter } from "@/components/site/VehicleGrid";
 import { ValueProposition } from "@/components/site/ValueProposition";
@@ -12,7 +13,6 @@ import { PickupPointsSection } from "@/components/site/PickupPointsSection";
 import { ExperienceSection } from "@/components/site/ExperienceSection";
 import { SeoExperiences } from "@/components/site/SeoExperiences";
 import { HowItWorks } from "@/components/site/HowItWorks";
-import { TrustpilotReviewBox } from "@/components/site/TrustpilotReviewBox";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
@@ -65,6 +65,7 @@ export function SiteHome({
           onEndDateChange={setEndDate}
           onDeliveryMethodChange={setDeliveryMethod}
         />
+        <SocialProofSection locale={locale} />
         <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
         <ValueProposition locale={locale} />
         <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
@@ -107,7 +108,6 @@ export function SiteHome({
         <SeoExperiences locale={locale} />
         <HowItWorks locale={locale} />
         <TrustBar locale={locale} />
-        <TrustpilotReviewBox locale={locale} />
         <FinalCTA locale={locale} />
       </main>
       <WhatsAppCTA locale={locale} />
