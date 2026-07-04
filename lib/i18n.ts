@@ -7,13 +7,13 @@ export const dictionary = {
       cars: "Auto",
       boats: "Barche",
       ebikes: "Bici elettriche",
-      book: "Richiedi ora"
+      book: "Trova la soluzione giusta"
     },
     hero: {
       kicker: "Ischia",
       title: "Noleggio a Ischia<br><em>per vivere l’isola.</em>",
       subtitle: "Confronta soluzioni di noleggio mezzi a Ischia: scooter, auto, e-bike, gommoni e barche tramite partner locali selezionati.",
-      cta: "Richiedi disponibilità →",
+      cta: "Trova la soluzione giusta →",
       secondary: "Come funziona"
     },
     trust: [
@@ -26,7 +26,7 @@ export const dictionary = {
       from: "A partire da",
       day: "giorno",
       zone: "Zona",
-      request: "Richiedi",
+      request: "Verifica disponibilità",
       all: "Tutti"
     }
   },
@@ -36,13 +36,13 @@ export const dictionary = {
       cars: "Cars",
       boats: "Boats",
       ebikes: "E-bikes",
-      book: "Request now"
+      book: "Find the right option"
     },
     hero: {
       kicker: "Ischia",
       title: "Vehicle rental in Ischia<br><em>for exploring the island.</em>",
       subtitle: "Compare rental options in Ischia for scooters, cars, e-bikes, rubber dinghies and boats through selected local partners.",
-      cta: "Request availability →",
+      cta: "Find the right option →",
       secondary: "How it works"
     },
     trust: [
@@ -55,7 +55,7 @@ export const dictionary = {
       from: "From",
       day: "day",
       zone: "Zone",
-      request: "Request",
+      request: "Check availability",
       all: "All"
     }
   }

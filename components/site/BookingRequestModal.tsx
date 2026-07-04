@@ -30,7 +30,7 @@ type Props = {
 const copy = {
   it: {
     title: "Richiesta disponibilità",
-    subtitle: "Lascia i dettagli essenziali: IschiaMotion controlla l’opzione richiesta e ti ricontatta con disponibilità e prossimi passaggi.",
+    subtitle: "Lascia i dettagli essenziali: IschiaMotion verifica disponibilità, prezzo e condizioni con i partner locali prima di ricontattarti.",
     firstName: "Nome",
     lastName: "Cognome",
     email: "Email",
@@ -44,7 +44,7 @@ const copy = {
     hotelName: "Nome hotel / struttura",
     deliveryNotes: "Note consegna opzionali",
     paymentNotice: "Eventuali acconti, saldi o pagamenti anticipati vengono definiti solo dopo la verifica della disponibilità con il partner locale.",
-    afterSubmit: "Al momento dell’invio selezioniamo automaticamente l’offerta compatibile più conveniente tra i partner disponibili, in base a date e zona. Ti ricontattiamo poi con la conferma.",
+    afterSubmit: "Ti ricontattiamo dopo aver verificato disponibilità, prezzo e condizioni.",
     privacyPrefix: "Inviando la richiesta dichiari di aver letto la",
     notes: "Note",
     language: "Lingua di contatto",
@@ -52,7 +52,7 @@ const copy = {
     pickupPoint: "Pickup point richiesto",
     autoAssignedPoint: "Partner/punto operativo assegnato automaticamente",
     autoAssignedPointHelp: "Per la consegna in hotel selezioniamo automaticamente il partner compatibile migliore per date e zona.",
-    submit: "Richiedi disponibilità",
+    submit: "Invia richiesta",
     sending: "Invio in corso...",
     close: "Chiudi",
     unavailable: "Questa offerta non è più disponibile per date e zona selezionate. Cambia ricerca oppure scrivici su WhatsApp.",
@@ -60,12 +60,12 @@ const copy = {
     pastDates: "Le date selezionate non sono più disponibili. Scegli una data da oggi in poi.",
     error: "Errore temporaneo: non siamo riusciti a inviare la richiesta. Riprova tra poco oppure scrivici su WhatsApp.",
     mockBlocked: "Questa opzione dimostrativa non può essere richiesta. Prova a cambiare ricerca o contattaci su WhatsApp.",
-    noPickupPoints: "Al momento i punti di ritiro non sono disponibili. Contattaci su WhatsApp per assistenza.",
-    whatsappFallback: "Scrivici su WhatsApp"
+    noPickupPoints: "Al momento i punti di ritiro non sono disponibili. Chiedi supporto su WhatsApp per assistenza.",
+    whatsappFallback: "Chiedi supporto su WhatsApp"
   },
   en: {
     title: "Availability request",
-    subtitle: "Share the key details: IschiaMotion reviews the requested option and contacts you with availability and next steps.",
+    subtitle: "Share the key details: IschiaMotion checks availability, price and conditions with local partners before contacting you.",
     firstName: "First name",
     lastName: "Last name",
     email: "Email",
@@ -79,7 +79,7 @@ const copy = {
     hotelName: "Hotel / property name",
     deliveryNotes: "Optional delivery notes",
     paymentNotice: "Deposits, balances or prepayments are defined only after availability is reviewed with the local partner.",
-    afterSubmit: "When you submit, we automatically select the best-priced compatible offer among available partners for your dates and area. We then contact you with confirmation.",
+    afterSubmit: "We’ll contact you after checking availability, price and conditions.",
     privacyPrefix: "By submitting the request, you confirm that you have read the",
     notes: "Notes",
     language: "Contact language",
@@ -87,7 +87,7 @@ const copy = {
     pickupPoint: "Requested pickup point",
     autoAssignedPoint: "Partner / operating point assigned automatically",
     autoAssignedPointHelp: "For hotel delivery we automatically select the best compatible partner for your dates and area.",
-    submit: "Check availability",
+    submit: "Send request",
     sending: "Sending...",
     close: "Close",
     unavailable: "This offer is no longer available for the selected dates and area. Change your search or message us on WhatsApp.",
@@ -95,15 +95,15 @@ const copy = {
     pastDates: "The selected dates are no longer available. Choose a date from today onwards.",
     error: "Temporary error: we could not send your request. Please try again shortly or message us on WhatsApp.",
     mockBlocked: "This demo option cannot be requested. Try changing your search or contact us on WhatsApp.",
-    noPickupPoints: "Pickup points are currently unavailable. Contact us on WhatsApp for assistance.",
-    whatsappFallback: "Message us on WhatsApp"
+    noPickupPoints: "Pickup points are currently unavailable. Ask for help on WhatsApp.",
+    whatsappFallback: "Ask for help on WhatsApp"
   }
 } satisfies Record<Locale, Record<string, string>>;
 
 const standardDeliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "hotel_delivery"];
 const whatsappMessages: Record<Locale, string> = {
-  it: "Ciao IschiaMotion, ho avuto un problema durante la richiesta online e vorrei verificare disponibilità.",
-  en: "Hello IschiaMotion, I had an issue with the online request and would like to check availability."
+  it: "Ciao IschiaMotion, ho avuto un problema durante la richiesta online e vorrei supporto per scegliere la soluzione giusta.",
+  en: "Hello IschiaMotion, I had an issue with the online request and would like help choosing the right option."
 };
 
 function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {

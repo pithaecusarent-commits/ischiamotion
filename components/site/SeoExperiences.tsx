@@ -86,7 +86,7 @@ export function SeoExperiences({ locale }: { locale: Locale }) {
             }>
               {item.id === "giornate-in-mare"
                 ? locale === "it" ? "Scopri i gommoni →" : "Explore rubber dinghies →"
-                : locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}
+                : locale === "it" ? "Trova il mezzo più adatto →" : "Find the right vehicle →"}
             </a>
           </article>
         ))}

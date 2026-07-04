@@ -27,7 +27,7 @@ export function VehicleCard({
     bici: locale === "it" ? "Bici elettrica" : "E-bike",
     beach_club: "Beach Club"
   };
-  const ctaLabel = locale === "it" ? "Verifica" : "Check";
+  const ctaLabel = locale === "it" ? "Verifica disponibilità" : "Check availability";
   const landingPath = getCategoryLandingPath(locale, vehicle.category);
   const handleSelect = () => onBook(vehicle);
   const openLanding = () => {
@@ -83,8 +83,8 @@ export function VehicleCard({
             {hasPrice ? (
               <p className="vcard-price-note">
                 {locale === "it"
-                  ? "Prezzo indicativo: varia per periodo, durata, disponibilità e condizioni partner."
-                  : "Indicative price: may vary by season, length, availability and partner conditions."}
+                  ? "Prezzo indicativo: può variare in base a periodo, durata, disponibilità, categoria del mezzo e condizioni del partner."
+                  : "Indicative price: it may vary by season, duration, availability, vehicle category and partner conditions."}
               </p>
             ) : null}
           </div>

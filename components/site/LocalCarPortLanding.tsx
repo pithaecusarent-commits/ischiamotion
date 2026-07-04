@@ -49,8 +49,8 @@ const content = {
     supportText: "IschiaMotion non è un autonoleggio diretto: raccoglie la richiesta e controlla le opzioni disponibili con partner selezionati sull'isola.",
     cardTitle: "Arrivi, bagagli e autonomia",
     cardText: "Soluzione utile se sbarchi a Ischia Porto e vuoi raggiungere hotel, spiagge o più comuni con maggiore libertà.",
-    primaryCta: "Richiedi disponibilità auto",
-    secondaryCta: "Contattaci su WhatsApp",
+    primaryCta: "Verifica disponibilità auto",
+    secondaryCta: "Chiedi supporto su WhatsApp",
     benefitsTitle: "Perché richiedere un'auto a Ischia Porto",
     benefitsText: "Ischia Porto è uno dei principali punti di arrivo dell'isola ed è una zona comoda per iniziare subito a muoversi verso Ischia Ponte, Casamicciola, Lacco Ameno, Forio, Sant'Angelo e le principali località turistiche. Un'auto può essere utile se soggiorni lontano dal porto, viaggi con bambini, bagagli o vuoi raggiungere più zone durante la vacanza.",
     howTitle: "Come funziona con IschiaMotion",
@@ -99,7 +99,7 @@ const content = {
         answer: "IschiaMotion è una piattaforma locale che raccoglie richieste e verifica disponibilità con partner selezionati. La conferma avviene dopo controllo di disponibilità e condizioni."
       }
     ],
-    finalTitle: "Richiedi disponibilità auto a Ischia Porto",
+    finalTitle: "Verifica disponibilità auto a Ischia Porto",
     finalText: "Ti aiutiamo a trovare una soluzione disponibile a Ischia Porto tramite partner locali selezionati, con conferma dopo verifica."
   },
   en: {
@@ -113,8 +113,8 @@ const content = {
     supportText: "IschiaMotion is not a direct car rental desk: it collects requests and checks available options with selected partners on the island.",
     cardTitle: "Arrival, luggage and freedom",
     cardText: "Useful if you land at Ischia Port and want to reach hotels, beaches or several towns with more independence.",
-    primaryCta: "Request car availability",
-    secondaryCta: "Contact us on WhatsApp",
+    primaryCta: "Check car availability",
+    secondaryCta: "Ask for help on WhatsApp",
     benefitsTitle: "Why request a car at Ischia Port",
     benefitsText: "Ischia Port is one of the island's main arrival points and a convenient area to start moving toward Ischia Ponte, Casamicciola, Lacco Ameno, Forio, Sant'Angelo and the main visitor areas. A car can be useful if you stay far from the port, travel with children or luggage, or want to visit several areas during your trip.",
     howTitle: "How it works with IschiaMotion",
@@ -163,7 +163,7 @@ const content = {
         answer: "IschiaMotion is a local platform that collects requests and checks availability with selected partners. Confirmation follows availability and conditions review."
       }
     ],
-    finalTitle: "Request car availability at Ischia Port",
+    finalTitle: "Check car availability at Ischia Port",
     finalText: "We help you find an available solution near Ischia Port through selected local partners, with confirmation after review."
   }
 } satisfies Record<Locale, LocalCarPortContent>;

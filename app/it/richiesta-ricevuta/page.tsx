@@ -69,7 +69,7 @@ export default function RequestReceivedPage({ searchParams }: Props) {
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a className="primary-btn justify-center" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-            Scrivici su WhatsApp
+            Hai dubbi? Scrivici su WhatsApp
           </a>
           <Link className="ghost-btn justify-center" href="/it">
             Torna alla homepage

@@ -42,8 +42,8 @@ export function Hero({
         </div>
         <p className="hero-request-note">
           {locale === "it"
-            ? "Richiesta senza impegno. Ti ricontattiamo dopo aver verificato disponibilità e condizioni con i partner locali."
-            : "No-obligation request. We contact you after reviewing availability and conditions with local partners."}
+            ? "Non sai quale mezzo scegliere? Ci dici dove soggiorni, quando arrivi e cosa vuoi fare: ti aiutiamo a trovare la soluzione più adatta per muoverti a Ischia."
+            : "Not sure which option is right for you? Tell us where you’re staying, when you arrive and what you want to do: we’ll help you find the best way to get around Ischia."}
         </p>
 
         <HeroSearch

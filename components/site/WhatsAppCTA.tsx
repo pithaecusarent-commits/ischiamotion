@@ -1,13 +1,13 @@
 import type { Locale } from "@/lib/types";
 
 const messages: Record<Locale, string> = {
-  it: "Ciao IschiaMotion, vorrei verificare la disponibilità per un noleggio a Ischia.",
-  en: "Hello IschiaMotion, I would like to check availability for a rental in Ischia."
+  it: "Ciao IschiaMotion, non so quale soluzione scegliere e vorrei supporto per muovermi a Ischia.",
+  en: "Hello IschiaMotion, I’m not sure what to choose and would like help getting around Ischia."
 };
 
 export function WhatsAppCTA({ locale }: { locale: Locale }) {
   const href = `https://wa.me/393296856370?text=${encodeURIComponent(messages[locale])}`;
-  const label = locale === "it" ? "Scrivici su WhatsApp" : "Message us on WhatsApp";
+  const label = locale === "it" ? "Hai dubbi? Scrivici su WhatsApp" : "Questions? Message us on WhatsApp";
 
   return (
     <a

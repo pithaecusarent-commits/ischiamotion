@@ -49,7 +49,7 @@ export function VehicleGrid({
           <div className="section-eyebrow">{locale === "it" ? "Noleggio a Ischia tramite partner" : "Rental in Ischia via partners"}</div>
           <h2 className="section-title" dangerouslySetInnerHTML={{ __html: locale === "it" ? "Scooter, auto,<br><em>e-bike e barche</em>" : "Scooters, cars,<br><em>e-bikes and boats</em>" }} />
         </div>
-        <a href="#prenota" className="see-all">{locale === "it" ? "Richiedi disponibilità →" : "Request availability →"}</a>
+        <a href="#prenota" className="see-all">{locale === "it" ? "Trova la soluzione giusta →" : "Find the right option →"}</a>
       </div>
 
       {filtered.length > 0 ? (
@@ -65,11 +65,11 @@ export function VehicleGrid({
           </h3>
           <p className="mx-auto mt-3 max-w-2xl text-ink/60">
             {locale === "it"
-              ? "Al momento non ci sono mezzi disponibili da mostrare. Prova a inviare una richiesta o scrivici su WhatsApp per verificare le opzioni con i partner locali."
-              : "No vehicles are currently available to show. Send a request or message us on WhatsApp to check options with local partners."}
+              ? "Al momento non ci sono mezzi disponibili da mostrare. Invia una richiesta o scrivici su WhatsApp: ti aiutiamo a verificare alternative con partner locali."
+              : "No vehicles are currently available to show. Send a request or message us on WhatsApp: we’ll help check alternatives with local partners."}
           </p>
           <a href="#prenota" className="primary-btn mt-5 inline-flex">
-            {locale === "it" ? "Imposta una richiesta" : "Set a request"}
+            {locale === "it" ? "Fatti consigliare la soluzione migliore" : "Get help choosing"}
           </a>
         </div>
       )}

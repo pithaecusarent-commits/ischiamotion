@@ -3,14 +3,14 @@ import type { Locale } from "@/lib/types";
 export function HowItWorks({ locale }: { locale: Locale }) {
   const steps = locale === "it"
     ? [
-      ["Cerca le opzioni", "Filtra per tipo di veicolo, date e zona dell'isola tra mezzi proposti da partner selezionati."],
-      ["Richiedi disponibilità", "Invia la richiesta online: IschiaMotion verifica date e opzioni con il network locale."],
-      ["Ricevi conferma", "Dopo la verifica ti indichiamo disponibilità, punto ritiro e prossimi passaggi."]
+      ["Ci dici cosa ti serve", "Indichi date, zona, arrivo, hotel e tipo di vacanza: così capiamo quale soluzione può essere più adatta."],
+      ["Verifichiamo con i partner", "IschiaMotion controlla disponibilità, prezzo e condizioni con operatori locali selezionati."],
+      ["Ti ricontattiamo", "Dopo la verifica ti indichiamo opzioni disponibili, punto ritiro o consegna e prossimi passaggi."]
     ]
     : [
-      ["Browse options", "Filter by vehicle type, dates and island area among options from selected local partners."],
-      ["Request availability", "Send your request online: IschiaMotion checks dates and options with the local network."],
-      ["Receive confirmation", "After review, we share availability, pickup point and next steps."]
+      ["Tell us what you need", "Share dates, area, arrival, hotel and trip style: this helps us understand which option may fit best."],
+      ["We check with partners", "IschiaMotion reviews availability, price and conditions with selected local operators."],
+      ["We contact you", "After the review, we share available options, pickup or delivery details and next steps."]
     ];
 
   return (

@@ -86,6 +86,11 @@ export function SearchResults({
             <p className="mt-3 text-ink/60">
               {categoryLabels[locale][category]} · {startDate || "-"} / {endDate || "-"}
             </p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+              {locale === "it"
+                ? "La richiesta non è una conferma automatica: verifichiamo disponibilità e condizioni prima di ricontattarti."
+                : "Your request is not an automatic confirmation: we check availability and conditions before contacting you."}
+            </p>
           </div>
           <a href={`/${locale}#prenota`} className="see-all">{locale === "it" ? "Modifica ricerca →" : "Change search →"}</a>
         </div>
@@ -141,8 +146,8 @@ export function SearchResults({
                         {vehicle.price_from > 0 ? (
                           <p className="vcard-price-note">
                             {locale === "it"
-                              ? "Prezzo indicativo: varia per periodo, durata, disponibilità e condizioni partner."
-                              : "Indicative price: may vary by season, length, availability and partner conditions."}
+                              ? "Prezzo indicativo: può variare in base a periodo, durata, disponibilità, categoria del mezzo e condizioni del partner."
+                              : "Indicative price: it may vary by season, duration, availability, vehicle category and partner conditions."}
                           </p>
                         ) : null}
                       </div>
@@ -150,7 +155,7 @@ export function SearchResults({
                         event.stopPropagation();
                         selectVehicle(vehicle);
                       }}>
-                        {locale === "it" ? "Richiedi verifica" : "Request review"}
+                        {locale === "it" ? "Richiedi questo mezzo" : "Request this option"}
                       </button>
                     </div>
                   </div>
