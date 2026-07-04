@@ -7,6 +7,7 @@ import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
 import { VehicleGrid, useVehicleFilter } from "@/components/site/VehicleGrid";
+import { ValueProposition } from "@/components/site/ValueProposition";
 import { PickupPointsSection } from "@/components/site/PickupPointsSection";
 import { ExperienceSection } from "@/components/site/ExperienceSection";
 import { SeoExperiences } from "@/components/site/SeoExperiences";
@@ -65,6 +66,7 @@ export function SiteHome({
           onDeliveryMethodChange={setDeliveryMethod}
         />
         <VehicleGrid locale={locale} active={activeFilter} onCategoryChange={setActiveFilter} categoryMinPrices={categoryMinPrices} />
+        <ValueProposition locale={locale} />
         <section className="brand-intro reveal" aria-labelledby="brand-intro-title">
           <div className="section-eyebrow">{locale === "it" ? "Il brand locale" : "The local platform"}</div>
           <h2 id="brand-intro-title">{locale === "it" ? "Cos’è IschiaMotion" : "What IschiaMotion is"}</h2>

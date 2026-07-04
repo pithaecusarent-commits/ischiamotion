@@ -2,6 +2,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
+import { ValueProposition } from "@/components/site/ValueProposition";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, scooterFaq, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
@@ -140,6 +141,8 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             <p>{isIt ? "Una richiesta semplice verso partner locali selezionati per muoverti sull'isola con più autonomia, senza conferma immediata." : "A simple request to selected local partners for moving around the island with more independence, without instant confirmation."}</p>
           </div>
         </section>
+
+        <ValueProposition locale={locale} category="scooter" />
 
         <section className="seo-landing-section">
           <div className="section-header">

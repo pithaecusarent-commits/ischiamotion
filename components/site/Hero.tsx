@@ -40,6 +40,11 @@ export function Hero({
           <a href="#prenota" className="primary-btn">{copy.hero.cta}</a>
           <a href="#come-funziona" className="ghost-btn">{copy.hero.secondary}</a>
         </div>
+        <p className="hero-request-note">
+          {locale === "it"
+            ? "Richiesta senza impegno. Ti ricontattiamo dopo aver verificato disponibilità e condizioni con i partner locali."
+            : "No-obligation request. We contact you after reviewing availability and conditions with local partners."}
+        </p>
 
         <HeroSearch
           locale={locale}

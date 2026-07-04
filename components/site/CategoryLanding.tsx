@@ -2,10 +2,12 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
+import { ValueProposition } from "@/components/site/ValueProposition";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import { Fragment } from "react";
 import type { CategoryLandingContent } from "@/lib/category-landings";
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
+import type { VehicleFilter } from "@/lib/types";
 
 function getSearchPath(content: CategoryLandingContent) {
   const basePath = content.locale === "it" ? "/it/risultati" : "/en/results";
@@ -255,6 +257,8 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
             <p>{content.cardText}</p>
           </div>
         </section>
+
+        <ValueProposition locale={content.locale} category={content.categoryParam as VehicleFilter} />
 
         <section className="seo-landing-section">
           <div className="section-header">

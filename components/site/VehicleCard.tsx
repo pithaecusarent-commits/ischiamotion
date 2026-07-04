@@ -70,14 +70,23 @@ export function VehicleCard({
           {features.map((feature) => <span className="feature" key={feature}>{feature}</span>)}
         </div>
         <div className="vcard-foot">
-          <div className="vcard-price">
+          <div>
+            <div className="vcard-price">
+              {hasPrice ? (
+                <>
+                  <small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small>
+                </>
+              ) : (
+                <small>{locale === "it" ? "Su richiesta" : "On request"}</small>
+              )}
+            </div>
             {hasPrice ? (
-              <>
-                <small>{t(locale).common.from}</small> €{vehicle.price_from} <small>/ {t(locale).common.day}</small>
-              </>
-            ) : (
-              <small>{locale === "it" ? "Su richiesta" : "On request"}</small>
-            )}
+              <p className="vcard-price-note">
+                {locale === "it"
+                  ? "Prezzo indicativo: varia per periodo, durata, disponibilità e condizioni partner."
+                  : "Indicative price: may vary by season, length, availability and partner conditions."}
+              </p>
+            ) : null}
           </div>
           <button className="book-btn" type="button" onClick={(event) => {
             event.stopPropagation();
