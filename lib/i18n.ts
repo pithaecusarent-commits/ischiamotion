@@ -14,7 +14,14 @@ export const dictionary = {
       title: "Muoviti a Ischia senza perdere tempo tra mille noleggiatori.",
       subtitle: "Scooter, auto, e-bike, gommoni, barche e beach club tramite partner locali selezionati. Dicci dove soggiorni, quando arrivi e cosa vuoi fare: verifichiamo per te disponibilità, prezzo e condizioni.",
       cta: "Trova la soluzione giusta",
-      secondary: "Come funziona"
+      secondary: "Scrivici su WhatsApp",
+      whatsappMessage: "Ciao IschiaMotion, vorrei un consiglio per scegliere il mezzo più adatto al mio soggiorno a Ischia.",
+      microcopy: "Richiesta senza impegno. La disponibilità viene confermata solo dopo verifica con il partner locale.",
+      benefits: [
+        "Partner locali selezionati",
+        "Prezzi e condizioni verificati",
+        "Supporto per scegliere il mezzo giusto"
+      ]
     },
     trust: [
       ["✓", "Soluzioni per diverse esigenze"],
@@ -40,10 +47,17 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Vehicle rental in Ischia<br><em>for exploring the island.</em>",
-      subtitle: "Compare rental options in Ischia for scooters, cars, e-bikes, rubber dinghies and boats through selected local partners.",
-      cta: "Find the right option →",
-      secondary: "How it works"
+      title: "Get around Ischia without wasting time between countless rental operators.",
+      subtitle: "Scooters, cars, e-bikes, dinghies, boats and beach clubs through selected local partners. Tell us where you are staying, when you arrive and what you would like to do: we check availability, price and conditions for you.",
+      cta: "Find the right option",
+      secondary: "Message us on WhatsApp",
+      whatsappMessage: "Hi IschiaMotion, I would like some advice on choosing the best option for my stay in Ischia.",
+      microcopy: "No-obligation request. Availability is confirmed only after checking with the local partner.",
+      benefits: [
+        "Selected local partners",
+        "Prices and conditions checked",
+        "Help choosing the right option"
+      ]
     },
     trust: [
       ["✓", "Options for different needs"],

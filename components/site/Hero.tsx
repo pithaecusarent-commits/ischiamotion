@@ -28,10 +28,7 @@ export function Hero({
   onDeliveryMethodChange: (value: BookingDeliveryMethod) => void;
 }) {
   const copy = t(locale);
-  const isItalian = locale === "it";
-  const heroWhatsAppText = encodeURIComponent(
-    "Ciao IschiaMotion, vorrei un consiglio per muovermi a Ischia. Vi dico dove soggiorno, quando arrivo e cosa vorrei fare."
-  );
+  const heroWhatsAppText = encodeURIComponent(copy.hero.whatsappMessage);
   const heroWhatsAppHref = `https://wa.me/393296856370?text=${heroWhatsAppText}`;
 
   return (
@@ -43,46 +40,24 @@ export function Hero({
 
         <div className="hero-actions">
           <a href="#prenota" className="primary-btn">{copy.hero.cta}</a>
-          {isItalian ? (
-            <a
-              href={heroWhatsAppHref}
-              className="ghost-btn hero-whatsapp-btn"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-ga-event="click_whatsapp"
-              data-ga-source="homepage_hero"
-            >
-              Scrivici su WhatsApp
-            </a>
-          ) : (
-            <a href="#come-funziona" className="ghost-btn">{copy.hero.secondary}</a>
-          )}
+          <a
+            href={heroWhatsAppHref}
+            className="ghost-btn hero-whatsapp-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ga-event="click_whatsapp"
+            data-ga-source="homepage_hero"
+          >
+            {copy.hero.secondary}
+          </a>
         </div>
-        <p className="hero-request-note">
-          {isItalian
-            ? "Richiesta senza impegno. La disponibilità viene confermata solo dopo verifica con il partner locale."
-            : "Not sure which option is right for you? Tell us where you’re staying, when you arrive and what you want to do: we’ll help you find the best way to get around Ischia."}
-        </p>
-        {isItalian ? (
-          <ul className="hero-benefits" aria-label="Vantaggi IschiaMotion">
-            <li>Partner locali selezionati</li>
-            <li>Prezzi e condizioni verificati</li>
-            <li>Supporto per scegliere il mezzo giusto</li>
-          </ul>
-        ) : null}
+        <p className="hero-request-note">{copy.hero.microcopy}</p>
+        <ul className="hero-benefits" aria-label={locale === "it" ? "Vantaggi IschiaMotion" : "IschiaMotion benefits"}>
+          {copy.hero.benefits.map((benefit) => (
+            <li key={benefit}>{benefit}</li>
+          ))}
+        </ul>
 
-        <HeroSearch
-          locale={locale}
-          category={activeFilter}
-          startDate={startDate}
-          endDate={endDate}
-          deliveryMethod={deliveryMethod}
-          onCategoryChange={onFilterChange}
-          onStartDateChange={onStartDateChange}
-          onEndDateChange={onEndDateChange}
-          onDeliveryMethodChange={onDeliveryMethodChange}
-        />
-        <VehicleFilters locale={locale} active={activeFilter} onChange={onFilterChange} />
       </div>
 
       <div className="hero-right">
@@ -135,21 +110,21 @@ export function Hero({
           <span className="light-dot light-dot-b" />
           <span className="light-dot light-dot-c" />
         </div>
+      </div>
 
-        <div className="hero-stat-row">
-          <div className="hero-stat">
-            <span className="hero-stat-val">✓</span>
-            <div className="hero-stat-label">{locale === "it" ? "Soluzioni di noleggio" : "Rental options"}</div>
-          </div>
-          <div className="hero-stat">
-            <span className="hero-stat-val">✓</span>
-            <div className="hero-stat-label">{locale === "it" ? "Partner selezionati" : "Selected partners"}</div>
-          </div>
-          <div className="hero-stat">
-            <span className="hero-stat-val">✓</span>
-            <div className="hero-stat-label">{locale === "it" ? "Conferma rapida" : "Quick confirmation"}</div>
-          </div>
-        </div>
+      <div className="hero-search-area">
+        <HeroSearch
+          locale={locale}
+          category={activeFilter}
+          startDate={startDate}
+          endDate={endDate}
+          deliveryMethod={deliveryMethod}
+          onCategoryChange={onFilterChange}
+          onStartDateChange={onStartDateChange}
+          onEndDateChange={onEndDateChange}
+          onDeliveryMethodChange={onDeliveryMethodChange}
+        />
+        <VehicleFilters locale={locale} active={activeFilter} onChange={onFilterChange} />
       </div>
     </section>
   );
