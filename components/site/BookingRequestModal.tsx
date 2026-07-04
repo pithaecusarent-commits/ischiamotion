@@ -34,7 +34,7 @@ const copy = {
     firstName: "Nome",
     lastName: "Cognome",
     email: "Email",
-    phone: "Telefono",
+    phone: "Numero WhatsApp",
     startDate: "Data inizio",
     endDate: "Data fine",
     pickupTime: "Orario ritiro preferito",
@@ -42,11 +42,14 @@ const copy = {
     port: "Porto",
     hotelMunicipality: "Comune",
     hotelName: "Nome hotel / struttura",
+    hotelNamePlaceholder: "Es. Hotel a Forio, zona porto, Sant'Angelo…",
     deliveryNotes: "Note consegna opzionali",
+    deliveryNotesPlaceholder: "Es. preferisco ritiro vicino hotel",
     paymentNotice: "Eventuali acconti, saldi o pagamenti anticipati vengono definiti solo dopo la verifica della disponibilità con il partner locale.",
-    afterSubmit: "Ti ricontattiamo dopo aver verificato disponibilità, prezzo e condizioni.",
+    afterSubmit: "La richiesta non è una conferma automatica. Ti ricontattiamo dopo aver verificato disponibilità, prezzo e condizioni.",
     privacyPrefix: "Inviando la richiesta dichiari di aver letto la",
-    notes: "Note",
+    notes: "Hai esigenze particolari?",
+    notesPlaceholder: "Es. siamo 2 adulti e 1 bambino, arrivo al porto con 2 valigie…",
     language: "Lingua di contatto",
     vehicle: "Opzione selezionata",
     pickupPoint: "Pickup point richiesto",
@@ -61,7 +64,12 @@ const copy = {
     error: "Errore temporaneo: non siamo riusciti a inviare la richiesta. Riprova tra poco oppure scrivici su WhatsApp.",
     mockBlocked: "Questa opzione dimostrativa non può essere richiesta. Prova a cambiare ricerca o contattaci su WhatsApp.",
     noPickupPoints: "Al momento i punti di ritiro non sono disponibili. Chiedi supporto su WhatsApp per assistenza.",
-    whatsappFallback: "Chiedi supporto su WhatsApp"
+    whatsappFallback: "Chiedi supporto su WhatsApp",
+    firstNameError: "Inserisci il tuo nome.",
+    lastNameError: "Inserisci il tuo cognome.",
+    emailError: "Inserisci un'email valida.",
+    phoneError: "Inserisci un numero WhatsApp valido.",
+    dateError: "Seleziona una data valida."
   },
   en: {
     title: "Availability request",
@@ -69,7 +77,7 @@ const copy = {
     firstName: "First name",
     lastName: "Last name",
     email: "Email",
-    phone: "Phone",
+    phone: "WhatsApp number",
     startDate: "Start date",
     endDate: "End date",
     pickupTime: "Preferred pickup time",
@@ -77,11 +85,14 @@ const copy = {
     port: "Port",
     hotelMunicipality: "Municipality",
     hotelName: "Hotel / property name",
+    hotelNamePlaceholder: "E.g. hotel in Forio, port area, Sant'Angelo…",
     deliveryNotes: "Optional delivery notes",
+    deliveryNotesPlaceholder: "E.g. I prefer pickup near the hotel",
     paymentNotice: "Deposits, balances or prepayments are defined only after availability is reviewed with the local partner.",
-    afterSubmit: "We’ll contact you after checking availability, price and conditions.",
+    afterSubmit: "This request is not an automatic confirmation. We’ll contact you after checking availability, price and conditions.",
     privacyPrefix: "By submitting the request, you confirm that you have read the",
-    notes: "Notes",
+    notes: "Any special needs?",
+    notesPlaceholder: "E.g. 2 adults and 1 child, arriving at the port with 2 suitcases…",
     language: "Contact language",
     vehicle: "Selected option",
     pickupPoint: "Requested pickup point",
@@ -96,7 +107,12 @@ const copy = {
     error: "Temporary error: we could not send your request. Please try again shortly or message us on WhatsApp.",
     mockBlocked: "This demo option cannot be requested. Try changing your search or contact us on WhatsApp.",
     noPickupPoints: "Pickup points are currently unavailable. Ask for help on WhatsApp.",
-    whatsappFallback: "Ask for help on WhatsApp"
+    whatsappFallback: "Ask for help on WhatsApp",
+    firstNameError: "Please enter your name.",
+    lastNameError: "Please enter your last name.",
+    emailError: "Please enter a valid email.",
+    phoneError: "Please enter a valid WhatsApp number.",
+    dateError: "Please select a valid date."
   }
 } satisfies Record<Locale, Record<string, string>>;
 
@@ -116,6 +132,13 @@ function errorMessageFor(code: string | undefined, text: Record<string, string>)
   if (code === "RATE_LIMITED") return text.rateLimited;
   if (code === "PAST_DATES" || code === "INVALID_DATES") return text.pastDates;
   return text.error;
+}
+
+function withCustomValidity(message: string) {
+  return {
+    onInvalid: (event: FormEvent<HTMLInputElement>) => event.currentTarget.setCustomValidity(message),
+    onChange: (event: FormEvent<HTMLInputElement>) => event.currentTarget.setCustomValidity("")
+  };
 }
 
 export function BookingRequestModal({
@@ -362,43 +385,43 @@ export function BookingRequestModal({
                   </label>
                   <label>
                     <span>{text.hotelName}</span>
-                    <input name="deliveryLocation" required />
+                    <input name="deliveryLocation" placeholder={text.hotelNamePlaceholder} required />
                   </label>
                 </div>
                 <label>
                   <span>{text.deliveryNotes}</span>
-                  <input name="deliveryNotes" />
+                  <input name="deliveryNotes" placeholder={text.deliveryNotesPlaceholder} />
                 </label>
               </>
             ) : null}
             <div className="booking-row">
               <label>
                 <span>{text.firstName}</span>
-                <input name="firstName" autoComplete="given-name" required />
+                <input name="firstName" autoComplete="given-name" required {...withCustomValidity(text.firstNameError)} />
               </label>
               <label>
                 <span>{text.lastName}</span>
-                <input name="lastName" autoComplete="family-name" required />
+                <input name="lastName" autoComplete="family-name" required {...withCustomValidity(text.lastNameError)} />
               </label>
             </div>
             <div className="booking-row">
               <label>
                 <span>{text.email}</span>
-                <input name="email" type="email" autoComplete="email" required />
+                <input name="email" type="email" autoComplete="email" required {...withCustomValidity(text.emailError)} />
               </label>
               <label>
                 <span>{text.phone}</span>
-                <input name="phone" type="tel" autoComplete="tel" required />
+                <input name="phone" type="tel" autoComplete="tel" required {...withCustomValidity(text.phoneError)} />
               </label>
             </div>
             <div className="booking-row">
               <label>
                 <span>{text.startDate}</span>
-                <input name="startDate" type="date" defaultValue={startDate} required />
+                <input name="startDate" type="date" defaultValue={startDate} required {...withCustomValidity(text.dateError)} />
               </label>
               <label>
                 <span>{text.endDate}</span>
-                <input name="endDate" type="date" defaultValue={endDate} required />
+                <input name="endDate" type="date" defaultValue={endDate} required {...withCustomValidity(text.dateError)} />
               </label>
             </div>
             <div className="booking-row">
@@ -417,7 +440,7 @@ export function BookingRequestModal({
             <div className="booking-message">{text.paymentNotice}</div>
             <label className="booking-notes">
               <span>{text.notes}</span>
-              <textarea name="notes" rows={4} />
+              <textarea name="notes" rows={4} placeholder={text.notesPlaceholder} />
             </label>
 
             {status === "error" ? (
