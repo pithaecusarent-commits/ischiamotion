@@ -28,23 +28,48 @@ export function Hero({
   onDeliveryMethodChange: (value: BookingDeliveryMethod) => void;
 }) {
   const copy = t(locale);
+  const isItalian = locale === "it";
+  const heroWhatsAppText = encodeURIComponent(
+    "Ciao IschiaMotion, vorrei un consiglio per muovermi a Ischia. Vi dico dove soggiorno, quando arrivo e cosa vorrei fare."
+  );
+  const heroWhatsAppHref = `https://wa.me/393296856370?text=${heroWhatsAppText}`;
 
   return (
     <section className="hero">
       <div className="hero-left">
         <div className="hero-tag">{copy.hero.kicker}</div>
-        <h1 dangerouslySetInnerHTML={{ __html: copy.hero.title }} />
+        <h1 className="hero-title" dangerouslySetInnerHTML={{ __html: copy.hero.title }} />
         <p className="hero-sub">{copy.hero.subtitle}</p>
 
         <div className="hero-actions">
           <a href="#prenota" className="primary-btn">{copy.hero.cta}</a>
-          <a href="#come-funziona" className="ghost-btn">{copy.hero.secondary}</a>
+          {isItalian ? (
+            <a
+              href={heroWhatsAppHref}
+              className="ghost-btn hero-whatsapp-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ga-event="click_whatsapp"
+              data-ga-source="homepage_hero"
+            >
+              Scrivici su WhatsApp
+            </a>
+          ) : (
+            <a href="#come-funziona" className="ghost-btn">{copy.hero.secondary}</a>
+          )}
         </div>
         <p className="hero-request-note">
-          {locale === "it"
-            ? "Non sai quale mezzo scegliere? Ci dici dove soggiorni, quando arrivi e cosa vuoi fare: ti aiutiamo a trovare la soluzione più adatta per muoverti a Ischia."
+          {isItalian
+            ? "Richiesta senza impegno. La disponibilità viene confermata solo dopo verifica con il partner locale."
             : "Not sure which option is right for you? Tell us where you’re staying, when you arrive and what you want to do: we’ll help you find the best way to get around Ischia."}
         </p>
+        {isItalian ? (
+          <ul className="hero-benefits" aria-label="Vantaggi IschiaMotion">
+            <li>Partner locali selezionati</li>
+            <li>Prezzi e condizioni verificati</li>
+            <li>Supporto per scegliere il mezzo giusto</li>
+          </ul>
+        ) : null}
 
         <HeroSearch
           locale={locale}

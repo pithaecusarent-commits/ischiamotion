@@ -11,9 +11,9 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Noleggio a Ischia<br><em>per vivere l’isola.</em>",
-      subtitle: "Confronta soluzioni di noleggio mezzi a Ischia: scooter, auto, e-bike, gommoni e barche tramite partner locali selezionati.",
-      cta: "Trova la soluzione giusta →",
+      title: "Muoviti a Ischia senza perdere tempo tra mille noleggiatori.",
+      subtitle: "Scooter, auto, e-bike, gommoni, barche e beach club tramite partner locali selezionati. Dicci dove soggiorni, quando arrivi e cosa vuoi fare: verifichiamo per te disponibilità, prezzo e condizioni.",
+      cta: "Trova la soluzione giusta",
       secondary: "Come funziona"
     },
     trust: [
