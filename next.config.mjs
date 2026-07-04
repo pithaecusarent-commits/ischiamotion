@@ -23,23 +23,23 @@ const nextConfig = {
       },
       {
         source: "/it/barca-con-skipper-ischia",
-        destination: "/it/beach-club-ischia",
-        permanent: true,
+        destination: "/it/noleggio-barche-ischia",
+        statusCode: 301,
       },
       {
         source: "/it/noleggio-barca-con-skipper-ischia",
-        destination: "/it/beach-club-ischia",
-        permanent: true,
+        destination: "/it/noleggio-barche-ischia",
+        statusCode: 301,
       },
       {
         source: "/en/boat-with-skipper-ischia",
-        destination: "/en/ischia-beach-club",
-        permanent: true,
+        destination: "/en/boat-rental-ischia",
+        statusCode: 301,
       },
       {
         source: "/en/boat-rental-with-skipper-ischia",
-        destination: "/en/ischia-beach-club",
-        permanent: true,
+        destination: "/en/boat-rental-ischia",
+        statusCode: 301,
       },
       {
         source: "/en/ischia-scooter-rental",
@@ -74,23 +74,23 @@ const nextConfig = {
       },
       {
         source: "/it/barca-con-skipper-ischia/",
-        destination: "/it/beach-club-ischia",
-        permanent: true,
+        destination: "/it/noleggio-barche-ischia",
+        statusCode: 301,
       },
       {
         source: "/it/noleggio-barca-con-skipper-ischia/",
-        destination: "/it/beach-club-ischia",
-        permanent: true,
+        destination: "/it/noleggio-barche-ischia",
+        statusCode: 301,
       },
       {
         source: "/en/boat-with-skipper-ischia/",
-        destination: "/en/ischia-beach-club",
-        permanent: true,
+        destination: "/en/boat-rental-ischia",
+        statusCode: 301,
       },
       {
         source: "/en/boat-rental-with-skipper-ischia/",
-        destination: "/en/ischia-beach-club",
-        permanent: true,
+        destination: "/en/boat-rental-ischia",
+        statusCode: 301,
       },
     ];
   },
