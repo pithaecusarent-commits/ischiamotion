@@ -233,6 +233,13 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
             <h1>{content.title}</h1>
             <p>{content.description}</p>
             <p>{content.microcopy}</p>
+            {content.guideLink ? (
+              <p>
+                {content.guideLink.before}
+                <a href={content.guideLink.href}>{content.guideLink.label}</a>
+                {content.guideLink.after}
+              </p>
+            ) : null}
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn" data-ga-event="click_request_availability" data-ga-category={content.key}>{content.primaryCta}</a>
               <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">

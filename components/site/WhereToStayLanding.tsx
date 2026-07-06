@@ -27,6 +27,9 @@ type PageContent = {
   mobilityEyebrow: string;
   mobilityTitle: string;
   mobilityItems: Array<[string, string]>;
+  guideLinkBefore: string;
+  guideLinkLabel: string;
+  guideLinkAfter: string;
   ischiastarsEyebrow: string;
   ischiastarsTitle: string;
   ischiastarsCardTitle: string;
@@ -84,6 +87,9 @@ const content: Record<Locale, PageContent> = {
       ["IschiaMotion per la mobilità", "IschiaMotion è una piattaforma locale per richiedere disponibilità di scooter, auto, e-bike, gommoni, barche e beach club a Ischia. Raccoglie la richiesta e verifica disponibilità, condizioni e conferma con partner selezionati sull'isola."],
       ["Pianificare prima", "Richiedere un mezzo in anticipo, soprattutto in alta stagione, aiuta ad avere più scelta e a partire senza imprevisti il giorno dell'arrivo."]
     ],
+    guideLinkBefore: "La scelta della zona dipende anche da cosa vuoi visitare: per orientarti meglio, consulta la guida su ",
+    guideLinkLabel: "cosa vedere a Ischia senza auto",
+    guideLinkAfter: ".",
     ischiastarsEyebrow: "Risorsa consigliata",
     ischiastarsTitle: "IschiaStars e IschiaMotion: due risorse complementari",
     ischiastarsCardTitle: "Soggiorno e spostamenti: un piano unico",
@@ -181,6 +187,9 @@ const content: Record<Locale, PageContent> = {
       ["IschiaMotion for local mobility", "IschiaMotion is a local platform for requesting availability of scooters, cars, e-bikes, rubber dinghies, boats and beach clubs in Ischia through selected partners. Not a direct rental company, but a single point for organising mobility on the island."],
       ["Plan ahead", "Requesting a vehicle in advance, especially in high season, means more choice and a smoother start to the trip on arrival day."]
     ],
+    guideLinkBefore: "The best area to stay in also depends on what you want to visit: to plan more easily, read our guide on ",
+    guideLinkLabel: "what to see in Ischia without a car",
+    guideLinkAfter: ".",
     ischiastarsEyebrow: "Useful resource",
     ischiastarsTitle: "IschiaStars: for planning your stay in Ischia",
     ischiastarsCardTitle: "Hotels, accommodation and tailored travel proposals",
@@ -245,6 +254,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
   const path = locale === "it" ? "/it/dove-dormire-a-ischia" : "/en/where-to-stay-in-ischia";
   const alternatePath = locale === "it" ? "/en/where-to-stay-in-ischia" : "/it/dove-dormire-a-ischia";
   const searchPath = locale === "it" ? "/it/risultati" : "/en/results";
+  const guideHref = locale === "it" ? "/it/cosa-vedere-a-ischia-senza-auto" : "/en/what-to-see-in-ischia-without-a-car";
   const whatsappUrl = `https://wa.me/393296856370?text=${encodeURIComponent(c.whatsappMsg)}`;
 
   const pageDescription = locale === "it"
@@ -345,6 +355,7 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
               </article>
             ))}
           </div>
+          <p>{c.guideLinkBefore}<a href={guideHref}>{c.guideLinkLabel}</a>{c.guideLinkAfter}</p>
         </section>
 
         <section className="seo-landing-section">

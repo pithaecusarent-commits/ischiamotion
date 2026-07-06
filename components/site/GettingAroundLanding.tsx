@@ -22,6 +22,9 @@ type Content = {
   choiceHeaders: [string, string, string];
   choices: Array<[string, string, string]>;
   sections: Array<{ title: string; paragraphs: string[]; links: Array<[string, string]> }>;
+  guideLinkBefore: string;
+  guideLinkLabel: string;
+  guideLinkAfter: string;
   alternativesTitle: string;
   alternativesText: string;
   areasEyebrow: string;
@@ -43,6 +46,9 @@ const content: Record<Locale, Content> = {
     eyebrow: "Guida alla mobilità",
     h1: "Come muoversi a Ischia",
     intro: "Il modo migliore per muoversi a Ischia dipende dalla zona dell'alloggio, dal periodo, dalle spiagge che vuoi raggiungere e dal tipo di vacanza. Bagagli, bambini, distanze e programmi giornalieri possono rendere più adatto uno scooter, un'auto, un'e-bike oppure i mezzi pubblici. Per esplorare la costa, invece, barche e gommoni offrono una prospettiva diversa, sempre in base a disponibilità, meteo e condizioni confermate dal partner locale.",
+    guideLinkBefore: "Se stai ancora organizzando il tuo itinerario, leggi anche la guida su ",
+    guideLinkLabel: "cosa vedere a Ischia senza auto",
+    guideLinkAfter: ", con zone, tappe e consigli pratici sugli spostamenti.",
     cardTitle: "Scegliere in base alla vacanza",
     cardText: "Confronta esigenze, zona di soggiorno e itinerario prima di richiedere la disponibilità del mezzo più adatto.",
     primaryCta: "Trova il mezzo più adatto",
@@ -117,6 +123,9 @@ const content: Record<Locale, Content> = {
     eyebrow: "Island mobility guide",
     h1: "How to get around Ischia",
     intro: "The best way to get around Ischia depends on where you are staying, the time of year, the beaches you plan to visit and your travel style. Luggage, children, hills and daily distances can make a scooter, car, e-bike or public transport the better option. Boats and RIBs offer another way to discover the coast, subject to local availability, weather and partner conditions.",
+    guideLinkBefore: "If you are still planning your itinerary, you can also read our guide on ",
+    guideLinkLabel: "what to see in Ischia without a car",
+    guideLinkAfter: ", with areas, stops and practical tips for getting around.",
     cardTitle: "Match transport to your trip",
     cardText: "Compare your base, itinerary and practical needs before requesting availability for a vehicle or service.",
     primaryCta: "Find the right vehicle",
@@ -179,6 +188,7 @@ export function GettingAroundLanding({ locale }: { locale: Locale }) {
   const path = locale === "it" ? "/it/come-muoversi-a-ischia" : "/en/how-to-get-around-ischia";
   const alternatePath = locale === "it" ? "/en/how-to-get-around-ischia" : "/it/come-muoversi-a-ischia";
   const searchPath = locale === "it" ? "/it/risultati" : "/en/results";
+  const guideHref = locale === "it" ? "/it/cosa-vedere-a-ischia-senza-auto" : "/en/what-to-see-in-ischia-without-a-car";
   const whatsappUrl = `https://wa.me/393296856370?text=${encodeURIComponent(c.whatsappMsg)}`;
   const description = locale === "it"
     ? "Guida pratica su come muoversi a Ischia: quando conviene scooter, auto, e-bike, bus, taxi o barca. Consigli per zone, porti, spiagge e richiesta disponibilità."
@@ -196,6 +206,7 @@ export function GettingAroundLanding({ locale }: { locale: Locale }) {
             <div className="section-eyebrow">{c.eyebrow}</div>
             <h1>{c.h1}</h1>
             <p>{c.intro}</p>
+            <p>{c.guideLinkBefore}<a href={guideHref}>{c.guideLinkLabel}</a>{c.guideLinkAfter}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{c.primaryCta}</a>
               <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{c.secondaryCta}</a>

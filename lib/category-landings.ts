@@ -19,6 +19,7 @@ export type CategoryLandingContent = {
   eyebrow: string;
   description: string;
   microcopy: string;
+  guideLink?: { before: string; label: string; href: string; after: string };
   cardTitle: string;
   cardText: string;
   primaryCta: string;
@@ -82,6 +83,12 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       eyebrow: "Auto a Ischia",
       description: "Indicaci date, zona di soggiorno e numero di persone: controlliamo rapidamente le auto disponibili e ti inviamo una proposta chiara con prezzo e condizioni. Una soluzione pratica per chi viaggia con famiglia, bambini o bagagli: evita chiamate, preventivi separati e dubbi sul ritiro, invia una sola richiesta e troviamo l'auto più comoda per il tuo soggiorno. Auto disponibili a partire da € 30 al giorno, secondo periodo, durata del noleggio e modello disponibile. Ritiro presso porto, punto convenzionato o consegna in hotel dove disponibile.",
       microcopy: "Disponibilità, prezzo e condizioni in pochi minuti negli orari operativi.",
+      guideLink: {
+        before: "Per scegliere meglio tra auto, scooter, bus o taxi, puoi consultare anche la guida su ",
+        label: "cosa vedere a Ischia senza auto",
+        href: "/it/cosa-vedere-a-ischia-senza-auto",
+        after: "."
+      },
       cardTitle: "Famiglie, coppie e bagagli",
       cardText: "L'auto è pratica quando devi muoverti tra Ischia Porto, Forio, Lacco Ameno, Barano e Sant'Angelo con più comfort.",
       primaryCta: "Verifica auto disponibili",
@@ -316,6 +323,12 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       eyebrow: "Cars in Ischia",
       description: "Share your dates, area of stay and number of guests: we quickly check available cars and send you a clear proposal with price and conditions. More comfort for families, luggage and getting around the island — skip the calls and mismatched quotes, send one request and we find the most comfortable car for your stay. Cars available from €30 a day, depending on season, rental length and available model. Pickup at the port, a partner point or hotel delivery where available.",
       microcopy: "Availability, price and conditions within minutes during operating hours.",
+      guideLink: {
+        before: "To compare cars, scooters, buses or taxis more easily, you can also read our guide on ",
+        label: "what to see in Ischia without a car",
+        href: "/en/what-to-see-in-ischia-without-a-car",
+        after: "."
+      },
       cardTitle: "Families, couples and luggage",
       cardText: "A car is useful for Ischia Port, Forio, Lacco Ameno, Barano and Sant'Angelo when you need more comfort.",
       primaryCta: "Check available cars",

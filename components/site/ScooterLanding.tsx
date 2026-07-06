@@ -128,6 +128,12 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             <div className="section-eyebrow">{isIt ? "Scooter a Ischia" : "Scooters in Ischia"}</div>
             <h1>{title}</h1>
             <p>{description}</p>
+            <p>
+              {isIt ? "Se vuoi capire quali zone visitare e quando può essere utile uno scooter, leggi la guida su " : "If you want to understand which areas to visit and when a scooter can be useful, read our guide on "}
+              <a href={isIt ? "/it/cosa-vedere-a-ischia-senza-auto" : "/en/what-to-see-in-ischia-without-a-car"}>
+                {isIt ? "cosa vedere a Ischia senza auto" : "what to see in Ischia without a car"}
+              </a>.
+            </p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{isIt ? "Verifica scooter disponibili" : "Check available scooters"}</a>
               <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Ricevi disponibilità su WhatsApp" : "Get availability on WhatsApp"}</a>

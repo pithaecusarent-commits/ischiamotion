@@ -51,7 +51,8 @@ const categoryLinks = {
     ["Noleggio bici elettriche Ischia", "/it/noleggio-bici-elettriche-ischia"],
     ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
     ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
-    ["Beach Club Ischia", "/it/beach-club-ischia"]
+    ["Beach Club Ischia", "/it/beach-club-ischia"],
+    ["Cosa vedere a Ischia senza auto", "/it/cosa-vedere-a-ischia-senza-auto"]
   ],
   en: [
     ["Scooter rental Ischia", "/en/scooter-rental-ischia"],
@@ -59,7 +60,8 @@ const categoryLinks = {
     ["E-bike rental Ischia", "/en/e-bike-rental-ischia"],
     ["Rubber dinghy rental Ischia", "/en/rubber-dinghy-rental-ischia"],
     ["Boat rental Ischia", "/en/boat-rental-ischia"],
-    ["Ischia Beach Club", "/en/ischia-beach-club"]
+    ["Ischia Beach Club", "/en/ischia-beach-club"],
+    ["What to See in Ischia Without a Car", "/en/what-to-see-in-ischia-without-a-car"]
   ]
 } satisfies Record<Locale, Array<[string, string]>>;
 
