@@ -1,12 +1,20 @@
 import type { Locale } from "@/lib/types";
+import type { VehicleFilter } from "@/lib/types";
+import { getWhatsAppUrl, resolveWhatsAppType, type WhatsAppMessageContext } from "@/lib/whatsapp";
 
-const messages: Record<Locale, string> = {
-  it: "Ciao IschiaMotion, non so quale soluzione scegliere e vorrei supporto per muovermi a Ischia.",
-  en: "Hello IschiaMotion, I’m not sure what to choose and would like help getting around Ischia."
-};
-
-export function WhatsAppCTA({ locale }: { locale: Locale }) {
-  const href = `https://wa.me/393296856370?text=${encodeURIComponent(messages[locale])}`;
+export function WhatsAppCTA({
+  locale,
+  category = "all",
+  context,
+  messageType
+}: {
+  locale: Locale;
+  category?: VehicleFilter;
+  context?: WhatsAppMessageContext;
+  messageType?: "requestReceived";
+}) {
+  const type = messageType ?? resolveWhatsAppType(category);
+  const href = getWhatsAppUrl(locale, type, { ...context, category });
   const label = locale === "it" ? "Hai dubbi? Scrivici su WhatsApp" : "Questions? Message us on WhatsApp";
 
   return (

@@ -16,8 +16,8 @@ const homeItems: Record<Locale, ValueItem[]> = {
       text: "Porto di arrivo, hotel, spiagge, bagagli e durata del soggiorno possono cambiare il mezzo più adatto."
     },
     {
-      title: "Disponibilità verificata",
-      text: "La richiesta non è una conferma automatica: controlliamo disponibilità, condizioni e punto di ritiro prima della conferma."
+      title: "Risposta rapida e verificata",
+      text: "Controlliamo subito disponibilità, condizioni e punto di ritiro con i nostri partner locali e ti ricontattiamo rapidamente con la soluzione migliore."
     },
     {
       title: "Supporto locale su WhatsApp",
@@ -34,8 +34,8 @@ const homeItems: Record<Locale, ValueItem[]> = {
       text: "Arrival port, hotel location, beaches, luggage and stay length can change which option fits best."
     },
     {
-      title: "Availability is reviewed",
-      text: "A request is not an automatic confirmation: we check availability, conditions and pickup point before confirmation."
+      title: "Fast, verified response",
+      text: "We quickly check availability, conditions and pickup point with our local partners and get back to you fast with the best option."
     },
     {
       title: "Local WhatsApp support",

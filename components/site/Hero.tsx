@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { BookingDeliveryMethod, Locale, PublicPickupPoint, VehicleFilter } from "@/lib/types";
 import { t } from "@/lib/i18n";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 import { HeroSearch } from "@/components/site/HeroSearch";
 import { VehicleFilters } from "@/components/site/VehicleFilters";
 
@@ -28,8 +29,7 @@ export function Hero({
   onDeliveryMethodChange: (value: BookingDeliveryMethod) => void;
 }) {
   const copy = t(locale);
-  const heroWhatsAppText = encodeURIComponent(copy.hero.whatsappMessage);
-  const heroWhatsAppHref = `https://wa.me/393296856370?text=${heroWhatsAppText}`;
+  const heroWhatsAppHref = getWhatsAppUrl(locale);
 
   return (
     <section className="hero">

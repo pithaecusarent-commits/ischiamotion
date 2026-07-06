@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
 import { DELIVERY_PORTS, HOTEL_MUNICIPALITIES, isValidDeliveryPort, municipalityLabels, portLabels } from "@/lib/delivery-zones";
 import { getSearchMode, searchModeSummaryLabel } from "@/lib/vehicle-categories";
+import { getWhatsAppUrl, resolveWhatsAppType } from "@/lib/whatsapp";
 import type {
   BookingDeliveryMethod,
   BookingPaymentMethod,
@@ -117,11 +118,6 @@ const copy = {
 } satisfies Record<Locale, Record<string, string>>;
 
 const standardDeliveryOptions: BookingDeliveryMethod[] = ["pickup_point", "hotel_delivery"];
-const whatsappMessages: Record<Locale, string> = {
-  it: "Ciao IschiaMotion, ho avuto un problema durante la richiesta online e vorrei supporto per scegliere la soluzione giusta.",
-  en: "Hello IschiaMotion, I had an issue with the online request and would like help choosing the right option."
-};
-
 function formatPickupLabel(point: PublicPickupPoint, locale: Locale) {
   const label = locale === "it" ? point.public_label_it : point.public_label_en;
   return label.replace(" - ", " — ");
@@ -283,7 +279,14 @@ export function BookingRequestModal({
     }
   }
 
-  const whatsappHref = `https://wa.me/393296856370?text=${encodeURIComponent(whatsappMessages[locale])}`;
+  const whatsappHref = getWhatsAppUrl(locale, resolveWhatsAppType(vehicle.category), {
+    startDate,
+    endDate,
+    areaOrHotel: initialHotelMunicipality || initialPickupMunicipality || initialPortSlug,
+    arrivalPoint: initialPortSlug || initialHotelMunicipality || initialPickupMunicipality,
+    departureArea: initialPortSlug || initialPickupMunicipality,
+    preferredArea: initialHotelMunicipality || initialPickupMunicipality
+  });
   const shouldShowOperationalPoint = deliveryMethod === "hotel_delivery";
 
   return (

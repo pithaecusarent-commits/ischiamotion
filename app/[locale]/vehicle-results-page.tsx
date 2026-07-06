@@ -59,6 +59,7 @@ export async function VehicleResultsPage({
   const portSlug = searchParams?.port_slug || "";
   const hotelMunicipality = searchParams?.hotel_municipality || "";
   const hasZoneFilter = Boolean(pickupMunicipality || portSlug || hotelMunicipality);
+  const areaOrHotel = hotelMunicipality || pickupMunicipality || portSlug || "";
 
   const [pickupPoints, result] = await Promise.all([
     getActivePickupPoints(),
@@ -93,7 +94,19 @@ export async function VehicleResultsPage({
           hasZoneFilter={hasZoneFilter}
         />
       </main>
-      <WhatsAppCTA locale={locale} />
+      <WhatsAppCTA
+        locale={locale}
+        category={category}
+        context={{
+          startDate,
+          endDate,
+          date: startDate,
+          areaOrHotel,
+          arrivalPoint: portSlug || hotelMunicipality || pickupMunicipality,
+          departureArea: portSlug || pickupMunicipality,
+          preferredArea: hotelMunicipality || pickupMunicipality
+        }}
+      />
       <Footer locale={locale} />
     </>
   );

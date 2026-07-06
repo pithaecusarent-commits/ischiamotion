@@ -7,19 +7,12 @@ import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import { Fragment } from "react";
 import type { CategoryLandingContent } from "@/lib/category-landings";
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
+import { getWhatsAppUrl, resolveWhatsAppType } from "@/lib/whatsapp";
 import type { VehicleFilter } from "@/lib/types";
 
 function getSearchPath(content: CategoryLandingContent) {
   const basePath = content.locale === "it" ? "/it/risultati" : "/en/results";
   return `${basePath}?category=${encodeURIComponent(content.categoryParam)}`;
-}
-
-function getWhatsAppUrl(locale: CategoryLandingContent["locale"]) {
-  const message = locale === "it"
-    ? "Ciao IschiaMotion, vorrei verificare la disponibilità per un noleggio a Ischia."
-    : "Hello IschiaMotion, I would like to check availability for a rental in Ischia.";
-
-  return `https://wa.me/393296856370?text=${encodeURIComponent(message)}`;
 }
 
 function getInternalLinks(locale: CategoryLandingContent["locale"]) {
@@ -211,7 +204,7 @@ const landingGuides = {
 export function CategoryLanding({ content }: { content: CategoryLandingContent }) {
   const homePath = content.locale === "it" ? "/it" : "/en";
   const searchPath = getSearchPath(content);
-  const whatsappUrl = getWhatsAppUrl(content.locale);
+  const whatsappUrl = getWhatsAppUrl(content.locale, resolveWhatsAppType(content.categoryParam as VehicleFilter));
   const brandAnchor = content.locale === "it"
     ? content.key === "auto" || content.key === "gommone"
       ? "piattaforma locale IschiaMotion"
@@ -404,7 +397,7 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
           </div>
         </section>
       </main>
-      <WhatsAppCTA locale={content.locale} />
+      <WhatsAppCTA locale={content.locale} category={content.categoryParam as VehicleFilter} />
       <Footer locale={content.locale} />
     </>
   );

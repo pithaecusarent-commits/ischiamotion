@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { ValueProposition } from "@/components/site/ValueProposition";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, scooterFaq, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
 import { Fragment } from "react";
@@ -21,10 +22,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const alternatePath = isIt ? "/en/scooter-rental-ischia" : "/it/noleggio-scooter-ischia";
   const homePath = isIt ? "/it" : "/en";
   const searchPath = isIt ? "/it/risultati?category=scooter" : "/en/results?category=scooter";
-  const whatsappUrl = `https://wa.me/393296856370?text=${encodeURIComponent(isIt
-    ? "Ciao IschiaMotion, non so se lo scooter è la soluzione giusta per la mia zona e vorrei supporto."
-    : "Hello IschiaMotion, I’m not sure if a scooter is right for my area and would like support."
-  )}`;
+  const whatsappUrl = getWhatsAppUrl(locale, "scooter");
   const title = isIt ? "Noleggio scooter a Ischia" : "Scooter rental in Ischia";
   const description = isIt
     ? "Ideale se vuoi muoverti in modo agile, ma zona dell’hotel, bagagli e salite possono fare la differenza. Ti aiutiamo a capire se è la scelta giusta e verifichiamo disponibilità con partner locali."
@@ -282,7 +280,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
           </div>
         </section>
       </main>
-      <WhatsAppCTA locale={locale} />
+      <WhatsAppCTA locale={locale} category="scooter" />
       <Footer locale={locale} />
     </>
   );

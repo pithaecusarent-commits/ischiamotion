@@ -6,6 +6,7 @@ import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
 import type { Locale } from "@/lib/types";
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, siteUrl, webpageJsonLd } from "@/lib/seo";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 type LocalCarPortContent = {
   locale: Locale;
@@ -172,14 +173,6 @@ function getSearchPath(locale: Locale) {
   return locale === "it" ? "/it/risultati?category=auto" : "/en/results?category=auto";
 }
 
-function getWhatsAppUrl(locale: Locale) {
-  const message = locale === "it"
-    ? "Ciao IschiaMotion, vorrei verificare la disponibilità per un'auto a Ischia Porto."
-    : "Hello IschiaMotion, I would like to check car availability at Ischia Port.";
-
-  return `https://wa.me/393296856370?text=${encodeURIComponent(message)}`;
-}
-
 export function getLocalCarPortContent(locale: Locale) {
   return content[locale];
 }
@@ -188,7 +181,9 @@ export function LocalCarPortLanding({ locale }: { locale: Locale }) {
   const c = getLocalCarPortContent(locale);
   const homePath = locale === "it" ? "/it" : "/en";
   const searchPath = getSearchPath(locale);
-  const whatsappUrl = getWhatsAppUrl(locale);
+  const whatsappUrl = getWhatsAppUrl(locale, "auto", {
+    arrivalPoint: locale === "it" ? "Ischia Porto" : "Ischia Port"
+  });
 
   return (
     <>
@@ -332,7 +327,7 @@ export function LocalCarPortLanding({ locale }: { locale: Locale }) {
           </div>
         </section>
       </main>
-      <WhatsAppCTA locale={locale} />
+      <WhatsAppCTA locale={locale} category="auto" context={{ arrivalPoint: locale === "it" ? "Ischia Porto" : "Ischia Port" }} />
       <Footer locale={locale} />
     </>
   );

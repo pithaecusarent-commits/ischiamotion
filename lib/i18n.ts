@@ -11,12 +11,11 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Muoviti a Ischia senza perdere tempo tra mille noleggiatori.",
-      subtitle: "Scooter, auto, e-bike, gommoni, barche e beach club tramite partner locali selezionati. Dicci dove soggiorni, quando arrivi e cosa vuoi fare: verifichiamo per te disponibilità, prezzo e condizioni.",
-      cta: "Trova la soluzione giusta",
+      title: "Noleggia scooter, auto e barche a Ischia senza perdere tempo.",
+      subtitle: "Dicci le date del tuo soggiorno, dove alloggi o dove arrivi: verifichiamo rapidamente la soluzione più comoda disponibile con partner locali selezionati.",
+      cta: "Verifica disponibilità e prezzo",
       secondary: "Scrivici su WhatsApp",
-      whatsappMessage: "Ciao IschiaMotion, vorrei un consiglio per scegliere il mezzo più adatto al mio soggiorno a Ischia.",
-      microcopy: "Richiesta senza impegno. La disponibilità viene confermata solo dopo verifica con il partner locale.",
+      microcopy: "Ti ricontattiamo rapidamente con la migliore soluzione disponibile per le tue date.",
       benefits: [
         "Partner locali selezionati",
         "Prezzi e condizioni verificati",
@@ -47,12 +46,11 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Get around Ischia without wasting time between countless rental operators.",
-      subtitle: "Scooters, cars, e-bikes, dinghies, boats and beach clubs through selected local partners. Tell us where you are staying, when you arrive and what you would like to do: we check availability, price and conditions for you.",
-      cta: "Find the right option",
+      title: "Rent a scooter, car or boat in Ischia without wasting time.",
+      subtitle: "Tell us your dates, where you're staying or arriving: we quickly check the most convenient option available with selected local partners.",
+      cta: "Check availability and price",
       secondary: "Message us on WhatsApp",
-      whatsappMessage: "Hi IschiaMotion, I would like some advice on choosing the best option for my stay in Ischia.",
-      microcopy: "No-obligation request. Availability is confirmed only after checking with the local partner.",
+      microcopy: "We'll get back to you quickly with the best option available for your dates.",
       benefits: [
         "Selected local partners",
         "Prices and conditions checked",

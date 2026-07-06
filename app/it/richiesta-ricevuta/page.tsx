@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { deliveryMethodLabels } from "@/lib/booking-labels";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Richiesta ricevuta - IschiaMotion",
@@ -38,8 +39,7 @@ export default function RequestReceivedPage({ searchParams }: Props) {
     ? searchParams.delivery_method
     : "pickup_point";
   const deliveryLocation = valueOrDash(searchParams?.delivery_location);
-  const whatsappText = `Ciao IschiaMotion, ho inviato una richiesta dal sito. Codice richiesta: ${code}.`;
-  const whatsappHref = `https://wa.me/393296856370?text=${encodeURIComponent(whatsappText)}`;
+  const whatsappHref = getWhatsAppUrl("it", "requestReceived");
 
   return (
     <main className="min-h-screen bg-sand px-5 py-10 text-ink">

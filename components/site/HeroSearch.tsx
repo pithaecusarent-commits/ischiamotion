@@ -134,8 +134,8 @@ export function HeroSearch({
           <div className="search-kicker">{locale === "it" ? "Richiesta veloce" : "Quick online request"}</div>
           <div className="search-note">
             {locale === "it"
-              ? "Richiesta senza impegno · verifica prezzo e condizioni · supporto locale"
-              : "No-obligation request · price and conditions review · local support"}
+              ? "Ricevi disponibilità, prezzo e condizioni prima della conferma"
+              : "Get availability, price and conditions before you confirm"}
           </div>
         </div>
         <div className="search-grid search-grid-2col">
@@ -213,7 +213,7 @@ export function HeroSearch({
         {error ? <div className="booking-message error">{error}</div> : null}
         <button type="button" className="search-btn" onClick={handleSearch}>
           <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="white" strokeWidth="1.5" /><path d="M10.5 10.5L13 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" /></svg>
-          {locale === "it" ? "Trova la soluzione giusta" : "Find the right option"}
+          {locale === "it" ? "Verifica disponibilità e prezzo" : "Check availability and price"}
         </button>
       </div>
     </div>
