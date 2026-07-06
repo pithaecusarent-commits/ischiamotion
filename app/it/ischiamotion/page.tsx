@@ -71,10 +71,10 @@ export default function IschiaMotionPage() {
         <section className="seo-landing-hero">
           <div>
             <div className="section-eyebrow">Piattaforma locale a Ischia</div>
-            <h1>IschiaMotion</h1>
+            <h1>Chi è IschiaMotion</h1>
             <p>
-              IschiaMotion nasce per rendere più semplice l’organizzazione degli spostamenti e delle esperienze a Ischia.
-              Una sola richiesta per verificare scooter, auto, barche, e-bike e servizi mare disponibili nelle date del tuo soggiorno.
+              Nasce per rendere più semplice l’organizzazione degli spostamenti a Ischia: una sola richiesta per
+              scooter, auto, barche, e-bike e servizi mare.
             </p>
           </div>
           <div className="seo-landing-card">

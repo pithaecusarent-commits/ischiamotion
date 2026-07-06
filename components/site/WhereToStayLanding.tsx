@@ -48,8 +48,8 @@ type PageContent = {
 const content: Record<Locale, PageContent> = {
   it: {
     eyebrow: "Guida alla vacanza",
-    h1: "Dove dormire a Ischia: zone migliori e come muoversi sull'isola",
-    intro: "Scegliere dove dormire a Ischia non riguarda solo l'alloggio: ogni zona dell'isola ha una distanza diversa dal porto, un accesso diverso alle spiagge e un bisogno diverso di muoversi. Chi soggiorna a Ischia Porto può cavarsela a piedi; chi sceglie Forio, Sant'Angelo o Barano ha quasi sempre bisogno di uno scooter, un'auto o un'e-bike per spostarsi in modo autonomo. Valutare insieme soggiorno e spostamenti aiuta a organizzare una vacanza più fluida, senza imprevisti.",
+    h1: "Dove dormire a Ischia",
+    intro: "Ogni zona dell'isola ha una distanza diversa dal porto e un bisogno diverso di muoversi: scegliere insieme dove dormire e come spostarti rende la vacanza più semplice.",
     cardTitle: "Soggiorno e mobilità insieme",
     cardText: "Scegliere la zona giusta e il mezzo adatto aiuta a organizzare una vacanza più fluida, senza imprevisti dell'ultimo momento.",
     primaryCta: "Trova il mezzo più adatto",
@@ -160,8 +160,8 @@ const content: Record<Locale, PageContent> = {
   },
   en: {
     eyebrow: "Ischia travel guide",
-    h1: "Where to stay in Ischia and how to get around",
-    intro: "Planning a holiday in Ischia means choosing the right area to stay and thinking about how to get around. Where you sleep on the island shapes your daily experience: some areas are close to everything, others require a vehicle to reach beaches, villages or the port.",
+    h1: "Where to Stay in Ischia",
+    intro: "Every area of the island sits differently from the port and calls for different transport: choosing where to stay and how to get around together makes the holiday easier.",
     cardTitle: "Accommodation and transport together",
     cardText: "Choosing the right location and the right vehicle helps you plan a smoother holiday, without wasted time or last-minute surprises.",
     primaryCta: "Find the right vehicle",
@@ -268,11 +268,11 @@ export function WhereToStayLanding({ locale }: { locale: Locale }) {
         { name: c.breadcrumbLabel, url: `${siteUrl}${path}` }
       ])} />
       <JsonLd data={faqJsonLd(c.faqs)} />
-      <JsonLd data={webpageJsonLd(locale, path, c.h1, pageDescription)} />
+      <JsonLd data={webpageJsonLd(locale, path, locale === "it" ? "Dove dormire a Ischia: zone migliori e come muoversi sull'isola" : "Where to stay in Ischia and how to get around", pageDescription)} />
       <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
 
-        <section className="seo-landing-hero">
+        <section className="seo-landing-hero guide-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
             <h1>{c.h1}</h1>

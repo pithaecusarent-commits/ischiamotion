@@ -47,8 +47,8 @@ type Content = {
 const content: Record<Locale, Content> = {
   it: {
     eyebrow: "Guida turistica",
-    h1: "Cosa vedere a Ischia senza auto: itinerario, zone e come muoversi",
-    intro: "Ischia non è solo spiagge e terme: è anche borghi, baie, panorami e zone con caratteristiche molto diverse tra loro, da Ischia Porto a Sant'Angelo, da Forio a Casamicciola. Per visitare Ischia meglio, conta anche scegliere il modo più pratico per muoversi: organizzare bene gli spostamenti rende la vacanza più semplice e piacevole, con o senza auto.",
+    h1: "Cosa vedere a Ischia senza auto",
+    intro: "Zone, itinerari e consigli pratici per organizzare gli spostamenti durante il soggiorno, con o senza auto.",
     ctaText: "Vuoi capire quale mezzo è più comodo per il tuo soggiorno? Indicaci date e zona: verifichiamo disponibilità e prezzo in pochi minuti.",
     cardTitle: "Vedere Ischia, un pezzo alla volta",
     cardText: "Ogni zona dell'isola ha un carattere diverso: questa guida ti aiuta a capire cosa vedere e quale mezzo può essere più pratico da valutare per raggiungerlo.",
@@ -176,8 +176,8 @@ const content: Record<Locale, Content> = {
   },
   en: {
     eyebrow: "Travel guide",
-    h1: "What to See in Ischia Without a Car: Itinerary, Areas and Getting Around",
-    intro: "Ischia is not just beaches and thermal parks: it's also villages, bays, viewpoints and areas that feel quite different from one another, from Ischia Porto to Sant'Angelo, from Forio to Casamicciola. To visit Ischia well, it also helps to choose the most practical way to get around: planning your trips makes the stay easier and more enjoyable, with or without a car.",
+    h1: "What to See in Ischia Without a Car",
+    intro: "Areas, itineraries and practical tips for planning your trips during your stay, with or without a car.",
     ctaText: "Want to find the most practical way to get around during your stay? Tell us your dates and area: we check availability and prices in just a few minutes.",
     cardTitle: "Seeing Ischia, one area at a time",
     cardText: "Every part of the island has its own character: this guide helps you understand what to see and which option may be worth considering to get there.",
@@ -323,10 +323,10 @@ export function IschiaNoCarGuide({ locale }: { locale: Locale }) {
         { name: c.breadcrumbLabel, url: `${siteUrl}${path}` }
       ])} />
       <JsonLd data={faqJsonLd(c.faqs)} />
-      <JsonLd data={webpageJsonLd(locale, path, c.h1, description)} />
+      <JsonLd data={webpageJsonLd(locale, path, locale === "it" ? "Cosa vedere a Ischia senza auto: itinerario, zone e come muoversi" : "What to See in Ischia Without a Car: Itinerary, Areas and Getting Around", description)} />
       <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
-        <section className="seo-landing-hero">
+        <section className="seo-landing-hero guide-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
             <h1>{c.h1}</h1>

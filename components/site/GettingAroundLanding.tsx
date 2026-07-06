@@ -45,7 +45,7 @@ const content: Record<Locale, Content> = {
   it: {
     eyebrow: "Guida alla mobilità",
     h1: "Come muoversi a Ischia",
-    intro: "Il modo migliore per muoversi a Ischia dipende dalla zona dell'alloggio, dal periodo, dalle spiagge che vuoi raggiungere e dal tipo di vacanza. Bagagli, bambini, distanze e programmi giornalieri possono rendere più adatto uno scooter, un'auto, un'e-bike oppure i mezzi pubblici. Per esplorare la costa, invece, barche e gommoni offrono una prospettiva diversa, sempre in base a disponibilità, meteo e condizioni confermate dal partner locale.",
+    intro: "Il mezzo più adatto dipende da zona, periodo e tipo di vacanza: scooter, auto, e-bike, bus, taxi o barca offrono soluzioni diverse.",
     guideLinkBefore: "Se stai ancora organizzando il tuo itinerario, leggi anche la guida su ",
     guideLinkLabel: "cosa vedere a Ischia senza auto",
     guideLinkAfter: ", con zone, tappe e consigli pratici sugli spostamenti.",
@@ -121,8 +121,8 @@ const content: Record<Locale, Content> = {
   },
   en: {
     eyebrow: "Island mobility guide",
-    h1: "How to get around Ischia",
-    intro: "The best way to get around Ischia depends on where you are staying, the time of year, the beaches you plan to visit and your travel style. Luggage, children, hills and daily distances can make a scooter, car, e-bike or public transport the better option. Boats and RIBs offer another way to discover the coast, subject to local availability, weather and partner conditions.",
+    h1: "How to Get Around Ischia",
+    intro: "The best option depends on your area, the season and your travel style: scooters, cars, e-bikes, buses, taxis and boats each suit different trips.",
     guideLinkBefore: "If you are still planning your itinerary, you can also read our guide on ",
     guideLinkLabel: "what to see in Ischia without a car",
     guideLinkAfter: ", with areas, stops and practical tips for getting around.",
@@ -198,10 +198,10 @@ export function GettingAroundLanding({ locale }: { locale: Locale }) {
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "IschiaMotion", url: `${siteUrl}${homePath}` }, { name: c.breadcrumbLabel, url: `${siteUrl}${path}` }])} />
       <JsonLd data={faqJsonLd(c.faqs)} />
-      <JsonLd data={webpageJsonLd(locale, path, c.h1, description)} />
+      <JsonLd data={webpageJsonLd(locale, path, locale === "it" ? "Come muoversi a Ischia" : "How to get around Ischia", description)} />
       <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
-        <section className="seo-landing-hero">
+        <section className="seo-landing-hero guide-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
             <h1>{c.h1}</h1>

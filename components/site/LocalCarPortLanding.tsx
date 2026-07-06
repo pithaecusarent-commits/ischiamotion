@@ -13,6 +13,7 @@ type LocalCarPortContent = {
   path: string;
   alternatePath: string;
   title: string;
+  h1: string;
   metaDescription: string;
   eyebrow: string;
   intro: string;
@@ -44,9 +45,10 @@ const content = {
     path: "/it/noleggio-auto-ischia-porto",
     alternatePath: "/en/car-rental-ischia-port",
     title: "Noleggio auto Ischia Porto: trova la tua in pochi minuti",
+    h1: "Noleggio auto a Ischia Porto: pronta all'arrivo",
     metaDescription: "Richiedi un'auto a noleggio a Ischia Porto con IschiaMotion. Verifichiamo disponibilità, condizioni e ritiro con partner locali selezionati sull'isola.",
     eyebrow: "Auto a Ischia Porto",
-    intro: "Arrivi a Ischia Porto e vuoi muoverti subito? Indicaci data, orario di arrivo e numero di persone: verifichiamo rapidamente le auto disponibili con partner locali selezionati e ti inviamo disponibilità, prezzo e condizioni in pochi minuti. Auto disponibili a partire da € 30 al giorno, secondo periodo e durata del noleggio. Ritiro presso Ischia Porto, punto convenzionato o consegna in hotel dove disponibile.",
+    intro: "Indicaci data, orario di arrivo e numero di persone: verifichiamo rapidamente le auto disponibili con partner locali selezionati, con ritiro a Ischia Porto o consegna in hotel dove disponibile.",
     supportText: "Ti rispondiamo in pochi minuti negli orari operativi, prima ancora di organizzare i tuoi spostamenti sull'isola.",
     cardTitle: "Arrivi, bagagli e autonomia",
     cardText: "Soluzione utile se sbarchi a Ischia Porto e vuoi raggiungere hotel, spiagge o più comuni con maggiore libertà.",
@@ -61,7 +63,7 @@ const content = {
       ["Ricevi la proposta in pochi minuti", "Ti comunichiamo dettagli di ritiro e informazioni utili prima del noleggio."]
     ],
     pricesTitle: "Prezzi noleggio auto Ischia Porto",
-    pricesText: "I prezzi del noleggio auto a Ischia Porto possono variare in base a periodo, durata, categoria del veicolo, disponibilità, assicurazione, cauzione e condizioni del partner. Nei mesi estivi e nei periodi di alta richiesta è consigliabile inviare la richiesta con anticipo.",
+    pricesText: "Auto disponibili a partire da € 30 al giorno, con variazioni in base a periodo, durata, categoria del veicolo, disponibilità, assicurazione, cauzione e condizioni del partner. Nei mesi estivi e nei periodi di alta richiesta è consigliabile inviare la richiesta con anticipo.",
     placesTitle: "Dove puoi andare da Ischia Porto",
     placesText: "Da Ischia Porto puoi raggiungere facilmente Ischia Ponte, Casamicciola Terme, Lacco Ameno, Forio, Barano, Serrara Fontana, Sant'Angelo e le spiagge principali dell'isola. La scelta dell'auto è particolarmente comoda per chi vuole visitare più zone in autonomia.",
     requestTitle: "Cosa indicare nella richiesta",
@@ -108,9 +110,10 @@ const content = {
     path: "/en/car-rental-ischia-port",
     alternatePath: "/it/noleggio-auto-ischia-porto",
     title: "Car rental at Ischia Port: find yours in minutes",
+    h1: "Car Rental at Ischia Port: Ready When You Arrive",
     metaDescription: "Request a rental car near Ischia Port with IschiaMotion. We check availability, conditions and pickup with selected local partners.",
     eyebrow: "Cars at Ischia Port",
-    intro: "Arriving at Ischia Port and want to get moving right away? Share your date, arrival time and number of guests: we quickly check available cars with selected local partners and send you availability, price and conditions within minutes. Cars available from €30 a day, depending on season and rental length. Pickup at Ischia Port, a partner point or hotel delivery where available.",
+    intro: "Share your arrival date, time and number of guests: we quickly check available cars with selected local partners, with pickup at Ischia Port or hotel delivery where available.",
     supportText: "We reply within minutes during operating hours, before you even organize your trip around the island.",
     cardTitle: "Arrival, luggage and freedom",
     cardText: "Useful if you land at Ischia Port and want to reach hotels, beaches or several towns with more independence.",
@@ -125,7 +128,7 @@ const content = {
       ["Receive confirmation after review", "We share pickup details and useful information before the rental."]
     ],
     pricesTitle: "Car rental prices at Ischia Port",
-    pricesText: "Car rental prices at Ischia Port may vary by season, rental length, vehicle category, availability, insurance, deposit and partner conditions. During summer and high-demand periods it is better to send the request in advance.",
+    pricesText: "Cars available from €30 a day, with variations by season, rental length, vehicle category, availability, insurance, deposit and partner conditions. During summer and high-demand periods it is better to send the request in advance.",
     placesTitle: "Where you can go from Ischia Port",
     placesText: "From Ischia Port you can easily reach Ischia Ponte, Casamicciola Terme, Lacco Ameno, Forio, Barano, Serrara Fontana, Sant'Angelo and the island's main beaches. A car is especially convenient if you want to visit several areas independently.",
     requestTitle: "What to include in your request",
@@ -199,7 +202,7 @@ export function LocalCarPortLanding({ locale }: { locale: Locale }) {
         <section className="seo-landing-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
-            <h1>{c.title}</h1>
+            <h1>{c.h1}</h1>
             <p>{c.intro}</p>
             <p>{c.supportText}</p>
             <div className="hero-actions">

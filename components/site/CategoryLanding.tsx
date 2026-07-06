@@ -230,8 +230,8 @@ export function CategoryLanding({ content }: { content: CategoryLandingContent }
         <section className="seo-landing-hero">
           <div>
             <div className="section-eyebrow">{content.eyebrow}</div>
-            <h1>{content.title}</h1>
-            <p>{content.description}</p>
+            <h1>{content.h1}</h1>
+            <p>{content.subtitle}</p>
             <p>{content.microcopy}</p>
             {content.guideLink ? (
               <p>

@@ -45,7 +45,7 @@ export default function RequestReceivedPage({ searchParams }: Props) {
     <main className="min-h-screen bg-sand px-5 py-10 text-ink">
       <section className="mx-auto max-w-3xl rounded-[32px] bg-cream p-6 shadow-soft sm:p-10">
         <div className="section-eyebrow">Richiesta ricevuta</div>
-        <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Richiesta ricevuta: la tua proposta è in arrivo.</h1>
+        <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">La tua proposta è in arrivo</h1>
         <p className="mt-4 text-ink/70">
           Stiamo controllando disponibilità, prezzo, condizioni e punto di ritiro o consegna per le date indicate.
           Ti invieremo rapidamente le soluzioni disponibili.

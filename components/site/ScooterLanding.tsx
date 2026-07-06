@@ -24,9 +24,13 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const searchPath = isIt ? "/it/risultati?category=scooter" : "/en/results?category=scooter";
   const whatsappUrl = getWhatsAppUrl(locale, "scooter");
   const title = isIt ? "Noleggio scooter a Ischia: trova il tuo in pochi minuti" : "Scooter rental in Ischia: find yours in minutes";
+  const h1Display = isIt ? "Noleggio scooter a Ischia: muoviti in libertà" : "Scooter Rental in Ischia: Explore with More Freedom";
   const description = isIt
     ? "Inserisci date e zona del soggiorno: verifichiamo rapidamente con partner locali selezionati e ti inviamo disponibilità, prezzo e condizioni dello scooter più adatto. Muoviti liberamente tra spiagge, terme, borghi e panorami dell'isola senza perdere tempo a contattare tanti noleggiatori: con una sola richiesta troviamo per te le soluzioni disponibili nella tua zona. Soluzioni disponibili a partire da € 25 al giorno, in base al periodo, alla durata del noleggio e alla tipologia di scooter. Ritiro presso porto, punto convenzionato o consegna in hotel dove disponibile."
     : "Share your dates and area of stay: we quickly check with selected local partners and send you availability, price and conditions for the right scooter. Get around freely between beaches, thermal parks, villages and viewpoints without wasting time contacting several rental operators — one request is enough for us to find the available options in your area. Options available from €25 a day, depending on season, rental length and scooter type. Pickup at the port, a partner point or hotel delivery where available.";
+  const subtitleDisplay = isIt
+    ? "Indicaci date e zona del soggiorno: verifichiamo rapidamente disponibilità, prezzo e punto di ritiro o consegna con partner locali selezionati."
+    : "Tell us your dates and area of stay: we quickly check availability, price and pickup or delivery with selected local partners.";
   const advantages = isIt
     ? [
       ["Spostamenti rapidi", "L’affitto di uno scooter a Ischia è pratico per muoversi tra Ischia Porto, spiagge, centri abitati e punti panoramici senza la rigidità dell'auto."],
@@ -126,8 +130,8 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
         <section className="seo-landing-hero">
           <div>
             <div className="section-eyebrow">{isIt ? "Scooter a Ischia" : "Scooters in Ischia"}</div>
-            <h1>{title}</h1>
-            <p>{description}</p>
+            <h1>{h1Display}</h1>
+            <p>{subtitleDisplay}</p>
             <p>
               {isIt ? "Se vuoi capire quali zone visitare e quando può essere utile uno scooter, leggi la guida su " : "If you want to understand which areas to visit and when a scooter can be useful, read our guide on "}
               <a href={isIt ? "/it/cosa-vedere-a-ischia-senza-auto" : "/en/what-to-see-in-ischia-without-a-car"}>

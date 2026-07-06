@@ -45,10 +45,10 @@ export default function RequestReceivedPage({ searchParams }: Props) {
     <main className="min-h-screen bg-sand px-5 py-10 text-ink">
       <section className="mx-auto max-w-3xl rounded-[32px] bg-cream p-6 shadow-soft sm:p-10">
         <div className="section-eyebrow">Request received</div>
-        <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Thank you, we received your request.</h1>
+        <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Your proposal is on its way</h1>
         <p className="mt-4 text-ink/70">
-          Availability is not confirmed yet: IschiaMotion reviews dates, area and conditions with selected local partners.
-          We will contact you with confirmation, alternatives or next steps.
+          We're checking availability, price, conditions and pickup or delivery details for your dates.
+          We'll send you the available options shortly.
         </p>
 
         <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/75 p-5">
@@ -64,12 +64,17 @@ export default function RequestReceivedPage({ searchParams }: Props) {
         </div>
 
         <div className="mt-8 rounded-[28px] border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-ink/75">
-          This confirms we received your request; it is not a final confirmation of availability or final price.
+          <div className="font-bold text-ink">What happens next?</div>
+          <ol className="mt-2 list-decimal space-y-1 pl-5">
+            <li>We check the available options right away.</li>
+            <li>We prepare a proposal with price and details.</li>
+            <li>You get it all within minutes via WhatsApp or email.</li>
+          </ol>
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a className="primary-btn justify-center" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-            Questions? Message us on WhatsApp
+            Continue on WhatsApp
           </a>
           <Link className="ghost-btn justify-center" href="/en">
             Back to homepage

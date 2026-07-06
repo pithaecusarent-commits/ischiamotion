@@ -62,7 +62,7 @@ const content: Record<Locale, Content> = {
   it: {
     eyebrow: "Guida all'arrivo",
     h1: "Arrivare a Ischia Porto: come muoversi dopo il traghetto",
-    intro: "Ischia Porto è uno dei principali punti di arrivo sull'isola per chi viaggia in traghetto o aliscafo. Organizzare gli spostamenti prima o subito dopo lo sbarco può rendere l'inizio del soggiorno più semplice, soprattutto se l'hotel non è nella stessa zona del porto.",
+    intro: "Ischia Porto è uno dei principali punti di arrivo dell'isola: organizzare gli spostamenti dopo lo sbarco rende l'inizio del soggiorno più semplice.",
     ctaText: "Indicaci quando arrivi e dove soggiorni: verifichiamo disponibilità e prezzo per la soluzione più pratica per le tue date.",
     cardTitle: "Organizzare l'arrivo con calma",
     cardText: "Zona dell'hotel, bagagli, numero di persone e programma di viaggio aiutano a capire quale mezzo può essere più pratico da valutare dopo lo sbarco.",
@@ -188,7 +188,7 @@ const content: Record<Locale, Content> = {
   en: {
     eyebrow: "Arrival guide",
     h1: "Arriving at Ischia Porto: Getting Around After the Ferry",
-    intro: "Ischia Porto is one of the island's main arrival points for travellers coming by ferry or hydrofoil. Planning your onward transport before or right after landing can make the start of your stay easier, especially if your hotel isn't in the same area as the port.",
+    intro: "Ischia Porto is one of the island's main arrival points: planning your transport after landing makes the start of your stay easier.",
     ctaText: "Tell us when you are arriving and where you are staying: we check availability and prices for the most practical option for your dates.",
     cardTitle: "A calmer start to your stay",
     cardText: "Your hotel's area, luggage, group size and travel plans all help work out which option may be worth considering once you land.",
@@ -334,7 +334,7 @@ export function IschiaPortArrivalGuide({ locale }: { locale: Locale }) {
       <JsonLd data={webpageJsonLd(locale, path, c.h1, description)} />
       <Header locale={locale} alternateHref={alternatePath} />
       <main className="seo-landing">
-        <section className="seo-landing-hero">
+        <section className="seo-landing-hero guide-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
             <h1>{c.h1}</h1>

@@ -11,8 +11,8 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Noleggia scooter, auto e barche a Ischia senza perdere tempo.",
-      subtitle: "Non serve contattare tanti noleggiatori: dicci le date del tuo soggiorno, dove alloggi o dove arrivi, e verifichiamo per te la soluzione più comoda con partner locali selezionati.",
+      title: "Scooter, auto e barche a Ischia senza perdere tempo.",
+      subtitle: "Non serve contattare tanti noleggiatori: dicci date e zona del soggiorno, verifichiamo la soluzione più comoda con partner locali selezionati.",
       cta: "Verifica disponibilità e prezzo",
       secondary: "Verifica disponibilità su WhatsApp",
       microcopy: "Risposta in pochi minuti negli orari operativi.",
@@ -46,8 +46,8 @@ export const dictionary = {
     },
     hero: {
       kicker: "Ischia",
-      title: "Rent a scooter, car or boat in Ischia without wasting time.",
-      subtitle: "No need to contact several rental operators: tell us your dates and where you're staying or arriving, and we'll check the most convenient option with selected local partners.",
+      title: "Scooters, cars and boats in Ischia, no time wasted.",
+      subtitle: "No need to contact several rental operators: tell us your dates and area, we'll check the most convenient option with local partners.",
       cta: "Check availability and price",
       secondary: "Check availability on WhatsApp",
       microcopy: "A reply within minutes during operating hours.",
