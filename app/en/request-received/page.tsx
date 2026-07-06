@@ -47,8 +47,8 @@ export default function RequestReceivedPage({ searchParams }: Props) {
         <div className="section-eyebrow">Request received</div>
         <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Your proposal is on its way</h1>
         <p className="mt-4 text-ink/70">
-          We're checking availability, price, conditions and pickup or delivery details for your dates.
-          We'll send you the available options shortly.
+          We&apos;re checking availability, price, conditions and pickup or delivery details for your dates.
+          We&apos;ll send you the available options shortly.
         </p>
 
         <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/75 p-5">
