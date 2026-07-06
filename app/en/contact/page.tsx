@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact IschiaMotion | Ischia",
   description: "Contact IschiaMotion for scooters, cars, e-bikes, rubber dinghies, boats and seaside services in Ischia.",
   alternates: {
-    canonical: "/en/contact",
-    languages: { it: "/it/contatti", en: "/en/contact", "x-default": "/it/contatti" }
+    canonical: canonicalUrl("/en/contact"),
+    languages: { it: canonicalUrl("/it/contatti"), en: canonicalUrl("/en/contact"), "x-default": canonicalUrl("/it/contatti") }
   }
 };
 

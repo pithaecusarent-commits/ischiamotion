@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contatti IschiaMotion | Ischia",
   description: "Contatta IschiaMotion per richieste di scooter, auto, e-bike, gommoni, barche e servizi mare a Ischia.",
   alternates: {
-    canonical: "/it/contatti",
-    languages: { it: "/it/contatti", en: "/en/contact", "x-default": "/it/contatti" }
+    canonical: canonicalUrl("/it/contatti"),
+    languages: { it: canonicalUrl("/it/contatti"), en: canonicalUrl("/en/contact"), "x-default": canonicalUrl("/it/contatti") }
   }
 };
 

@@ -3,7 +3,7 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { JsonLd } from "@/components/site/JsonLd";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
-import { breadcrumbJsonLd, canonicalSiteUrl, organizationId, siteUrl, websiteReference } from "@/lib/seo";
+import { breadcrumbJsonLd, canonicalSiteUrl, canonicalUrl, organizationId, siteUrl, websiteReference } from "@/lib/seo";
 
 const path = "/it/ischiamotion";
 const title = "Chi è IschiaMotion | Piattaforma locale a Ischia";
@@ -13,16 +13,16 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: path,
+    canonical: canonicalUrl(path),
     languages: {
-      it: path,
-      "x-default": path
+      it: canonicalUrl(path),
+      "x-default": canonicalUrl(path)
     }
   },
   openGraph: {
     title,
     description,
-    url: path,
+    url: canonicalUrl(path),
     siteName: "IschiaMotion",
     type: "website",
     locale: "it_IT",

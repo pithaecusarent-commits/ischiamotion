@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/types";
 import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 import { getHomepageCategoryMinPrices } from "@/lib/supabase/queries/public-vehicles";
 import { JsonLd } from "@/components/site/JsonLd";
-import { serviceJsonLd, websiteJsonLd } from "@/lib/seo";
+import { canonicalUrl, serviceJsonLd, websiteJsonLd } from "@/lib/seo";
 
 type Props = { params: { locale: Locale } };
 const locales: Locale[] = ["it", "en"];
@@ -38,8 +38,12 @@ export function generateMetadata({ params }: Props): Metadata {
       description
     },
     alternates: {
-      canonical: `/${params.locale}`,
-      languages: { it: "/it", en: "/en", "x-default": "/it" }
+      canonical: canonicalUrl(`/${params.locale}`),
+      languages: {
+        it: canonicalUrl("/it"),
+        en: canonicalUrl("/en"),
+        "x-default": canonicalUrl("/it")
+      }
     }
   };
 }

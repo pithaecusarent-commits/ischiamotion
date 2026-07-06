@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LocalCarPortLanding, getLocalCarPortContent } from "@/components/site/LocalCarPortLanding";
+import { canonicalUrl } from "@/lib/seo";
 
 const content = getLocalCarPortContent("en");
 
@@ -7,17 +8,17 @@ export const metadata: Metadata = {
   title: "Car rental Ischia Port | Request car availability",
   description: content.metaDescription,
   alternates: {
-    canonical: content.path,
+    canonical: canonicalUrl(content.path),
     languages: {
-      it: content.alternatePath,
-      en: content.path,
-      "x-default": content.alternatePath
+      it: canonicalUrl(content.alternatePath),
+      en: canonicalUrl(content.path),
+      "x-default": canonicalUrl(content.alternatePath)
     }
   },
   openGraph: {
     title: "Car rental Ischia Port | Request car availability",
     description: content.metaDescription,
-    url: content.path,
+    url: canonicalUrl(content.path),
     siteName: "IschiaMotion",
     type: "website",
     locale: "en_US"

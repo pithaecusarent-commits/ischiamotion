@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Termini | IschiaMotion",
   description: "Termini base di utilizzo di IschiaMotion per richieste di disponibilità tramite partner locali selezionati.",
   alternates: {
-    canonical: "/it/termini",
-    languages: { it: "/it/termini", en: "/en/terms", "x-default": "/it/termini" }
+    canonical: canonicalUrl("/it/termini"),
+    languages: { it: canonicalUrl("/it/termini"), en: canonicalUrl("/en/terms"), "x-default": canonicalUrl("/it/termini") }
   }
 };
 

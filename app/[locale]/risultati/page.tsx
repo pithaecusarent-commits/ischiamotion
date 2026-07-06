@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { VehicleResultsPage } from "@/app/[locale]/vehicle-results-page";
+import { canonicalUrl } from "@/lib/seo";
 import type { Locale } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     follow: true
   },
   alternates: {
-    canonical: "/it/risultati"
+    canonical: canonicalUrl("/it/risultati")
   }
 };
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ScooterLanding } from "@/components/site/ScooterLanding";
+import { canonicalUrl } from "@/lib/seo";
 import { getActivePickupPoints } from "@/lib/supabase/queries/pickup-points";
 
 export const revalidate = 300;
@@ -8,17 +9,17 @@ export const metadata: Metadata = {
   title: "Scooter rental in Ischia | IschiaMotion",
   description: "Request a scooter in Ischia. Check availability, prices, helmets and pickup through selected local partners.",
   alternates: {
-    canonical: "/en/scooter-rental-ischia",
+    canonical: canonicalUrl("/en/scooter-rental-ischia"),
     languages: {
-      it: "/it/noleggio-scooter-ischia",
-      en: "/en/scooter-rental-ischia",
-      "x-default": "/it/noleggio-scooter-ischia"
+      it: canonicalUrl("/it/noleggio-scooter-ischia"),
+      en: canonicalUrl("/en/scooter-rental-ischia"),
+      "x-default": canonicalUrl("/it/noleggio-scooter-ischia")
     }
   },
   openGraph: {
     title: "Scooter rental in Ischia | IschiaMotion",
     description: "Request a scooter in Ischia. Check availability, prices, helmets and pickup through selected local partners.",
-    url: "/en/scooter-rental-ischia",
+    url: canonicalUrl("/en/scooter-rental-ischia"),
     siteName: "IschiaMotion",
     type: "website",
     locale: "en_US",

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | IschiaMotion",
   description: "Cookie Policy di IschiaMotion: informazioni sui cookie tecnici e analitici (Google Analytics 4, su consenso). Nessun cookie di profilazione o pubblicità.",
   alternates: {
-    canonical: "/it/cookie-policy",
-    languages: { it: "/it/cookie-policy", en: "/en/cookie-policy", "x-default": "/it/cookie-policy" }
+    canonical: canonicalUrl("/it/cookie-policy"),
+    languages: { it: canonicalUrl("/it/cookie-policy"), en: canonicalUrl("/en/cookie-policy"), "x-default": canonicalUrl("/it/cookie-policy") }
   }
 };
 

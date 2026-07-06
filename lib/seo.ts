@@ -5,6 +5,11 @@ export const canonicalSiteUrl = `${siteUrl}/`;
 export const organizationId = "https://www.ischiamotion.com/#organization";
 export const websiteId = organizationId;
 
+export function canonicalUrl(path = "/") {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${siteUrl}${normalizedPath}`;
+}
+
 export const organizationReference = {
   "@type": ["Organization", "LocalBusiness"],
   "@id": organizationId,

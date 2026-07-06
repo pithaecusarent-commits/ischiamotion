@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy | IschiaMotion",
   description: "Basic privacy information for IschiaMotion, a local rental request platform through selected partners.",
   alternates: {
-    canonical: "/en/privacy",
-    languages: { it: "/it/privacy", en: "/en/privacy", "x-default": "/it/privacy" }
+    canonical: canonicalUrl("/en/privacy"),
+    languages: { it: canonicalUrl("/it/privacy"), en: canonicalUrl("/en/privacy"), "x-default": canonicalUrl("/it/privacy") }
   }
 };
 

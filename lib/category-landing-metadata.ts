@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { CategoryLandingContent } from "@/lib/category-landings";
+import { canonicalUrl } from "@/lib/seo";
 
 export function categoryLandingMetadata(content: CategoryLandingContent): Metadata {
   const socialImage = {
@@ -11,17 +12,17 @@ export function categoryLandingMetadata(content: CategoryLandingContent): Metada
     title: content.metaTitle,
     description: content.metaDescription,
     alternates: {
-      canonical: content.path,
+      canonical: canonicalUrl(content.path),
       languages: {
-        it: content.locale === "it" ? content.path : content.alternatePath,
-        en: content.locale === "en" ? content.path : content.alternatePath,
-        "x-default": content.locale === "it" ? content.path : content.alternatePath
+        it: canonicalUrl(content.locale === "it" ? content.path : content.alternatePath),
+        en: canonicalUrl(content.locale === "en" ? content.path : content.alternatePath),
+        "x-default": canonicalUrl(content.locale === "it" ? content.path : content.alternatePath)
       }
     },
     openGraph: {
       title: content.metaTitle,
       description: content.metaDescription,
-      url: content.path,
+      url: canonicalUrl(content.path),
       siteName: "IschiaMotion",
       type: "website",
       locale: content.locale === "it" ? "it_IT" : "en_US",

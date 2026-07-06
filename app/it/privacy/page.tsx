@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy | IschiaMotion",
   description: "Informativa privacy di IschiaMotion, piattaforma locale per richieste di noleggio tramite partner selezionati.",
   alternates: {
-    canonical: "/it/privacy",
-    languages: { it: "/it/privacy", en: "/en/privacy", "x-default": "/it/privacy" }
+    canonical: canonicalUrl("/it/privacy"),
+    languages: { it: canonicalUrl("/it/privacy"), en: canonicalUrl("/en/privacy"), "x-default": canonicalUrl("/it/privacy") }
   }
 };
 

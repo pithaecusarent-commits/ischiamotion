@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LocalCarPortLanding, getLocalCarPortContent } from "@/components/site/LocalCarPortLanding";
+import { canonicalUrl } from "@/lib/seo";
 
 const content = getLocalCarPortContent("it");
 
@@ -7,17 +8,17 @@ export const metadata: Metadata = {
   title: "Noleggio auto Ischia Porto | Richiesta disponibilità auto",
   description: content.metaDescription,
   alternates: {
-    canonical: content.path,
+    canonical: canonicalUrl(content.path),
     languages: {
-      it: content.path,
-      en: content.alternatePath,
-      "x-default": content.path
+      it: canonicalUrl(content.path),
+      en: canonicalUrl(content.alternatePath),
+      "x-default": canonicalUrl(content.path)
     }
   },
   openGraph: {
     title: "Noleggio auto Ischia Porto | Richiesta disponibilità auto",
     description: content.metaDescription,
-    url: content.path,
+    url: canonicalUrl(content.path),
     siteName: "IschiaMotion",
     type: "website",
     locale: "it_IT"

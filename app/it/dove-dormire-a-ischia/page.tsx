@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import { WhereToStayLanding } from "@/components/site/WhereToStayLanding";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Dove dormire a Ischia: guida alle zone | IschiaMotion",
   description: "Guida a Ischia Porto, Forio, Lacco Ameno, Sant’Angelo e Maronti, con consigli per muoversi sull’isola.",
   alternates: {
-    canonical: "/it/dove-dormire-a-ischia",
+    canonical: canonicalUrl("/it/dove-dormire-a-ischia"),
     languages: {
-      it: "/it/dove-dormire-a-ischia",
-      en: "/en/where-to-stay-in-ischia",
-      "x-default": "/it/dove-dormire-a-ischia"
+      it: canonicalUrl("/it/dove-dormire-a-ischia"),
+      en: canonicalUrl("/en/where-to-stay-in-ischia"),
+      "x-default": canonicalUrl("/it/dove-dormire-a-ischia")
     }
   },
   openGraph: {
     title: "Dove dormire a Ischia: guida alle zone | IschiaMotion",
     description: "Guida a Ischia Porto, Forio, Lacco Ameno, Sant’Angelo e Maronti, con consigli per muoversi sull’isola.",
-    url: "/it/dove-dormire-a-ischia",
+    url: canonicalUrl("/it/dove-dormire-a-ischia"),
     siteName: "IschiaMotion",
     type: "website",
     locale: "it_IT",

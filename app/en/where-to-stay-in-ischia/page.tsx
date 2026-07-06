@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import { WhereToStayLanding } from "@/components/site/WhereToStayLanding";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Where to stay in Ischia: area guide | IschiaMotion",
   description: "Compare Ischia Port, Forio, Lacco Ameno, Sant’Angelo and Maronti, with practical transport tips.",
   alternates: {
-    canonical: "/en/where-to-stay-in-ischia",
+    canonical: canonicalUrl("/en/where-to-stay-in-ischia"),
     languages: {
-      it: "/it/dove-dormire-a-ischia",
-      en: "/en/where-to-stay-in-ischia",
-      "x-default": "/it/dove-dormire-a-ischia"
+      it: canonicalUrl("/it/dove-dormire-a-ischia"),
+      en: canonicalUrl("/en/where-to-stay-in-ischia"),
+      "x-default": canonicalUrl("/it/dove-dormire-a-ischia")
     }
   },
   openGraph: {
     title: "Where to stay in Ischia: area guide | IschiaMotion",
     description: "Compare Ischia Port, Forio, Lacco Ameno, Sant’Angelo and Maronti, with practical transport tips.",
-    url: "/en/where-to-stay-in-ischia",
+    url: canonicalUrl("/en/where-to-stay-in-ischia"),
     siteName: "IschiaMotion",
     type: "website",
     locale: "en_US",

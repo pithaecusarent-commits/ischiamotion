@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/site/InfoPage";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | IschiaMotion",
   description: "Cookie Policy for IschiaMotion: information about technical and analytics cookies (Google Analytics 4, on consent). No profiling or advertising cookies.",
   alternates: {
-    canonical: "/en/cookie-policy",
-    languages: { it: "/it/cookie-policy", en: "/en/cookie-policy", "x-default": "/it/cookie-policy" }
+    canonical: canonicalUrl("/en/cookie-policy"),
+    languages: { it: canonicalUrl("/it/cookie-policy"), en: canonicalUrl("/en/cookie-policy"), "x-default": canonicalUrl("/it/cookie-policy") }
   }
 };
 
