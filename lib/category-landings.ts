@@ -103,7 +103,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       ],
       faqs: [
         { question: "Quanto costa il noleggio auto a Ischia?", answer: "Dipende da periodo, durata, categoria e disponibilità dei partner. IschiaMotion mostra prezzi a partire da e verifica le condizioni finali dopo la richiesta." },
-        { question: "Posso richiedere consegna in hotel?", answer: "Indica hotel o struttura ricettiva e zona: controlliamo subito la disponibilità della consegna con il partner locale." },
+        { question: "Posso richiedere consegna in hotel?", answer: "Sì, puoi indicare il tuo hotel o la zona di soggiorno. Verifichiamo subito se è disponibile la consegna oppure il punto di ritiro più comodo." },
         { question: "La prenotazione è confermata subito?", answer: "Verifichiamo subito le soluzioni disponibili per le tue date e ti rispondiamo in pochi minuti negli orari operativi con la proposta finale prima della conferma." },
         { question: "Serve una carta o cauzione?", answer: "Eventuali cauzioni, documenti e condizioni vengono comunicati dopo verifica con il partner locale." },
         { question: "Posso ritirare l'auto al porto di Ischia?", answer: "Puoi indicare Ischia Porto o un punto comodo: verifichiamo subito la disponibilità del ritiro e ti rispondiamo in pochi minuti." },

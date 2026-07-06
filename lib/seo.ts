@@ -37,7 +37,7 @@ export const scooterFaq = {
     },
     {
       question: "Dove posso ritirare lo scooter?",
-      answer: "Puoi indicare un punto ritiro IschiaMotion o una zona comoda come Ischia Porto, Forio, Casamicciola, Sant’Angelo o Barano: controlliamo subito la disponibilità con il partner locale."
+      answer: "Puoi indicare un punto ritiro IschiaMotion o una zona comoda come Ischia Porto, Forio, Casamicciola, Sant’Angelo o Barano. Prima della conferma ricevi tutti i dettagli della proposta, incluso punto di ritiro e orario."
     },
     {
       question: "Posso richiedere il noleggio online?",

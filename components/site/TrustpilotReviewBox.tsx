@@ -6,14 +6,14 @@ const copy = {
   it: {
     eyebrow: "Recensioni esterne",
     title: "IschiaMotion è su Trustpilot",
-    text: "Leggi o lascia una recensione sulla nostra pagina ufficiale e aiutaci a migliorare il servizio per chi visita Ischia.",
+    text: "Leggi le esperienze di chi ha già utilizzato il servizio, o lascia la tua recensione sulla nostra pagina ufficiale.",
     cta: "Vai su Trustpilot",
     aria: "Vai alla pagina ufficiale Trustpilot di IschiaMotion"
   },
   en: {
     eyebrow: "External reviews",
     title: "IschiaMotion is on Trustpilot",
-    text: "Read or leave a review on our official page and help us improve the service for visitors in Ischia.",
+    text: "Read what guests who've already used the service say, or leave your own review on our official page.",
     cta: "Visit Trustpilot",
     aria: "Visit the official IschiaMotion Trustpilot page"
   }

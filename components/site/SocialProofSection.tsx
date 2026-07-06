@@ -4,18 +4,18 @@ import { getFeaturedSocialProofReviews, trustpilotReviewUrl } from "@/lib/social
 const copy = {
   it: {
     eyebrow: "DICONO DI NOI",
-    title: "Una richiesta semplice, un aiuto concreto per vivere Ischia senza pensieri.",
-    intro: "Ogni richiesta viene verificata con partner locali selezionati, per aiutarti a scegliere la soluzione più adatta alle tue date, alla zona in cui soggiorni e al tipo di vacanza che desideri.",
+    title: "Esperienze reali di chi ha scelto IschiaMotion",
+    intro: "Dalla richiesta alla consegna o al ritiro, accompagniamo ogni cliente nella scelta della soluzione più comoda per il suo soggiorno.",
     ratingLabel: "Valutazione",
-    trustpilotCta: "Leggi tutte le recensioni su Trustpilot",
+    trustpilotCta: "Leggi le esperienze di chi ha già utilizzato il servizio",
     note: "Gli estratti riportati provengono da recensioni pubbliche su Google e Trustpilot."
   },
   en: {
     eyebrow: "WHAT GUESTS SAY",
-    title: "Simple requests, practical local help for enjoying Ischia without stress.",
-    intro: "Every request is checked with selected local partners to help you choose the option that best suits your dates, where you are staying and the kind of holiday you are planning.",
+    title: "Real experiences from guests who chose IschiaMotion",
+    intro: "From the request to delivery or pickup, we support every guest in choosing the most convenient option for their stay.",
     ratingLabel: "Rating",
-    trustpilotCta: "Read all reviews on Trustpilot",
+    trustpilotCta: "Read what guests who've used the service say",
     note: "These excerpts come from public reviews on Google and Trustpilot."
   }
 } satisfies Record<Locale, {

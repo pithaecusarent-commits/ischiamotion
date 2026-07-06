@@ -73,14 +73,14 @@ export default function IschiaMotionPage() {
             <div className="section-eyebrow">Piattaforma locale a Ischia</div>
             <h1>IschiaMotion</h1>
             <p>
-              IschiaMotion è una piattaforma locale dedicata alla mobilità turistica e ai servizi mare sull’isola d’Ischia.
-              Raccogliamo le richieste dei visitatori e verifichiamo le opzioni disponibili con partner locali selezionati.
+              IschiaMotion nasce per rendere più semplice l’organizzazione degli spostamenti e delle esperienze a Ischia.
+              Una sola richiesta per verificare scooter, auto, barche, e-bike e servizi mare disponibili nelle date del tuo soggiorno.
             </p>
           </div>
           <div className="seo-landing-card">
             <span>Un riferimento locale</span>
             <strong>Richieste semplici, partner selezionati</strong>
-            <p>Un unico punto di contatto per orientarsi tra noleggi e servizi turistici a Ischia, con condizioni verificate prima della conferma.</p>
+            <p>Ti aiutiamo a confrontare le opzioni e a scegliere quella più pratica per la tua zona, con informazioni chiare prima della conferma.</p>
           </div>
         </section>
 
@@ -93,8 +93,8 @@ export default function IschiaMotionPage() {
           </div>
           <div className="seo-landing-grid">
             <article className="seo-card">
-              <h3>Una piattaforma indipendente</h3>
-              <p>IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati sull’isola.</p>
+              <h3>Un supporto locale, non solo un modulo online</h3>
+              <p>Non devi contattare tanti noleggiatori: raccogliamo per te le opzioni disponibili e ti aiutiamo a scegliere quella più adatta.</p>
             </article>
             <article className="seo-card">
               <h3>Operativa a Ischia</h3>
@@ -102,7 +102,7 @@ export default function IschiaMotionPage() {
             </article>
             <article className="seo-card">
               <h3>Partner locali selezionati</h3>
-              <p>Collaboriamo con realtà locali per verificare disponibilità, requisiti, condizioni e modalità di ritiro prima della conferma finale.</p>
+              <p>Collaboriamo con realtà locali per offrirti opzioni pratiche e affidabili, con disponibilità, requisiti e condizioni verificati prima della conferma finale.</p>
             </article>
           </div>
         </section>

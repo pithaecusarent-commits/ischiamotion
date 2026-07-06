@@ -51,8 +51,8 @@ export function PickupPointsSection({
         </div>
         <p>
           {locale === "it"
-            ? "Scegli la zona più comoda per te: verifichiamo subito con i partner locali il punto di ritiro o la consegna disponibili per le tue date."
-            : "Pick the area that suits you best: we quickly check pickup or delivery options with local partners for your dates."}
+            ? "Organizziamo ritiro o consegna nella zona più comoda per il tuo soggiorno, secondo disponibilità: indicaci porto, hotel o località e verifichiamo subito la soluzione più pratica."
+            : "We organize pickup or delivery in the most convenient area for your stay, based on availability: tell us the port, hotel or area and we'll check the most practical option right away."}
         </p>
       </div>
 

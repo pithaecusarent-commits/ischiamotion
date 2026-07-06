@@ -52,14 +52,14 @@ const landingGuides = {
     auto: {
       pickupTitle: "Ritiro al porto e consegna dove prevista",
       pickupItems: [
-        ["Porto e arrivi", "Ischia Porto e Casamicciola sono zone decisive quando arrivi con traghetto, aliscafo o bagagli: puoi indicarle nella richiesta e attendere verifica del partner."],
-        ["Hotel e strutture", "Per auto e spostamenti familiari può essere utile chiedere consegna in hotel o presso una struttura ricettiva, dove prevista dal partner locale."],
-        ["Comuni più distanti", "Forio, Barano, Lacco Ameno e Sant'Angelo richiedono pianificazione migliore: ritiro, orari e disponibilità vengono confermati dopo controllo."]
+        ["Porto e arrivi", "Ischia Porto e Casamicciola sono zone decisive quando arrivi con traghetto, aliscafo o bagagli: indicale nella richiesta e verifichiamo subito la soluzione più pratica."],
+        ["Hotel e strutture", "Per auto e spostamenti familiari puoi chiedere consegna in hotel o presso una struttura ricettiva: controlliamo rapidamente la disponibilità con il partner locale."],
+        ["Comuni più distanti", "Forio, Barano, Lacco Ameno e Sant'Angelo richiedono pianificazione migliore: ti comunichiamo prima della conferma ritiro, orari e disponibilità."]
       ],
       practicalTitle: "Parcheggi, strade e consigli di guida",
       practicalItems: [
-        ["Documenti e patente", "Prepara patente valida, documento e dati di contatto. Età minima, categoria veicolo ed eventuali requisiti dipendono dal partner."],
-        ["Cauzione e condizioni", "Cauzione, coperture e franchigie non vanno date per scontate: IschiaMotion le verifica prima della conferma finale."],
+        ["Documenti e patente", "Prepara patente valida, documento e dati di contatto. Età minima, categoria veicolo ed eventuali requisiti li verifichiamo subito in base al partner."],
+        ["Cauzione e condizioni", "Cauzione, coperture e franchigie non vanno date per scontate: te le indichiamo chiaramente nella proposta, prima della conferma finale."],
         ["Parcheggi e strade", "Strade strette, traffico e parcheggi cambiano tra porto, centri e borghi: valuta itinerario e zona prima della richiesta."],
         ["Quando valutare altro", "Se viaggi leggero e resti tra porto, spiagge e centro, scooter o e-bike possono essere più agili; con famiglia e bagagli l'auto resta più comoda."]
       ]
@@ -69,12 +69,12 @@ const landingGuides = {
       pickupItems: [
         ["Borghi e lungomare", "Ischia Porto, Casamicciola, Forio e Lacco Ameno sono pratici per tratti più leggeri, soste frequenti e percorsi panoramici vicino al mare."],
         ["Salite e distanze", "Barano e alcune zone interne possono richiedere più attenzione a pendenze, autonomia e traffico: meglio indicare il percorso previsto nella richiesta."],
-        ["Hotel dove previsto", "La consegna presso hotel o struttura può essere disponibile solo per alcuni partner e zone; viene sempre verificata prima della conferma."]
+        ["Hotel dove previsto", "La consegna presso hotel o struttura dipende da partner e zona: indica la tua e verifichiamo subito la disponibilità."]
       ],
       practicalTitle: "Cosa sapere prima di richiedere un'e-bike",
       practicalItems: [
         ["Autonomia", "Chiedi opzioni coerenti con durata e tragitto. Le salite dell'isola incidono su batteria e comfort."],
-        ["Dotazioni", "Casco, lucchetto, caricatore e accessori dipendono dal partner selezionato e vengono confermati dopo verifica."],
+        ["Dotazioni", "Casco, lucchetto, caricatore e accessori variano in base al partner selezionato: te li confermiamo nella proposta."],
         ["Quando valutare altro", "Per bagagli, bambini piccoli o hotel molto distanti dal porto può essere più indicata un'auto; per spostamenti rapidi uno scooter."]
       ]
     },
@@ -96,12 +96,12 @@ const landingGuides = {
       pickupTitle: "Ritiro barche e aree di partenza",
       pickupItems: [
         ["Punto nautico", "Il ritiro barca avviene presso un punto definito o IschiaMotion Point. Per le categorie nautiche non si parla di consegna in hotel."],
-        ["Costa dell'isola", "Ischia Porto, Casamicciola, Forio, Lacco Ameno e Sant'Angelo aiutano a orientare partenza, tratte e tempi, ma la disponibilità dipende dai partner."],
-        ["Condizioni marine", "Meteo, vento, orari e regole operative sono parte della verifica prima della conferma."]
+        ["Costa dell'isola", "Ischia Porto, Casamicciola, Forio, Lacco Ameno e Sant'Angelo aiutano a orientare partenza, tratte e tempi: verifichiamo subito la disponibilità con i partner."],
+        ["Condizioni marine", "Meteo, vento, orari e regole operative vengono controllati subito e comunicati nella proposta, prima della conferma."]
       ],
       practicalTitle: "Cosa sapere prima di richiedere una barca",
       practicalItems: [
-        ["Requisiti", "Barca disponibile solo dove prevista dal partner e se requisiti, documenti e condizioni sono compatibili."],
+        ["Requisiti", "Verifichiamo subito requisiti, documenti e condizioni compatibili con il mezzo scelto e te li indichiamo nella proposta."],
         ["Barca o gommone", "La barca è utile se cerchi più comfort e spazio; il gommone può essere più essenziale e agile."],
         ["Quando scegliere un beach club", "Se cerchi comfort in spiaggia, valuta la pagina Beach Club."]
       ]
@@ -125,14 +125,14 @@ const landingGuides = {
     auto: {
       pickupTitle: "Port pickup and delivery where offered",
       pickupItems: [
-        ["Ports and arrivals", "Ischia Port and Casamicciola matter when you arrive by ferry, hydrofoil or with luggage. Add them to the request and wait for partner review."],
-        ["Hotels and stays", "For families, hotel or accommodation delivery may be useful where offered by the local partner."],
-        ["Further towns", "Forio, Barano, Lacco Ameno and Sant'Angelo need better planning: pickup, timing and availability are confirmed after review."]
+        ["Ports and arrivals", "Ischia Port and Casamicciola matter when you arrive by ferry, hydrofoil or with luggage: add them to your request and we'll check the most practical option right away."],
+        ["Hotels and stays", "For families, you can request hotel or accommodation delivery: we quickly check availability with the local partner."],
+        ["Further towns", "Forio, Barano, Lacco Ameno and Sant'Angelo need better planning: we share pickup, timing and availability before confirmation."]
       ],
       practicalTitle: "Parking, roads and driving advice",
       practicalItems: [
-        ["Documents and license", "Prepare a valid driving license, ID and contact details. Age, vehicle category and requirements depend on the partner."],
-        ["Deposit and conditions", "Deposit, coverage and excess are not automatic: IschiaMotion checks them before final confirmation."],
+        ["Documents and license", "Prepare a valid driving license, ID and contact details. Age, vehicle category and requirements are checked right away with the partner."],
+        ["Deposit and conditions", "Deposit, coverage and excess are not automatic: we lay them out clearly in your proposal, before final confirmation."],
         ["Parking and roads", "Narrow roads, traffic and parking vary between ports, towns and villages: consider route and area before requesting."],
         ["When to choose another option", "If you travel light around port, beaches and town centers, scooter or e-bike may be easier; with family and luggage, a car is more comfortable."]
       ]
@@ -142,12 +142,12 @@ const landingGuides = {
       pickupItems: [
         ["Villages and seafronts", "Ischia Port, Casamicciola, Forio and Lacco Ameno work well for lighter rides, frequent stops and scenic seafront routes."],
         ["Hills and distance", "Barano and inland areas require more attention to gradients, range and traffic: share your planned route in the request."],
-        ["Hotels where available", "Hotel or accommodation delivery may be available only with some partners and areas, always after review."]
+        ["Hotels where available", "Hotel or accommodation delivery depends on partner and area: tell us yours and we'll check availability right away."]
       ],
       practicalTitle: "What to know before requesting an e-bike",
       practicalItems: [
         ["Range", "Ask for options that fit rental length and route. Ischia's hills affect battery and comfort."],
-        ["Equipment", "Helmet, lock, charger and accessories depend on the selected partner and are confirmed after review."],
+        ["Equipment", "Helmet, lock, charger and accessories vary by selected partner: we confirm them in your proposal."],
         ["When to choose another option", "For luggage, small children or accommodation far from the port, a car may fit better; for quick moves, a scooter."]
       ]
     },
@@ -169,12 +169,12 @@ const landingGuides = {
       pickupTitle: "Marine conditions, requirements and nautical points",
       pickupItems: [
         ["Nautical point", "Boat pickup is at a defined point or IschiaMotion Point. Nautical categories do not use hotel delivery."],
-        ["Island coast", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help plan departure, route and timing, subject to partner availability."],
-        ["Marine conditions", "Weather, wind, timing and operating rules are part of the review before confirmation."]
+        ["Island coast", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help plan departure, route and timing: we check availability with partners right away."],
+        ["Marine conditions", "Weather, wind, timing and operating rules are checked right away and shared in your proposal, before confirmation."]
       ],
       practicalTitle: "Boats with or without a license",
       practicalItems: [
-        ["License and requirements", "Availability with or without a boating license depends on the boat, documents and conditions confirmed by the partner."],
+        ["License and requirements", "We check requirements, documents and conditions for your chosen boat right away and share them in your proposal."],
         ["Boat or rubber dinghy", "A boat is useful for more comfort and space; a rubber dinghy can be simpler and more agile."],
         ["When to choose a beach club", "If you want comfort on shore, consider beach club access with selected local venues."]
       ]
