@@ -23,10 +23,10 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const homePath = isIt ? "/it" : "/en";
   const searchPath = isIt ? "/it/risultati?category=scooter" : "/en/results?category=scooter";
   const whatsappUrl = getWhatsAppUrl(locale, "scooter");
-  const title = isIt ? "Noleggio scooter a Ischia" : "Scooter rental in Ischia";
+  const title = isIt ? "Noleggio scooter a Ischia: trova il tuo in pochi minuti" : "Scooter rental in Ischia: find yours in minutes";
   const description = isIt
-    ? "Ideale se vuoi muoverti in modo agile, ma zona dell’hotel, bagagli e salite possono fare la differenza. Ti aiutiamo a capire se è la scelta giusta e verifichiamo disponibilità con partner locali."
-    : "Great for moving around easily, but hotel area, luggage and hills can make a difference. We help you understand if it’s the right choice and check availability with local partners.";
+    ? "Inserisci date e zona del soggiorno: verifichiamo rapidamente con partner locali selezionati e ti inviamo disponibilità, prezzo e condizioni dello scooter più adatto. Muoviti liberamente tra spiagge, terme, borghi e panorami dell'isola senza perdere tempo a contattare tanti noleggiatori: con una sola richiesta troviamo per te le soluzioni disponibili nella tua zona. Soluzioni disponibili a partire da € 25 al giorno, in base al periodo, alla durata del noleggio e alla tipologia di scooter. Ritiro presso porto, punto convenzionato o consegna in hotel dove disponibile."
+    : "Share your dates and area of stay: we quickly check with selected local partners and send you availability, price and conditions for the right scooter. Get around freely between beaches, thermal parks, villages and viewpoints without wasting time contacting several rental operators — one request is enough for us to find the available options in your area. Options available from €25 a day, depending on season, rental length and scooter type. Pickup at the port, a partner point or hotel delivery where available.";
   const advantages = isIt
     ? [
       ["Spostamenti rapidi", "L’affitto di uno scooter a Ischia è pratico per muoversi tra Ischia Porto, spiagge, centri abitati e punti panoramici senza la rigidità dell'auto."],
@@ -70,13 +70,13 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
     : [
       ["IschiaMotion Point", "You can indicate a convenient pickup point. Actual availability is reviewed with the local partner."],
       ["Port where available", "For Ischia Port or Casamicciola, share arrival and timing; pickup and conditions are not automatic."],
-      ["Hotel where available", "For some areas and partners, you can indicate hotel or accommodation, always subject to review."],
+      ["Hotel where available", "For some areas and partners, you can request hotel or accommodation delivery — we confirm it quickly after your request."],
       ["Documents and helmet", "License, ID, helmet, deposit and conditions depend on the scooter and are confirmed by the partner before pickup."]
     ];
   const practicalItems = isIt
     ? [
       ["Prezzi e durata", "Il prezzo dipende da periodo, durata, cilindrata e disponibilità. Puoi richiedere un noleggio giornaliero o per più giorni; il totale viene confermato dal partner."],
-      ["Scooter 50cc o 125cc", "La categoria disponibile dipende dal partner e dai requisiti di guida. Indica patente ed esperienza per verificare l’opzione adatta."],
+      ["Scooter 50cc o 125cc", "La categoria disponibile varia in base a disponibilità e requisiti di guida. Indica patente ed esperienza e ti proponiamo subito l'opzione più adatta."],
       ["Età minima e patente", "Età minima e patente necessaria variano in base al mezzo e alle regole applicabili. I requisiti vengono controllati prima della conferma."],
       ["Casco e passeggero", "Casco, secondo casco e dotazioni dipendono dall’opzione disponibile. Chiedi conferma se viaggi in due."],
       ["Cauzione e assicurazione", "Cauzione, copertura assicurativa, franchigia e modalità di pagamento sono condizioni del partner e vengono comunicate prima del ritiro."],
@@ -84,7 +84,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
     ]
     : [
       ["Prices and rental length", "Price depends on season, rental length, scooter type and availability. You can request a daily or multi-day rental; the partner confirms the total."],
-      ["50cc or 125cc scooter", "The available category depends on the partner and driving requirements. Share your license and experience to review a suitable option."],
+      ["50cc or 125cc scooter", "The available category varies by availability and driving requirements. Share your license and experience and we'll offer the right option right away."],
       ["Minimum age and license", "Minimum age and required license vary by scooter and applicable rules. Requirements are checked before confirmation."],
       ["Helmet and passenger", "Helmet, second helmet and equipment depend on the available option. Ask for confirmation when travelling as a pair."],
       ["Deposit and insurance", "Deposit, insurance coverage, excess and payment method are partner conditions communicated before pickup."],
@@ -129,14 +129,14 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             <h1>{title}</h1>
             <p>{description}</p>
             <div className="hero-actions">
-              <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità scooter" : "Check scooter availability"}</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Chiedi supporto su WhatsApp" : "Ask for help on WhatsApp"}</a>
+              <a href={searchPath} className="primary-btn">{isIt ? "Verifica scooter disponibili" : "Check available scooters"}</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Ricevi disponibilità su WhatsApp" : "Get availability on WhatsApp"}</a>
             </div>
           </div>
           <div className="seo-landing-card">
             <span>{isIt ? "Ideale per" : "Best for"}</span>
             <strong>{isIt ? "Coppie e spostamenti veloci" : "Couples and quick trips"}</strong>
-            <p>{isIt ? "Una richiesta semplice verso partner locali selezionati per muoverti sull'isola con più autonomia, senza conferma immediata." : "A simple request to selected local partners for moving around the island with more independence, without instant confirmation."}</p>
+            <p>{isIt ? "Risposta in pochi minuti negli orari operativi, con disponibilità, prezzo e condizioni pronti prima della conferma." : "A reply within minutes during operating hours, with availability, price and conditions ready before you confirm."}</p>
           </div>
         </section>
 
@@ -271,11 +271,11 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
 
         <section className="final-cta">
           <div className="final-box">
-            <h2>{isIt ? "Verifica disponibilità tramite partner locali" : "Check availability through local partners"}</h2>
-            <p>{isIt ? "Imposta le date, scegli un’opzione e invia una richiesta: riceverai conferma dopo verifica con il partner locale." : "Set your dates, choose an option and send a request: confirmation follows review with the local partner."}</p>
+            <h2>{isIt ? "Verifica scooter disponibili in pochi minuti" : "Check available scooters in minutes"}</h2>
+            <p>{isIt ? "Imposta le date e invia la richiesta: ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni." : "Set your dates and send the request: we reply within minutes with availability, price and conditions."}</p>
             <div className="hero-actions">
-              <a href={searchPath} className="primary-btn">{isIt ? "Verifica disponibilità" : "Check availability"}</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Chiedi supporto su WhatsApp" : "Ask for help on WhatsApp"}</a>
+              <a href={searchPath} className="primary-btn">{isIt ? "Verifica scooter disponibili" : "Check available scooters"}</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Ricevi disponibilità su WhatsApp" : "Get availability on WhatsApp"}</a>
             </div>
           </div>
         </section>

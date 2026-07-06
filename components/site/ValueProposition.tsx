@@ -16,8 +16,8 @@ const homeItems: Record<Locale, ValueItem[]> = {
       text: "Porto di arrivo, hotel, spiagge, bagagli e durata del soggiorno possono cambiare il mezzo più adatto."
     },
     {
-      title: "Risposta rapida e verificata",
-      text: "Controlliamo subito disponibilità, condizioni e punto di ritiro con i nostri partner locali e ti ricontattiamo rapidamente con la soluzione migliore."
+      title: "Risposta in pochi minuti",
+      text: "Verifichiamo subito disponibilità, prezzo, condizioni e punto di ritiro con i nostri partner locali. Ricevi rapidamente la soluzione più comoda per le tue date."
     },
     {
       title: "Supporto locale su WhatsApp",
@@ -34,8 +34,8 @@ const homeItems: Record<Locale, ValueItem[]> = {
       text: "Arrival port, hotel location, beaches, luggage and stay length can change which option fits best."
     },
     {
-      title: "Fast, verified response",
-      text: "We quickly check availability, conditions and pickup point with our local partners and get back to you fast with the best option."
+      title: "A reply within minutes",
+      text: "We instantly check availability, price, conditions and pickup point with our local partners. Get the most convenient option for your dates, fast."
     },
     {
       title: "Local WhatsApp support",

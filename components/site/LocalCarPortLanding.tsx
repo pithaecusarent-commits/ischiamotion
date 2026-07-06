@@ -43,15 +43,15 @@ const content = {
     locale: "it",
     path: "/it/noleggio-auto-ischia-porto",
     alternatePath: "/en/car-rental-ischia-port",
-    title: "Noleggio auto Ischia Porto",
+    title: "Noleggio auto Ischia Porto: trova la tua in pochi minuti",
     metaDescription: "Richiedi un'auto a noleggio a Ischia Porto con IschiaMotion. Verifichiamo disponibilità, condizioni e ritiro con partner locali selezionati sull'isola.",
     eyebrow: "Auto a Ischia Porto",
-    intro: "Se arrivi a Ischia Porto e vuoi muoverti liberamente sull'isola, IschiaMotion ti aiuta a inviare una richiesta per il noleggio auto con ritiro in zona o presso un punto concordato. Verifichiamo disponibilità, condizioni e conferma con partner locali selezionati, così puoi ricevere una proposta chiara prima di organizzare i tuoi spostamenti.",
-    supportText: "IschiaMotion non è un autonoleggio diretto: raccoglie la richiesta e controlla le opzioni disponibili con partner selezionati sull'isola.",
+    intro: "Arrivi a Ischia Porto e vuoi muoverti subito? Indicaci data, orario di arrivo e numero di persone: verifichiamo rapidamente le auto disponibili con partner locali selezionati e ti inviamo disponibilità, prezzo e condizioni in pochi minuti. Auto disponibili a partire da € 30 al giorno, secondo periodo e durata del noleggio. Ritiro presso Ischia Porto, punto convenzionato o consegna in hotel dove disponibile.",
+    supportText: "Ti rispondiamo in pochi minuti negli orari operativi, prima ancora di organizzare i tuoi spostamenti sull'isola.",
     cardTitle: "Arrivi, bagagli e autonomia",
     cardText: "Soluzione utile se sbarchi a Ischia Porto e vuoi raggiungere hotel, spiagge o più comuni con maggiore libertà.",
-    primaryCta: "Verifica disponibilità auto",
-    secondaryCta: "Chiedi supporto su WhatsApp",
+    primaryCta: "Verifica auto disponibili",
+    secondaryCta: "Ricevi disponibilità su WhatsApp",
     benefitsTitle: "Perché richiedere un'auto a Ischia Porto",
     benefitsText: "Ischia Porto è uno dei principali punti di arrivo dell'isola ed è una zona comoda per iniziare subito a muoversi verso Ischia Ponte, Casamicciola, Lacco Ameno, Forio, Sant'Angelo e le principali località turistiche. Un'auto può essere utile se soggiorni lontano dal porto, viaggi con bambini, bagagli o vuoi raggiungere più zone durante la vacanza.",
     howTitle: "Come funziona con IschiaMotion",
@@ -85,11 +85,11 @@ const content = {
     faqs: [
       {
         question: "Posso ritirare l'auto direttamente a Ischia Porto?",
-        answer: "La disponibilità del ritiro a Ischia Porto dipende dal periodo, dal partner e dalle condizioni operative. Con IschiaMotion invii una richiesta e ricevi conferma dopo verifica."
+        answer: "La disponibilità del ritiro a Ischia Porto varia in base al periodo e alle condizioni operative. Invii una richiesta e ricevi una risposta in pochi minuti negli orari operativi."
       },
       {
         question: "Quanto costa noleggiare un'auto a Ischia Porto?",
-        answer: "Il prezzo può variare in base a date, durata, categoria dell'auto, disponibilità, assicurazione e condizioni del partner. Per questo è meglio richiedere una verifica aggiornata."
+        answer: "Il prezzo può variare in base a date, durata, categoria dell'auto, disponibilità, assicurazione e condizioni del partner. Invia una richiesta e ricevi un prezzo aggiornato in pochi minuti."
       },
       {
         question: "Conviene noleggiare un'auto a Ischia?",
@@ -97,25 +97,25 @@ const content = {
       },
       {
         question: "IschiaMotion è un autonoleggio?",
-        answer: "IschiaMotion è una piattaforma locale che raccoglie richieste e verifica disponibilità con partner selezionati. La conferma avviene dopo controllo di disponibilità e condizioni."
+        answer: "IschiaMotion è una piattaforma locale che raccoglie la tua richiesta e la verifica subito con partner selezionati, rispondendoti in pochi minuti negli orari operativi."
       }
     ],
-    finalTitle: "Verifica disponibilità auto a Ischia Porto",
-    finalText: "Ti aiutiamo a trovare una soluzione disponibile a Ischia Porto tramite partner locali selezionati, con conferma dopo verifica."
+    finalTitle: "Verifica auto disponibili a Ischia Porto",
+    finalText: "Invia una richiesta: troviamo per te una soluzione disponibile a Ischia Porto tramite partner locali selezionati e ti rispondiamo in pochi minuti."
   },
   en: {
     locale: "en",
     path: "/en/car-rental-ischia-port",
     alternatePath: "/it/noleggio-auto-ischia-porto",
-    title: "Car rental Ischia Port",
+    title: "Car rental at Ischia Port: find yours in minutes",
     metaDescription: "Request a rental car near Ischia Port with IschiaMotion. We check availability, conditions and pickup with selected local partners.",
     eyebrow: "Cars at Ischia Port",
-    intro: "If you arrive at Ischia Port and want to move freely around the island, IschiaMotion helps you send a car rental request for pickup in the area or at an agreed point. We check availability, conditions and confirmation with selected local partners before you organize your island travel.",
-    supportText: "IschiaMotion is not a direct car rental desk: it collects requests and checks available options with selected partners on the island.",
+    intro: "Arriving at Ischia Port and want to get moving right away? Share your date, arrival time and number of guests: we quickly check available cars with selected local partners and send you availability, price and conditions within minutes. Cars available from €30 a day, depending on season and rental length. Pickup at Ischia Port, a partner point or hotel delivery where available.",
+    supportText: "We reply within minutes during operating hours, before you even organize your trip around the island.",
     cardTitle: "Arrival, luggage and freedom",
     cardText: "Useful if you land at Ischia Port and want to reach hotels, beaches or several towns with more independence.",
-    primaryCta: "Check car availability",
-    secondaryCta: "Ask for help on WhatsApp",
+    primaryCta: "Check available cars",
+    secondaryCta: "Get availability on WhatsApp",
     benefitsTitle: "Why request a car at Ischia Port",
     benefitsText: "Ischia Port is one of the island's main arrival points and a convenient area to start moving toward Ischia Ponte, Casamicciola, Lacco Ameno, Forio, Sant'Angelo and the main visitor areas. A car can be useful if you stay far from the port, travel with children or luggage, or want to visit several areas during your trip.",
     howTitle: "How it works with IschiaMotion",
@@ -149,11 +149,11 @@ const content = {
     faqs: [
       {
         question: "Can I pick up the car directly at Ischia Port?",
-        answer: "Pickup availability at Ischia Port depends on season, partner and operating conditions. With IschiaMotion you send a request and receive confirmation after review."
+        answer: "Pickup availability at Ischia Port varies by season and operating conditions. Send a request and get a reply within minutes during operating hours."
       },
       {
         question: "How much does car rental at Ischia Port cost?",
-        answer: "The price can vary by dates, rental length, car category, availability, insurance and partner conditions. It is best to request an updated check."
+        answer: "The price can vary by dates, rental length, car category, availability, insurance and partner conditions. Send a request and get an updated price within minutes."
       },
       {
         question: "Is renting a car in Ischia convenient?",
@@ -161,11 +161,11 @@ const content = {
       },
       {
         question: "Is IschiaMotion a car rental company?",
-        answer: "IschiaMotion is a local platform that collects requests and checks availability with selected partners. Confirmation follows availability and conditions review."
+        answer: "IschiaMotion is a local platform that collects your request and checks it right away with selected partners, replying within minutes during operating hours."
       }
     ],
-    finalTitle: "Check car availability at Ischia Port",
-    finalText: "We help you find an available solution near Ischia Port through selected local partners, with confirmation after review."
+    finalTitle: "Check available cars at Ischia Port",
+    finalText: "Send a request: we find an available solution near Ischia Port through selected local partners and reply within minutes."
   }
 } satisfies Record<Locale, LocalCarPortContent>;
 
