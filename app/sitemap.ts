@@ -25,6 +25,8 @@ const seoRoutes: Array<{ path: string; priority: number; freq: MetadataRoute.Sit
   { path: "/en/how-to-get-around-ischia", priority: 0.8, freq: "monthly" },
   { path: "/it/cosa-vedere-a-ischia-senza-auto", priority: 0.8, freq: "monthly" },
   { path: "/en/what-to-see-in-ischia-without-a-car", priority: 0.8, freq: "monthly" },
+  { path: "/it/arrivare-a-ischia-porto-come-muoversi-dopo-il-traghetto", priority: 0.8, freq: "monthly" },
+  { path: "/en/arriving-at-ischia-porto-getting-around-after-the-ferry", priority: 0.8, freq: "monthly" },
   { path: "/it/contatti", priority: 0.6, freq: "yearly" },
   { path: "/en/contact", priority: 0.6, freq: "yearly" },
   { path: "/it/privacy", priority: 0.3, freq: "yearly" },
