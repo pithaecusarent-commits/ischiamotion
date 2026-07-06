@@ -12,14 +12,14 @@ export const dictionary = {
     hero: {
       kicker: "Ischia",
       title: "Noleggia scooter, auto e barche a Ischia senza perdere tempo.",
-      subtitle: "Dicci le date del tuo soggiorno, dove alloggi o dove arrivi: verifichiamo rapidamente la soluzione più comoda disponibile con partner locali selezionati.",
+      subtitle: "Non serve contattare tanti noleggiatori: dicci le date del tuo soggiorno, dove alloggi o dove arrivi, e verifichiamo per te la soluzione più comoda con partner locali selezionati.",
       cta: "Verifica disponibilità e prezzo",
       secondary: "Verifica disponibilità su WhatsApp",
       microcopy: "Risposta in pochi minuti negli orari operativi.",
       benefits: [
-        "Partner locali selezionati",
-        "Prezzi e condizioni verificati",
-        "Supporto per scegliere il mezzo giusto"
+        "Una sola richiesta, niente chiamate multiple",
+        "Prezzo, condizioni e ritiro in un'unica proposta",
+        "Supporto locale per scegliere il mezzo giusto"
       ]
     },
     trust: [
@@ -47,14 +47,14 @@ export const dictionary = {
     hero: {
       kicker: "Ischia",
       title: "Rent a scooter, car or boat in Ischia without wasting time.",
-      subtitle: "Tell us your dates, where you're staying or arriving: we quickly check the most convenient option available with selected local partners.",
+      subtitle: "No need to contact several rental operators: tell us your dates and where you're staying or arriving, and we'll check the most convenient option with selected local partners.",
       cta: "Check availability and price",
       secondary: "Check availability on WhatsApp",
       microcopy: "A reply within minutes during operating hours.",
       benefits: [
-        "Selected local partners",
-        "Prices and conditions checked",
-        "Help choosing the right option"
+        "One request, no multiple calls",
+        "Price, conditions and pickup in a single proposal",
+        "Local support to choose the right option"
       ]
     },
     trust: [

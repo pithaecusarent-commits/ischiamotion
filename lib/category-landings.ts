@@ -80,7 +80,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaDescription: "Richiedi un’auto a Ischia. Verifica disponibilità, ritiro al porto e consegna dove prevista tramite partner locali.",
       primaryKeyword: "noleggio auto Ischia",
       eyebrow: "Auto a Ischia",
-      description: "Indicaci date, zona di soggiorno e numero di persone: controlliamo rapidamente le auto disponibili e ti inviamo una proposta chiara con prezzo e condizioni. Più comfort per famiglie, bagagli e spostamenti sull'isola: evita chiamate e preventivi diversi, invia una sola richiesta e troviamo l'auto più comoda per il tuo soggiorno. Auto disponibili a partire da € 30 al giorno, secondo periodo, durata del noleggio e modello disponibile. Ritiro presso porto, punto convenzionato o consegna in hotel dove disponibile.",
+      description: "Indicaci date, zona di soggiorno e numero di persone: controlliamo rapidamente le auto disponibili e ti inviamo una proposta chiara con prezzo e condizioni. Una soluzione pratica per chi viaggia con famiglia, bambini o bagagli: evita chiamate, preventivi separati e dubbi sul ritiro, invia una sola richiesta e troviamo l'auto più comoda per il tuo soggiorno. Auto disponibili a partire da € 30 al giorno, secondo periodo, durata del noleggio e modello disponibile. Ritiro presso porto, punto convenzionato o consegna in hotel dove disponibile.",
       microcopy: "Disponibilità, prezzo e condizioni in pochi minuti negli orari operativi.",
       cardTitle: "Famiglie, coppie e bagagli",
       cardText: "L'auto è pratica quando devi muoverti tra Ischia Porto, Forio, Lacco Ameno, Barano e Sant'Angelo con più comfort.",
@@ -102,6 +102,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Quando evitarla", "Se viaggi leggero e resti tra porto e centro, scooter o e-bike possono essere più semplici per parcheggio e traffico."]
       ],
       faqs: [
+        { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e modalità di ritiro o consegna prima di scegliere." },
         { question: "Quanto costa il noleggio auto a Ischia?", answer: "Dipende da periodo, durata, categoria e disponibilità dei partner. IschiaMotion mostra prezzi a partire da e verifica le condizioni finali dopo la richiesta." },
         { question: "Posso richiedere consegna in hotel?", answer: "Sì, puoi indicare il tuo hotel o la zona di soggiorno. Verifichiamo subito se è disponibile la consegna oppure il punto di ritiro più comodo." },
         { question: "La prenotazione è confermata subito?", answer: "Verifichiamo subito le soluzioni disponibili per le tue date e ti rispondiamo in pochi minuti negli orari operativi con la proposta finale prima della conferma." },
@@ -146,6 +147,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Quando valutare altro", "Con bagagli, bambini piccoli o tratte molto ripide, auto o scooter possono essere più pratici."]
       ],
       faqs: [
+        { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e modalità di ritiro o consegna prima di scegliere." },
         { question: "Le bici elettriche sono adatte a tutta Ischia?", answer: "Ischia ha salite e strade strette: conviene scegliere percorsi adatti e verificare autonomia e condizioni con il partner." },
         { question: "Posso richiedere e-bike vicino al porto?", answer: "Puoi indicare Ischia Porto o un'altra zona; la disponibilità viene verificata dopo la richiesta." },
         { question: "Il casco è incluso?", answer: "Dotazioni e accessori dipendono dal partner selezionato e vengono confermati dopo verifica." },
@@ -169,7 +171,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaDescription: "Richiedi un gommone a Ischia. Verifica disponibilità, patente, punto nautico e meteo tramite partner locali selezionati.",
       primaryKeyword: "noleggio gommoni Ischia",
       eyebrow: "Gommoni a Ischia",
-      description: "Comunicaci data, numero di persone e preferenze: verifichiamo rapidamente le barche disponibili e ti proponiamo in pochi minuti la soluzione più adatta. Scopri Ischia dal mare senza perdere tempo a cercare tra tanti operatori: con una sola richiesta puoi ricevere proposte per gommoni, barche con skipper o soluzioni senza patente, secondo disponibilità. Soluzioni disponibili a partire da € 150 al giorno, in base al periodo, alla durata, alla tipologia di imbarcazione e ai servizi richiesti. Partenza da punti nautici convenzionati, con possibilità di valutare soluzioni con o senza skipper.",
+      description: "Comunicaci data, numero di persone e preferenze: verifichiamo rapidamente le barche disponibili e ti proponiamo in pochi minuti la soluzione più adatta. Scopri Ischia dal mare senza perdere tempo a cercare tra tanti operatori: con una sola richiesta puoi ricevere proposte per gommoni, barche con skipper o soluzioni senza patente, secondo disponibilità. Ti aiutiamo a valutare imbarcazione, numero di persone, partenza e presenza dello skipper prima della conferma. Soluzioni disponibili a partire da € 150 al giorno, in base al periodo, alla durata, alla tipologia di imbarcazione e ai servizi richiesti. Partenza da punti nautici convenzionati.",
       microcopy: "Ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni.",
       cardTitle: "Costa e calette",
       cardText: "Per le categorie nautiche il ritiro avviene presso IschiaMotion Point o punto definito, non con consegna in hotel.",
@@ -193,6 +195,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Quando scegliere un beach club", "Se preferisci lettino riservato, ombrellone e servizi a terra, valuta un beach club."]
       ],
       faqs: [
+        { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e modalità di ritiro prima di scegliere." },
         { question: "Gommone e barca sono la stessa cosa?", answer: "No. Su IschiaMotion sono categorie separate: il gommone ha caratteristiche, disponibilità e condizioni diverse dalla barca." },
         { question: "Posso ricevere il gommone in hotel?", answer: "No. Per categorie nautiche il ritiro è presso punto definito o IschiaMotion Point, secondo indicazioni del partner." },
         { question: "La disponibilità dipende dal meteo?", answer: "Sì. Mare, vento e condizioni operative possono incidere sulla conferma finale." },
@@ -216,7 +219,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       metaDescription: "Richiedi una barca a Ischia. Verifica disponibilità, partenza, requisiti e meteo tramite partner locali selezionati.",
       primaryKeyword: "noleggio barche Ischia",
       eyebrow: "Barche a Ischia",
-      description: "Comunicaci data, numero di persone e preferenze: verifichiamo rapidamente le barche disponibili e ti proponiamo in pochi minuti la soluzione più adatta. Scopri Ischia dal mare con più spazio e comfort, senza perdere tempo a cercare tra tanti operatori: con una sola richiesta puoi ricevere proposte con o senza skipper, secondo disponibilità e requisiti. Prezzi in base a periodo, durata, modello e servizi richiesti. Partenza da punti nautici convenzionati.",
+      description: "Comunicaci data, numero di persone e preferenze: verifichiamo rapidamente le barche disponibili e ti proponiamo in pochi minuti la soluzione più adatta. Scopri Ischia dal mare con più spazio e comfort, senza perdere tempo a cercare tra tanti operatori: con una sola richiesta puoi ricevere proposte con o senza skipper, secondo disponibilità e requisiti. Ti aiutiamo a valutare imbarcazione, numero di persone, partenza e presenza dello skipper prima della conferma. Prezzi in base a periodo, durata, modello e servizi richiesti. Partenza da punti nautici convenzionati.",
       microcopy: "Ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni.",
       cardTitle: "Uscite in mare",
       cardText: "Verifichiamo subito requisiti e condizioni con i partner locali. Per una giornata relax a terra puoi valutare un beach club.",
@@ -238,6 +241,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Quando scegliere altro", "Se preferisci lettini, ombrelloni e servizi a terra, valuta la pagina Beach Club."]
       ],
       faqs: [
+        { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e punto di partenza prima di scegliere." },
         { question: "La barca è una prenotazione immediata?", answer: "Verifichiamo subito disponibilità, requisiti e condizioni con i nostri partner e ti rispondiamo in pochi minuti negli orari operativi." },
         { question: "Posso noleggiare barche senza patente?", answer: "Verifichiamo subito i requisiti in base al mezzo scelto e te li indichiamo chiaramente nella proposta, prima della conferma." },
         { question: "Il ritiro può avvenire in hotel?", answer: "No. Per le categorie nautiche il ritiro avviene presso punto definito o IschiaMotion Point." },
@@ -288,6 +292,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Coppie, famiglie e gruppi", "La richiesta può includere numero persone, adulti e bambini, zona preferita e note cliente."]
       ],
       faqs: [
+        { question: "Perché usare IschiaMotion invece di contattare direttamente una struttura?", answer: "Con una sola richiesta puoi verificare rapidamente più strutture locali, ricevendo una proposta con disponibilità, servizi e condizioni prima di scegliere." },
         { question: "IschiaMotion gestisce direttamente i beach club?", answer: "No. IschiaMotion facilita la richiesta e il contatto con strutture e partner locali selezionati." },
         { question: "Cosa posso richiedere?", answer: "Puoi richiedere lettini, ombrelloni, accesso giornaliero, servizi spiaggia, pranzo o aperitivo vista mare." },
         { question: "La disponibilità è confermata subito?", answer: "Verifichiamo subito con la struttura o il partner locale e ti rispondiamo in pochi minuti negli orari operativi con la proposta finale." },
@@ -331,6 +336,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["When to avoid it", "If you travel light and stay around the port or town center, scooter or e-bike may be easier for parking and traffic."]
       ],
       faqs: [
+        { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and pickup or delivery details before you choose." },
         { question: "How much does car rental in Ischia cost?", answer: "It depends on season, length, category and partner availability. IschiaMotion shows starting prices and checks final conditions after request." },
         { question: "Can I request hotel delivery?", answer: "Where offered by the partner and area, you can request hotel or accommodation delivery. Availability is always reviewed." },
         { question: "Is the booking instantly confirmed?", answer: "We check available options for your dates right away and reply within minutes during operating hours with the final proposal before you confirm." },
@@ -374,6 +380,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["When to choose another option", "With luggage, small children or very steep routes, car or scooter may be more practical."]
       ],
       faqs: [
+        { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and pickup or delivery details before you choose." },
         { question: "Are e-bikes suitable for all of Ischia?", answer: "Ischia has hills and narrow roads: choose suitable routes and review battery range and conditions with the partner." },
         { question: "Can I request an e-bike near the port?", answer: "You can indicate Ischia Port or another area; availability is reviewed after request." },
         { question: "Is a helmet included?", answer: "Equipment and accessories depend on the selected partner and are confirmed after review." },
@@ -420,6 +427,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["When to choose a beach club", "If you prefer reserved sunbeds, umbrellas and services on shore, consider a beach club."]
       ],
       faqs: [
+        { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and pickup details before you choose." },
         { question: "Is a rubber dinghy the same as a boat?", answer: "No. On IschiaMotion they are separate categories with different availability and conditions." },
         { question: "Can it be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or IschiaMotion Point." },
         { question: "Does weather affect availability?", answer: "Yes. Sea, wind and operational conditions can affect final confirmation." },
@@ -465,6 +473,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["When to choose another option", "If you prefer sunbeds, umbrellas and seaside services, consider the Beach Club page."]
       ],
       faqs: [
+        { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and departure point before you choose." },
         { question: "Is boat rental instantly confirmed?", answer: "We check availability, requirements and conditions with our partners right away and reply within minutes during operating hours." },
         { question: "Can I rent without a license?", answer: "It depends on the boat and partner conditions. Requirements and documents are reviewed before confirmation." },
         { question: "Can the boat be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or IschiaMotion Point." },
@@ -515,6 +524,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Couples, families and groups", "The request can include guest count, adults and children, preferred area and customer notes."]
       ],
       faqs: [
+        { question: "Why use IschiaMotion instead of contacting a venue directly?", answer: "With a single request you can quickly check several local venues, receiving a proposal with availability, services and conditions before you choose." },
         { question: "Does IschiaMotion directly operate beach clubs?", answer: "No. IschiaMotion facilitates requests and contact with selected local venues and partners." },
         { question: "What can I request?", answer: "You can request sunbeds, umbrellas, daily access, beach services, seaside lunch or aperitif." },
         { question: "Is availability confirmed instantly?", answer: "We check with the selected venue or local partner right away and reply within minutes during operating hours with the final proposal." },

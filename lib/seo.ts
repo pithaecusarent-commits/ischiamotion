@@ -32,6 +32,10 @@ export const websiteReference = {
 export const scooterFaq = {
   it: [
     {
+      question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?",
+      answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e modalità di ritiro o consegna prima di scegliere."
+    },
+    {
       question: "Quanto costa noleggiare uno scooter a Ischia?",
       answer: "Il prezzo varia in base a periodo, durata, cilindrata e disponibilità dei partner locali. Invia una richiesta online e ricevi in pochi minuti prezzo e condizioni aggiornati."
     },
@@ -73,6 +77,10 @@ export const scooterFaq = {
     }
   ],
   en: [
+    {
+      question: "Why use IschiaMotion instead of contacting a rental company directly?",
+      answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and pickup or delivery details before you choose."
+    },
     {
       question: "How much does scooter rental in Ischia cost?",
       answer: "The cost depends on season, rental length, scooter type and options available from local partners. With IschiaMotion you send an online request and receive confirmation after partner review."

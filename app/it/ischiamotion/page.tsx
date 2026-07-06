@@ -139,13 +139,14 @@ export default function IschiaMotionPage() {
           </div>
           <article className="seo-card">
             <p>
+              Non è solo una richiesta online: è un modo più semplice per organizzare mobilità e servizi mare a Ischia.
               IschiaMotion non presenta come proprie tutte le disponibilità pubblicate e non è il fornitore diretto di ogni mezzo o servizio.
-              Il suo ruolo è raccogliere la richiesta, aiutare il cliente a definire zona e necessità e verificare una soluzione con operatori
-              locali selezionati. Questo permette di considerare categorie diverse e più zone dell’isola attraverso un solo punto di contatto.
+              Tu ci dici cosa ti serve, noi verifichiamo le opzioni locali disponibili con operatori selezionati e ti inviamo una proposta chiara,
+              considerando categorie diverse e più zone dell’isola attraverso un solo punto di contatto.
             </p>
             <p>
-              Mezzo, contratto, requisiti, cauzione, coperture, prezzo e modalità operative dipendono dal partner che fornisce concretamente
-              il servizio e vengono comunicati prima della conferma finale.
+              Prima della conferma sai cosa stai scegliendo: mezzo, contratto, requisiti, cauzione, coperture, prezzo, modalità operative e
+              punto di ritiro o consegna dipendono dal partner che fornisce concretamente il servizio e vengono comunicati nella proposta.
             </p>
           </article>
         </section>
