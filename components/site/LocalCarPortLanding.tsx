@@ -58,7 +58,7 @@ const content = {
     steps: [
       ["Invia la richiesta", "Indichi date, orari, numero di persone e preferenze utili per orientare la verifica."],
       ["Verifichiamo disponibilità", "Controlliamo disponibilità e condizioni con partner locali selezionati a Ischia."],
-      ["Ricevi conferma dopo verifica", "Ti comunichiamo dettagli di ritiro e informazioni utili prima del noleggio."]
+      ["Ricevi la proposta in pochi minuti", "Ti comunichiamo dettagli di ritiro e informazioni utili prima del noleggio."]
     ],
     pricesTitle: "Prezzi noleggio auto Ischia Porto",
     pricesText: "I prezzi del noleggio auto a Ischia Porto possono variare in base a periodo, durata, categoria del veicolo, disponibilità, assicurazione, cauzione e condizioni del partner. Nei mesi estivi e nei periodi di alta richiesta è consigliabile inviare la richiesta con anticipo.",

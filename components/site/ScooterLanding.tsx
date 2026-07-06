@@ -63,8 +63,8 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
   const pickupItems = isIt
     ? [
       ["IschiaMotion Point", "Puoi indicare un punto ritiro comodo. La disponibilità effettiva viene verificata con il partner locale."],
-      ["Porto dove previsto", "Per Ischia Porto o Casamicciola puoi segnalare arrivo e fascia oraria; ritiro e condizioni non sono automatici."],
-      ["Hotel dove previsto", "Per alcune zone e partner puoi indicare hotel o struttura ricettiva, sempre soggetto a verifica."],
+      ["Porto dove previsto", "Per Ischia Porto o Casamicciola segnala arrivo e fascia oraria: controlliamo subito ritiro e condizioni disponibili."],
+      ["Hotel dove previsto", "Per alcune zone puoi indicare hotel o struttura ricettiva: verifichiamo rapidamente l'opzione con il partner."],
       ["Documenti e casco", "Patente, documento, casco, cauzione e condizioni dipendono dal mezzo e vengono confermati dal partner prima del ritiro."]
     ]
     : [

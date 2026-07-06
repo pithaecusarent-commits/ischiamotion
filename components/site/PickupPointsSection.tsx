@@ -51,8 +51,8 @@ export function PickupPointsSection({
         </div>
         <p>
           {locale === "it"
-            ? "Indica un punto IschiaMotion distribuito sull’isola: la disponibilità e le modalità vengono confermate dopo verifica con il partner locale."
-            : "Select an IschiaMotion point across the island: availability and pickup details are confirmed after review with the local partner."}
+            ? "Scegli la zona più comoda per te: verifichiamo subito con i partner locali il punto di ritiro o la consegna disponibili per le tue date."
+            : "Pick the area that suits you best: we quickly check pickup or delivery options with local partners for your dates."}
         </p>
       </div>
 

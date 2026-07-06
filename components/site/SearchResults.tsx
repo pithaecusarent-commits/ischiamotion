@@ -82,14 +82,14 @@ export function SearchResults({
         <div className="section-header">
           <div>
             <div className="section-eyebrow">{locale === "it" ? "Risultati ricerca" : "Search results"}</div>
-            <h1 className="section-title">{locale === "it" ? "Opzioni da verificare" : "Options to review"}</h1>
+            <h1 className="section-title">{locale === "it" ? "Opzioni disponibili" : "Available options"}</h1>
             <p className="mt-3 text-ink/60">
               {categoryLabels[locale][category]} · {startDate || "-"} / {endDate || "-"}
             </p>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
               {locale === "it"
-                ? "La richiesta non è una conferma automatica: verifichiamo disponibilità e condizioni prima di ricontattarti."
-                : "Your request is not an automatic confirmation: we check availability and conditions before contacting you."}
+                ? "Verifichiamo subito le opzioni disponibili per le tue date e ti inviamo in pochi minuti prezzo e condizioni."
+                : "We check the available options for your dates right away and send you price and conditions within minutes."}
             </p>
           </div>
           <a href={`/${locale}#prenota`} className="see-all">{locale === "it" ? "Modifica ricerca →" : "Change search →"}</a>
@@ -98,8 +98,8 @@ export function SearchResults({
         {isFallback ? (
           <div className="mb-5 rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-ink/70">
             {locale === "it"
-              ? "Stiamo mostrando esempi generici: la disponibilità effettiva viene verificata con i partner locali."
-              : "Showing generic examples: actual availability is reviewed with local partners."}
+              ? "Stiamo mostrando esempi generici: invia le tue date e verifichiamo subito la disponibilità reale con i partner locali."
+              : "Showing generic examples: send your dates and we'll check real availability with local partners right away."}
           </div>
         ) : null}
 
@@ -146,8 +146,8 @@ export function SearchResults({
                         {vehicle.price_from > 0 ? (
                           <p className="vcard-price-note">
                             {locale === "it"
-                              ? "Prezzo indicativo: può variare in base a periodo, durata, disponibilità, categoria del mezzo e condizioni del partner."
-                              : "Indicative price: it may vary by season, duration, availability, vehicle category and partner conditions."}
+                              ? "Invia le date e ricevi in pochi minuti il prezzo aggiornato e le condizioni della soluzione disponibile."
+                              : "Send your dates and get the updated price and conditions within minutes."}
                           </p>
                         ) : null}
                       </div>

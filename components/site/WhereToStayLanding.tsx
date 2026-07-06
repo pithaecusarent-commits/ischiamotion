@@ -96,7 +96,7 @@ const content: Record<Locale, PageContent> = {
       ["Auto a Ischia", "Utile per famiglie, bagagli e strutture lontane dal porto. Più comfort per più persone su tratte lunghe.", "/it/noleggio-auto-ischia"],
       ["E-bike a Ischia", "Perfetta per percorsi panoramici, borghi e lungomare. Adatta per chi preferisce pedalare con assistenza elettrica sull'isola.", "/it/noleggio-bici-elettriche-ischia"],
       ["Gommone a Ischia", "Per vivere la costa dal mare, raggiungere calette inaccessibili via terra e organizzare una giornata fuori porta.", "/it/noleggio-gommoni-ischia"],
-      ["Barca a Ischia", "Per chi vuole più comfort in mare. Disponibilità soggetta a requisiti, meteo e condizioni del partner.", "/it/noleggio-barche-ischia"],
+      ["Barca a Ischia", "Per chi vuole più comfort in mare. Verifichiamo subito requisiti, meteo e disponibilità con i partner locali.", "/it/noleggio-barche-ischia"],
       ["Beach Club a Ischia", "Lettini, ombrelloni e servizi mare presso strutture locali selezionate. Ideale per una giornata organizzata in spiaggia.", "/it/beach-club-ischia"]
     ],
     linksTitle: "Esplora i servizi di IschiaMotion",

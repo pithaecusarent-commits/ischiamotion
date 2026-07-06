@@ -34,7 +34,7 @@ export default function ContactItPage() {
         sections: [
           {
             title: "WhatsApp",
-            body: <>Per una richiesta veloce puoi usare la CTA WhatsApp presente sul sito o chiamare e scrivere al numero <a href="tel:+393296856370">+39 329 685 6370</a>. La disponibilità resta soggetta a verifica.</>
+            body: <>Per una richiesta veloce puoi usare la CTA WhatsApp presente sul sito o chiamare e scrivere al numero <a href="tel:+393296856370">+39 329 685 6370</a>. Risposta rapida via WhatsApp negli orari operativi.</>
           },
           {
             title: "Email",
@@ -42,7 +42,7 @@ export default function ContactItPage() {
           },
           {
             title: "Come funziona",
-            body: "IschiaMotion raccoglie la tua richiesta e verifica disponibilità, condizioni e conferma con partner locali selezionati sull’isola."
+            body: "Invii la tua richiesta e verifichiamo subito disponibilità e condizioni con partner locali selezionati sull’isola: ricevi la proposta in pochi minuti."
           },
           {
             title: "Sede e indicazioni",

@@ -63,22 +63,22 @@ const content: Record<Locale, Content> = {
     sections: [
       {
         title: "Muoversi a Ischia in scooter",
-        paragraphs: ["Lo scooter è spesso la soluzione più agile per spostarsi tra i comuni, cercare parcheggio e raggiungere spiagge o borghi con maggiore autonomia. Il noleggio scooter a Ischia è particolarmente pratico per coppie e viaggiatori con pochi bagagli.", "Chi arriva via mare può richiedere un noleggio scooter a Ischia Porto; sul versante occidentale, il noleggio scooter a Forio può essere utile per Citara, il centro e le località vicine. Disponibilità, cilindrata, requisiti e punto di ritiro vengono confermati dopo la verifica con il partner locale."],
+        paragraphs: ["Lo scooter è spesso la soluzione più agile per spostarsi tra i comuni, cercare parcheggio e raggiungere spiagge o borghi con maggiore autonomia. Il noleggio scooter a Ischia è particolarmente pratico per coppie e viaggiatori con pochi bagagli.", "Chi arriva via mare può richiedere un noleggio scooter a Ischia Porto; sul versante occidentale, il noleggio scooter a Forio può essere utile per Citara, il centro e le località vicine. Indica la tua zona: controlliamo subito cilindrata, requisiti e punto di ritiro disponibili con il partner locale."],
         links: [["Noleggio scooter Ischia", "/it/noleggio-scooter-ischia"]]
       },
       {
         title: "Muoversi a Ischia in auto",
-        paragraphs: ["L'auto a Ischia offre più comfort a famiglie, piccoli gruppi e viaggiatori con valigie, passeggini o attrezzatura da mare. Può essere utile anche per alloggi collinari o itinerari con molte tappe.", "Prima di scegliere il noleggio auto a Ischia conviene considerare dimensioni del veicolo, parcheggio e accessibilità dell'alloggio. La ricerca car rental Ischia può includere proposte diverse: IschiaMotion inoltra la richiesta e le condizioni definitive vengono confermate dal partner disponibile."],
+        paragraphs: ["L'auto a Ischia offre più comfort a famiglie, piccoli gruppi e viaggiatori con valigie, passeggini o attrezzatura da mare. Può essere utile anche per alloggi collinari o itinerari con molte tappe.", "Prima di scegliere il noleggio auto a Ischia conviene considerare dimensioni del veicolo, parcheggio e accessibilità dell'alloggio. Invia una richiesta: controlliamo subito le opzioni disponibili e ti inviamo in pochi minuti prezzo e condizioni."],
         links: [["Noleggio auto Ischia", "/it/noleggio-auto-ischia"]]
       },
       {
         title: "Muoversi a Ischia in e-bike",
-        paragraphs: ["Un'e-bike a Ischia è adatta a chi ama pedalare lungo tratti panoramici, lungomare e percorsi con soste frequenti. Le salite dell'isola richiedono comunque una valutazione realistica di allenamento, autonomia della batteria e itinerario.", "Per il noleggio e-bike a Ischia, compresa la zona di Forio, è utile indicare altezza, durata e percorso previsto. Modello, autonomia e disponibilità dell'e-bike a Forio o in altre zone sono confermati dopo la verifica locale."],
+        paragraphs: ["Un'e-bike a Ischia è adatta a chi ama pedalare lungo tratti panoramici, lungomare e percorsi con soste frequenti. Le salite dell'isola richiedono comunque una valutazione realistica di allenamento, autonomia della batteria e itinerario.", "Per il noleggio e-bike a Ischia, compresa la zona di Forio, è utile indicare altezza, durata e percorso previsto: verifichiamo subito modello, autonomia e disponibilità con il partner locale."],
         links: [["Noleggio bici elettriche Ischia", "/it/noleggio-bici-elettriche-ischia"]]
       },
       {
         title: "Vivere Ischia dal mare: barche e gommoni",
-        paragraphs: ["Il noleggio barche a Ischia e il noleggio gommoni a Ischia permettono di osservare la costa, fermarsi nelle baie consentite e costruire una giornata diversa rispetto agli spostamenti via terra.", "Una barca con skipper a Ischia può essere richiesta quando il servizio è disponibile. Anche un gommone senza patente a Ischia dipende dal tipo di mezzo, dalla normativa applicabile e dalle condizioni del partner. Meteo, requisiti, porto di partenza e dettagli del servizio devono sempre essere verificati e confermati prima dell'uscita."],
+        paragraphs: ["Il noleggio barche a Ischia e il noleggio gommoni a Ischia permettono di osservare la costa, fermarsi nelle baie consentite e costruire una giornata diversa rispetto agli spostamenti via terra.", "Una barca con skipper a Ischia può essere richiesta quando il servizio è disponibile, così come un gommone senza patente in base al tipo di mezzo e alla normativa applicabile. Indicaci data, numero di persone e tipo di esperienza: controlliamo subito meteo, requisiti e porto di partenza e ti inviamo una proposta in pochi minuti."],
         links: [["Noleggio barche Ischia", "/it/noleggio-barche-ischia"], ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"]]
       }
     ],
@@ -96,7 +96,7 @@ const content: Record<Locale, Content> = {
       ["Barano e Maronti", "Spiaggia e aree interne possono richiedere cambi o tragitti più lunghi.", "Auto, scooter, bus o taxi marino"]
     ],
     beachTitle: "Beach club a Ischia: quando conviene organizzarsi prima",
-    beachText: "Chi desidera una giornata al mare più comoda può richiedere disponibilità per beach club selezionati. Nei periodi più richiesti è utile muoversi in anticipo: lettini, servizi, condizioni e conferma dipendono dalla verifica con la struttura locale.",
+    beachText: "Chi desidera una giornata al mare più comoda può richiedere disponibilità per beach club selezionati. Nei periodi più richiesti è utile muoversi in anticipo: indica data e numero di persone e verifichiamo subito lettini, servizi e condizioni con la struttura locale.",
     beachLink: ["Beach club Ischia", "/it/beach-club-ischia"],
     linksTitle: "Servizi utili per organizzare gli spostamenti",
     usefulLinks: [["Scooter", "/it/noleggio-scooter-ischia"], ["Auto", "/it/noleggio-auto-ischia"], ["E-bike", "/it/noleggio-bici-elettriche-ischia"], ["Gommoni", "/it/noleggio-gommoni-ischia"], ["Barche", "/it/noleggio-barche-ischia"], ["Beach club", "/it/beach-club-ischia"]],
@@ -108,7 +108,7 @@ const content: Record<Locale, Content> = {
       { question: "Meglio scooter o auto a Ischia?", answer: "Lo scooter è più agile e adatto a una o due persone con pochi bagagli. L'auto offre più spazio e protezione ed è generalmente più pratica per famiglie, gruppi e trasferimenti con valigie." },
       { question: "Come muoversi da Ischia Porto?", answer: "Il centro si esplora bene a piedi. Per raggiungere altri comuni si possono usare bus, taxi, scooter, auto o e-bike, scegliendo in base a bagagli, numero di persone e destinazione." },
       { question: "Come raggiungere le spiagge più belle di Ischia?", answer: "Molte spiagge sono raggiungibili via strada con bus, taxi o mezzo privato; alcune baie si apprezzano anche dal mare. Accessi, parcheggi e servizi cambiano da zona a zona, quindi conviene verificarli prima." },
-      { question: "È possibile richiedere un mezzo senza carta di credito?", answer: "È possibile inviare la richiesta indicando questa esigenza, ma metodi di pagamento, deposito e documenti richiesti dipendono dal partner e dal mezzo. Le condizioni vengono confermate dopo la verifica della disponibilità." }
+      { question: "È possibile richiedere un mezzo senza carta di credito?", answer: "Indica questa esigenza nella richiesta: verifichiamo subito metodi di pagamento, deposito e documenti richiesti in base a partner e mezzo, e ti rispondiamo in pochi minuti." }
     ],
     finalTitle: "Organizza i tuoi spostamenti a Ischia",
     finalText: "Invia una richiesta a IschiaMotion: verifichiamo disponibilità e condizioni con partner locali selezionati e ti diamo conferma quando una soluzione è disponibile."

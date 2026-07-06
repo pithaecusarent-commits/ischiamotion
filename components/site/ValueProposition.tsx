@@ -70,8 +70,8 @@ const categoryItems: Record<Locale, Partial<Record<VehicleFilter, ValueItem[]>>>
         text: "Porto, hotel, Forio, Barano o Sant’Angelo cambiano disponibilità e condizioni: le verifichiamo con il partner."
       },
       {
-        title: "Richiesta senza impegno",
-        text: "Ti ricontattiamo solo dopo aver verificato disponibilità, prezzo indicativo e condizioni operative."
+        title: "Risposta in pochi minuti",
+        text: "Controlliamo subito disponibilità, prezzo e condizioni operative e ti inviamo rapidamente la proposta."
       }
     ],
     bici: [
@@ -94,8 +94,8 @@ const categoryItems: Record<Locale, Partial<Record<VehicleFilter, ValueItem[]>>>
         text: "Disponibilità, itinerari e condizioni dipendono da periodo, meteo, durata e tipologia di uscita."
       },
       {
-        title: "Non è una conferma automatica",
-        text: "Verifichiamo requisiti, capienza, punto di partenza e condizioni operative con partner locali."
+        title: "Sicurezza prima di tutto",
+        text: "Meteo, requisiti nautici, capienza e punto di partenza vengono verificati subito, per offrirti una soluzione sicura e adatta alla tua giornata."
       },
       {
         title: "Aiuto nella scelta",
@@ -156,8 +156,8 @@ const categoryItems: Record<Locale, Partial<Record<VehicleFilter, ValueItem[]>>>
         text: "Port, hotel, Forio, Barano or Sant’Angelo can change availability and conditions: we review them with the partner."
       },
       {
-        title: "No-obligation request",
-        text: "We contact you after checking availability, indicative price and operating conditions."
+        title: "A reply within minutes",
+        text: "We instantly check availability, price and operating conditions and quickly send you the proposal."
       }
     ],
     bici: [
@@ -180,8 +180,8 @@ const categoryItems: Record<Locale, Partial<Record<VehicleFilter, ValueItem[]>>>
         text: "Availability, itineraries and conditions depend on season, weather, rental length and type of sea outing."
       },
       {
-        title: "Not an automatic confirmation",
-        text: "We review requirements, capacity, departure point and operating conditions with local partners."
+        title: "Safety comes first",
+        text: "Weather, boating requirements, capacity and departure point are checked right away, for a safe option that fits your day."
       },
       {
         title: "Help choosing",

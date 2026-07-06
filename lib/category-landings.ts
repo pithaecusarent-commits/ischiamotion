@@ -89,7 +89,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       howTitle: "Disponibilità tramite partner locali",
       benefits: [
         ["Partner scelti con cura", "Collaboriamo con operatori locali selezionati per affidabilità, disponibilità e conoscenza del territorio."],
-        ["Richiesta rapida", "Indichi date, preferenze e zona: la conferma arriva dopo verifica della disponibilità."],
+        ["Richiesta rapida", "Indichi date, preferenze e zona: verifichiamo subito la disponibilità e ti rispondiamo in pochi minuti."],
         ["Ritiro o consegna dove previsto", "Per le auto possono essere disponibili porto, hotel o punti concordati, secondo condizioni partner."],
         ["Prezzi chiari", "I prezzi a partire da riflettono le opzioni più richieste: ti confermiamo il totale in pochi minuti in base a date, durata e modello."]
       ],
@@ -103,10 +103,10 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       ],
       faqs: [
         { question: "Quanto costa il noleggio auto a Ischia?", answer: "Dipende da periodo, durata, categoria e disponibilità dei partner. IschiaMotion mostra prezzi a partire da e verifica le condizioni finali dopo la richiesta." },
-        { question: "Posso richiedere consegna in hotel?", answer: "Dove previsto dal partner e dalla zona, puoi indicare consegna in hotel o struttura ricettiva. La disponibilità viene sempre verificata." },
+        { question: "Posso richiedere consegna in hotel?", answer: "Indica hotel o struttura ricettiva e zona: controlliamo subito la disponibilità della consegna con il partner locale." },
         { question: "La prenotazione è confermata subito?", answer: "Verifichiamo subito le soluzioni disponibili per le tue date e ti rispondiamo in pochi minuti negli orari operativi con la proposta finale prima della conferma." },
         { question: "Serve una carta o cauzione?", answer: "Eventuali cauzioni, documenti e condizioni vengono comunicati dopo verifica con il partner locale." },
-        { question: "Posso ritirare l'auto al porto di Ischia?", answer: "Puoi indicare Ischia Porto o un punto comodo; la disponibilità del ritiro viene confermata dopo verifica." },
+        { question: "Posso ritirare l'auto al porto di Ischia?", answer: "Puoi indicare Ischia Porto o un punto comodo: verifichiamo subito la disponibilità del ritiro e ti rispondiamo in pochi minuti." },
         { question: "L'auto conviene per Sant'Angelo o Barano?", answer: "Sì, spesso è utile per strutture o itinerari fuori dalle zone centrali. Orari, ritiro e parcheggi vanno però valutati in base alla zona." },
         { question: "Posso richiedere un'auto per pochi giorni?", answer: "Puoi indicare le date desiderate. Durata minima, fasce orarie e condizioni dipendono dal partner disponibile." },
         { question: "IschiaMotion è il noleggiatore dell'auto?", answer: "No. IschiaMotion raccoglie la richiesta e la verifica tramite partner locali selezionati, mantenendo chiaro il modello di piattaforma." }
@@ -153,7 +153,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "La richiesta conferma subito il mezzo?", answer: "Verifichiamo subito le opzioni disponibili e ti rispondiamo in pochi minuti negli orari operativi con la proposta finale." },
         { question: "Posso usare l'e-bike per Forio e Lacco Ameno?", answer: "Sì, sono zone spesso adatte a spostamenti leggeri e panoramici, valutando sempre distanza, autonomia e punto di ritiro." },
         { question: "Le pendenze di Ischia sono un problema?", answer: "Possono esserlo su alcune tratte interne o verso zone alte. Conviene indicare percorso e livello di esperienza nella richiesta." },
-        { question: "Posso richiedere consegna presso hotel?", answer: "Dove previsto dal partner puoi indicare hotel o struttura. La consegna non è automatica e viene confermata dopo verifica." }
+        { question: "Posso richiedere consegna presso hotel?", answer: "Indicaci hotel o struttura: controlliamo rapidamente le opzioni disponibili e ti confermiamo la consegna in pochi minuti." }
       ],
       finalTitle: "Vuoi muoverti in e-bike?",
       finalText: "Invia una richiesta e verifica le opzioni disponibili per bici elettriche a Ischia."
@@ -196,7 +196,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Gommone e barca sono la stessa cosa?", answer: "No. Su IschiaMotion sono categorie separate: il gommone ha caratteristiche, disponibilità e condizioni diverse dalla barca." },
         { question: "Posso ricevere il gommone in hotel?", answer: "No. Per categorie nautiche il ritiro è presso punto definito o IschiaMotion Point, secondo indicazioni del partner." },
         { question: "La disponibilità dipende dal meteo?", answer: "Sì. Mare, vento e condizioni operative possono incidere sulla conferma finale." },
-        { question: "Serve patente nautica?", answer: "Dipende dal mezzo e dalle condizioni del partner. Requisiti e documenti vengono verificati prima della conferma." },
+        { question: "Serve patente nautica?", answer: "Verifichiamo subito i requisiti in base al mezzo scelto e te li indichiamo chiaramente nella proposta, prima della conferma." },
         { question: "Noleggio gommone Ischia prezzi: da cosa dipendono?", answer: "I prezzi per il noleggio di un gommone a Ischia variano in base a periodo, durata, modello, porto di partenza, presenza di skipper e disponibilità. Invii una richiesta e ricevi una proposta aggiornata in pochi minuti negli orari operativi." },
         { question: "Da dove si ritira un gommone a Ischia?", answer: "Il punto viene indicato dopo verifica con il partner: può essere un punto nautico definito o IschiaMotion Point, non una consegna in hotel." },
         { question: "Posso indicare una zona di partenza preferita?", answer: "Sì. Puoi indicare Ischia Porto, Forio, Lacco Ameno, Sant'Angelo o un'altra zona utile: verifichiamo subito la fattibilità con i nostri partner locali." },
@@ -219,7 +219,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       description: "Comunicaci data, numero di persone e preferenze: verifichiamo rapidamente le barche disponibili e ti proponiamo in pochi minuti la soluzione più adatta. Scopri Ischia dal mare con più spazio e comfort, senza perdere tempo a cercare tra tanti operatori: con una sola richiesta puoi ricevere proposte con o senza skipper, secondo disponibilità e requisiti. Prezzi in base a periodo, durata, modello e servizi richiesti. Partenza da punti nautici convenzionati.",
       microcopy: "Ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni.",
       cardTitle: "Uscite in mare",
-      cardText: "Barca disponibile solo dove previsto da partner, requisiti e condizioni. Per una giornata relax a terra puoi valutare un beach club.",
+      cardText: "Verifichiamo subito requisiti e condizioni con i partner locali. Per una giornata relax a terra puoi valutare un beach club.",
       primaryCta: "Verifica barche disponibili",
       categoryParam: "barca",
       benefits: [
@@ -227,7 +227,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Condizioni chiare", "Requisiti, documenti, meteo e condizioni finali arrivano rapidamente, prima della conferma."],
         ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."]
       ],
-      zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto è uno dei punti più richiesti per organizzare il noleggio di barche e uscite in mare, ma disponibilità, punto di imbarco e condizioni vengono sempre confermati dopo verifica con il partner. Casamicciola, Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Per chi cerca affitto barca a Ischia, la partenza resta comunque soggetta al punto indicato dal partner.",
+      zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto è uno dei punti più richiesti per organizzare il noleggio di barche e uscite in mare: verifichiamo subito disponibilità, punto di imbarco e condizioni con i nostri partner. Casamicciola, Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Per chi cerca affitto barca a Ischia, indichiamo il punto di partenza in pochi minuti in base a disponibilità e organizzazione del partner.",
       inspirationTitle: "Vivere Ischia dal mare",
       inspirationText: "Il noleggio barca permette di scoprire l'isola da una prospettiva diversa, tra baie, coste panoramiche, soste bagno e itinerari personalizzati. Le soluzioni disponibili possono variare in base al periodo, alle condizioni meteo-marine e ai partner selezionati.",
       whenTitle: "Quando conviene la barca",
@@ -239,7 +239,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       ],
       faqs: [
         { question: "La barca è una prenotazione immediata?", answer: "Verifichiamo subito disponibilità, requisiti e condizioni con i nostri partner e ti rispondiamo in pochi minuti negli orari operativi." },
-        { question: "Posso noleggiare barche senza patente?", answer: "Dipende dal mezzo e dalle condizioni del partner. Requisiti e documenti vengono verificati prima della conferma." },
+        { question: "Posso noleggiare barche senza patente?", answer: "Verifichiamo subito i requisiti in base al mezzo scelto e te li indichiamo chiaramente nella proposta, prima della conferma." },
         { question: "Il ritiro può avvenire in hotel?", answer: "No. Per le categorie nautiche il ritiro avviene presso punto definito o IschiaMotion Point." },
         { question: "Il meteo può bloccare l'uscita?", answer: "Sì. Condizioni meteo-marine e operative sono parte della verifica." },
         { question: "Quanto costa noleggiare una barca a Ischia?", answer: "Il prezzo varia per date, durata, modello, disponibilità e condizioni partner." },

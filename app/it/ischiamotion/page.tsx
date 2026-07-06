@@ -116,16 +116,16 @@ export default function IschiaMotionPage() {
           </div>
           <div className="seo-landing-grid">
             <article className="seo-card">
-              <h3>1. Indichi cosa ti serve</h3>
-              <p>Comunichi categoria, date, numero di persone e zona preferita. Puoi richiedere scooter, auto, e-bike, gommoni, barche o servizi Beach Club.</p>
+              <h3>1. Inserisci date e zona</h3>
+              <p>Ci dici cosa cerchi: categoria, date, numero di persone e zona preferita, per scooter, auto, e-bike, gommoni, barche o servizi Beach Club.</p>
             </article>
             <article className="seo-card">
-              <h3>2. Verifichiamo le opzioni</h3>
-              <p>IschiaMotion controlla disponibilità, requisiti, ritiro, consegna dove prevista e condizioni con i partner locali compatibili.</p>
+              <h3>2. Controlliamo subito le opzioni</h3>
+              <p>Verifichiamo disponibilità, requisiti, ritiro, consegna dove prevista e condizioni con i partner locali compatibili.</p>
             </article>
             <article className="seo-card">
-              <h3>3. Ricevi una conferma chiara</h3>
-              <p>La richiesta non equivale a una prenotazione automatica. La conferma arriva dopo la verifica dell’opzione e delle condizioni applicabili.</p>
+              <h3>3. Ricevi la proposta in pochi minuti</h3>
+              <p>Ti inviamo le soluzioni disponibili per le tue date, con tutti i dettagli utili prima della conferma.</p>
             </article>
           </div>
         </section>

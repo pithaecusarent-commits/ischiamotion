@@ -134,8 +134,8 @@ export function HeroSearch({
           <div className="search-kicker">{locale === "it" ? "Richiesta veloce" : "Quick online request"}</div>
           <div className="search-note">
             {locale === "it"
-              ? "Ricevi disponibilità, prezzo e condizioni prima della conferma"
-              : "Get availability, price and conditions before you confirm"}
+              ? "Una richiesta · risposta in pochi minuti · supporto locale"
+              : "One request · reply within minutes · local support"}
           </div>
         </div>
         <div className="search-grid search-grid-2col">

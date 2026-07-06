@@ -49,7 +49,7 @@ export function VehicleGrid({
           <div className="section-eyebrow">{locale === "it" ? "Noleggio a Ischia tramite partner" : "Rental in Ischia via partners"}</div>
           <h2 className="section-title" dangerouslySetInnerHTML={{ __html: locale === "it" ? "Scooter, auto,<br><em>e-bike e barche</em>" : "Scooters, cars,<br><em>e-bikes and boats</em>" }} />
         </div>
-        <a href="#prenota" className="see-all">{locale === "it" ? "Trova la soluzione giusta →" : "Find the right option →"}</a>
+        <a href="#prenota" className="see-all">{locale === "it" ? "Verifica disponibilità e prezzo →" : "Check availability and price →"}</a>
       </div>
 
       {filtered.length > 0 ? (

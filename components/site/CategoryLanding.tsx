@@ -87,7 +87,7 @@ const landingGuides = {
       ],
       practicalTitle: "Gommoni con o senza patente",
       practicalItems: [
-        ["Patente nautica", "Dipende dal mezzo e dalla motorizzazione. Requisiti, documenti e capienza vengono verificati con il partner."],
+        ["Patente nautica", "Verifichiamo subito i requisiti in base a mezzo e motorizzazione, insieme a documenti e capienza, con il partner locale."],
         ["Gommone o barca", "Il gommone è spesso più agile per costa e calette; la barca può offrire più spazio e comfort, secondo modello."],
         ["Quando valutare un beach club", "Se preferisci servizi a terra, lettini e ombrelloni, un beach club può essere più comodo."]
       ]

@@ -47,8 +47,8 @@ export default function RequestReceivedPage({ searchParams }: Props) {
         <div className="section-eyebrow">Richiesta ricevuta</div>
         <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Grazie, abbiamo ricevuto la tua richiesta.</h1>
         <p className="mt-4 text-ink/70">
-          La disponibilità non è ancora confermata: IschiaMotion verifica date, zona e condizioni con i partner locali selezionati.
-          Ti ricontatteremo con conferma, alternative o prossimi passaggi.
+          Stiamo verificando subito date, zona e condizioni con i partner locali selezionati:
+          ricevi la proposta in pochi minuti negli orari operativi, con disponibilità, prezzo e prossimi passaggi.
         </p>
 
         <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/75 p-5">
@@ -64,7 +64,7 @@ export default function RequestReceivedPage({ searchParams }: Props) {
         </div>
 
         <div className="mt-8 rounded-[28px] border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-ink/75">
-          Questa è una conferma di ricezione, non una conferma definitiva di disponibilità o prezzo finale.
+          Prima della conferma definitiva ricevi il dettaglio completo di disponibilità e prezzo, in pochi minuti negli orari operativi.
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">

@@ -33,11 +33,11 @@ export const scooterFaq = {
   it: [
     {
       question: "Quanto costa noleggiare uno scooter a Ischia?",
-      answer: "Il costo dipende da periodo, durata, cilindrata e disponibilità dei partner locali. Con IschiaMotion invii una richiesta online e ricevi conferma dopo verifica con il partner selezionato."
+      answer: "Il prezzo varia in base a periodo, durata, cilindrata e disponibilità dei partner locali. Invia una richiesta online e ricevi in pochi minuti prezzo e condizioni aggiornati."
     },
     {
       question: "Dove posso ritirare lo scooter?",
-      answer: "Puoi indicare un punto ritiro IschiaMotion o una zona comoda come Ischia Porto, Forio, Casamicciola, Sant’Angelo o Barano. La disponibilità viene confermata dopo verifica con il partner locale."
+      answer: "Puoi indicare un punto ritiro IschiaMotion o una zona comoda come Ischia Porto, Forio, Casamicciola, Sant’Angelo o Barano: controlliamo subito la disponibilità con il partner locale."
     },
     {
       question: "Posso richiedere il noleggio online?",
@@ -53,7 +53,7 @@ export const scooterFaq = {
     },
     {
       question: "Cosa succede dopo la richiesta?",
-      answer: "Ricevi una conferma di ricezione. IschiaMotion verifica disponibilità, date e punto ritiro con i partner locali, poi ti contatta per completare la richiesta."
+      answer: "Verifichiamo subito disponibilità, date e punto ritiro con i partner locali e ti inviamo la proposta in pochi minuti negli orari operativi."
     },
     {
       question: "Lo scooter conviene per muoversi a Ischia?",
@@ -61,11 +61,11 @@ export const scooterFaq = {
     },
     {
       question: "Posso richiedere scooter a Ischia Porto?",
-      answer: "Puoi indicare Ischia Porto come zona preferita. Ritiro, orario e disponibilità vengono verificati con i partner locali prima della conferma."
+      answer: "Puoi indicare Ischia Porto come zona preferita: controlliamo subito ritiro, orario e disponibilità con i partner locali."
     },
     {
       question: "Casco, cauzione e documenti sono inclusi?",
-      answer: "Casco, cauzione, documenti richiesti e condizioni dipendono dal partner e dal mezzo. IschiaMotion li verifica e li comunica prima della conferma finale."
+      answer: "Casco, cauzione e documenti richiesti variano in base a partner e mezzo: te li indichiamo chiaramente nella proposta, prima della conferma finale."
     },
     {
       question: "IschiaMotion è il noleggiatore diretto?",

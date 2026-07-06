@@ -83,8 +83,8 @@ export function VehicleCard({
             {hasPrice ? (
               <p className="vcard-price-note">
                 {locale === "it"
-                  ? "Prezzo indicativo: può variare in base a periodo, durata, disponibilità, categoria del mezzo e condizioni del partner."
-                  : "Indicative price: it may vary by season, duration, availability, vehicle category and partner conditions."}
+                  ? "Invia le date e ricevi in pochi minuti il prezzo aggiornato e le condizioni della soluzione disponibile."
+                  : "Send your dates and get the updated price and conditions within minutes."}
               </p>
             ) : null}
           </div>
