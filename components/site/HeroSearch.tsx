@@ -131,11 +131,11 @@ export function HeroSearch({
     <div className="search-card" id="prenota">
       <div className="search-inner">
         <div className="search-topline">
-          <div className="search-kicker">{locale === "it" ? "Richiesta veloce" : "Quick online request"}</div>
+          <div className="search-kicker">{locale === "it" ? "Verifica disponibilità e prezzo" : "Check availability and price"}</div>
           <div className="search-note">
             {locale === "it"
-              ? "Una richiesta · risposta in pochi minuti · supporto locale"
-              : "One request · reply within minutes · local support"}
+              ? "Indicaci date e zona del soggiorno: verifichiamo subito disponibilità, prezzo e punto di ritiro o consegna."
+              : "Tell us your dates and area of stay: we instantly check availability, price and pickup or delivery point."}
           </div>
         </div>
         <div className="search-grid search-grid-2col">

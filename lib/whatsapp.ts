@@ -59,19 +59,19 @@ export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude
     },
     scooter: (context) => {
       const range = dateRange(context, "[dal]", "[al]");
-      return `Ciao IschiaMotion, vorrei verificare disponibilità per uno scooter a Ischia. Date: ${range.from} - ${range.to}. Soggiorno a ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}. Persone: [1/2].`;
+      return `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per uno scooter a Ischia. Date: ${range.from} - ${range.to}. Soggiorno a ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}. Persone: [1/2].`;
     },
     auto: (context) => {
       const range = dateRange(context, "[dal]", "[al]");
-      return `Ciao IschiaMotion, vorrei verificare disponibilità per un’auto a Ischia. Date: ${range.from} - ${range.to}. Arrivo a ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[porto/hotel]")}. Persone: [numero]. Bagagli: [sì/no].`;
+      return `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per un’auto a Ischia. Date: ${range.from} - ${range.to}. Arrivo a ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[porto/hotel]")}. Persone: [numero]. Bagagli: [sì/no].`;
     },
-    gommone: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità per un gommone a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Patente nautica: [sì/no]. Preferenza: [mezza giornata/giornata intera].`,
+    gommone: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per un gommone a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Patente nautica: [sì/no]. Preferenza: [mezza giornata/giornata intera].`,
     bici: (context) => {
       const range = dateRange(context, "[dal]", "[al]");
-      return `Ciao IschiaMotion, vorrei verificare disponibilità per e-bike a Ischia. Date: ${range.from} - ${range.to}. Soggiorno a ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}. Persone: [numero].`;
+      return `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per e-bike a Ischia. Date: ${range.from} - ${range.to}. Soggiorno a ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}. Persone: [numero].`;
     },
-    barca: (context) => `Ciao IschiaMotion, vorrei una barca con skipper a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Preferenza: [mezza giornata/giornata intera]. Zona o porto di partenza: ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[zona]")}.`,
-    beach_club: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità per un beach club a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Zona preferita: ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/altra zona]")}.`,
+    barca: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per una barca con skipper a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Preferenza: [mezza giornata/giornata intera]. Zona o porto di partenza: ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[zona]")}.`,
+    beach_club: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per un beach club a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Zona preferita: ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/altra zona]")}.`,
     requestReceived: () => "Ciao IschiaMotion, ho appena inviato una richiesta e vorrei aggiungere un dettaglio."
   },
   en: {
@@ -83,19 +83,19 @@ export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude
     },
     scooter: (context) => {
       const range = dateRange(context, "[from]", "[to]");
-      return `Hi IschiaMotion, I would like to check availability for a scooter in Ischia. Dates: ${range.from} - ${range.to}. I am staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}. People: [1/2].`;
+      return `Hi IschiaMotion, I would like to check availability and price for a scooter in Ischia. Dates: ${range.from} - ${range.to}. I am staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}. People: [1/2].`;
     },
     auto: (context) => {
       const range = dateRange(context, "[from]", "[to]");
-      return `Hi IschiaMotion, I would like to check availability for a car in Ischia. Dates: ${range.from} - ${range.to}. Arrival point: ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[port/hotel]")}. People: [number]. Luggage: [yes/no].`;
+      return `Hi IschiaMotion, I would like to check availability and price for a car in Ischia. Dates: ${range.from} - ${range.to}. Arrival point: ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[port/hotel]")}. People: [number]. Luggage: [yes/no].`;
     },
-    gommone: (context) => `Hi IschiaMotion, I would like to check availability for a dinghy in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Boat licence: [yes/no]. Preference: [half day/full day].`,
+    gommone: (context) => `Hi IschiaMotion, I would like to check availability and price for a dinghy in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Boat licence: [yes/no]. Preference: [half day/full day].`,
     bici: (context) => {
       const range = dateRange(context, "[from]", "[to]");
-      return `Hi IschiaMotion, I would like to check availability for e-bikes in Ischia. Dates: ${range.from} - ${range.to}. I am staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}. People: [number].`;
+      return `Hi IschiaMotion, I would like to check availability and price for e-bikes in Ischia. Dates: ${range.from} - ${range.to}. I am staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}. People: [number].`;
     },
-    barca: (context) => `Hi IschiaMotion, I would like a boat with skipper in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Preference: [half day/full day]. Preferred departure area or port: ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[area]")}.`,
-    beach_club: (context) => `Hi IschiaMotion, I would like to check availability for a beach club in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Preferred area: ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/other area]")}.`,
+    barca: (context) => `Hi IschiaMotion, I would like to check availability and price for a boat with skipper in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Preference: [half day/full day]. Preferred departure area or port: ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[area]")}.`,
+    beach_club: (context) => `Hi IschiaMotion, I would like to check availability and price for a beach club in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Preferred area: ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/other area]")}.`,
     requestReceived: () => "Hi IschiaMotion, I have just submitted a request and would like to add a detail."
   }
 };

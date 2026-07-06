@@ -15,7 +15,7 @@ export function WhatsAppCTA({
 }) {
   const type = messageType ?? resolveWhatsAppType(category);
   const href = getWhatsAppUrl(locale, type, { ...context, category });
-  const label = locale === "it" ? "Hai dubbi? Scrivici su WhatsApp" : "Questions? Message us on WhatsApp";
+  const label = locale === "it" ? "Ricevi una risposta rapida su WhatsApp" : "Get a fast reply on WhatsApp";
 
   return (
     <a

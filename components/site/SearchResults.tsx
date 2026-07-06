@@ -70,11 +70,11 @@ export function SearchResults({
   };
   const emptyText = hasZoneFilter
     ? (locale === "it"
-      ? "Nessuna soluzione immediatamente disponibile per questa zona. Inviaci comunque la richiesta: verificheremo eventuali alternative con i nostri partner locali."
-      : "No solution immediately available for this zone. Send us your request anyway: we will check possible alternatives with our local partners.")
+      ? "Verifichiamo subito le soluzioni disponibili per questa zona: invia la richiesta e controlliamo le alternative con i nostri partner locali."
+      : "We're checking the available options for this area right away: send your request and we'll check alternatives with our local partners.")
     : (locale === "it"
-      ? "Al momento non ci sono mezzi disponibili per questa ricerca. Prova a cambiare date o categoria."
-      : "No vehicles are currently available for this search. Try changing dates or category.");
+      ? "Le opzioni vengono controllate in tempo reale con i partner locali. Prova a cambiare date o categoria per vedere altre soluzioni disponibili."
+      : "Options are checked in real time with local partners. Try changing dates or category to see other available options.");
 
   return (
     <>
@@ -82,14 +82,14 @@ export function SearchResults({
         <div className="section-header">
           <div>
             <div className="section-eyebrow">{locale === "it" ? "Risultati ricerca" : "Search results"}</div>
-            <h1 className="section-title">{locale === "it" ? "Opzioni disponibili" : "Available options"}</h1>
+            <h1 className="section-title">{locale === "it" ? "Stiamo cercando la soluzione migliore per te" : "We're finding the best option for you"}</h1>
             <p className="mt-3 text-ink/60">
               {categoryLabels[locale][category]} · {startDate || "-"} / {endDate || "-"}
             </p>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
               {locale === "it"
-                ? "Verifichiamo subito le opzioni disponibili per le tue date e ti inviamo in pochi minuti prezzo e condizioni."
-                : "We check the available options for your dates right away and send you price and conditions within minutes."}
+                ? "Abbiamo ricevuto le tue preferenze. Verifichiamo subito disponibilità, prezzo e condizioni con i partner locali."
+                : "We've received your preferences. We instantly check availability, price and conditions with local partners."}
             </p>
           </div>
           <a href={`/${locale}#prenota`} className="see-all">{locale === "it" ? "Modifica ricerca →" : "Change search →"}</a>
@@ -165,7 +165,7 @@ export function SearchResults({
           </div>
         ) : (
           <div className="rounded-[28px] border border-ink/10 bg-white/75 p-8 text-center shadow-card">
-            <h2 className="font-serif text-3xl font-bold">{locale === "it" ? "Nessun risultato" : "No results"}</h2>
+            <h2 className="font-serif text-3xl font-bold">{locale === "it" ? "Verifichiamo subito le soluzioni disponibili" : "We're checking available options right now"}</h2>
             <p className="mt-3 text-ink/60">{emptyText}</p>
           </div>
         )}

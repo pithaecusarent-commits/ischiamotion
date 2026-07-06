@@ -45,10 +45,10 @@ export default function RequestReceivedPage({ searchParams }: Props) {
     <main className="min-h-screen bg-sand px-5 py-10 text-ink">
       <section className="mx-auto max-w-3xl rounded-[32px] bg-cream p-6 shadow-soft sm:p-10">
         <div className="section-eyebrow">Richiesta ricevuta</div>
-        <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Grazie, abbiamo ricevuto la tua richiesta.</h1>
+        <h1 className="mt-3 font-serif text-4xl font-bold sm:text-5xl">Richiesta ricevuta: la tua proposta è in arrivo.</h1>
         <p className="mt-4 text-ink/70">
-          Stiamo verificando subito date, zona e condizioni con i partner locali selezionati:
-          ricevi la proposta in pochi minuti negli orari operativi, con disponibilità, prezzo e prossimi passaggi.
+          Stiamo controllando disponibilità, prezzo, condizioni e punto di ritiro o consegna per le date indicate.
+          Ti invieremo rapidamente le soluzioni disponibili.
         </p>
 
         <div className="mt-8 rounded-[28px] border border-ink/10 bg-white/75 p-5">
@@ -64,12 +64,17 @@ export default function RequestReceivedPage({ searchParams }: Props) {
         </div>
 
         <div className="mt-8 rounded-[28px] border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-ink/75">
-          Prima della conferma definitiva ricevi il dettaglio completo di disponibilità e prezzo, in pochi minuti negli orari operativi.
+          <div className="font-bold text-ink">Cosa succede ora?</div>
+          <ol className="mt-2 list-decimal space-y-1 pl-5">
+            <li>Verifichiamo subito le opzioni disponibili.</li>
+            <li>Prepariamo una proposta con prezzo e dettagli.</li>
+            <li>Ricevi tutto in pochi minuti via WhatsApp o email.</li>
+          </ol>
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a className="primary-btn justify-center" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-            Hai dubbi? Scrivici su WhatsApp
+            Continua su WhatsApp
           </a>
           <Link className="ghost-btn justify-center" href="/it">
             Torna alla homepage
