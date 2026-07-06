@@ -329,7 +329,7 @@ export function IschiaNoCarGuide({ locale }: { locale: Locale }) {
         <section className="seo-landing-hero guide-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
-            <h1>{c.h1}</h1>
+            <h1 className="seo-landing-title">{c.h1}</h1>
             <p>{c.intro}</p>
             <p>{c.ctaText}</p>
             <div className="hero-actions">
@@ -471,4 +471,3 @@ export function IschiaNoCarGuide({ locale }: { locale: Locale }) {
     </>
   );
 }
-

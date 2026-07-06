@@ -204,7 +204,7 @@ export function GettingAroundLanding({ locale }: { locale: Locale }) {
         <section className="seo-landing-hero guide-hero">
           <div>
             <div className="section-eyebrow">{c.eyebrow}</div>
-            <h1>{c.h1}</h1>
+            <h1 className="seo-landing-title">{c.h1}</h1>
             <p>{c.intro}</p>
             <p>{c.guideLinkBefore}<a href={guideHref}>{c.guideLinkLabel}</a>{c.guideLinkAfter}</p>
             <div className="hero-actions">

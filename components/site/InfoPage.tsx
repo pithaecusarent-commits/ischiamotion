@@ -28,7 +28,7 @@ export function InfoPage({ locale, content }: { locale: Locale; content: InfoPag
         <section className="seo-landing-hero">
           <div>
             <div className="section-eyebrow">{content.eyebrow}</div>
-            <h1>{content.title}</h1>
+            <h1 className="seo-landing-title">{content.title}</h1>
             <p>{content.intro}</p>
           </div>
           <div className="seo-landing-card">

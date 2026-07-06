@@ -130,7 +130,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
         <section className="seo-landing-hero">
           <div>
             <div className="section-eyebrow">{isIt ? "Scooter a Ischia" : "Scooters in Ischia"}</div>
-            <h1>{h1Display}</h1>
+            <h1 className="seo-landing-title">{h1Display}</h1>
             <p>{subtitleDisplay}</p>
             <p>
               {isIt ? "Se vuoi capire quali zone visitare e quando può essere utile uno scooter, leggi la guida su " : "If you want to understand which areas to visit and when a scooter can be useful, read our guide on "}
