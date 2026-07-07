@@ -189,14 +189,14 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       subtitle: "Vivi il mare in libertà: indicaci data e preferenze, verifichiamo rapidamente le imbarcazioni disponibili.",
       microcopy: "Ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni.",
       cardTitle: "Costa e calette",
-      cardText: "Per le categorie nautiche il ritiro avviene presso IschiaMotion Point o punto definito, non con consegna in hotel.",
+      cardText: "Per le categorie nautiche il ritiro avviene presso un punto nautico partner o un punto definito, non con consegna in hotel.",
       primaryCta: "Verifica gommoni disponibili",
       categoryParam: "gommone",
       howTitle: "Verifichiamo subito la disponibilità per le tue date",
       benefits: [
         ["Costa più vicina", "Il gommone è una soluzione agile per calette, tratti panoramici e giornate in mare intorno all'isola."],
         ["Meteo e mare controllati", "Disponibilità e uscita dipendono da mare, vento, periodo e condizioni operative del partner: verifichiamo tutto in pochi minuti."],
-        ["Punto ritiro definito", "Per gommoni e nautica si usa un punto concordato o IschiaMotion Point."],
+        ["Punto ritiro definito", "Per gommoni e nautica si usa un punto concordato o un punto nautico partner."],
         ["Partner scelti con cura", "La richiesta viene controllata con operatori locali selezionati per affidabilità e conoscenza della costa."]
       ],
       zonesText: "Per un gommone contano soprattutto punto nautico, costa da raggiungere e rientro. Ischia Porto e Casamicciola sono pratici per chi arriva sull'isola; Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a orientare calette e tratti panoramici. Citara e Maronti sono riferimenti utili per immaginare la giornata in mare, mentre la partenza resta legata ai punti definiti dai partner.",
@@ -212,11 +212,11 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       faqs: [
         { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e modalità di ritiro prima di scegliere." },
         { question: "Gommone e barca sono la stessa cosa?", answer: "No. Su IschiaMotion sono categorie separate: il gommone ha caratteristiche, disponibilità e condizioni diverse dalla barca." },
-        { question: "Posso ricevere il gommone in hotel?", answer: "No. Per categorie nautiche il ritiro è presso punto definito o IschiaMotion Point, secondo indicazioni del partner." },
+        { question: "Posso ricevere il gommone in hotel?", answer: "No. Per categorie nautiche il ritiro è presso punto definito o un punto nautico partner, secondo indicazioni del partner." },
         { question: "La disponibilità dipende dal meteo?", answer: "Sì. Mare, vento e condizioni operative possono incidere sulla conferma finale." },
         { question: "Serve patente nautica?", answer: "Verifichiamo subito i requisiti in base al mezzo scelto e te li indichiamo chiaramente nella proposta, prima della conferma." },
         { question: "Noleggio gommone Ischia prezzi: da cosa dipendono?", answer: "I prezzi per il noleggio di un gommone a Ischia variano in base a periodo, durata, modello, porto di partenza, presenza di skipper e disponibilità. Invii una richiesta e ricevi una proposta aggiornata in pochi minuti negli orari operativi." },
-        { question: "Da dove si ritira un gommone a Ischia?", answer: "Il punto viene indicato dopo verifica con il partner: può essere un punto nautico definito o IschiaMotion Point, non una consegna in hotel." },
+        { question: "Da dove si ritira un gommone a Ischia?", answer: "Il punto viene indicato dopo verifica con il partner: può essere un punto nautico definito o un punto nautico partner, non una consegna in hotel." },
         { question: "Posso indicare una zona di partenza preferita?", answer: "Sì. Puoi indicare Ischia Porto, Forio, Lacco Ameno, Sant'Angelo o un'altra zona utile: verifichiamo subito la fattibilità con i nostri partner locali." },
         { question: "Cosa succede se il mare non è adatto?", answer: "La sicurezza e le condizioni operative prevalgono. Il partner può modificare o non confermare l'uscita in base al meteo-mare." }
       ],
@@ -245,7 +245,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       benefits: [
         ["Esperienza su misura", "La richiesta viene abbinata in pochi minuti a opzioni compatibili con periodo, disponibilità e tipo di giornata in mare."],
         ["Condizioni chiare", "Requisiti, documenti, meteo e condizioni finali arrivano rapidamente, prima della conferma."],
-        ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o IschiaMotion Point, non in hotel."]
+        ["Punti nautici definiti", "Il ritiro per barche avviene presso punto indicato o un punto nautico partner, non in hotel."]
       ],
       zonesText: "Le barche sono legate ai punti nautici disponibili più che alla consegna in hotel. Ischia Porto è uno dei punti più richiesti per organizzare il noleggio di barche e uscite in mare: verifichiamo subito disponibilità, punto di imbarco e condizioni con i nostri partner. Casamicciola, Forio, Lacco Ameno, San Montano e Sant'Angelo aiutano a definire costa e calette da raggiungere. Per chi cerca affitto barca a Ischia, indichiamo il punto di partenza in pochi minuti in base a disponibilità e organizzazione del partner.",
       inspirationTitle: "Vivere Ischia dal mare",
@@ -261,7 +261,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e punto di partenza prima di scegliere." },
         { question: "La barca è una prenotazione immediata?", answer: "Verifichiamo subito disponibilità, requisiti e condizioni con i nostri partner e ti rispondiamo in pochi minuti negli orari operativi." },
         { question: "Posso noleggiare barche senza patente?", answer: "Verifichiamo subito i requisiti in base al mezzo scelto e te li indichiamo chiaramente nella proposta, prima della conferma." },
-        { question: "Il ritiro può avvenire in hotel?", answer: "No. Per le categorie nautiche il ritiro avviene presso punto definito o IschiaMotion Point." },
+        { question: "Il ritiro può avvenire in hotel?", answer: "No. Per le categorie nautiche il ritiro avviene presso punto definito o un punto nautico partner." },
         { question: "Il meteo può bloccare l'uscita?", answer: "Sì. Condizioni meteo-marine e operative sono parte della verifica." },
         { question: "Quanto costa noleggiare una barca a Ischia?", answer: "Il prezzo varia per date, durata, modello, disponibilità e condizioni partner." },
         { question: "Che differenza c'è tra barca e gommone?", answer: "La barca può offrire più comfort e spazio; il gommone è spesso più agile ed essenziale. La scelta dipende da gruppo, rotta e disponibilità." },
@@ -437,14 +437,14 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       subtitle: "Enjoy the sea with more freedom: share your date and preferences, and we will quickly check available boats.",
       microcopy: "We reply within minutes with availability, price and conditions.",
       cardTitle: "Coast and coves",
-      cardText: "For nautical categories, pickup is at an IschiaMotion Point or defined point, not hotel delivery.",
+      cardText: "For nautical categories, pickup is at a partner nautical point or defined point, not hotel delivery.",
       primaryCta: "Check available rubber dinghies",
       categoryParam: "gommone",
       howTitle: "We check availability for your dates right away",
       benefits: [
         ["Close to the coast", "A rubber dinghy or RIB is an agile choice for coves, scenic coastline and relaxed sea days around the island."],
         ["Weather and sea review", "Availability may depend on sea, wind, season and partner operating rules — we check it all within minutes."],
-        ["Defined pickup point", "Rubber dinghies and nautical services use an agreed point or IschiaMotion Point."],
+        ["Defined pickup point", "Rubber dinghies and nautical services use an agreed point or a partner nautical point."],
         ["Carefully selected partners", "We review the request with local operators selected for reliability and knowledge of the coast."]
       ],
       zonesText: "For a rubber dinghy or RIB, the nautical pickup point matters more than hotel location. Ischia Port and Casamicciola are useful for arrivals; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coves and scenic coast. Citara and Maronti can shape the idea of the day at sea, while departure remains tied to partner-defined nautical points.",
@@ -460,11 +460,11 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       faqs: [
         { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and pickup details before you choose." },
         { question: "Is a rubber dinghy the same as a boat?", answer: "No. On IschiaMotion they are separate categories with different availability and conditions." },
-        { question: "Can it be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or IschiaMotion Point." },
+        { question: "Can it be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or a partner nautical point." },
         { question: "Does weather affect availability?", answer: "Yes. Sea, wind and operational conditions can affect final confirmation." },
         { question: "Do I need a boating license?", answer: "It depends on the vehicle and partner conditions. Requirements and documents are reviewed before confirmation." },
         { question: "How much does rubber dinghy rental in Ischia cost?", answer: "Price varies by season, length, category and availability. Send a request and get an updated proposal within minutes during operating hours." },
-        { question: "Where do I pick up a rubber dinghy in Ischia?", answer: "The point is shared after partner review: it may be a defined nautical point or IschiaMotion Point, not hotel delivery." },
+        { question: "Where do I pick up a rubber dinghy in Ischia?", answer: "The point is shared after partner review: it may be a defined nautical point or a partner nautical point, not hotel delivery." },
         { question: "Can I request a preferred departure area?", answer: "Yes. You can mention Ischia Port, Forio, Lacco Ameno, Sant'Angelo or another useful area — we check feasibility with our partners right away." },
         { question: "What happens if sea conditions are not suitable?", answer: "Safety and operating conditions come first. The partner may adjust or not confirm the trip depending on marine weather." }
       ],
@@ -493,7 +493,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       benefits: [
         ["Matched options", "We match your request within minutes with suitable local partners and boats compatible with season and availability."],
         ["Clear conditions", "Requirements, documents, weather and final conditions arrive quickly, before confirmation."],
-        ["Defined nautical points", "Boat pickup is at an indicated point or IschiaMotion Point, not hotel delivery."]
+        ["Defined nautical points", "Boat pickup is at an indicated point or a partner nautical point, not hotel delivery."]
       ],
       zonesText: "Boat rental depends on nautical points rather than hotel delivery. Ischia Port and Casamicciola are convenient for arrivals and departures; Forio, Lacco Ameno, San Montano and Sant'Angelo help define coastal areas and coves. Citara and Maronti can shape the itinerary idea, while departure remains subject to the partner's confirmed point.",
       inspirationTitle: "Experience Ischia from the sea",
@@ -509,7 +509,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and departure point before you choose." },
         { question: "Is boat rental instantly confirmed?", answer: "We check availability, requirements and conditions with our partners right away and reply within minutes during operating hours." },
         { question: "Can I rent without a license?", answer: "It depends on the boat and partner conditions. Requirements and documents are reviewed before confirmation." },
-        { question: "Can the boat be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or IschiaMotion Point." },
+        { question: "Can the boat be delivered to a hotel?", answer: "No. Nautical categories use a defined pickup point or a partner nautical point." },
         { question: "Can weather stop the trip?", answer: "Yes. Marine weather and operational conditions are part of the review." },
         { question: "How much does boat rental in Ischia cost?", answer: "Price varies by dates, duration, model, availability and partner conditions." },
         { question: "What is the difference between boat and rubber dinghy?", answer: "A boat may offer more comfort and space; a rubber dinghy is often more essential and agile. It depends on group, route and availability." },

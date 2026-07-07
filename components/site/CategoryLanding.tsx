@@ -81,7 +81,7 @@ const landingGuides = {
     gommone: {
       pickupTitle: "Meteo, requisiti e punti nautici",
       pickupItems: [
-        ["Punto definito", "Per i gommoni non è prevista consegna in hotel: il ritiro avviene presso punto nautico indicato o IschiaMotion Point, secondo partner."],
+        ["Punto definito", "Per i gommoni non è prevista consegna in hotel: il ritiro avviene presso punto nautico indicato o un punto nautico partner, secondo partner."],
         ["Costa e calette", "Ischia Porto, Casamicciola, Forio, Lacco Ameno e Sant'Angelo possono essere riferimenti utili per scegliere zona di partenza e rientro."],
         ["Meteo e mare", "Vento, mare e condizioni operative possono cambiare la disponibilità anche dopo la richiesta iniziale."]
       ],
@@ -95,7 +95,7 @@ const landingGuides = {
     barca: {
       pickupTitle: "Ritiro barche e aree di partenza",
       pickupItems: [
-        ["Punto nautico", "Il ritiro barca avviene presso un punto definito o IschiaMotion Point. Per le categorie nautiche non si parla di consegna in hotel."],
+        ["Punto nautico", "Il ritiro barca avviene presso un punto definito o un punto nautico partner. Per le categorie nautiche non si parla di consegna in hotel."],
         ["Costa dell'isola", "Ischia Porto, Casamicciola, Forio, Lacco Ameno e Sant'Angelo aiutano a orientare partenza, tratte e tempi: verifichiamo subito la disponibilità con i partner."],
         ["Condizioni marine", "Meteo, vento, orari e regole operative vengono controllati subito e comunicati nella proposta, prima della conferma."]
       ],
@@ -154,7 +154,7 @@ const landingGuides = {
     gommone: {
       pickupTitle: "Weather, requirements and nautical points",
       pickupItems: [
-        ["Defined point", "Rubber dinghies are not delivered to hotels: pickup is at an indicated nautical point or IschiaMotion Point, depending on partner."],
+        ["Defined point", "Rubber dinghies are not delivered to hotels: pickup is at an indicated nautical point or a partner nautical point, depending on partner."],
         ["Coast and coves", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help choose departure and return areas."],
         ["Weather and sea", "Wind, sea state and operational conditions can affect availability even after the first request."]
       ],
@@ -168,7 +168,7 @@ const landingGuides = {
     barca: {
       pickupTitle: "Marine conditions, requirements and nautical points",
       pickupItems: [
-        ["Nautical point", "Boat pickup is at a defined point or IschiaMotion Point. Nautical categories do not use hotel delivery."],
+        ["Nautical point", "Boat pickup is at a defined point or a partner nautical point. Nautical categories do not use hotel delivery."],
         ["Island coast", "Ischia Port, Casamicciola, Forio, Lacco Ameno and Sant'Angelo help plan departure, route and timing: we check availability with partners right away."],
         ["Marine conditions", "Weather, wind, timing and operating rules are checked right away and shared in your proposal, before confirmation."]
       ],

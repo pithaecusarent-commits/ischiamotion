@@ -51,8 +51,8 @@ export function PickupPointsSection({
         </div>
         <p>
           {locale === "it"
-            ? "Organizziamo ritiro o consegna nella zona più comoda per il tuo soggiorno, secondo disponibilità: indicaci porto, hotel o località e verifichiamo subito la soluzione più pratica."
-            : "We organize pickup or delivery in the most convenient area for your stay, based on availability: tell us the port, hotel or area and we'll check the most practical option right away."}
+            ? "Organizziamo ritiro o consegna nella zona più comoda per il tuo soggiorno, secondo disponibilità: indicaci porto, hotel o località e verifichiamo subito la soluzione più pratica. Gli IschiaMotion Point sono punti fisici dei partner locali selezionati: dopo la verifica della disponibilità ti confermiamo il punto più comodo per il ritiro o l'imbarco."
+            : "We organize pickup or delivery in the most convenient area for your stay, based on availability: tell us the port, hotel or area and we'll check the most practical option right away. IschiaMotion Points are physical locations operated by selected local partners: after checking availability, we confirm the most convenient pickup or boarding point."}
         </p>
       </div>
 

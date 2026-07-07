@@ -8,20 +8,20 @@ import { getSearchMode } from "@/lib/vehicle-categories";
 
 const deliveryLabels: Record<Locale, Record<BookingDeliveryMethod, string>> = {
   it: {
-    pickup_point: "Ritiro presso IschiaMotion Point",
+    pickup_point: "Ritiro presso IschiaMotion Point partner",
     port_delivery: "Consegna al porto",
     hotel_delivery: "Consegna in hotel"
   },
   en: {
-    pickup_point: "Pickup at IschiaMotion Point",
+    pickup_point: "Pickup at an IschiaMotion partner point",
     port_delivery: "Port delivery",
     hotel_delivery: "Hotel delivery"
   }
 };
 
 const zoneLabels: Record<Locale, { pickup: string; hotel: string; placeholder: string }> = {
-  it: { pickup: "Comune IschiaMotion Point", hotel: "Comune hotel", placeholder: "-- Seleziona zona --" },
-  en: { pickup: "IschiaMotion Point municipality", hotel: "Hotel municipality", placeholder: "-- Select zone --" }
+  it: { pickup: "Zona dell'IschiaMotion Point", hotel: "Comune hotel", placeholder: "-- Seleziona zona --" },
+  en: { pickup: "IschiaMotion partner point area", hotel: "Hotel municipality", placeholder: "-- Select zone --" }
 };
 
 const secondFieldLabels: Record<Locale, { standard: string; nautical: string; beach_club: string }> = {

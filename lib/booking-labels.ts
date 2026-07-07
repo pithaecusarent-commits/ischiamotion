@@ -11,12 +11,12 @@ export { portLabels, municipalityLabels };
 
 export const deliveryMethodLabels: Record<Locale, Record<BookingDeliveryMethod, string>> = {
   it: {
-    pickup_point: "Ritiro presso IschiaMotion Point",
+    pickup_point: "Ritiro presso IschiaMotion Point partner",
     port_delivery: "Consegna al porto",
     hotel_delivery: "Consegna in hotel"
   },
   en: {
-    pickup_point: "Pickup at IschiaMotion Point",
+    pickup_point: "Pickup at an IschiaMotion partner point",
     port_delivery: "Port delivery",
     hotel_delivery: "Hotel delivery"
   }

@@ -57,7 +57,7 @@ export function VehicleCard({
           // eslint-disable-next-line @next/next/no-img-element
           <img src={vehicle.image_url} alt={title} loading="lazy" decoding="async" />
         ) : (
-          <span>{vehicle.emoji}</span>
+          <span aria-hidden="true">{vehicle.emoji}</span>
         )}
         <span className="avail">{locale === "it" ? "Su richiesta" : "On request"}</span>
       </div>
@@ -65,7 +65,7 @@ export function VehicleCard({
         <div className="vcard-type">{typeLabels[vehicle.category]}</div>
         <div className="vcard-name">{title}</div>
         {description ? <p className="vcard-description">{description}</p> : null}
-        <div className="vcard-loc">📍 {location}</div>
+        <div className="vcard-loc"><span aria-hidden="true">📍</span> {location}</div>
         <div className="vcard-features">
           {features.map((feature) => <span className="feature" key={feature}>{feature}</span>)}
         </div>

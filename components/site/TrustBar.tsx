@@ -8,7 +8,7 @@ export function TrustBar({ locale }: { locale: Locale }) {
     <div className="trust-bar reveal">
       {copy.trust.map(([value, label]) => (
         <div className="trust-item" key={label}>
-          <div className="trust-val">{value}</div>
+          <div className="trust-val" aria-hidden="true">{value}</div>
           <div className="trust-label">{label}</div>
         </div>
       ))}

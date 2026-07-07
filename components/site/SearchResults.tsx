@@ -124,13 +124,13 @@ export function SearchResults({
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={vehicle.image_url} alt={title} />
                     ) : (
-                      <span>{vehicle.emoji}</span>
+                      <span aria-hidden="true">{vehicle.emoji}</span>
                     )}
                   </div>
                   <div className="result-body">
                     <div className="vcard-type">{categoryLabels[locale][vehicle.category]}</div>
                     <h2>{title}</h2>
-                    <p className="vcard-loc">📍 {location}</p>
+                    <p className="vcard-loc"><span aria-hidden="true">📍</span> {location}</p>
                     <div className="vcard-features">
                       {features.slice(0, 3).map((feature) => <span className="feature" key={feature}>{feature}</span>)}
                     </div>
