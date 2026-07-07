@@ -29,8 +29,8 @@ const copy = {
 
 function Stars({ label }: { label: string }) {
   return (
-    <span className="review-stars" aria-label={`${label}: 5/5`}>
-      <span aria-hidden="true">★★★★★</span>
+    <span className="review-stars" role="img" aria-label={`${label}: 5/5`}>
+      ★★★★★
     </span>
   );
 }
