@@ -22,7 +22,7 @@ export function ManageCookiesButton({ locale }: { locale: Locale }) {
         justifyContent: "center",
       }}
     >
-      {locale === "it" ? "Gestisci cookie" : "Manage cookies"}
+      {locale === "it" ? "Preferenze cookie" : "Cookie preferences"}
     </button>
   );
 }
