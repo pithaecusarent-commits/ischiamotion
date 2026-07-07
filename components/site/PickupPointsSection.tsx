@@ -1,7 +1,8 @@
 import type { Locale, PublicPickupPoint } from "@/lib/types";
 import { IschiaPickupMap } from "./IschiaPickupMap";
 
-const preferredZones = ["Ischia Porto", "Casamicciola", "Lacco Ameno", "Forio", "Sant'Angelo", "Barano"];
+const publicPickupZones = ["Ischia Porto", "Casamicciola", "Lacco Ameno", "Forio"];
+const preferredZones = publicPickupZones;
 
 function sortPickupPoints(points: PublicPickupPoint[]) {
   return [...points].sort((a, b) => {
@@ -23,6 +24,29 @@ function formatPickupLabel(label: string) {
     .replace("Sant'Angelo", "Sant’Angelo");
 }
 
+function formatPickupTitle(point: PublicPickupPoint, locale: Locale) {
+  const titles: Record<string, Record<Locale, string>> = {
+    "Ischia Porto": {
+      it: "Point Porto d’Ischia",
+      en: "Ischia Port Point"
+    },
+    Casamicciola: {
+      it: "Point Casamicciola",
+      en: "Casamicciola Point"
+    },
+    "Lacco Ameno": {
+      it: "Point Lacco Ameno",
+      en: "Lacco Ameno Point"
+    },
+    Forio: {
+      it: "Point Forio",
+      en: "Forio Point"
+    }
+  };
+
+  return titles[point.zone]?.[locale] ?? formatPickupLabel(locale === "it" ? point.public_label_it : point.public_label_en);
+}
+
 export function PickupPointsSection({
   locale,
   pickupPoints
@@ -30,50 +54,52 @@ export function PickupPointsSection({
   locale: Locale;
   pickupPoints: PublicPickupPoint[];
 }) {
-  const points = sortPickupPoints(pickupPoints);
+  const points = sortPickupPoints(pickupPoints.filter((point) => publicPickupZones.includes(point.zone)));
 
   return (
-    <section className="pickup-section reveal" aria-label={locale === "it" ? "Punti ritiro IschiaMotion" : "IschiaMotion Pickup Points"}>
+    <section className="pickup-section reveal" aria-label={locale === "it" ? "Zone ritiro e consegna IschiaMotion" : "IschiaMotion pickup and delivery areas"}>
       <div className="pickup-section-header">
         <div>
-          <div className="section-eyebrow">{locale === "it" ? "Punti ritiro" : "Pickup points"}</div>
+          <div className="section-eyebrow">{locale === "it" ? "Ritiro e consegna" : "Pickup and delivery"}</div>
           <h2 className="section-title">
             {locale === "it" ? (
               <>
-                Punti ritiro <span className="brand-title-accent">IschiaMotion</span>
+                Zone e punti di ritiro <span className="brand-title-accent">IschiaMotion Point</span>
               </>
             ) : (
               <>
-                <span className="brand-title-accent">IschiaMotion</span> Pickup Points
+                <span className="brand-title-accent">IschiaMotion Points</span> and delivery areas
               </>
             )}
           </h2>
         </div>
-        <p>
-          {locale === "it"
-            ? "Organizziamo ritiro o consegna nella zona più comoda per il tuo soggiorno, secondo disponibilità: indicaci porto, hotel o località e verifichiamo subito la soluzione più pratica. Gli IschiaMotion Point sono punti fisici dei partner locali selezionati: dopo la verifica della disponibilità ti confermiamo il punto più comodo per il ritiro o l'imbarco."
-            : "We organize pickup or delivery in the most convenient area for your stay, based on availability: tell us the port, hotel or area and we'll check the most practical option right away. IschiaMotion Points are physical locations operated by selected local partners: after checking availability, we confirm the most convenient pickup or boarding point."}
-        </p>
       </div>
 
       <div className="pickup-section-body">
         <IschiaPickupMap points={points.slice(0, 6)} />
 
-        <div className="pickup-list">
-          {points.map((point, index) => {
-            const label = locale === "it" ? point.public_label_it : point.public_label_en;
-            const description = locale === "it" ? point.description_it : point.description_en;
+        <div className="pickup-content">
+          <div className="pickup-list">
+            {points.map((point, index) => {
+              const description = locale === "it" ? point.description_it : point.description_en;
 
-            return (
-              <article className="pickup-point-card" key={point.id}>
-                <span className="pickup-index">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{formatPickupLabel(label)}</h3>
-                  <p>{description || point.zone}</p>
-                </div>
-              </article>
-            );
-          })}
+              return (
+                <article className="pickup-point-card" key={point.id}>
+                  <span className="pickup-index">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3>{formatPickupTitle(point, locale)}</h3>
+                    <p>{description || point.zone}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <p className="pickup-note">
+            {locale === "it"
+              ? "Puoi scegliere uno dei 4 IschiaMotion Point per il ritiro. Se preferisci la consegna, indicaci hotel o indirizzo: la verifichiamo con il partner locale in tutta l’isola, secondo disponibilità e condizioni."
+              : "Choose one of the 4 IschiaMotion Points for pickup. If you prefer delivery, tell us your hotel or address: we check island-wide delivery with the local partner, subject to availability and conditions."}
+          </p>
         </div>
       </div>
     </section>
