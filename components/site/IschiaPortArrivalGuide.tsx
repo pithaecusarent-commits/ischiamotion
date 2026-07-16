@@ -103,7 +103,7 @@ const content: Record<Locale, Content> = {
       {
         title: "Scooter",
         text: "Può essere una soluzione da valutare per coppie o viaggiatori leggeri che desiderano autonomia durante il soggiorno.",
-        links: [["Noleggio scooter Ischia", "/it/noleggio-scooter-ischia"]]
+        links: [["Noleggio scooter Ischia Porto", "/it/noleggio-scooter-ischia-porto"]]
       },
       {
         title: "Auto",

@@ -36,6 +36,8 @@ export function SiteHome({
   const [deliveryMethod, setDeliveryMethod] = useState<BookingDeliveryMethod>("pickup_point");
 
   useEffect(() => {
+    document.documentElement.classList.add("reveal-observer-ready");
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -46,7 +48,10 @@ export function SiteHome({
     }, { threshold: 0.12 });
 
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("reveal-observer-ready");
+    };
   }, []);
 
   return (
@@ -88,6 +93,8 @@ export function SiteHome({
                 <a href="/it/noleggio-auto-ischia">noleggio auto a Ischia</a>, il{" "}
                 <a href="/it/noleggio-bici-elettriche-ischia">noleggio e-bike a Ischia</a> e le opzioni per{" "}
                 <a href="/it/noleggio-gommoni-ischia">gommoni</a> o <a href="/it/noleggio-barche-ischia">barche</a>.
+                Se arrivi al porto puoi consultare anche il <a href="/it/noleggio-scooter-ischia-porto">noleggio scooter a Ischia Porto</a>;
+                per esigenze specifiche, verifica le opzioni di <a href="/it/noleggio-auto-ischia-senza-carta-di-credito">auto senza carta di credito</a>.
               </p>
             </>
           ) : (
@@ -99,6 +106,10 @@ export function SiteHome({
               <p>
                 IschiaMotion collects your request and checks availability, conditions and confirmation with selected local partners on
                 the island. This makes local mobility and marine-service requests clearer and simpler.
+              </p>
+              <p>
+                Planning a car-free stay? Start with our guide to <a href="/en/where-to-stay-in-ischia-without-a-car">where to stay in Ischia without a car</a>,
+                then compare scooter, car and e-bike options for your area.
               </p>
             </>
           )}

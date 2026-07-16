@@ -209,6 +209,7 @@ const content: Record<Locale, PageContent> = {
     categoryLinks: [
       ["IschiaMotion home", "/en"],
       ["Check availability", "/en/results"],
+      ["Where to stay without a car", "/en/where-to-stay-in-ischia-without-a-car"],
       ["Scooter rental Ischia", "/en/scooter-rental-ischia"],
       ["Car rental Ischia", "/en/car-rental-ischia"],
       ["E-bike rental Ischia", "/en/e-bike-rental-ischia"],

@@ -280,7 +280,7 @@ const content: Record<Locale, Content> = {
       ["Forio", "Worth considering if you're after beaches and west-coast life."],
       ["Sant'Angelo and Barano", "For those seeking a quieter stay, while planning journeys to other areas a little more carefully."]
     ],
-    stayLink: ["Where to stay in Ischia", "/en/where-to-stay-in-ischia"],
+    stayLink: ["Where to stay in Ischia without a car", "/en/where-to-stay-in-ischia-without-a-car"],
     tableEyebrow: "Quick comparison",
     tableTitle: "Which Transport Option Fits Your Trip?",
     tableHeaders: ["Type of trip", "Option to consider", "Why"],

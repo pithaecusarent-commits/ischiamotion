@@ -47,7 +47,9 @@ const content = {
 const categoryLinks = {
   it: [
     ["Noleggio scooter Ischia", "/it/noleggio-scooter-ischia"],
+    ["Scooter Ischia Porto", "/it/noleggio-scooter-ischia-porto"],
     ["Noleggio auto Ischia", "/it/noleggio-auto-ischia"],
+    ["Auto senza carta di credito", "/it/noleggio-auto-ischia-senza-carta-di-credito"],
     ["Noleggio bici elettriche Ischia", "/it/noleggio-bici-elettriche-ischia"],
     ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
     ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
@@ -55,6 +57,7 @@ const categoryLinks = {
     ["Cosa vedere a Ischia senza auto", "/it/cosa-vedere-a-ischia-senza-auto"]
   ],
   en: [
+    ["Where to stay without a car", "/en/where-to-stay-in-ischia-without-a-car"],
     ["Scooter rental Ischia", "/en/scooter-rental-ischia"],
     ["Car rental Ischia", "/en/car-rental-ischia"],
     ["E-bike rental Ischia", "/en/e-bike-rental-ischia"],
