@@ -44,7 +44,7 @@ export type CategoryLandingContent = {
 
 const commonIt = {
   primaryCta: "Verifica disponibilità e prezzo",
-  secondaryCta: "Ricevi disponibilità su WhatsApp",
+  secondaryCta: "Chiedi un consiglio su WhatsApp",
   benefitsTitle: "Perché usare IschiaMotion",
   zonesTitle: "Zone servite a Ischia",
   howTitle: "Come funziona",
@@ -58,7 +58,7 @@ const commonIt = {
 
 const commonEn = {
   primaryCta: "Check availability and price",
-  secondaryCta: "Get availability on WhatsApp",
+  secondaryCta: "Ask for advice on WhatsApp",
   benefitsTitle: "Why use IschiaMotion",
   zonesTitle: "Areas in Ischia",
   howTitle: "How it works",

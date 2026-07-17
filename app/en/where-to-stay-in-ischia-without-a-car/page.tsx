@@ -101,7 +101,7 @@ export const metadata: Metadata = {
 };
 
 export default function WhereToStayInIschiaWithoutACarPage() {
-  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi IschiaMotion, I am planning Ischia without a car and would like advice on where to stay and which transport option makes sense.")}`;
+  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi IschiaMotion, I’d like some advice to choose the best option for my stay in Ischia.\n\nI arrive on [date], I’m staying in [area/hotel], and I’m considering [scooter/car/e-bike/rubber boat/boat/beach club].\n\nCan you help me understand the most convenient solution based on my plans?")}`;
 
   return (
     <>
@@ -121,7 +121,7 @@ export default function WhereToStayInIschiaWithoutACarPage() {
             <p>This guide compares the main areas and explains when walking, buses or taxis may be enough — and when a scooter, e-bike or car can make the island easier.</p>
             <div className="hero-actions">
               <a href="/en/scooter-rental-ischia" className="primary-btn">Check scooter options</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Ask for advice on WhatsApp</a>
             </div>
           </div>
           <div className="seo-landing-card">
@@ -207,7 +207,7 @@ export default function WhereToStayInIschiaWithoutACarPage() {
             <p>Tell us where you are staying, your dates and how you want to move around. We check available options with selected local partners.</p>
             <div className="hero-actions">
               <a href="/en/results" className="primary-btn">Check availability</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Ask for advice on WhatsApp</a>
             </div>
           </div>
         </section>

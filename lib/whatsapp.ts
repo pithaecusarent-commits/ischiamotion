@@ -30,7 +30,7 @@ const categoryLabels: Record<Locale, Record<Exclude<VehicleFilter, "all">, strin
     scooter: "scooter",
     auto: "car",
     bici: "e-bike",
-    gommone: "dinghy",
+    gommone: "rubber boat",
     barca: "boat",
     beach_club: "beach club"
   }
@@ -55,47 +55,131 @@ export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude
       const category = categoryLabel("it", context?.category, "[scooter/auto/e-bike/gommone/barca/beach club]");
       const date = valueOrPlaceholder(context?.date || context?.startDate, "[data]");
       const area = valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]");
-      return `Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta al mio soggiorno a Ischia. Arrivo il ${date}, soggiorno a ${area} e sto valutando ${category}.`;
+      return [
+        "Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta al mio soggiorno a Ischia.",
+        "",
+        `Arrivo il ${date}, soggiorno in zona ${area} e sto valutando ${category}.`,
+        "",
+        "Potete aiutarmi a capire la soluzione migliore in base ai miei spostamenti?"
+      ].join("\n");
     },
     scooter: (context) => {
       const range = dateRange(context, "[dal]", "[al]");
-      return `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per uno scooter a Ischia. Date: ${range.from} - ${range.to}. Soggiorno a ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}. Persone: [1/2].`;
+      return [
+        "Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più comoda per muovermi a Ischia.",
+        "",
+        `Arrivo/soggiorno dal ${range.from} al ${range.to}, in zona ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}, e sto valutando uno scooter.`,
+        "",
+        "Potete aiutarmi a capire se è la scelta migliore in base ai miei spostamenti?"
+      ].join("\n");
     },
     auto: (context) => {
       const range = dateRange(context, "[dal]", "[al]");
-      return `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per un’auto a Ischia. Date: ${range.from} - ${range.to}. Arrivo a ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[porto/hotel]")}. Persone: [numero]. Bagagli: [sì/no].`;
+      return [
+        "Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta al mio soggiorno a Ischia.",
+        "",
+        `Arrivo/soggiorno dal ${range.from} al ${range.to}, arrivo o soggiorno in zona ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[porto/hotel]")}, e sto valutando un’auto.`,
+        "",
+        "Potete aiutarmi a capire la soluzione più comoda in base a persone, bagagli e spostamenti?"
+      ].join("\n");
     },
-    gommone: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per un gommone a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Patente nautica: [sì/no]. Preferenza: [mezza giornata/giornata intera].`,
+    gommone: (context) => [
+      "Ciao IschiaMotion, vorrei un consiglio per organizzare una giornata in mare a Ischia.",
+      "",
+      `Data indicativa: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Sto valutando un gommone, con patente nautica: [sì/no].`,
+      "",
+      "Potete aiutarmi a capire la soluzione più adatta tra mezza giornata e giornata intera?"
+    ].join("\n"),
     bici: (context) => {
       const range = dateRange(context, "[dal]", "[al]");
-      return `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per e-bike a Ischia. Date: ${range.from} - ${range.to}. Soggiorno a ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}. Persone: [numero].`;
+      return [
+        "Ciao IschiaMotion, vorrei un consiglio per muovermi a Ischia in modo pratico e panoramico.",
+        "",
+        `Arrivo/soggiorno dal ${range.from} al ${range.to}, in zona ${valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]")}, e sto valutando e-bike per [numero] persone.`,
+        "",
+        "Potete aiutarmi a capire se è una buona soluzione per il mio itinerario?"
+      ].join("\n");
     },
-    barca: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per una barca con skipper a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Preferenza: [mezza giornata/giornata intera]. Zona o porto di partenza: ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[zona]")}.`,
-    beach_club: (context) => `Ciao IschiaMotion, vorrei verificare disponibilità e prezzo per un beach club a Ischia. Data: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Zona preferita: ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/altra zona]")}.`,
+    barca: (context) => [
+      "Ciao IschiaMotion, vorrei un consiglio per organizzare un’esperienza in barca a Ischia.",
+      "",
+      `Data indicativa: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Sto valutando una barca con skipper, partendo da ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[zona/porto]")}.`,
+      "",
+      "Potete aiutarmi a capire la soluzione più adatta tra tour, durata e itinerario?"
+    ].join("\n"),
+    beach_club: (context) => [
+      "Ciao IschiaMotion, vorrei un consiglio per organizzare una giornata mare comoda a Ischia.",
+      "",
+      `Data indicativa: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Sto valutando un beach club in zona ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/altra zona]")}.`,
+      "",
+      "Potete aiutarmi a capire la soluzione più adatta in base a zona e servizi desiderati?"
+    ].join("\n"),
     requestReceived: () => "Ciao IschiaMotion, ho appena inviato una richiesta e vorrei aggiungere un dettaglio."
   },
   en: {
     generic: (context) => {
-      const category = categoryLabel("en", context?.category, "[scooter/car/e-bike/dinghy/boat/beach club]");
+      const category = categoryLabel("en", context?.category, "[scooter/car/e-bike/rubber boat/boat/beach club]");
       const date = valueOrPlaceholder(context?.date || context?.startDate, "[date]");
       const area = valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]");
-      return `Hi IschiaMotion, I would like some advice on choosing the best option for my stay in Ischia. I arrive on ${date}, I am staying in ${area} and I am considering ${category}.`;
+      return [
+        "Hi IschiaMotion, I’d like some advice to choose the best option for my stay in Ischia.",
+        "",
+        `I arrive on ${date}, I’m staying in ${area}, and I’m considering ${category}.`,
+        "",
+        "Can you help me understand the most convenient solution based on my plans?"
+      ].join("\n");
     },
     scooter: (context) => {
       const range = dateRange(context, "[from]", "[to]");
-      return `Hi IschiaMotion, I would like to check availability and price for a scooter in Ischia. Dates: ${range.from} - ${range.to}. I am staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}. People: [1/2].`;
+      return [
+        "Hi IschiaMotion, I’d like some advice to choose the most convenient way to get around Ischia.",
+        "",
+        `I arrive/stay from ${range.from} to ${range.to}, I’m staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}, and I’m considering a scooter.`,
+        "",
+        "Can you help me understand if it is the best option based on my plans?"
+      ].join("\n");
     },
     auto: (context) => {
       const range = dateRange(context, "[from]", "[to]");
-      return `Hi IschiaMotion, I would like to check availability and price for a car in Ischia. Dates: ${range.from} - ${range.to}. Arrival point: ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[port/hotel]")}. People: [number]. Luggage: [yes/no].`;
+      return [
+        "Hi IschiaMotion, I’d like some advice to choose the best option for my stay in Ischia.",
+        "",
+        `I arrive/stay from ${range.from} to ${range.to}, my arrival point or area is ${valueOrPlaceholder(context?.arrivalPoint || context?.areaOrHotel, "[port/hotel]")}, and I’m considering a car.`,
+        "",
+        "Can you help me understand the most convenient solution based on people, luggage and plans?"
+      ].join("\n");
     },
-    gommone: (context) => `Hi IschiaMotion, I would like to check availability and price for a dinghy in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Boat licence: [yes/no]. Preference: [half day/full day].`,
+    gommone: (context) => [
+      "Hi IschiaMotion, I’d like some advice to plan a day at sea in Ischia.",
+      "",
+      `Indicative date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. I’m considering a rubber boat, boat licence: [yes/no].`,
+      "",
+      "Can you help me understand the best option between half day and full day?"
+    ].join("\n"),
     bici: (context) => {
       const range = dateRange(context, "[from]", "[to]");
-      return `Hi IschiaMotion, I would like to check availability and price for e-bikes in Ischia. Dates: ${range.from} - ${range.to}. I am staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}. People: [number].`;
+      return [
+        "Hi IschiaMotion, I’d like some advice to get around Ischia in a practical and scenic way.",
+        "",
+        `I arrive/stay from ${range.from} to ${range.to}, I’m staying in ${valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]")}, and I’m considering e-bikes for [number] people.`,
+        "",
+        "Can you help me understand if it suits my itinerary?"
+      ].join("\n");
     },
-    barca: (context) => `Hi IschiaMotion, I would like to check availability and price for a boat with skipper in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Preference: [half day/full day]. Preferred departure area or port: ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[area]")}.`,
-    beach_club: (context) => `Hi IschiaMotion, I would like to check availability and price for a beach club in Ischia. Date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. Preferred area: ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/other area]")}.`,
+    barca: (context) => [
+      "Hi IschiaMotion, I’d like some advice to plan a boat experience in Ischia.",
+      "",
+      `Indicative date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. I’m considering a boat with skipper, departing from ${valueOrPlaceholder(context?.departureArea || context?.areaOrHotel, "[area/port]")}.`,
+      "",
+      "Can you help me understand the best option based on tour, duration and itinerary?"
+    ].join("\n"),
+    beach_club: (context) => [
+      "Hi IschiaMotion, I’d like some advice to plan a comfortable beach day in Ischia.",
+      "",
+      `Indicative date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. I’m considering a beach club around ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/other area]")}.`,
+      "",
+      "Can you help me understand the best option based on area and services?"
+    ].join("\n"),
     requestReceived: () => "Hi IschiaMotion, I have just submitted a request and would like to add a detail."
   }
 };

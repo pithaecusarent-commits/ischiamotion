@@ -14,7 +14,7 @@ export const dictionary = {
       title: "Scooter, auto e barche a Ischia senza perdere tempo.",
       subtitle: "Non serve contattare tanti noleggiatori: dicci date e zona del soggiorno, verifichiamo la soluzione più comoda con partner locali selezionati.",
       cta: "Verifica disponibilità e prezzo",
-      secondary: "Verifica disponibilità su WhatsApp",
+      secondary: "Chiedi un consiglio su WhatsApp",
       microcopy: "Risposta in pochi minuti negli orari operativi.",
       benefits: [
         "Una sola richiesta, niente chiamate multiple",
@@ -49,7 +49,7 @@ export const dictionary = {
       title: "Scooters, cars and boats in Ischia, no time wasted.",
       subtitle: "No need to contact several rental operators: tell us your dates and area, we'll check the most convenient option with local partners.",
       cta: "Check availability and price",
-      secondary: "Check availability on WhatsApp",
+      secondary: "Ask for advice on WhatsApp",
       microcopy: "A reply within minutes during operating hours.",
       benefits: [
         "One request, no multiple calls",

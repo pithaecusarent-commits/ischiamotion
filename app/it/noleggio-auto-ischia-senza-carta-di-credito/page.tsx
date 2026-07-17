@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 };
 
 export default function NoleggioAutoIschiaSenzaCartaPage() {
-  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Ciao IschiaMotion, vorrei richiedere disponibilità per noleggio auto a Ischia senza carta di credito, se disponibile.")}`;
+  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta al mio soggiorno a Ischia.\n\nArrivo il [data], soggiorno in zona [zona/hotel] e sto valutando un’auto senza carta di credito, se le condizioni dei partner lo permettono.\n\nPotete aiutarmi a capire la soluzione migliore in base ai miei spostamenti?")}`;
 
   return (
     <>
@@ -83,7 +83,7 @@ export default function NoleggioAutoIschiaSenzaCartaPage() {
             <p>La disponibilità non è automatica e le condizioni possono cambiare in base a periodo, categoria auto, durata, cauzione e modalità richieste dal partner.</p>
             <div className="hero-actions">
               <a href="/it/risultati?category=auto" className="primary-btn">Richiedi disponibilità</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Chiedi su WhatsApp</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Chiedi un consiglio su WhatsApp</a>
             </div>
           </div>
           <div className="seo-landing-card">
@@ -152,7 +152,7 @@ export default function NoleggioAutoIschiaSenzaCartaPage() {
             <p>Invia date, zona, durata e modalità preferita: controlliamo se esistono opzioni disponibili con partner locali selezionati.</p>
             <div className="hero-actions">
               <a href="/it/risultati?category=auto" className="primary-btn">Richiedi disponibilità</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Chiedi su WhatsApp</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Chiedi un consiglio su WhatsApp</a>
             </div>
           </div>
         </section>

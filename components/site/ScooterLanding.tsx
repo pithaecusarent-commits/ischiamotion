@@ -140,7 +140,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             </p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{isIt ? "Verifica scooter disponibili" : "Check available scooters"}</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Ricevi disponibilità su WhatsApp" : "Get availability on WhatsApp"}</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Chiedi un consiglio su WhatsApp" : "Ask for advice on WhatsApp"}</a>
             </div>
           </div>
           <div className="seo-landing-card">
@@ -285,7 +285,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
             <p>{isIt ? "Imposta le date e invia la richiesta: ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni." : "Set your dates and send the request: we reply within minutes with availability, price and conditions."}</p>
             <div className="hero-actions">
               <a href={searchPath} className="primary-btn">{isIt ? "Verifica scooter disponibili" : "Check available scooters"}</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Ricevi disponibilità su WhatsApp" : "Get availability on WhatsApp"}</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">{isIt ? "Chiedi un consiglio su WhatsApp" : "Ask for advice on WhatsApp"}</a>
             </div>
           </div>
         </section>

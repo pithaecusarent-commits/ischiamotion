@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 };
 
 export default function NoleggioScooterIschiaPortoPage() {
-  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Ciao IschiaMotion, arrivo a Ischia Porto e vorrei richiedere disponibilità per uno scooter.")}`;
+  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta al mio soggiorno a Ischia.\n\nArrivo il [data] a Ischia Porto, soggiorno in zona [zona/hotel] e sto valutando uno scooter.\n\nPotete aiutarmi a capire la soluzione migliore in base ai miei spostamenti?")}`;
 
   return (
     <>
@@ -83,7 +83,7 @@ export default function NoleggioScooterIschiaPortoPage() {
             <p>Con IschiaMotion invii una richiesta senza impegno: verifichiamo disponibilità, punto di ritiro, orario, documenti e condizioni con partner locali selezionati.</p>
             <div className="hero-actions">
               <a href="/it/risultati?category=scooter&port_slug=ischia_porto" className="primary-btn">Richiedi disponibilità</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Chiedi un consiglio su WhatsApp</a>
             </div>
           </div>
           <div className="seo-landing-card">
@@ -152,7 +152,7 @@ export default function NoleggioScooterIschiaPortoPage() {
             <p>Invia date, orario di arrivo e zona di soggiorno: verifichiamo disponibilità e condizioni con partner locali selezionati.</p>
             <div className="hero-actions">
               <a href="/it/risultati?category=scooter&port_slug=ischia_porto" className="primary-btn">Richiedi disponibilità</a>
-              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a>
+              <a href={whatsappUrl} className="ghost-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">Chiedi un consiglio su WhatsApp</a>
             </div>
           </div>
         </section>
