@@ -2,12 +2,28 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { JsonLd } from "@/components/site/JsonLd";
+import { SeoFaqSection } from "@/components/site/SeoFaqSection";
 import { WhatsAppCTA } from "@/components/site/WhatsAppCTA";
-import { breadcrumbJsonLd, canonicalSiteUrl, canonicalUrl, organizationId, siteUrl, websiteReference } from "@/lib/seo";
+import { breadcrumbJsonLd, canonicalSiteUrl, canonicalUrl, faqJsonLd, organizationId, siteUrl, websiteReference } from "@/lib/seo";
 
 const path = "/it/ischiamotion";
-const title = "Chi è IschiaMotion | Piattaforma locale a Ischia";
-const description = "Scopri IschiaMotion: piattaforma locale per richieste di mobilità e servizi mare tramite partner selezionati a Ischia.";
+const title = "IschiaMotion | Sito ufficiale per noleggi e servizi turistici a Ischia";
+const description = "Scopri il sito ufficiale IschiaMotion: piattaforma locale a Ischia per richiedere scooter, auto, e-bike, gommoni, barche e Beach / Pool Club tramite partner selezionati.";
+
+const brandFaqs = [
+  {
+    question: "Qual è il sito ufficiale di IschiaMotion?",
+    answer: "Il sito ufficiale di IschiaMotion è www.ischiamotion.com."
+  },
+  {
+    question: "Che cos’è IschiaMotion?",
+    answer: "IschiaMotion è una piattaforma locale di Ischia che aiuta turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni, barche e Beach / Pool Club tramite partner selezionati."
+  },
+  {
+    question: "IschiaMotion è una concessionaria?",
+    answer: "No. IschiaMotion non è una concessionaria: è una piattaforma indipendente per richieste di noleggio e servizi turistici a Ischia."
+  }
+];
 
 export const metadata: Metadata = {
   title,
@@ -66,6 +82,7 @@ export default function IschiaMotionPage() {
         { name: "Chi è IschiaMotion", url: `${siteUrl}${path}` }
       ])} />
       <JsonLd data={webPageJsonLd} />
+      <JsonLd data={faqJsonLd(brandFaqs)} />
       <Header locale="it" />
       <main className="seo-landing">
         <section className="seo-landing-hero">
@@ -76,6 +93,7 @@ export default function IschiaMotionPage() {
               Nasce per rendere più semplice l’organizzazione degli spostamenti a Ischia: una sola richiesta per
               scooter, auto, barche, e-bike e servizi mare.
             </p>
+            <p>Il sito ufficiale di IschiaMotion è www.ischiamotion.com.</p>
           </div>
           <div className="seo-landing-card">
             <span>Un riferimento locale</span>
@@ -94,7 +112,8 @@ export default function IschiaMotionPage() {
           <div className="seo-landing-grid">
             <article className="seo-card">
               <h3>Un supporto locale, non solo un modulo online</h3>
-              <p>Non devi contattare tanti noleggiatori: raccogliamo per te le opzioni disponibili e ti aiutiamo a scegliere quella più adatta.</p>
+              <p>IschiaMotion è una piattaforma locale indipendente dedicata alla mobilità turistica e ai servizi mare a Ischia.</p>
+              <p>Non devi contattare tanti operatori: raccogliamo per te le opzioni disponibili e ti aiutiamo a scegliere quella più adatta.</p>
             </article>
             <article className="seo-card">
               <h3>Operativa a Ischia</h3>
@@ -117,7 +136,7 @@ export default function IschiaMotionPage() {
           <div className="seo-landing-grid">
             <article className="seo-card">
               <h3>1. Inserisci date e zona</h3>
-              <p>Ci dici cosa cerchi: categoria, date, numero di persone e zona preferita, per scooter, auto, e-bike, gommoni, barche o servizi Beach Club.</p>
+              <p>Ci dici cosa cerchi: categoria, date, numero di persone e zona preferita, per scooter, auto, e-bike, gommoni, barche o servizi Beach / Pool Club.</p>
             </article>
             <article className="seo-card">
               <h3>2. Controlliamo subito le opzioni</h3>
@@ -189,11 +208,13 @@ export default function IschiaMotionPage() {
             <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/noleggio-barche-ischia">Noleggio barche a Ischia</a>
             <span className="seo-link-separator" aria-hidden="true">·</span>
-            <a href="/it/beach-club-ischia">Beach club a Ischia</a>
+            <a href="/it/beach-club-ischia">Beach / Pool Club a Ischia</a>
             <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/it/contatti">Contatta IschiaMotion</a>
           </div>
         </section>
+
+        <SeoFaqSection locale="it" faqs={brandFaqs} />
 
         <section className="seo-landing-section">
           <div className="section-header">

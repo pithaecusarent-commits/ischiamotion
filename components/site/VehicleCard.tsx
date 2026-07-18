@@ -25,7 +25,7 @@ export function VehicleCard({
     gommone: locale === "it" ? "Gommone" : "Rubber dinghy",
     barca: locale === "it" ? "Barca" : "Boat",
     bici: locale === "it" ? "Bici elettrica" : "E-bike",
-    beach_club: "Beach Club"
+    beach_club: "Beach / Pool Club"
   };
   const ctaLabel = locale === "it" ? "Verifica disponibilità" : "Check availability";
   const landingPath = getCategoryLandingPath(locale, vehicle.category);

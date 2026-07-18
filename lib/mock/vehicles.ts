@@ -79,10 +79,10 @@ export const vehicles: PublicVehicle[] = [
   {
     id: "svc-beach-club-1",
     category: "beach_club",
-    title_it: "Beach Club",
-    title_en: "Beach Club",
+    title_it: "Beach / Pool Club",
+    title_en: "Beach / Pool Club",
     description_it: "Prenota una giornata di mare più comoda, con servizi e stabilimenti selezionati.",
-    description_en: "Book a more comfortable day by the sea with selected beach clubs and services.",
+    description_en: "Book a more comfortable day by the sea with selected Beach / Pool Clubs and services.",
     location_it: "Ischia",
     location_en: "Ischia",
     price_from: 0,

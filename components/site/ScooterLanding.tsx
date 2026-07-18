@@ -102,7 +102,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       ["Noleggio e-bike Ischia", "/it/noleggio-bici-elettriche-ischia"],
       ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
       ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
-      ["Beach Club", "/it/beach-club-ischia"],
+      ["Beach / Pool Club", "/it/beach-club-ischia"],
       ["Contatti", "/it/contatti"]
     ]
     : [
@@ -112,7 +112,7 @@ export function ScooterLanding({ locale, pickupPoints }: { locale: Locale; picku
       ["E-bikes", "/en/e-bike-rental-ischia"],
       ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
       ["Boats", "/en/boat-rental-ischia"],
-      ["Beach Club", "/en/ischia-beach-club"],
+      ["Beach / Pool Club", "/en/ischia-beach-club"],
       ["Contact", "/en/contact"]
     ];
 

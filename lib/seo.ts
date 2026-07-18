@@ -175,7 +175,15 @@ export function organizationJsonLd() {
       "@type": "Place",
       name: "Ischia"
     },
-    description: "IschiaMotion è una piattaforma locale per richieste di mobilità e servizi mare a Ischia tramite partner selezionati.",
+    description: "IschiaMotion è una piattaforma locale per richieste di mobilità e servizi mare a Ischia tramite partner selezionati: scooter, auto, e-bike, gommoni, barche e Beach / Pool Club.",
+    knowsAbout: [
+      "noleggio scooter Ischia",
+      "noleggio auto Ischia",
+      "e-bike Ischia",
+      "gommoni Ischia",
+      "barche Ischia",
+      "Beach / Pool Club Ischia"
+    ],
     sameAs: ["https://it.trustpilot.com/review/ischiamotion.com"]
   };
 }
@@ -193,7 +201,7 @@ export function serviceJsonLd(locale: Locale, path: string, name: string, descri
       "@type": "Place",
       name: "Ischia"
     },
-    serviceType: locale === "it" ? "Piattaforma locale per richieste noleggio scooter auto e barche" : "Local scooter car and boat rental request platform",
+    serviceType: locale === "it" ? "Piattaforma locale per richieste scooter auto e-bike gommoni barche e Beach / Pool Club" : "Local request platform for scooters cars e-bikes rubber dinghies boats and Beach / Pool Club",
     url: `${siteUrl}${path}`
   };
 }

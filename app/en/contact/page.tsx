@@ -4,7 +4,7 @@ import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact IschiaMotion | Ischia",
-  description: "Contact IschiaMotion for scooters, cars, e-bikes, rubber dinghies, boats and seaside services in Ischia.",
+  description: "Contact IschiaMotion for scooters, cars, e-bikes, rubber dinghies, boats and Beach / Pool Club experiences in Ischia.",
   alternates: {
     canonical: canonicalUrl("/en/contact"),
     languages: { it: canonicalUrl("/it/contatti"), en: canonicalUrl("/en/contact"), "x-default": canonicalUrl("/it/contatti") }

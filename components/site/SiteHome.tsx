@@ -80,7 +80,7 @@ export function SiteHome({
             <>
               <p>
                 <a href="/it/ischiamotion">IschiaMotion</a> è una piattaforma locale di Ischia dedicata alla mobilità turistica e ai servizi mare.
-                Aiutiamo turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni e beach club tramite partner locali
+                Aiutiamo turisti e visitatori a richiedere disponibilità per scooter, auto, e-bike, gommoni e Beach / Pool Club tramite partner locali
                 selezionati sull’isola.
               </p>
               <p>

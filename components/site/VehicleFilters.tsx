@@ -10,7 +10,7 @@ const labels: Record<Locale, Record<VehicleFilter, [string, string]>> = {
     gommone: ["🚤", "Gommone"],
     barca: ["🛥️", "Barca"],
     bici: ["🚲", "Bici"],
-    beach_club: ["🏖️", "Beach Club"]
+    beach_club: ["🏖️", "Beach / Pool Club"]
   },
   en: {
     all: ["", "All"],
@@ -19,7 +19,7 @@ const labels: Record<Locale, Record<VehicleFilter, [string, string]>> = {
     gommone: ["🚤", "Rubber dinghy"],
     barca: ["🛥️", "Boats"],
     bici: ["🚲", "E-bikes"],
-    beach_club: ["🏖️", "Beach Club"]
+    beach_club: ["🏖️", "Beach / Pool Club"]
   }
 };
 

@@ -24,7 +24,7 @@ const categoryLabels: Record<Locale, Record<Exclude<VehicleFilter, "all">, strin
     bici: "e-bike",
     gommone: "gommone",
     barca: "barca",
-    beach_club: "beach club"
+    beach_club: "Beach / Pool Club"
   },
   en: {
     scooter: "scooter",
@@ -32,7 +32,7 @@ const categoryLabels: Record<Locale, Record<Exclude<VehicleFilter, "all">, strin
     bici: "e-bike",
     gommone: "rubber boat",
     barca: "boat",
-    beach_club: "beach club"
+    beach_club: "Beach / Pool Club"
   }
 };
 
@@ -52,7 +52,7 @@ const dateRange = (
 export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude<VehicleFilter, "all"> | "requestReceived", MessageBuilder>> = {
   it: {
     generic: (context) => {
-      const category = categoryLabel("it", context?.category, "[scooter/auto/e-bike/gommone/barca/beach club]");
+      const category = categoryLabel("it", context?.category, "[scooter/auto/e-bike/gommone/barca/Beach / Pool Club]");
       const date = valueOrPlaceholder(context?.date || context?.startDate, "[data]");
       const area = valueOrPlaceholder(context?.areaOrHotel, "[zona/hotel]");
       return [
@@ -110,7 +110,7 @@ export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude
     beach_club: (context) => [
       "Ciao IschiaMotion, vorrei un consiglio per organizzare una giornata mare comoda a Ischia.",
       "",
-      `Data indicativa: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Sto valutando un beach club in zona ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/altra zona]")}.`,
+      `Data indicativa: ${valueOrPlaceholder(context?.date || context?.startDate, "[data]")}. Persone: [numero]. Sto valutando un Beach / Pool Club in zona ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/altra zona]")}.`,
       "",
       "Potete aiutarmi a capire la soluzione più adatta in base a zona e servizi desiderati?"
     ].join("\n"),
@@ -118,7 +118,7 @@ export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude
   },
   en: {
     generic: (context) => {
-      const category = categoryLabel("en", context?.category, "[scooter/car/e-bike/rubber boat/boat/beach club]");
+      const category = categoryLabel("en", context?.category, "[scooter/car/e-bike/rubber boat/boat/Beach / Pool Club]");
       const date = valueOrPlaceholder(context?.date || context?.startDate, "[date]");
       const area = valueOrPlaceholder(context?.areaOrHotel, "[area/hotel]");
       return [
@@ -176,7 +176,7 @@ export const whatsappMessageTemplates: Record<Locale, Record<"generic" | Exclude
     beach_club: (context) => [
       "Hi IschiaMotion, I’d like some advice to plan a comfortable beach day in Ischia.",
       "",
-      `Indicative date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. I’m considering a beach club around ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/other area]")}.`,
+      `Indicative date: ${valueOrPlaceholder(context?.date || context?.startDate, "[date]")}. People: [number]. I’m considering a Beach / Pool Club around ${valueOrPlaceholder(context?.preferredArea || context?.areaOrHotel, "[Forio/Sant’Angelo/other area]")}.`,
       "",
       "Can you help me understand the best option based on area and services?"
     ].join("\n"),

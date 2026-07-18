@@ -26,7 +26,7 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
       ["Noleggio e-bike Ischia", "/it/noleggio-bici-elettriche-ischia"],
       ["Noleggio gommoni Ischia", "/it/noleggio-gommoni-ischia"],
       ["Noleggio barche Ischia", "/it/noleggio-barche-ischia"],
-      ["Beach Club", "/it/beach-club-ischia"],
+      ["Beach / Pool Club", "/it/beach-club-ischia"],
       ["Dove dormire a Ischia", "/it/dove-dormire-a-ischia"],
       ["Contatti", "/it/contatti"]
     ];
@@ -41,7 +41,7 @@ function getInternalLinks(locale: CategoryLandingContent["locale"]) {
     ["E-bikes", "/en/e-bike-rental-ischia"],
     ["Rubber dinghies", "/en/rubber-dinghy-rental-ischia"],
     ["Boats", "/en/boat-rental-ischia"],
-    ["Beach Club", "/en/ischia-beach-club"],
+    ["Beach / Pool Club", "/en/ischia-beach-club"],
     ["Where to stay in Ischia", "/en/where-to-stay-in-ischia"],
     ["Contact", "/en/contact"]
   ];
@@ -89,7 +89,7 @@ const landingGuides = {
       practicalItems: [
         ["Patente nautica", "Verifichiamo subito i requisiti in base a mezzo e motorizzazione, insieme a documenti e capienza, con il partner locale."],
         ["Gommone o barca", "Il gommone è spesso più agile per costa e calette; la barca può offrire più spazio e comfort, secondo modello."],
-        ["Quando valutare un beach club", "Se preferisci servizi a terra, lettini e ombrelloni, un beach club può essere più comodo."]
+        ["Quando valutare un Beach / Pool Club", "Se preferisci servizi a terra, lettini, ombrelloni o piscine, un Beach / Pool Club può essere più comodo."]
       ]
     },
     barca: {
@@ -103,11 +103,11 @@ const landingGuides = {
       practicalItems: [
         ["Requisiti", "Verifichiamo subito requisiti, documenti e condizioni compatibili con il mezzo scelto e te li indichiamo nella proposta."],
         ["Barca o gommone", "La barca è utile se cerchi più comfort e spazio; il gommone può essere più essenziale e agile."],
-        ["Quando scegliere un beach club", "Se cerchi comfort in spiaggia, valuta la pagina Beach Club."]
+        ["Quando scegliere un Beach / Pool Club", "Se cerchi comfort in spiaggia o in piscina, valuta la pagina Beach / Pool Club."]
       ]
     },
     beach_club: {
-      pickupTitle: "Zone e disponibilità Beach Club",
+      pickupTitle: "Zone e disponibilità Beach / Pool Club",
       pickupItems: [
         ["Data e persone", "Indica giorno richiesto, numero persone, adulti e bambini per verificare soluzioni coerenti."],
         ["Zona preferita", "Forio, Lacco Ameno, Ischia Porto, Sant'Angelo e altre zone possono orientare la ricerca tra strutture locali."],
@@ -162,7 +162,7 @@ const landingGuides = {
       practicalItems: [
         ["Boating license", "It depends on the vehicle and engine. Requirements, documents and capacity are reviewed with the partner."],
         ["Rubber dinghy, RIB or boat", "A rubber dinghy or RIB is often agile for coast and coves; a boat may offer more space and comfort, depending on model."],
-        ["When to choose a beach club", "If you prefer reserved seaside services on shore, beach club access may fit better."]
+        ["When to choose a Beach / Pool Club", "If you prefer reserved seaside or pool services on shore, Beach / Pool Club access may fit better."]
       ]
     },
     barca: {
@@ -176,11 +176,11 @@ const landingGuides = {
       practicalItems: [
         ["License and requirements", "We check requirements, documents and conditions for your chosen boat right away and share them in your proposal."],
         ["Boat or rubber dinghy", "A boat is useful for more comfort and space; a rubber dinghy can be simpler and more agile."],
-        ["When to choose a beach club", "If you want comfort on shore, consider beach club access with selected local venues."]
+        ["When to choose a Beach / Pool Club", "If you want comfort on shore or by the pool, consider Beach / Pool Club access with selected local venues."]
       ]
     },
     beach_club: {
-      pickupTitle: "Beach Club areas and availability",
+      pickupTitle: "Beach / Pool Club areas and availability",
       pickupItems: [
         ["Date and guests", "Share requested date, guest count, adults and children to review suitable options."],
         ["Preferred area", "Forio, Lacco Ameno, Ischia Port, Sant'Angelo and other areas can guide the search among local venues."],

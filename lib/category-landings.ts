@@ -207,7 +207,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Giornata in mare", "Adatto a chi vuole vivere costa, calette e soste panoramiche con un mezzo nautico agile."],
         ["Piccoli gruppi", "Utile per uscite tra amici o famiglia, secondo capienza e condizioni partner."],
         ["Alternativa alla barca", "Più essenziale e maneggevole rispetto ad alcune barche, ma con meno comfort secondo modello."],
-        ["Quando scegliere un beach club", "Se preferisci lettino riservato, ombrellone e servizi a terra, valuta un beach club."]
+        ["Quando scegliere un Beach / Pool Club", "Se preferisci lettino riservato, ombrellone, piscina o servizi a terra, valuta un Beach / Pool Club."]
       ],
       faqs: [
         { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e modalità di ritiro prima di scegliere." },
@@ -239,7 +239,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       subtitle: "Comunicaci data, numero di persone e preferenze: verifichiamo rapidamente le barche disponibili e ti proponiamo la soluzione più adatta.",
       microcopy: "Ti rispondiamo in pochi minuti con disponibilità, prezzo e condizioni.",
       cardTitle: "Uscite in mare",
-      cardText: "Verifichiamo subito requisiti e condizioni con i partner locali. Per una giornata relax a terra puoi valutare un beach club.",
+      cardText: "Verifichiamo subito requisiti e condizioni con i partner locali. Per una giornata relax a terra puoi valutare un Beach / Pool Club.",
       primaryCta: "Verifica barche disponibili",
       categoryParam: "barca",
       benefits: [
@@ -255,7 +255,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Autonomia in mare", "Adatta quando il partner prevede noleggio in autonomia e i requisiti sono rispettati."],
         ["Costa e calette", "Ideale per esplorare tratti di costa, soste in rada e panorami dal mare con tempi concordati."],
         ["Più comfort", "Rispetto al gommone può offrire più spazio, ombra o stabilità, secondo modello disponibile."],
-        ["Quando scegliere altro", "Se preferisci lettini, ombrelloni e servizi a terra, valuta la pagina Beach Club."]
+        ["Quando scegliere altro", "Se preferisci lettini, ombrelloni, piscine e servizi a terra, valuta la pagina Beach / Pool Club."]
       ],
       faqs: [
         { question: "Perché usare IschiaMotion invece di contattare direttamente un noleggiatore?", answer: "Con una sola richiesta puoi verificare rapidamente più opzioni locali, ricevendo una proposta con disponibilità, prezzo, condizioni e punto di partenza prima di scegliere." },
@@ -277,47 +277,47 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       key: "beach_club",
       path: "/it/beach-club-ischia",
       alternatePath: "/en/ischia-beach-club",
-      title: "Beach Club a Ischia",
-      h1: "Beach Club a Ischia: relax e comfort in spiaggia",
-      metaTitle: "Beach Club a Ischia | IschiaMotion",
-      metaDescription: "Richiedi un Beach Club a Ischia con lettini, ombrelloni e servizi mare presso strutture locali selezionate.",
-      eyebrow: "Beach Club a Ischia",
-      description: "Indicaci data, numero di persone e preferenze: verifichiamo rapidamente le disponibilità presso strutture locali selezionate e ti inviamo in pochi minuti lettini, servizi e condizioni. Vivi il mare senza pensieri e senza contattare più stabilimenti: con una sola richiesta troviamo per te la soluzione più comoda nella tua zona.",
-      subtitle: "Indicaci data, numero di persone e preferenze: verifichiamo rapidamente lettini, servizi e condizioni con strutture locali selezionate.",
+      title: "Beach / Pool Club a Ischia",
+      h1: "Beach / Pool Club a Ischia",
+      metaTitle: "Beach / Pool Club Ischia | Lettini, Piscine e Servizi Mare",
+      metaDescription: "Richiedi disponibilità per Beach / Pool Club a Ischia: lettini, ombrelloni, piscine e servizi mare selezionati in base a zona, periodo e disponibilità.",
+      eyebrow: "Beach / Pool Club a Ischia",
+      description: "Indicaci data, numero di persone e preferenze: verifichiamo rapidamente le disponibilità presso Beach / Pool Club, lidi, piscine e strutture mare selezionate. Puoi richiedere lettini, ombrelloni, accesso giornaliero, pranzo, aperitivo o servizi mare dove disponibili: la conferma dipende sempre da zona, periodo e disponibilità dei partner locali.",
+      subtitle: "Indicaci data, numero di persone e preferenze: verifichiamo lettini, ombrelloni, piscine e servizi mare con strutture locali selezionate.",
       microcopy: "Risposta in pochi minuti negli orari operativi.",
       cardTitle: "Relax, lettini e servizi mare",
       cardText: "Richiedi lettini, ombrelloni e servizi mare dove disponibili tramite strutture locali selezionate.",
-      primaryCta: "Verifica Beach Club disponibili",
+      primaryCta: "Verifica Beach / Pool Club disponibili",
       categoryParam: "beach_club",
       howTitle: "Richiesta rapida tramite strutture locali selezionate",
       steps: [
         ["Scegli data e preferenze", "Indichi giorno, numero di persone, zona preferita, lettini, ombrelloni o servizi desiderati."],
         ["Invia la richiesta", "La richiesta arriva a IschiaMotion con i dettagli utili per verificare disponibilità e condizioni della struttura."],
-        ["Verifichiamo subito con i partner", "Controlliamo le opzioni con beach club, stabilimenti e partner locali selezionati."],
+        ["Verifichiamo subito con i partner", "Controlliamo le opzioni con Beach / Pool Club, lidi, piscine, strutture mare e partner locali selezionati."],
         ["Ricevi la proposta in pochi minuti", "Ti rispondiamo rapidamente con disponibilità, servizi confermati e prossimi passaggi."]
       ],
       benefits: [
-        ["Lettino riservato", "Un beach club ti permette di vivere il mare senza pensieri con lettino, ombrellone e servizi in spiaggia."],
-        ["Servizi curati", "Ristorazione, assistenza e ambienti organizzati rendono la giornata più semplice per coppie, famiglie e gruppi."],
+        ["Lettino riservato", "Un Beach / Pool Club ti permette di vivere il mare senza pensieri con lettino, ombrellone e servizi in spiaggia."],
+        ["Piscine e servizi curati", "Piscine, ristorazione, assistenza e ambienti organizzati rendono la giornata più semplice per coppie, famiglie e gruppi, dove disponibili."],
         ["Partner selezionati", "IschiaMotion ti aiuta a contattare strutture e partner locali selezionati, senza presentarsi come gestore diretto."],
         ["Richiesta facile", "Indichi data, persone, fascia oraria, zona preferita ed eventuali esigenze per ricevere supporto mirato."]
       ],
-      zonesText: "Ischia offre spiagge e baie diverse tra loro: zone sabbiose, scorci panoramici, stabilimenti eleganti e luoghi perfetti per una giornata lenta e rigenerante. Attraverso IschiaMotion puoi inviare una richiesta e ricevere supporto per trovare la soluzione più adatta alle tue esigenze.",
-      whenTitle: "Beach club a Ischia: relax, mare e panorami",
+      zonesText: "Ischia offre spiagge, baie, lidi, pool club e strutture mare diverse tra loro: zone sabbiose, scorci panoramici, piscine e luoghi perfetti per una giornata lenta e rigenerante. Attraverso IschiaMotion puoi inviare una richiesta e ricevere supporto per trovare la soluzione più adatta alle tue esigenze.",
+      whenTitle: "Beach / Pool Club a Ischia: relax, mare e piscine",
       whenItems: [
-        ["Lettini e ombrelloni", "Puoi richiedere soluzioni con lettini, ombrelloni e servizi spiaggia in base alla disponibilità."],
-        ["Accesso giornaliero", "Ideale per organizzare una giornata intera o una fascia oraria al mare con più comfort."],
+        ["Lettini e ombrelloni", "Puoi richiedere soluzioni con lettini, ombrelloni, lidi e servizi spiaggia in base alla disponibilità."],
+        ["Piscine e accesso giornaliero", "Ideale per organizzare una giornata intera o una fascia oraria al mare o in piscina con più comfort, dove disponibile."],
         ["Pranzo o aperitivo vista mare", "Puoi indicare preferenze per ristorazione, aperitivo o altri servizi dove disponibili presso strutture selezionate."],
         ["Coppie, famiglie e gruppi", "La richiesta può includere numero persone, adulti e bambini, zona preferita e note cliente."]
       ],
       faqs: [
         { question: "Perché usare IschiaMotion invece di contattare direttamente una struttura?", answer: "Con una sola richiesta puoi verificare rapidamente più strutture locali, ricevendo una proposta con disponibilità, servizi e condizioni prima di scegliere." },
-        { question: "IschiaMotion gestisce direttamente i beach club?", answer: "No. IschiaMotion facilita la richiesta e il contatto con strutture e partner locali selezionati." },
-        { question: "Cosa posso richiedere?", answer: "Puoi richiedere lettini, ombrelloni, accesso giornaliero, servizi spiaggia, pranzo o aperitivo vista mare." },
+        { question: "IschiaMotion gestisce direttamente i Beach / Pool Club?", answer: "No. IschiaMotion facilita la richiesta e il contatto con strutture e partner locali selezionati." },
+        { question: "Cosa posso richiedere?", answer: "Puoi richiedere lettini, ombrelloni, accesso giornaliero, servizi spiaggia, piscine, pranzo o aperitivo vista mare dove disponibili." },
         { question: "La disponibilità è confermata subito?", answer: "Verifichiamo subito con la struttura o il partner locale e ti rispondiamo in pochi minuti negli orari operativi con la proposta finale." },
         { question: "È adatto a famiglie e gruppi?", answer: "Sì. Puoi indicare numero persone, adulti e bambini, fascia oraria e preferenze di zona." }
       ],
-      finalTitle: "Vuoi organizzare una giornata in beach club?",
+      finalTitle: "Vuoi organizzare una giornata in Beach / Pool Club?",
       finalText: "Invia una richiesta e ricevi supporto per trovare la soluzione più adatta tra strutture e partner locali selezionati."
     }
   },
@@ -455,7 +455,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Day at sea", "Good for enjoying coast, coves and scenic stops with an agile nautical option."],
         ["Small groups", "Useful for friends or family, depending on capacity and partner conditions."],
         ["Alternative to a boat", "Usually more essential and agile than some boats, but with less comfort depending on model."],
-        ["When to choose a beach club", "If you prefer reserved sunbeds, umbrellas and services on shore, consider a beach club."]
+        ["When to choose a Beach / Pool Club", "If you prefer reserved sunbeds, umbrellas, pools or services on shore, consider a Beach / Pool Club."]
       ],
       faqs: [
         { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and pickup details before you choose." },
@@ -486,7 +486,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       subtitle: "Share the date, number of guests and preferences: we quickly check available boats and propose the best fit for your trip.",
       microcopy: "We reply within minutes with availability, price and conditions.",
       cardTitle: "Days at sea",
-      cardText: "Boat rental is available only where offered by partners, requirements and conditions. For a relaxed day on shore, consider a beach club.",
+      cardText: "Boat rental is available only where offered by partners, requirements and conditions. For a relaxed day on shore, consider a Beach / Pool Club.",
       primaryCta: "Check available boats",
       categoryParam: "barca",
       howTitle: "We check availability for your dates right away",
@@ -503,7 +503,7 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
         ["Autonomy at sea", "Suitable when a partner offers independent rental and requirements are met."],
         ["Coast and coves", "Ideal for exploring selected coast areas, quiet stops and sea views with agreed timing and conditions."],
         ["More comfort", "Compared with a rubber dinghy, a boat may offer more space, shade or stability depending on model."],
-        ["When to choose another option", "If you prefer sunbeds, umbrellas and seaside services, consider the Beach Club page."]
+        ["When to choose another option", "If you prefer sunbeds, umbrellas, pools and seaside services, consider the Beach / Pool Club page."]
       ],
       faqs: [
         { question: "Why use IschiaMotion instead of contacting a rental company directly?", answer: "With a single request you can quickly check several local options, receiving a proposal with availability, price, conditions and departure point before you choose." },
@@ -525,47 +525,47 @@ export const categoryLandings: Record<Locale, Record<CategoryLandingKey, Categor
       key: "beach_club",
       path: "/en/ischia-beach-club",
       alternatePath: "/it/beach-club-ischia",
-      title: "Beach clubs in Ischia",
-      h1: "Beach Club in Ischia: Relax by the Sea",
-      metaTitle: "Beach clubs in Ischia | IschiaMotion",
-      metaDescription: "Request a Beach Club in Ischia with sunbeds, umbrellas and seaside services at selected local venues.",
-      eyebrow: "Beach Clubs in Ischia",
-      description: "Share the date, number of guests and preferences: we quickly check availability at selected local venues and send you sunbeds, services and conditions within minutes. Enjoy the sea without contacting several venues yourself — one request is enough for us to find the most comfortable option in your area.",
-      subtitle: "Share the date, number of guests and preferences: we quickly check sunbeds, services and conditions at selected local venues.",
+      title: "Beach / Pool Club in Ischia",
+      h1: "Beach / Pool Club in Ischia",
+      metaTitle: "Beach / Pool Club Ischia | Sunbeds, Pools and Seaside Experiences",
+      metaDescription: "Request Beach / Pool Club availability in Ischia, including sunbeds, umbrellas, pools and selected seaside experiences depending on area, season and partner availability.",
+      eyebrow: "Beach / Pool Club in Ischia",
+      description: "Share the date, number of guests and preferences: we quickly check availability at selected Beach / Pool Clubs, seaside venues, pool clubs and local partners. You can request sunbeds, umbrellas, pools, day access, lunch, aperitif or seaside experiences where available; confirmation always depends on area, season and partner availability.",
+      subtitle: "Share date, guests and preferences: we check sunbeds, umbrellas, pools and seaside services with selected local venues.",
       microcopy: "A reply within minutes during operating hours.",
       cardTitle: "Sea, comfort and views",
       cardText: "Request sunbeds, umbrellas and seaside services where available through selected local venues.",
-      primaryCta: "Check available Beach Clubs",
+      primaryCta: "Check available Beach / Pool Clubs",
       categoryParam: "beach_club",
       howTitle: "A fast request through selected local venues",
       steps: [
         ["Choose date and preferences", "Share the date, number of guests, preferred area, sunbeds, umbrellas or requested services."],
         ["Send the request", "Your request reaches IschiaMotion with the details needed to review venue availability and conditions."],
-        ["We check with partners right away", "We check options with beach clubs, seaside venues and selected local partners."],
+        ["We check with partners right away", "We check options with Beach / Pool Clubs, pool clubs, seaside venues and selected local partners."],
         ["Get your proposal in minutes", "We reply quickly with availability, confirmed services and next steps."]
       ],
       benefits: [
-        ["Reserved sunbeds", "A beach club allows you to enjoy the sea without stress with sunbeds, umbrellas and beach assistance."],
-        ["Curated services", "Food, drinks, organized spaces and dedicated services make the day easier for couples, families and groups."],
+        ["Reserved sunbeds", "A Beach / Pool Club allows you to enjoy the sea without stress with sunbeds, umbrellas and beach assistance."],
+        ["Pools and curated services", "Pools, food, drinks, organized spaces and dedicated services make the day easier for couples, families and groups, where available."],
         ["Selected local partners", "IschiaMotion helps you connect with selected venues and partners without acting as the direct operator."],
         ["Easy request", "Share date, guests, preferred timing, area, sunbed or umbrella needs and customer notes."]
       ],
-      zonesText: "Ischia offers many different seaside locations: sandy beaches, panoramic bays, elegant beach venues and relaxing corners by the sea. Through IschiaMotion, you can send a request and receive support in finding the most suitable option for your needs.",
-      whenTitle: "Beach clubs in Ischia: sea, comfort and views",
+      zonesText: "Ischia offers many different seaside locations: sandy beaches, panoramic bays, pool clubs, elegant seaside venues and relaxing corners by the sea. Through IschiaMotion, you can send a request and receive support in finding the most suitable option for your needs.",
+      whenTitle: "Beach / Pool Clubs in Ischia: sea, comfort and pools",
       whenItems: [
         ["Sunbeds and umbrellas", "You can request sunbeds, umbrellas and beach services depending on venue availability."],
-        ["Daily access", "Ideal for organizing a full day or selected time slot by the sea with more comfort."],
+        ["Pools and daily access", "Ideal for organizing a full day or selected time slot by the sea or by the pool with more comfort, where available."],
         ["Seaside lunch or aperitif", "Share preferences for food, drinks or other services where available at selected local venues."],
         ["Couples, families and groups", "The request can include guest count, adults and children, preferred area and customer notes."]
       ],
       faqs: [
         { question: "Why use IschiaMotion instead of contacting a venue directly?", answer: "With a single request you can quickly check several local venues, receiving a proposal with availability, services and conditions before you choose." },
-        { question: "Does IschiaMotion directly operate beach clubs?", answer: "No. IschiaMotion facilitates requests and contact with selected local venues and partners." },
-        { question: "What can I request?", answer: "You can request sunbeds, umbrellas, daily access, beach services, seaside lunch or aperitif." },
+        { question: "Does IschiaMotion directly operate Beach / Pool Clubs?", answer: "No. IschiaMotion facilitates requests and contact with selected local venues and partners." },
+        { question: "What can I request?", answer: "You can request sunbeds, umbrellas, pools, daily access, beach services, seaside lunch or aperitif where available." },
         { question: "Is availability confirmed instantly?", answer: "We check with the selected venue or local partner right away and reply within minutes during operating hours with the final proposal." },
         { question: "Is it suitable for families and groups?", answer: "Yes. You can share guest count, adults and children, preferred timing and area." }
       ],
-      finalTitle: "Want to plan a beach club day?",
+      finalTitle: "Want to plan a Beach / Pool Club day?",
       finalText: "Send a request and receive support in finding the most suitable option through selected local venues and partners."
     }
   }

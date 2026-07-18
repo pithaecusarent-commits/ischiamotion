@@ -15,7 +15,7 @@ const categoryLabels: Record<Locale, Record<VehicleFilter, string>> = {
     bici: "E-bike",
     gommone: "Gommone",
     barca: "Barca",
-    beach_club: "Beach Club"
+    beach_club: "Beach / Pool Club"
   },
   en: {
     all: "All vehicles",
@@ -24,7 +24,7 @@ const categoryLabels: Record<Locale, Record<VehicleFilter, string>> = {
     bici: "E-bike",
     gommone: "Rubber dinghy",
     barca: "Boat",
-    beach_club: "Beach Club"
+    beach_club: "Beach / Pool Club"
   }
 };
 

@@ -53,7 +53,7 @@ const content: Record<Locale, Content> = {
     cardText: "Confronta esigenze, zona di soggiorno e itinerario prima di richiedere la disponibilità del mezzo più adatto.",
     primaryCta: "Trova il mezzo più adatto",
     secondaryCta: "Chiedi un consiglio su WhatsApp",
-    whatsappMsg: "Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta per muovermi a Ischia.\n\nSoggiorno in zona [zona/hotel] e sto valutando [scooter/auto/e-bike/barca/beach club].\n\nPotete aiutarmi a capire la soluzione migliore in base ai miei spostamenti?",
+    whatsappMsg: "Ciao IschiaMotion, vorrei un consiglio per scegliere la soluzione più adatta per muovermi a Ischia.\n\nSoggiorno in zona [zona/hotel] e sto valutando [scooter/auto/e-bike/barca/Beach / Pool Club].\n\nPotete aiutarmi a capire la soluzione migliore in base ai miei spostamenti?",
     breadcrumbLabel: "Come muoversi a Ischia",
     choiceEyebrow: "Confronto rapido",
     choiceTitle: "Quale mezzo scegliere",
@@ -64,7 +64,7 @@ const content: Record<Locale, Content> = {
       ["Percorsi panoramici leggeri", "E-bike", "Lungomare, borghi e soste frequenti"],
       ["Spiagge e calette dal mare", "Barca o gommone", "Giornate lungo la costa"],
       ["Zone centrali", "A piedi o bus", "Soggiorni vicino a servizi e fermate"],
-      ["Giornata relax", "Beach club", "Mare con servizi già organizzati"]
+      ["Giornata relax", "Beach / Pool Club", "Mare, piscina e servizi già organizzati"]
     ],
     sections: [
       {
@@ -101,11 +101,11 @@ const content: Record<Locale, Content> = {
       ["Sant'Angelo", "Il borgo è pedonale: occorre pianificare arrivo, parcheggio e trasferimenti esterni.", "A piedi nel borgo, bus o taxi fuori"],
       ["Barano e Maronti", "Spiaggia e aree interne possono richiedere cambi o tragitti più lunghi.", "Auto, scooter, bus o taxi marino"]
     ],
-    beachTitle: "Beach club a Ischia: quando conviene organizzarsi prima",
-    beachText: "Chi desidera una giornata al mare più comoda può richiedere disponibilità per beach club selezionati. Nei periodi più richiesti è utile muoversi in anticipo: indica data e numero di persone e verifichiamo subito lettini, servizi e condizioni con la struttura locale.",
-    beachLink: ["Beach club Ischia", "/it/beach-club-ischia"],
+    beachTitle: "Beach / Pool Club a Ischia: quando conviene organizzarsi prima",
+    beachText: "Chi desidera una giornata al mare o in piscina più comoda può richiedere disponibilità per Beach / Pool Club, lidi e strutture mare selezionate. Nei periodi più richiesti è utile muoversi in anticipo: indica data e numero di persone e verifichiamo lettini, ombrelloni, piscine, servizi e condizioni con la struttura locale.",
+    beachLink: ["Beach / Pool Club Ischia", "/it/beach-club-ischia"],
     linksTitle: "Servizi utili per organizzare gli spostamenti",
-    usefulLinks: [["Scooter", "/it/noleggio-scooter-ischia"], ["Auto", "/it/noleggio-auto-ischia"], ["E-bike", "/it/noleggio-bici-elettriche-ischia"], ["Gommoni", "/it/noleggio-gommoni-ischia"], ["Barche", "/it/noleggio-barche-ischia"], ["Beach club", "/it/beach-club-ischia"]],
+    usefulLinks: [["Scooter", "/it/noleggio-scooter-ischia"], ["Auto", "/it/noleggio-auto-ischia"], ["E-bike", "/it/noleggio-bici-elettriche-ischia"], ["Gommoni", "/it/noleggio-gommoni-ischia"], ["Barche", "/it/noleggio-barche-ischia"], ["Beach / Pool Club", "/it/beach-club-ischia"]],
     faqs: [
       { question: "Qual è il modo migliore per muoversi a Ischia?", answer: "Dipende da zona, stagione e programma. Lo scooter è agile per coppie e spostamenti frequenti; l'auto è più comoda per famiglie e bagagli; bus, taxi ed e-bike funzionano bene per esigenze e itinerari specifici." },
       { question: "Serve l'auto a Ischia?", answer: "Non sempre. In zone centrali si può camminare e usare il bus. L'auto diventa utile per famiglie, bagagli, alloggi collinari o giornate con molte tappe, tenendo conto di traffico e parcheggio." },
@@ -130,7 +130,7 @@ const content: Record<Locale, Content> = {
     cardText: "Compare your base, itinerary and practical needs before requesting availability for a vehicle or service.",
     primaryCta: "Find the right vehicle",
     secondaryCta: "Ask for advice on WhatsApp",
-    whatsappMsg: "Hi IschiaMotion, I’d like some advice to choose the best way to get around Ischia.\n\nI’m staying in [area/hotel], and I’m considering [scooter/car/e-bike/boat/beach club].\n\nCan you help me understand the most convenient solution based on my plans?",
+    whatsappMsg: "Hi IschiaMotion, I’d like some advice to choose the best way to get around Ischia.\n\nI’m staying in [area/hotel], and I’m considering [scooter/car/e-bike/boat/Beach / Pool Club].\n\nCan you help me understand the most convenient solution based on my plans?",
     breadcrumbLabel: "How to get around Ischia",
     choiceEyebrow: "Quick comparison",
     choiceTitle: "Which option should you choose?",
@@ -141,7 +141,7 @@ const content: Record<Locale, Content> = {
       ["Easy scenic rides", "E-bike", "Seafronts, villages and frequent stops"],
       ["Beaches and coves from the sea", "Boat or RIB", "Days along the coast"],
       ["Central areas", "Walking or bus", "Stays near services and bus stops"],
-      ["A relaxed beach day", "Beach club", "Pre-arranged seaside services"]
+      ["A relaxed beach day", "Beach / Pool Club", "Pre-arranged seaside and pool services"]
     ],
     sections: [
       { title: "Getting around Ischia by scooter", paragraphs: ["A scooter is often the most agile choice for moving between towns, parking and reaching beaches or villages independently. Scooter rental in Ischia suits couples and travellers carrying light luggage.", "Scooter rental at Ischia Porto is practical after a ferry arrival, while scooter rental in Forio works well for exploring the western coast. Engine size, licence requirements, pickup point and availability are confirmed after a check with the local partner."], links: [["Scooter rental Ischia", "/en/scooter-rental-ischia"]] },
@@ -162,11 +162,11 @@ const content: Record<Locale, Content> = {
       ["Sant'Angelo", "The village is pedestrianised, so plan arrival, parking and trips beyond it.", "Walking locally, bus or taxi outside"],
       ["Barano and Maronti", "The beach and inland areas can involve changes or longer journeys.", "Car, scooter, bus or sea taxi"]
     ],
-    beachTitle: "Ischia beach clubs: when to plan ahead",
-    beachText: "Travellers looking for an easier beach day can request availability at selected beach clubs. During popular periods it helps to enquire early; sunbeds, services, terms and confirmation depend on a check with the local venue.",
-    beachLink: ["Ischia beach clubs", "/en/ischia-beach-club"],
+    beachTitle: "Ischia Beach / Pool Clubs: when to plan ahead",
+    beachText: "Travellers looking for an easier beach or pool day can request availability at selected Beach / Pool Clubs and seaside venues. During popular periods it helps to enquire early; sunbeds, umbrellas, pools, services, terms and confirmation depend on a check with the local venue.",
+    beachLink: ["Ischia Beach / Pool Clubs", "/en/ischia-beach-club"],
     linksTitle: "Useful services for planning your journeys",
-    usefulLinks: [["Scooters", "/en/scooter-rental-ischia"], ["Cars", "/en/car-rental-ischia"], ["E-bikes", "/en/e-bike-rental-ischia"], ["RIBs", "/en/rubber-dinghy-rental-ischia"], ["Boats", "/en/boat-rental-ischia"], ["Beach clubs", "/en/ischia-beach-club"]],
+    usefulLinks: [["Scooters", "/en/scooter-rental-ischia"], ["Cars", "/en/car-rental-ischia"], ["E-bikes", "/en/e-bike-rental-ischia"], ["RIBs", "/en/rubber-dinghy-rental-ischia"], ["Boats", "/en/boat-rental-ischia"], ["Beach / Pool Clubs", "/en/ischia-beach-club"]],
     faqs: [
       { question: "What is the best way to get around Ischia?", answer: "It depends on your base, season and plans. Scooters are agile for frequent trips, cars suit families and luggage, while buses, taxis and e-bikes work well for particular routes and travel styles." },
       { question: "Do you need a car in Ischia?", answer: "Not always. Central areas can be explored on foot and by bus. A car is useful for families, luggage, hillside accommodation or multi-stop days, provided you account for traffic and parking." },

@@ -61,7 +61,7 @@ export function HeroSearch({
 
   const searchMode = getSearchMode(category);
 
-  // Boats/dinghies and Beach Club don't use the standard pickup/hotel toggle:
+  // Boats/dinghies and Beach / Pool Club don't use the standard pickup/hotel toggle:
   // keep the underlying delivery_method on the DB-supported "pickup_point" value
   // (boats only support pickup at an IschiaMotion Point — enforced server-side)
   // while the visible field switches to the relevant zone selector instead.
@@ -152,7 +152,7 @@ export function HeroSearch({
               <option value="bici">E-bike</option>
               <option value="gommone">{locale === "it" ? "Gommone" : "Rubber dinghy"}</option>
               <option value="barca">{locale === "it" ? "Barca" : "Boat"}</option>
-              <option value="beach_club">Beach Club</option>
+              <option value="beach_club">Beach / Pool Club</option>
             </select>
           </div>
           <div className="s-field">

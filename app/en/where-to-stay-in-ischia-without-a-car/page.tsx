@@ -101,7 +101,7 @@ export const metadata: Metadata = {
 };
 
 export default function WhereToStayInIschiaWithoutACarPage() {
-  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi IschiaMotion, I’d like some advice to choose the best option for my stay in Ischia.\n\nI arrive on [date], I’m staying in [area/hotel], and I’m considering [scooter/car/e-bike/rubber boat/boat/beach club].\n\nCan you help me understand the most convenient solution based on my plans?")}`;
+  const whatsappUrl = `https://wa.me/${ISCHIAMOTION_WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi IschiaMotion, I’d like some advice to choose the best option for my stay in Ischia.\n\nI arrive on [date], I’m staying in [area/hotel], and I’m considering [scooter/car/e-bike/rubber boat/boat/Beach / Pool Club].\n\nCan you help me understand the most convenient solution based on my plans?")}`;
 
   return (
     <>
@@ -193,7 +193,7 @@ export default function WhereToStayInIschiaWithoutACarPage() {
             <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/en/rubber-dinghy-rental-ischia">Rubber dinghies</a>
             <span className="seo-link-separator" aria-hidden="true">·</span>
-            <a href="/en/ischia-beach-club">Beach clubs</a>
+            <a href="/en/ischia-beach-club">Beach / Pool Clubs</a>
             <span className="seo-link-separator" aria-hidden="true">·</span>
             <a href="/en/contact">Contact</a>
           </div>

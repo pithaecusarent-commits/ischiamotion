@@ -65,8 +65,8 @@ export function Hero({
           className="hero-art-image"
           src="/images/ischiamotion-noleggi-esperienze-ischia.webp"
           alt={locale === "it"
-            ? "Noleggio mezzi a Ischia con scooter, auto, e-bike, gommoni e barche"
-            : "Vehicle rental in Ischia with scooters, cars, e-bikes and boats"}
+            ? "Noleggio mezzi e servizi a Ischia con scooter, auto, e-bike, gommoni, barche e Beach / Pool Club"
+            : "Vehicle and service requests in Ischia with scooters, cars, e-bikes, rubber dinghies, boats and Beach / Pool Club"}
           fill
           sizes="(max-width: 760px) 240px, (max-width: 1080px) 520px, min(46vw, 662px)"
           quality={82}

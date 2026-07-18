@@ -99,7 +99,7 @@ const categoryItems: Record<Locale, Partial<Record<VehicleFilter, ValueItem[]>>>
       },
       {
         title: "Aiuto nella scelta",
-        text: "Se hai dubbi tra gommone, barca o beach club, ti aiutiamo a orientare la richiesta."
+        text: "Se hai dubbi tra gommone, barca o Beach / Pool Club, ti aiutiamo a orientare la richiesta."
       }
     ],
     barca: [
@@ -185,7 +185,7 @@ const categoryItems: Record<Locale, Partial<Record<VehicleFilter, ValueItem[]>>>
       },
       {
         title: "Help choosing",
-        text: "If you are unsure between rubber dinghy, boat or beach club, we help orient your request."
+        text: "If you are unsure between rubber dinghy, boat or Beach / Pool Club, we help orient your request."
       }
     ],
     barca: [

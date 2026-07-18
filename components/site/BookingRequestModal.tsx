@@ -195,7 +195,7 @@ export function BookingRequestModal({
       return;
     }
 
-    // Boats/dinghies and Beach Club always submit delivery_method = "pickup_point"
+    // Boats/dinghies and Beach / Pool Club always submit delivery_method = "pickup_point"
     // (the only method the backend currently allows for those categories). The
     // chosen port / fixed location is still recorded as readable text below.
     const selectedDeliveryMethod: BookingDeliveryMethod = isNautical || isBeachClub

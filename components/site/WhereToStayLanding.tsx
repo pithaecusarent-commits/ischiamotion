@@ -84,7 +84,7 @@ const content: Record<Locale, PageContent> = {
     mobilityItems: [
       ["Zona e mezzo: un binomio importante", "Chi soggiorna lontano dal porto o dalle spiagge principali si trova spesso a dover noleggiare un mezzo. Valutare questo aspetto prima di scegliere l'alloggio aiuta a pianificare meglio la vacanza."],
       ["Scoprire calette e borghi", "Chi vuole esplorare l'isola in autonomia, raggiungere calette poco frequentate o visitare borghi lontani dall'hotel, si organizza meglio con lo scooter, l'auto o l'e-bike giusta."],
-      ["IschiaMotion per la mobilità", "IschiaMotion è una piattaforma locale per richiedere disponibilità di scooter, auto, e-bike, gommoni, barche e beach club a Ischia. Raccoglie la richiesta e verifica disponibilità, condizioni e conferma con partner selezionati sull'isola."],
+      ["IschiaMotion per la mobilità", "IschiaMotion è una piattaforma locale per richiedere disponibilità di scooter, auto, e-bike, gommoni, barche e Beach / Pool Club a Ischia. Raccoglie la richiesta e verifica disponibilità, condizioni e conferma con partner selezionati sull'isola."],
       ["Pianificare prima", "Richiedere un mezzo in anticipo, soprattutto in alta stagione, aiuta ad avere più scelta e a partire senza imprevisti il giorno dell'arrivo."]
     ],
     guideLinkBefore: "La scelta della zona dipende anche da cosa vuoi visitare: per orientarti meglio, consulta la guida su ",
@@ -93,7 +93,7 @@ const content: Record<Locale, PageContent> = {
     ischiastarsEyebrow: "Risorsa consigliata",
     ischiastarsTitle: "IschiaStars e IschiaMotion: due risorse complementari",
     ischiastarsCardTitle: "Soggiorno e spostamenti: un piano unico",
-    ischiastarsText: "IschiaStars.it è una risorsa dedicata alla scelta del soggiorno a Ischia: hotel, strutture e preventivi personalizzati per chi vuole pianificare con cura la propria vacanza. IschiaMotion è il complemento naturale: serve a organizzare gli spostamenti una volta scelto dove dormire. Scooter, auto, e-bike, gommoni e beach club tramite partner locali selezionati. Le due risorse coprono aspetti diversi della stessa vacanza e si usano meglio insieme.",
+    ischiastarsText: "IschiaStars.it è una risorsa dedicata alla scelta del soggiorno a Ischia: hotel, strutture e preventivi personalizzati per chi vuole pianificare con cura la propria vacanza. IschiaMotion è il complemento naturale: serve a organizzare gli spostamenti una volta scelto dove dormire. Scooter, auto, e-bike, gommoni e Beach / Pool Club tramite partner locali selezionati. Le due risorse coprono aspetti diversi della stessa vacanza e si usano meglio insieme.",
     ischiastarsLinkLabel: "Organizzare il soggiorno a Ischia con IschiaStars",
     afterStayEyebrow: "Mobilità sull'isola",
     afterStayTitle: "Dopo aver scelto dove dormire",
@@ -103,7 +103,7 @@ const content: Record<Locale, PageContent> = {
       ["E-bike a Ischia", "Perfetta per percorsi panoramici, borghi e lungomare. Adatta per chi preferisce pedalare con assistenza elettrica sull'isola.", "/it/noleggio-bici-elettriche-ischia"],
       ["Gommone a Ischia", "Per vivere la costa dal mare, raggiungere calette inaccessibili via terra e organizzare una giornata fuori porta.", "/it/noleggio-gommoni-ischia"],
       ["Barca a Ischia", "Per chi vuole più comfort in mare. Verifichiamo subito requisiti, meteo e disponibilità con i partner locali.", "/it/noleggio-barche-ischia"],
-      ["Beach Club a Ischia", "Lettini, ombrelloni e servizi mare presso strutture locali selezionate. Ideale per una giornata organizzata in spiaggia.", "/it/beach-club-ischia"]
+      ["Beach / Pool Club a Ischia", "Lettini, ombrelloni, piscine e servizi mare presso strutture locali selezionate. Ideale per una giornata organizzata in spiaggia o in piscina.", "/it/beach-club-ischia"]
     ],
     linksTitle: "Esplora i servizi di IschiaMotion",
     categoryLinks: [
@@ -114,7 +114,7 @@ const content: Record<Locale, PageContent> = {
       ["E-bike a Ischia", "/it/noleggio-bici-elettriche-ischia"],
       ["Gommoni a Ischia", "/it/noleggio-gommoni-ischia"],
       ["Barche a Ischia", "/it/noleggio-barche-ischia"],
-      ["Beach Club a Ischia", "/it/beach-club-ischia"],
+      ["Beach / Pool Club a Ischia", "/it/beach-club-ischia"],
       ["Contatti", "/it/contatti"]
     ],
     faqs: [
@@ -140,7 +140,7 @@ const content: Record<Locale, PageContent> = {
       },
       {
         question: "IschiaMotion prenota direttamente hotel?",
-        answer: "No. IschiaMotion è una piattaforma dedicata alla mobilità e ai servizi locali a Ischia: scooter, auto, e-bike, gommoni, barche e beach club. Per hotel e strutture ricettive è utile rivolgersi a risorse dedicate come IschiaStars.it."
+        answer: "No. IschiaMotion è una piattaforma dedicata alla mobilità e ai servizi locali a Ischia: scooter, auto, e-bike, gommoni, barche e Beach / Pool Club. Per hotel e strutture ricettive è utile rivolgersi a risorse dedicate come IschiaStars.it."
       },
       {
         question: "Cos'è IschiaStars?",
@@ -156,7 +156,7 @@ const content: Record<Locale, PageContent> = {
       }
     ],
     finalTitle: "Pronto a organizzare gli spostamenti a Ischia?",
-    finalText: "Dopo aver scelto dove dormire, richiedi su IschiaMotion disponibilità per scooter, auto, e-bike, gommoni, barche e beach club tramite partner locali selezionati."
+    finalText: "Dopo aver scelto dove dormire, richiedi su IschiaMotion disponibilità per scooter, auto, e-bike, gommoni, barche e Beach / Pool Club tramite partner locali selezionati."
   },
   en: {
     eyebrow: "Ischia travel guide",
@@ -184,7 +184,7 @@ const content: Record<Locale, PageContent> = {
     mobilityItems: [
       ["Location and transport: a key combination", "Guests staying far from the port or main beaches often need to rent a vehicle. Thinking about this before choosing accommodation helps plan a smoother holiday."],
       ["Exploring coves and villages", "Those who want to explore the island independently, reach less crowded coves or visit villages away from their hotel benefit from choosing the right scooter, car or e-bike."],
-      ["IschiaMotion for local mobility", "IschiaMotion is a local platform for requesting availability of scooters, cars, e-bikes, rubber dinghies, boats and beach clubs in Ischia through selected partners. Not a direct rental company, but a single point for organising mobility on the island."],
+      ["IschiaMotion for local mobility", "IschiaMotion is a local platform for requesting availability of scooters, cars, e-bikes, rubber dinghies, boats and Beach / Pool Clubs in Ischia through selected partners. Not a direct rental company, but a single point for organising mobility on the island."],
       ["Plan ahead", "Requesting a vehicle in advance, especially in high season, means more choice and a smoother start to the trip on arrival day."]
     ],
     guideLinkBefore: "The best area to stay in also depends on what you want to visit: to plan more easily, read our guide on ",
@@ -203,7 +203,7 @@ const content: Record<Locale, PageContent> = {
       ["E-bike in Ischia", "Great for scenic routes, villages and seafronts. Mind the hills and check battery range with the partner.", "/en/e-bike-rental-ischia"],
       ["Rubber dinghy in Ischia", "To enjoy the coast from the sea, reach coves and organise a day on the water. Pickup at a defined nautical point.", "/en/rubber-dinghy-rental-ischia"],
       ["Boat in Ischia", "For more comfort at sea. Availability subject to requirements, weather and partner conditions.", "/en/boat-rental-ischia"],
-      ["Beach Club in Ischia", "Sunbeds, umbrellas and seaside services through selected local venues. Ideal for an organised day by the sea.", "/en/ischia-beach-club"]
+      ["Beach / Pool Club in Ischia", "Sunbeds, umbrellas, pools and seaside services through selected local venues. Ideal for an organised day by the sea or by the pool.", "/en/ischia-beach-club"]
     ],
     linksTitle: "Explore IschiaMotion services",
     categoryLinks: [
@@ -215,7 +215,7 @@ const content: Record<Locale, PageContent> = {
       ["E-bike rental Ischia", "/en/e-bike-rental-ischia"],
       ["Rubber dinghy rental Ischia", "/en/rubber-dinghy-rental-ischia"],
       ["Boat rental Ischia", "/en/boat-rental-ischia"],
-      ["Ischia Beach Club", "/en/ischia-beach-club"],
+      ["Ischia Beach / Pool Club", "/en/ischia-beach-club"],
       ["Contact", "/en/contact"]
     ],
     faqs: [
@@ -229,7 +229,7 @@ const content: Record<Locale, PageContent> = {
       },
       {
         question: "Does IschiaMotion book hotels?",
-        answer: "No. IschiaMotion is a platform focused on mobility and local services in Ischia: scooters, cars, e-bikes, rubber dinghies, boats and beach clubs. For hotels and accommodation, a dedicated resource like IschiaStars.it is more suitable."
+        answer: "No. IschiaMotion is a platform focused on mobility and local services in Ischia: scooters, cars, e-bikes, rubber dinghies, boats and Beach / Pool Clubs. For hotels and accommodation, a dedicated resource like IschiaStars.it is more suitable."
       },
       {
         question: "What is IschiaStars?",
@@ -245,7 +245,7 @@ const content: Record<Locale, PageContent> = {
       }
     ],
     finalTitle: "Ready to plan getting around Ischia?",
-    finalText: "Once you've chosen where to stay, request availability on IschiaMotion for scooters, cars, e-bikes, rubber dinghies, boats and beach clubs — through selected local partners."
+    finalText: "Once you've chosen where to stay, request availability on IschiaMotion for scooters, cars, e-bikes, rubber dinghies, boats and Beach / Pool Clubs — through selected local partners."
   }
 };
 

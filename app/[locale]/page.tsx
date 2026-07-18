@@ -20,11 +20,11 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!locales.includes(params.locale)) notFound();
   const isIt = params.locale === "it";
   const title = isIt
-    ? "Noleggio a Ischia: scooter, auto e barche | IschiaMotion"
-    : "Ischia rentals: scooters, cars and boats | IschiaMotion";
+    ? "IschiaMotion | Noleggio Scooter, Auto, E-Bike, Barche e Beach / Pool Club a Ischia"
+    : "IschiaMotion | Scooter, Car, E-Bike, Boat and Beach / Pool Club Rentals in Ischia";
   const description = isIt
-    ? "Richiedi disponibilità per scooter, auto, e-bike, gommoni e barche a Ischia tramite partner locali selezionati."
-    : "Request scooters, cars, e-bikes, rubber dinghies and boats in Ischia through selected local partners.";
+    ? "IschiaMotion è la piattaforma locale a Ischia per richiedere scooter, auto, e-bike, gommoni, barche e Beach / Pool Club tramite partner selezionati."
+    : "IschiaMotion is a local platform in Ischia to request scooters, cars, e-bikes, rubber dinghies, boats and Beach / Pool Club experiences through selected local partners.";
 
   return {
     title,
@@ -62,10 +62,10 @@ export default async function LocaleHome({ params }: Props) {
       <JsonLd data={serviceJsonLd(
         params.locale,
         `/${params.locale}`,
-        isIt ? "Noleggio scooter auto barche Ischia tramite marketplace locale" : "Scooter car boat rental Ischia through a local marketplace",
+        isIt ? "IschiaMotion piattaforma locale per scooter auto e servizi mare a Ischia" : "IschiaMotion local platform for scooters cars and seaside services in Ischia",
         isIt
-          ? "IschiaMotion facilita richieste di disponibilità per noleggio scooter, auto, e-bike, gommoni, barche e Beach Club tramite partner selezionati a Ischia."
-          : "IschiaMotion facilitates availability requests for scooter rental, car rental, e-bike rental, rubber dinghy rental, boat rental and Beach Clubs through selected local partners in Ischia."
+          ? "IschiaMotion facilita richieste di disponibilità per scooter, auto, e-bike, gommoni, barche e Beach / Pool Club tramite partner selezionati a Ischia."
+          : "IschiaMotion facilitates availability requests for scooter rental, car rental, e-bike rental, rubber dinghy rental, boat rental and Beach / Pool Club experiences through selected local partners in Ischia."
       )} />
       <SiteHome locale={params.locale} pickupPoints={pickupPoints} categoryMinPrices={categoryMinPrices} />
     </>
